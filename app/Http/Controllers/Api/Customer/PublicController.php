@@ -21,6 +21,8 @@ class PublicController extends Controller
 
   public function cities(Request $request)
   {
+    return $this->sendResponse(CityResource::collection(City::latest()->get()), "");
+
     return $this->sendResponse(new CityCollection(City::paginate($request->perPage ?? "20")), "");
   }
 

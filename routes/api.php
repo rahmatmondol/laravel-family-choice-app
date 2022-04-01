@@ -32,7 +32,7 @@ Route::group(
       Route::post('get-verificatin-code', 'AuthController@getVerificationCode');
       Route::post('verify-phone', 'AuthController@verifyPhone');
       Route::post('foreget-password', 'AuthController@foregetPassword');
-      Route::post('/cities', 'PublicController@cities')->name('cities');
+      Route::post('cities', 'PublicController@cities')->name('cities');
     });
 
 
