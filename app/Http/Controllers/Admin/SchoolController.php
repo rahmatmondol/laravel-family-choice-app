@@ -1,0 +1,103 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Models\School;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Repositories\SchoolTypeRepository;
+use App\Interfaces\GradeRepositoryInterface;
+use App\Interfaces\SchoolRepositoryInterface;
+use App\Repositories\EducationTypeRepository;
+use App\Http\Requests\Admin\SchoolFormRequest;
+use App\Repositories\EducationalSubjectRepository;
+
+class SchoolController extends Controller
+{
+
+  public function __construct(
+    private SchoolRepositoryInterface $schoolRepository,
+    private EducationalSubjectRepository $educationalSubjectRepository,
+    private EducationTypeRepository $educationTypeRepository,
+    private SchoolTypeRepository $schoolTypeRepository,
+    private GradeRepositoryInterface $gradeRepository,
+  ) {
+    //create read update delete
+    $this->middleware(['permission:read_schools'])->only('index');
+    $this->middleware(['permission:create_schools'])->only('create');
+    $this->middleware(['permission:update_schools'])->only('edit');
+    $this->middleware(['permission:delete_schools'])->only('destroy');
+  } //end of constructor
+
+  public function index(Request $request)
+  {
+    session(['currentPage' => request('page', 1)]);
+
+    $schools = $this->schoolRepository->getFilteredSchools($request);
+
+    return view('admin.schools.index', compact('schools'));
+  } // end of index
+
+  public function create(Request $request)
+  {
+    $educationalSubjects = $this->educationalSubjectRepository->getAllEducationalSubjects();
+    $educationTypes = $this->educationTypeRepository->getAllEducationTypes();
+    $schoolTypes = $this->schoolTypeRepository->getAllSchoolTypes();
+    $grades = $this->roleRepository->getAllGrades();
+
+    return view('admin.schools.create', compact('roles', 'educationalSubjects', 'educationTypes', 'schoolTypes', 'grades'));
+  } //end of create
+
+  public function show($school)
+  {
+    $school = $this->schoolRepository->getSchoolById($school);
+
+    return view('admin.schools.show', compact('school'));
+  } //end of create
+
+  public function store(SchoolFormRequest $request)
+  {
+    $this->schoolRepository->createSchool($request);
+
+    session()->flash('success', __('site.Data added successfully'));
+
+    if ($request->continue) {
+      return redirect()->route('admin.schools.index', ['page' => session('currentPage')]);
+    }
+    return redirect()->back();
+  } //end of store
+
+  public function edit($school)
+  {
+
+    $school = $this->schoolRepository->getSchoolById($school);
+
+    // $roles = $this->roleRepository->getAllRoles();
+
+    return view('admin.schools.edit', compact('school',));
+  } //end of edit
+
+  public function update(SchoolFormRequest $request, School $school)
+  {
+    $this->schoolRepository->updateSchool($request, $school);
+
+    session()->flash('success', __('Data updated successfully'));
+
+    if ($request->continue) {
+      return redirect()->route('admin.schools.index', ['page' => session('currentPage')]);
+    }
+    return redirect()->back();
+  } //end of update
+
+  public function destroy(School $school)
+  {
+    if (!$school) {
+      return redirect()->back();
+    }
+    $this->schoolRepository->deleteSchool($school);
+
+    session()->flash('success', __('Data deleted successfully'));
+    return redirect()->route('admin.schools.index', ['page' => session('currentPage')]);
+  } //end of destroy
+
+}//end of controller

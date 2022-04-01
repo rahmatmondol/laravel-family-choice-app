@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Providers;
+
+use App\Repositories\CityRepository;
+use App\Repositories\RoleRepository;
+use App\Repositories\AdminRepository;
+use App\Repositories\GradeRepository;
+use App\Repositories\SliderRepository;
+use Illuminate\Support\ServiceProvider;
+use App\Repositories\CustomerRepository;
+use App\Repositories\SchoolTypeRepository;
+use App\Interfaces\CityRepositoryInterface;
+use App\Interfaces\RoleRepositoryInterface;
+use App\Interfaces\AdminRepositoryInterface;
+use App\Interfaces\GradeRepositoryInterface;
+use App\Interfaces\SliderRepositoryInterface;
+use App\Repositories\EducationTypeRepository;
+use App\Interfaces\CustomerRepositoryInterface;
+use App\Interfaces\SchoolTypeRepositoryInterface;
+use App\Repositories\EducationalSubjectRepository;
+use App\Interfaces\EducationTypeRepositoryInterface;
+use App\Interfaces\EducationalSubjectRepositoryInterface;
+
+class RepositoryServiceProvider extends ServiceProvider
+{
+  /**
+   * Register services.
+   *
+   * @return void
+   */
+  public function register()
+  {
+    $this->app->bind(AdminRepositoryInterface::class, AdminRepository::class);
+    $this->app->bind(RoleRepositoryInterface::class, RoleRepository::class);
+    $this->app->bind(CustomerRepositoryInterface::class, CustomerRepository::class);
+    $this->app->bind(SliderRepositoryInterface::class, SliderRepository::class);
+    $this->app->bind(GradeRepositoryInterface::class, GradeRepository::class);
+    $this->app->bind(CityRepositoryInterface::class, CityRepository::class);
+    $this->app->bind(EducationalSubjectRepositoryInterface::class, EducationalSubjectRepository::class);
+    $this->app->bind(EducationTypeRepositoryInterface::class, EducationTypeRepository::class);
+    $this->app->bind(SchoolTypeRepositoryInterface::class, SchoolTypeRepository::class);
+  }
+  /**
+   * Bootstrap services.
+   *
+   * @return void
+   */
+  public function boot()
+  {
+    //
+  }
+}

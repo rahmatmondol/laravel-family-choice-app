@@ -1,0 +1,97 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Models\School;
+use App\Scopes\OrderScope;
+use App\Traits\UploadFileTrait;
+use App\Interfaces\SchoolRepositoryInterface;
+use App\Models\SchoolImage;
+
+class SchoolRepository implements SchoolRepositoryInterface
+{
+  use UploadFileTrait;
+
+  public function getFilteredSchools($request)
+  {
+    return  School::withoutGlobalScope(new OrderScope)
+      ->whenSearch($request->search)
+      ->isActive($request->status)
+      ->latest()
+      ->paginate(request()->perPage ?? 20);
+  }
+
+  public function getSchoolById($schoolId)
+  {
+    $school = School::findOrFail($schoolId);
+    return $school;
+  }
+
+  public function getSchoolRequestData($request)
+  {
+    $request_data = array_merge([
+      'status', 'order_column', 'type', 'phone', 'whatsapp', 'email', 'available_seats', 'fees', 'lat', 'lng'
+    ], config('translatable.locales'));
+
+    return  $request->only($request_data);
+  }
+
+  public function createSchool($request)
+  {
+    $request_data = $this->getSchoolRequestData($request);
+
+    if ($request->image) {
+      $request_data['image'] = $this->uploadImages($request->image, 'schools/', '', '');
+    } //end of if
+
+    $school = School::create($request_data);
+
+
+
+    if ($request->attachments) {
+      $this->insertImages($request->attachments, $school->id);
+    }
+    return   $school;
+  }
+
+  public function updateSchool($request, $school)
+  {
+    $request_data = $this->getSchoolRequestData($request);
+
+    if ($request->image) {
+      $request_data['image'] = $this->uploadImages($request->image, 'schools/', $school->image);
+    } //end of if
+
+    if ($request->password) {
+      $request_data['password'] = bcrypt($request->password);
+    }
+
+    $school->update($request_data);
+    
+    if ($request->attachments) {
+      $this->insertImages($request->attachments, $school->id);
+    } // end of if
+
+    return true;
+  }
+
+  function insertImages($attachments, $school_id)
+  {
+    $attachments = $this->MultipleUploadImages($attachments, 'school_images/');
+
+    foreach ($attachments as $file_name) {
+      SchoolImage::create([
+        'school_id' => $school_id,
+        'image' => $file_name,
+      ]);
+    }
+  }
+
+  public function deleteSchool($school)
+  {
+    $this->removeImage($school->image, 'schools');
+    $this->deleteAttachments('school_images', 'school_images', 'school_id', $school->id);
+    $school->delete();
+    return true;
+  }
+}
