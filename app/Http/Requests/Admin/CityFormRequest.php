@@ -15,7 +15,6 @@ class CityFormRequest extends FormRequest
   }
   public function rules()
   {
-
     if ($this->isMethod('post')) {
       return $this->createRules();
     } elseif ($this->isMethod('put')) {
@@ -26,8 +25,7 @@ class CityFormRequest extends FormRequest
   public function createRules()
   {
 
-    $this->rules += [
-    ];
+    $this->rules += [];
 
     foreach (config('translatable.locales') as $locale) {
       $this->rules += [$locale . '.title' => ['required', Rule::unique('city_translations', 'title')]];
@@ -41,8 +39,7 @@ class CityFormRequest extends FormRequest
 
     $city = $this->route('city');
 
-    $this->rules += [
-    ];
+    $this->rules += [];
 
     foreach (config('translatable.locales') as $locale) {
       $this->rules += [$locale . '.title' => ['required', Rule::unique('city_translations', 'title')->ignore($city->id, 'city_id')]];

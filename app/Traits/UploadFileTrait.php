@@ -60,16 +60,24 @@ trait UploadFileTrait
     }
   }
 
-
   public function deleteAttachments($table, $folder, $column, $id)
   {
-
     $attachments = DB::table($table)->where($column, $id)->get();
     foreach ($attachments as $attachment) {
       $this->removeImage($attachment->image, $folder);
     }
     $attachment->delete();
 
+    return true;
+  }
+
+  public function deleteOneAttachment($table, $folder, $id)
+  {
+    $query = DB::table($table)->where('id', $id);
+    $image = $query->first();
+
+    $this->removeImage($image->image, $folder);
+    $query->delete();
     return true;
   }
 }

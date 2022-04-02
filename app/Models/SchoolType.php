@@ -39,4 +39,9 @@ class SchoolType extends Model
     });
   } // end of scopeWhenSearch
 
+  /////////////////// start relationships ///////////////////////////////
+  public function schools()
+  {
+    return $this->belongsToMany(SchoolType::class, 'school_types', 'school_id', 'school_type_id')->withTranslation(app()->getLocale());
+  }
 }

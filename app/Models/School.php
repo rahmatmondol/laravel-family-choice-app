@@ -45,6 +45,25 @@ class School extends Model
   {
     return $this->hasMany(SchoolImage::class);
   } // end of user
-  /////////////////// end relationships ///////////////////////////////
 
+  public function grades()
+  {
+    return $this->belongsToMany(Grade::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale());
+  }
+
+  public function educationalSubjects()
+  {
+    return $this->belongsToMany(EducationalSubject::class, 'school_education_subject', 'school_id', 'educational_subject_id')->withTranslation(app()->getLocale());
+  }
+
+  public function educationTypes()
+  {
+    return $this->belongsToMany(EducationType::class, 'school_education_type', 'school_id', 'education_type_id')->withTranslation(app()->getLocale());
+  }
+
+  public function schoolTypes()
+  {
+    return $this->belongsToMany(SchoolType::class, 'school_school_type', 'school_id', 'school_type_id')->withTranslation(app()->getLocale());
+  }
+  /////////////////// end relationships ///////////////////////////////
 }

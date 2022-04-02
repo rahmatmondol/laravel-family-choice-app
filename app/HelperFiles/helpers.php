@@ -1,5 +1,15 @@
 <?php
 
+// school types
+if (!function_exists('types')) {
+  function types($asStr = null)
+  {
+    if ($asStr == 'asString') {
+      return 'school,nursery,school_and_nursery';
+    }
+    return ['school', 'nursery', 'school_and_nursery'];
+  }
+}
 
 if (!function_exists('checkAdminPermission')) {
   function checkAdminPermission($permission)

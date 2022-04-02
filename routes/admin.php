@@ -72,6 +72,10 @@ Route::group(
         'sliders' => 'SliderController',
         // 'backgrounds' => 'BackgroundController',
       ]);
+
+      Route::get('schools/deleteImage/{id}', 'SchoolController@deleteImage');
+
+
       // });
 
       // Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => "User"], function () {

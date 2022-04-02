@@ -38,12 +38,16 @@
   {{--noty--}}
   <link rel="stylesheet" href="{{ asset('admin/plugins/noty/noty.css') }}">
   <script src="{{ asset('admin/plugins/noty/noty.min.js') }}"></script>
+  <!-- fancybox -->
+  <link rel="stylesheet" href="{{ asset('admin/') }}/css/admin.css">
 
   <script>
     let appUrl     = @json(config('myconfig.appUrl'));
     let appLocale  = @json(app()->getLocale());
   </script>
   @stack('header_css')
+  @stack('header_js')
+
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -102,10 +106,12 @@
   <!-- AdminLTE for demo purposes -->
   <script src="{{ asset('admin/') }}/dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="{{ asset('admin/') }}/dist/js/pages/dashboard.js"></script>
+  {{-- <script src="{{ asset('admin/') }}/dist/js/pages/dashboard.js"></script> --}}
   <script src="{{ asset('admin/') }}/plugins/selectric/jquery.selectric.min.js"></script>
   {{-- fancybox --}}
-  <script src="{{ asset('admin/') }}//plugins/fancybox/jquery.fancybox.min.js"></script>
+  <script src="{{ asset('admin/') }}/plugins/fancybox/jquery.fancybox.min.js"></script>
+  {{-- admin --}}
+  <script src="{{ asset('admin/') }}/js/admin.js"></script>
   <script>
     $('.selectric').selectric();
   </script>
@@ -152,6 +158,8 @@
       }
     })
   </script>
+
+  @stack('footer_js')
 
 </body>
 

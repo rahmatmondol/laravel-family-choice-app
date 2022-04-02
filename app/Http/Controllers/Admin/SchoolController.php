@@ -43,9 +43,9 @@ class SchoolController extends Controller
     $educationalSubjects = $this->educationalSubjectRepository->getAllEducationalSubjects();
     $educationTypes = $this->educationTypeRepository->getAllEducationTypes();
     $schoolTypes = $this->schoolTypeRepository->getAllSchoolTypes();
-    $grades = $this->roleRepository->getAllGrades();
+    $grades = $this->gradeRepository->getAllGrades();
 
-    return view('admin.schools.create', compact('roles', 'educationalSubjects', 'educationTypes', 'schoolTypes', 'grades'));
+    return view('admin.schools.create', compact('educationalSubjects', 'educationTypes', 'schoolTypes', 'grades'));
   } //end of create
 
   public function show($school)
@@ -69,12 +69,12 @@ class SchoolController extends Controller
 
   public function edit($school)
   {
-
+    $educationalSubjects = $this->educationalSubjectRepository->getAllEducationalSubjects();
+    $educationTypes = $this->educationTypeRepository->getAllEducationTypes();
+    $schoolTypes = $this->schoolTypeRepository->getAllSchoolTypes();
+    $grades = $this->gradeRepository->getAllGrades();
     $school = $this->schoolRepository->getSchoolById($school);
-
-    // $roles = $this->roleRepository->getAllRoles();
-
-    return view('admin.schools.edit', compact('school',));
+    return view('admin.schools.edit', compact('school', 'educationalSubjects', 'educationTypes', 'schoolTypes', 'grades'));
   } //end of edit
 
   public function update(SchoolFormRequest $request, School $school)
@@ -100,4 +100,10 @@ class SchoolController extends Controller
     return redirect()->route('admin.schools.index', ['page' => session('currentPage')]);
   } //end of destroy
 
+  public function deleteImage($id)
+  {
+    $this->schoolRepository->deleteAttachment($id);
+    session()->flash('success', __('Data deleted successfully'));
+    return redirect()->back();
+  }
 }//end of controller

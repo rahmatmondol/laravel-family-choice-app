@@ -18,14 +18,16 @@ return new class extends Migration
       $table->boolean('status')->default(1); // default active
 
       $table->integer('order_column')->nullable();
-      $table->enum('type', ['school', 'nursery'])->nullable();
+      $table->enum('type', types())->nullable();
       $table->string('phone')->nullable()->unique();
       $table->string('whatsapp')->nullable()->unique();
       $table->string('email')->unique();
       $table->integer('available_seats')->nullable();
       $table->double('review')->default(0);
+      $table->integer('count_reviews')->default(0);
       $table->double('fees')->nullable();
       $table->string('password');
+      $table->string('image')->default('default.png');
 
       $table->double('lat')->nullable();
       $table->double('lng')->nullable();

@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 <?php
-$page = 'grades';
-$title = __('site.Grades');
+$page = 'schools';
+$title = __('site.Schools');
 ?>
 @section('title_page')
 {{ $title }}
@@ -17,7 +17,7 @@ $title = __('site.Grades');
         <div class="col-sm-6">
           <h6>{{ $title }}
             <small>
-              ( {{ $grades->total() }} )
+              ( {{ $schools->total() }} )
             </small>
           </h6>
 
@@ -30,7 +30,7 @@ $title = __('site.Grades');
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route('admin.grades.index') }}" method="get">
+          <form action="{{ route('admin.schools.index') }}" method="get">
 
             <div class="row">
 
@@ -42,8 +42,8 @@ $title = __('site.Grades');
               <div class="col-md-4">
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                   @lang('site.Search')</button>
-                @if (checkAdminPermission('create_grades'))
-                <a href="{{ route('admin.grades.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
+                @if (checkAdminPermission('create_schools'))
+                <a href="{{ route('admin.schools.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
                   @lang('site.Add')</a>
                 @endif
               </div>
@@ -90,36 +90,36 @@ $title = __('site.Grades');
             </tr>
           </thead>
           <tbody>
-            @forelse ($grades as $grade )
+            @forelse ($schools as $school )
             <tr>
               <td>
                 {{ $loop->iteration }}
               </td>
               <td>
-                {{ $grade->title }}
+                {{ $school->title }}
               </td>
               <td class="project-state">
-                @include('admin.partials._render_status',['status'=>$grade->status])
+                @include('admin.partials._render_status',['status'=>$school->status])
               </td>
 
               <td>
-                {{ $grade->order_column }}
+                {{ $school->order_column }}
               </td>
               <td class="project-actions text-right">
 
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route('admin.grades.show', ['grade'=>$grade->id]),
+                'route'=>route('admin.schools.show', ['school'=>$school->id]),
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
-                'route'=>route('admin.grades.edit', ['grade'=>$grade->id]),
+                'route'=>route('admin.schools.edit', ['school'=>$school->id]),
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route('admin.grades.destroy', $grade->id),
+                'route'=>route('admin.schools.destroy', $school->id),
                 ])
 
               </td>
@@ -134,7 +134,7 @@ $title = __('site.Grades');
 
           </tbody>
         </table>
-        {{ $grades->appends(request()->query())->links() }}
+        {{ $schools->appends(request()->query())->links() }}
 
       </div>
       <!-- /.card-body -->

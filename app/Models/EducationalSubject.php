@@ -40,4 +40,10 @@ class EducationalSubject extends Model
     });
   } // end of scopeWhenSearch
 
+  /////////////////// start relationships ///////////////////////////////
+
+  public function schools()
+  {
+    return $this->belongsToMany(EducationalSubject::class, 'educational_subjects', 'school_id', 'educational_subject_id')->withTranslation(app()->getLocale());
+  }
 }

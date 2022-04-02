@@ -19,6 +19,12 @@ class DatabaseSeeder extends Seeder
     $this->call([
       LaratrustSeeder::class,
       AdminTableSeeder::class,
+      CitiesTableSeeder::class,
+      SchoolTypesTableSeeder::class,
+      EducationalSubjectsTableSeeder::class,
+      EducationTypesTableSeeder::class,
+      GradesTableSeeder::class,
+      SlidersTableSeeder::class,
     ]);
   }
 }

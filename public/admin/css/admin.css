@@ -1,0 +1,215 @@
+.skin-blue .sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a {
+    color: #fff;
+    background: #367fa99c;
+    border-left-color: #3c8dbc;
+}
+
+.gallery>img{
+    width: 50px;
+    padding: 4px;
+    border: 2px solid #ddd;
+    height: 50px;
+    margin: 2px;
+}
+/* start CustomCheckboxes style  */
+
+.CustomCheckboxes {
+    /* display: block; */
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.CustomCheckboxes input {
+position: absolute;
+opacity: 0;
+cursor: pointer;
+height: 0;
+width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0px;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #3c8dbc;
+}
+
+/* On mouse-over, add a grey background color */
+.CustomCheckboxes:hover input ~ .checkmark {
+background-color: #2196F3;
+}
+
+/* When the checkbox is checked, add a blue background */
+.CustomCheckboxes input:checked ~ .checkmark {
+background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+content: "";
+position: absolute;
+display: none;
+}
+
+/* Show the checkmark when checked */
+.CustomCheckboxes input:checked ~ .checkmark:after {
+display: block;
+}
+
+/* Style the checkmark/indicator */
+.CustomCheckboxes .checkmark:after {
+    left: 8px;
+    top: 4px;
+    width: 7.5px;
+    height: 15px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+/* end CustomCheckboxes  style  */
+
+.box-body .table td button {
+    display: inline-block;
+    margin: auto;
+    /* margin-bottom: 10px; */
+    width: auto;
+}
+
+.box-body .table td a {
+    display: inline-block;
+    margin: auto;
+}
+.box-body .modal-body .table td a {
+    width: auto;
+}
+.box-body .table td form {
+    display: inline-block !important;
+}
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+    vertical-align: middle;
+}
+
+
+.mb-2 {
+    margin-bottom: .8rem;
+}
+
+.d-inline-block {
+    display: inline-block;
+}
+
+
+.nav-tabs>li>a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid #ecf0f5;
+    border-radius: 4px 4px 0 0;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #fff;
+    cursor: default;
+    background-color: #3c8dbc;
+    border: 1px solid #3c8dbc;
+    border-bottom-color: transparent;
+}
+
+
+
+.box-body .input-group  {
+    display: block;
+}
+
+
+
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+
+table,
+table td,
+table th{
+    text-align: left !important;
+}
+
+.box-body .table td.actions a {
+    display: inline-block !important;
+    margin-bottom: auto;
+}
+.box-body .table td.actions form {
+    display: inline-block !important;
+}
+
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td,
+.sidebar-menu li>a {
+        text-transform: capitalize;
+}
+
+
+
+/*.table-responsiveAll {*/
+/*    min-height: .01%;*/
+/*    overflow-x: auto;*/
+/*    width: 100%;*/
+/*    margin-bottom: 15px;*/
+/*    overflow-y: hidden;*/
+/*    -ms-overflow-style: -ms-autohiding-scrollbar;*/
+/*    border: 1px solid #ddd;*/
+/*}*/
+
+
+table small.btn-xs {
+    display: block;
+    text-align: center;
+    min-width: 54px;
+    max-width: 54px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

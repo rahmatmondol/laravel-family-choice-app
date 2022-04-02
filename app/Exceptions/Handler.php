@@ -52,26 +52,22 @@ class Handler extends ExceptionHandler
     });
   }
 
-
   protected function unauthenticated($request, AuthenticationException $exception)
   {
-
     if (request()->is('api/*') || $request->expectsJson()) {
       return $this->sendError(__('site.Unauthenticated'), '');
     }
 
-
     $guard = Arr::get($exception->guards(), 0);
 
     switch ($guard) {
-      case 'customer':
-        $login = 'customer.login';
-        break;
+      // case 'customer':
+      //   $login = 'customer.login';
+      //   break;
       default:
-        $login = 'login';
+        $login = 'admin.login';
         break;
     }
-
     return redirect()->guest(route($login));
   }
 }

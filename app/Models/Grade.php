@@ -39,4 +39,10 @@ class Grade extends Model
     });
   } // end of scopeWhenSearch
 
+  /////////////////// start relationships ///////////////////////////////
+  public function schools()
+  {
+    return $this->belongsToMany(School::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale());
+  }
+  /////////////////// end relationships ///////////////////////////////
 }

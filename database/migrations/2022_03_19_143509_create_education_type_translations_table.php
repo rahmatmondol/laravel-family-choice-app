@@ -16,7 +16,8 @@ return new class extends Migration
     Schema::create('education_type_translations', function (Blueprint $table) {
       $table->id();
 
-      $table->string('title');
+      $table->string('title')->unique();
+
 
       $table->string('locale')->index();
       $table->foreignId('education_type_id')->nullable()->constrained()->onDelete('cascade');

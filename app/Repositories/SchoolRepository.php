@@ -44,9 +44,35 @@ class SchoolRepository implements SchoolRepositoryInterface
       $request_data['image'] = $this->uploadImages($request->image, 'schools/', '', '');
     } //end of if
 
+    if ($request->password) {
+      $request_data['password'] = bcrypt($request->password);
+    }
+
     $school = School::create($request_data);
 
+    if ($request->educationalSubjects) {
+      $educationalSubjects = array_filter((array)$request->educationalSubjects, function ($value) {
+        return !is_null($value);
+      });
 
+      $school->educationalSubjects()->attach($educationalSubjects);
+    } // end of if
+
+    if ($request->educationTypes) {
+      $educationTypes = array_filter((array)$request->educationTypes, function ($value) {
+        return !is_null($value);
+      });
+
+      $school->educationTypes()->attach($educationTypes);
+    } // end of if
+
+    if ($request->schoolTypes) {
+      $schoolTypes = array_filter((array)$request->schoolTypes, function ($value) {
+        return !is_null($value);
+      });
+
+      $school->schoolTypes()->attach($schoolTypes);
+    } // end of if
 
     if ($request->attachments) {
       $this->insertImages($request->attachments, $school->id);
@@ -67,7 +93,24 @@ class SchoolRepository implements SchoolRepositoryInterface
     }
 
     $school->update($request_data);
-    
+
+
+    $educationalSubjects = array_filter((array)$request->educationalSubjects, function ($value) {
+      return !is_null($value);
+    });
+
+    $educationTypes = array_filter((array)$request->educationTypes, function ($value) {
+      return !is_null($value);
+    });
+
+    $schoolTypes = array_filter((array)$request->schoolTypes, function ($value) {
+      return !is_null($value);
+    });
+
+    $school->educationalSubjects()->sync($educationalSubjects);
+    $school->educationTypes()->sync($educationTypes);
+    $school->schoolTypes()->sync($schoolTypes);
+
     if ($request->attachments) {
       $this->insertImages($request->attachments, $school->id);
     } // end of if
@@ -93,5 +136,13 @@ class SchoolRepository implements SchoolRepositoryInterface
     $this->deleteAttachments('school_images', 'school_images', 'school_id', $school->id);
     $school->delete();
     return true;
+  }
+
+  public function deleteAttachment($id)
+  {
+    $this->deleteOneAttachment('school_images', 'school_images', $id);
+
+    session()->flash('success', __('site.deleted_successfully'));
+    return redirect()->back();
   }
 }

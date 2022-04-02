@@ -6,6 +6,7 @@ use App\Repositories\CityRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\AdminRepository;
 use App\Repositories\GradeRepository;
+use App\Repositories\SchoolRepository;
 use App\Repositories\SliderRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\CustomerRepository;
@@ -14,6 +15,7 @@ use App\Interfaces\CityRepositoryInterface;
 use App\Interfaces\RoleRepositoryInterface;
 use App\Interfaces\AdminRepositoryInterface;
 use App\Interfaces\GradeRepositoryInterface;
+use App\Interfaces\SchoolRepositoryInterface;
 use App\Interfaces\SliderRepositoryInterface;
 use App\Repositories\EducationTypeRepository;
 use App\Interfaces\CustomerRepositoryInterface;
@@ -40,6 +42,7 @@ class RepositoryServiceProvider extends ServiceProvider
     $this->app->bind(EducationalSubjectRepositoryInterface::class, EducationalSubjectRepository::class);
     $this->app->bind(EducationTypeRepositoryInterface::class, EducationTypeRepository::class);
     $this->app->bind(SchoolTypeRepositoryInterface::class, SchoolTypeRepository::class);
+    $this->app->bind(SchoolRepositoryInterface::class, SchoolRepository::class);
   }
   /**
    * Bootstrap services.

@@ -6,8 +6,29 @@ $title = __('site.Create School');
 @section('title_page')
 {{ $title }}
 @endsection
-@section('content')
 
+@push('footer_js')
+
+<script type="text/javascript" src="{!! asset('admin/js/initMap.js') !!}"></script>
+
+
+<!-- en  get states and regoins and streests  -->
+<script>
+  // Initialize the map.
+  @php
+    $lat = !empty(old('lat')) ? old('lat') : 30.05806302883548;
+    $lng = !empty(old('lng')) ? old('lng') : 31.20761839389786;
+  @endphp
+  setCoords({{ $lat }},{{ $lng }})
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{env('MAP_KEY')}}&callback&callback=initMap&libraries=places"
+  async defer>
+</script>
+<script type="text/javascript" src="{!! asset('admin/js/locationpicker.jquery.js') !!}"></script>
+@endpush
+
+@section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -58,6 +79,37 @@ $title = __('site.Create School');
               </div>
               <div class="  with-border"></div><br>
               @endforeach
+              {{-- email --}}
+              <div class="form-group">
+                <label for="inputName"> @lang('site.E-mail')</label>
+                <input type="email" name="email" value="{{ old('email') }}" required class="form-control">
+              </div>
+              {{-- phone --}}
+              <div class="form-group">
+                <label>@lang('site.Phone')</label>
+                <input required="required" type="text" name="phone" class="form-control" value="{{old('phone')}}"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+              </div>
+              {{-- whatsapp --}}
+              <div class="form-group">
+                <label>@lang('site.Whatsapp')</label>
+                <input required="required" type="text" name="whatsapp" class="form-control" value="{{old('whatsapp')}}"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+              </div>
+
+              <div class="form-group">
+                <label>@lang('site.address')</label>
+                <input type="text" name='address' class="form-control" id="address" required>
+              </div>
+
+              <div class="form-group">
+                <div id="map" style="height:300px !important"></div>
+              </div>
+
+              <input type="hidden" class="form-control" id="lat" name="lat" value="{!! $lat !!}">
+
+              <input type="hidden" class="form-control" id="lng" name="lng" value="{!! $lng !!}">
+
 
             </div>
             <!-- /.card-body -->
@@ -68,22 +120,82 @@ $title = __('site.Create School');
           <div class="card card-primary">
             <div class="card-body">
 
-              {{-- order_column --}}
-              <div class="form-group">
-                <label>@lang('site.Order Item')</label>
-                <input type="text" name="order_column" value="{{ old('order_column') }}" class="form-control"
-                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
-              </div>
-
               {{-- type --}}
               <div class="form-group">
                 <label for="inputType">@lang('site.Type')</label>
                 <select id="inputType" name="type" required class="form-control custom-select">
                   <option value='' selected disabled>@lang('site.Type')</option>
-                  <option value="school" @if(old('type')=='school' ) selected @endif>@lang('site.School')</option>
-                  <option value="nursery" @if(old('type')=='nursery' ) selected @endif>@lang('site.Nursery')</option>
+                  @foreach(types() as $type)
+                  <option value="{{ $type }}" @if(old('type')==$type) selected @endif>@lang('site.'.$type)</option>
+                  @endforeach
                 </select>
               </div>
+
+              {{-- educationalSubjects --}}
+              <div class="form-group">
+                <label for="inputType">@lang('site.educationalSubjects')</label>
+                <select name="educationalSubjects[]" class="form-control selectric" multiple data-live-search="true"
+                  required>
+                  <option value="">@lang('site.educationalSubjects') </option>
+                  @foreach( $educationalSubjects as $value )
+                  <option value="{{ $value->id}}" @if( in_array($value->id,(array)old('educationalSubjects'))) selected
+                    @endif >
+                    {{ $value->title }}</option>
+                  @endforeach
+                </select>
+              </div>
+
+              {{-- educationTypes --}}
+              <div class="form-group">
+                <label for="inputType">@lang('site.educationTypes')</label>
+                <select name="educationTypes[]" class="form-control selectric" multiple data-live-search="true"
+                  required>
+                  <option value="">@lang('site.educationTypes') </option>
+                  @foreach( $educationTypes as $value )
+                  <option value="{{ $value->id}}" @if( in_array($value->id,(array)old('educationTypes'))) selected
+                    @endif >
+                    {{ $value->title }}</option>
+                  @endforeach
+                </select>
+              </div>
+
+              {{-- schoolTypes --}}
+              <div class="form-group">
+                <label for="inputType">@lang('site.schoolTypes')</label>
+                <select name="schoolTypes[]" class="form-control selectric" multiple data-live-search="true" required>
+                  <option value="">@lang('site.schoolTypes') </option>
+                  @foreach( $schoolTypes as $value )
+                  <option value="{{ $value->id}}" @if( in_array($value->id,(array)old('schoolTypes'))) selected
+                    @endif >
+                    {{ $value->title }}</option>
+                  @endforeach
+                </select>
+              </div>
+
+
+              {{-- order_column --}}
+              <div class="form-group">
+                <label>@lang('site.Order It ')</label>
+                <input type="text" name="order_column" value="{{ old('order_column') }}" class="form-control"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+              </div>
+
+              {{-- available_seats --}}
+              <div class="form-group">
+                <label>@lang('site.Available seats')</label>
+                <input required="required" type="text" name="available_seats" class="form-control"
+                  value="{{old('available_seats')}}"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+              </div>
+
+
+              {{-- fees --}}
+              <div class="form-group">
+                <label>@lang('site.Fees')</label>
+                <input required="required" type="text" name="fees" class="form-control" value="{{old('fees')}}"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+              </div>
+
 
               {{-- status --}}
               <div class="form-group">
@@ -95,6 +207,39 @@ $title = __('site.Create School');
                 </select>
               </div>
 
+              {{-- passwrod --}}
+              <div class="form-group">
+                <label>@lang('site.password')</label>
+                <input type="password" name="password" class="form-control" required>
+              </div>
+
+              {{-- password_confirmation --}}
+              <div class="form-group">
+                <label>@lang('site.Password Confirmation')</label>
+                <input type="password" name="password_confirmation" class="form-control" required>
+              </div>
+
+              {{-- image --}}
+              <div class="form-group">
+                <label>@lang('site.image')</label>
+                <input required="required" type="file" id='image' name="image" class="form-control image2">
+              </div>
+
+              <div class="form-group">
+                <img src="{{ asset('uploads/default.png') }}" style="width: 100px" class="img-thumbnail image-preview2"
+                  alt="">
+              </div>
+
+              {{-- attachments --}}
+              <div class="form-group">
+                <label>@lang('site.attachments')</label>
+                <input required="required" type="file" id="gallery-photo-attachments" name="attachments[]" multiple
+                  class="form-control image">
+              </div>
+
+              <div class="form-group gallery gallery_attachments">
+
+              </div>
             </div>
             <!-- /.card-body -->
           </div>

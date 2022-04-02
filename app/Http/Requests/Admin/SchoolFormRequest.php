@@ -8,11 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class SchoolFormRequest extends FormRequest
 {
-  public $rules = [
-    'type' => ['required', 'in:school,nursery'],
-    'available_seats' => ['nullable', 'integer'],
-    'fees' => ['required', 'integer'],
-  ];
+  public $rules = [];
 
   public function authorize()
   {
@@ -20,6 +16,22 @@ class SchoolFormRequest extends FormRequest
   }
   public function rules()
   {
+    $this->rules += [
+      'type' => ['required', 'in:' . types('asString')],
+      'available_seats' => ['nullable', 'integer'],
+      'fees' => ['required', 'integer'],
+      'lat' => ['nullable'],
+      'lng' => ['nullable'],
+
+      'educationalSubjects' => 'nullable|array',
+      'educationalSubjects.*' => 'nullable|exists:educational_subjects,id',
+
+      'educationTypes' => 'nullable|array',
+      'educationTypes.*' => 'nullable|exists:education_types,id',
+
+      'schoolTypes' => 'nullable|array',
+      'schoolTypes.*' => 'nullable|exists:school_types,id',
+    ];
 
     if ($this->isMethod('post')) {
       return $this->createRules();
@@ -30,11 +42,14 @@ class SchoolFormRequest extends FormRequest
 
   public function createRules()
   {
-
     $this->rules += [
       'email' => ['required', 'email', 'unique:schools', new CheckEmailExist("schools")],
       'phone' => [
         'bail', 'required', 'unique:schools,phone'
+        // , new ValidatePhoneNumber()
+      ],
+      'whatsapp' => [
+        'nullable', 'unique:schools,whatsapp'
         // , new ValidatePhoneNumber()
       ],
       'password' => ['required', 'string', 'min:6'],
@@ -60,6 +75,7 @@ class SchoolFormRequest extends FormRequest
     $this->rules += [
       'email' => ['required', 'email', 'unique:schools,email,' . $school->id, new CheckEmailExist("schools")],
       'phone' => ['bail', 'required', 'unique:schools,phone,' . $school->id],
+      'whatsapp' => ['nullable', 'unique:schools,whatsapp,' . $school->id],
       'image' => validateImage(),
       'password' => 'nullable|confirmed',
       'attachments' => 'nullable',

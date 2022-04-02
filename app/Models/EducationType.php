@@ -39,4 +39,10 @@ class EducationType extends Model
     });
   } // end of scopeWhenSearch
 
+  /////////////////// start relationships ///////////////////////////////
+
+  public function schools()
+  {
+    return $this->belongsToMany(EducationType::class, 'education_types', 'school_id', 'education_type_id')->withTranslation(app()->getLocale());
+  }
 }

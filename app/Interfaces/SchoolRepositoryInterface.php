@@ -9,4 +9,5 @@ interface SchoolRepositoryInterface
   public function createSchool($request);
   public function updateSchool($request, $school);
   public function deleteSchool($school);
+  public function deleteAttachment($id);
 }
