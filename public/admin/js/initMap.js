@@ -2,9 +2,9 @@
 var lat;
 var lng;
 
-function setCoords(lat, lng) {
-  this.lat = lat;
-  this.lng = lng;
+function setCoords(lat=null, lng=null) {
+  this.lat = lat??'24.713552';
+  this.lng = lng??'46.675297';
 }
 
 function GetAddress() {

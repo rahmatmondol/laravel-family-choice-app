@@ -10,14 +10,12 @@ $title = __('site.Edit School');
 @push('footer_js')
 
 <script type="text/javascript" src="{!! asset('admin/js/initMap.js') !!}"></script>
-
-
 <!-- en  get states and regoins and streests  -->
 <script>
   // Initialize the map.
   @php
-      $lat = old('lat',$school->lat);
-      $lng = old('lng',$school->lng);
+    $lat = old('lat',$school->lat)??24.713552;
+    $lng = old('lng',$school->lng)??46.675297;
   @endphp
   setCoords({{ $lat }},{{ $lng }})
 </script>

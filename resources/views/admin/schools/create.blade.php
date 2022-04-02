@@ -16,8 +16,8 @@ $title = __('site.Create School');
 <script>
   // Initialize the map.
   @php
-    $lat = !empty(old('lat')) ? old('lat') : 30.05806302883548;
-    $lng = !empty(old('lng')) ? old('lng') : 31.20761839389786;
+    $lat = !empty(old('lat')) ? old('lat') : 24.713552;
+    $lng = !empty(old('lng')) ? old('lng') : 46.675297;
   @endphp
   setCoords({{ $lat }},{{ $lng }})
 </script>
