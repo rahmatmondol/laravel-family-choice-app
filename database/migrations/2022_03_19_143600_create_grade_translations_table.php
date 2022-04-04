@@ -16,7 +16,7 @@ return new class extends Migration
     Schema::create('grade_translations', function (Blueprint $table) {
       $table->id();
 
-      $table->string('title')->unique();
+      $table->string('title');
 
 
       $table->string('locale')->index();

@@ -15,7 +15,9 @@ return new class extends Migration
   {
     Schema::create('courses', function (Blueprint $table) {
       $table->id();
+
       $table->integer('order_column')->nullable();
+      $table->string('image')->default('default.png');
       $table->boolean('status')->default(1); // default active
       $table->enum('type', ['summery', 'wintry']);
       $table->date('from_data');

@@ -15,7 +15,7 @@ return new class extends Migration
   {
     Schema::create('type_translations', function (Blueprint $table) {
       $table->id();
-      $table->string('title')->unique();
+      $table->string('title');
       $table->string('locale')->index();
       $table->foreignId('type_id')->nullable()->constrained()->onDelete('cascade');
       $table->unique(['type_id', 'locale']);
