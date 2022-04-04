@@ -48,7 +48,7 @@ class School extends Model
 
   public function grades()
   {
-    return $this->belongsToMany(Grade::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale());
+    return $this->belongsToMany(Grade::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale())->withPivot(['administrative_expenses', 'fees']);
   }
 
   public function educationalSubjects()
@@ -64,6 +64,11 @@ class School extends Model
   public function schoolTypes()
   {
     return $this->belongsToMany(SchoolType::class, 'school_school_type', 'school_id', 'school_type_id')->withTranslation(app()->getLocale());
+  }
+
+  public function types()
+  {
+    return $this->belongsToMany(SchoolType::class, 'school_type', 'school_id', 'type_id')->withTranslation(app()->getLocale());
   }
   /////////////////// end relationships ///////////////////////////////
 }

@@ -13,12 +13,9 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('school_grade', function (Blueprint $table) {
+    Schema::create('school_type', function (Blueprint $table) {
       $table->id();
-      $table->boolean('status')->default(1); // default active
-      $table->double('fees');
-      $table->double('administrative_expenses')->nullable();
-      $table->foreignId('grade_id')->nullable()->constrained()->onDelete('cascade');
+      $table->foreignId('type_id')->nullable()->constrained()->onDelete('cascade');
       $table->foreignId('school_id')->nullable()->constrained()->onDelete('cascade');
 
       $table->timestamps();
@@ -32,6 +29,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('school_grade');
+    Schema::dropIfExists('school_type');
   }
 };

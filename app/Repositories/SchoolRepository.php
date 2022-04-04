@@ -74,6 +74,14 @@ class SchoolRepository implements SchoolRepositoryInterface
       $school->schoolTypes()->attach($schoolTypes);
     } // end of if
 
+    if ($request->types) {
+      $types = array_filter((array)$request->types, function ($value) {
+        return !is_null($value);
+      });
+
+      $school->types()->attach($types);
+    } // end of if
+
     if ($request->attachments) {
       $this->insertImages($request->attachments, $school->id);
     }
@@ -107,9 +115,14 @@ class SchoolRepository implements SchoolRepositoryInterface
       return !is_null($value);
     });
 
+    $types = array_filter((array)$request->types, function ($value) {
+      return !is_null($value);
+    });
+
     $school->educationalSubjects()->sync($educationalSubjects);
     $school->educationTypes()->sync($educationTypes);
     $school->schoolTypes()->sync($schoolTypes);
+    $school->schoolTypes()->sync($types);
 
     if ($request->attachments) {
       $this->insertImages($request->attachments, $school->id);

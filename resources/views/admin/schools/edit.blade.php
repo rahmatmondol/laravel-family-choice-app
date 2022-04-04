@@ -124,14 +124,17 @@ $title = __('site.Edit School');
           <div class="card card-primary">
             <div class="card-body">
 
-              {{-- type --}}
+              {{-- types --}}
               <div class="form-group">
-                <label for="inputType">@lang('site.Type')</label>
-                <select id="inputType" name="type" required class="form-control custom-select">
-                  <option value='' selected disabled>@lang('site.Type')</option>
-                  @foreach(types() as $type)
-                  <option value="{{ $type }}" @if(old('type',$school->type)==$type) selected @endif>@lang('site.'.$type)
-                  </option>
+                <label for="inputType">@lang('site.types')</label>
+                <select name="types[]" class="form-control selectric" multiple data-live-search="true"
+                  required>
+                  <option value="">@lang('site.types') </option>
+                  @foreach( $types as $value )
+                  <option value="{{ $value->id }}" @if( in_array($value->
+                    id,$school->types->pluck('id')->toArray())
+                    || in_array($value->id,(array)old('types'))) selected @endif >
+                    {{ $value->title }}</option>
                   @endforeach
                 </select>
               </div>

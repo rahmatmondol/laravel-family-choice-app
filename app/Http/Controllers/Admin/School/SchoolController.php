@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\School;
 
 use App\Models\School;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\SchoolTypeRepository;
+use App\Interfaces\TypeRepositoryInterface;
 use App\Interfaces\GradeRepositoryInterface;
 use App\Interfaces\SchoolRepositoryInterface;
 use App\Repositories\EducationTypeRepository;
@@ -21,8 +22,9 @@ class SchoolController extends Controller
     private EducationTypeRepository $educationTypeRepository,
     private SchoolTypeRepository $schoolTypeRepository,
     private GradeRepositoryInterface $gradeRepository,
+    private TypeRepositoryInterface $typeRepository,
   ) {
-    //create read update delete
+    // create read update delete
     $this->middleware(['permission:read_schools'])->only('index');
     $this->middleware(['permission:create_schools'])->only('create');
     $this->middleware(['permission:update_schools'])->only('edit');
@@ -44,8 +46,9 @@ class SchoolController extends Controller
     $educationTypes = $this->educationTypeRepository->getAllEducationTypes();
     $schoolTypes = $this->schoolTypeRepository->getAllSchoolTypes();
     $grades = $this->gradeRepository->getAllGrades();
+    $types = $this->typeRepository->getAllTypes();
 
-    return view('admin.schools.create', compact('educationalSubjects', 'educationTypes', 'schoolTypes', 'grades'));
+    return view('admin.schools.create', compact('educationalSubjects', 'educationTypes', 'schoolTypes', 'grades', 'types'));
   } //end of create
 
   public function show($school)
@@ -73,8 +76,10 @@ class SchoolController extends Controller
     $educationTypes = $this->educationTypeRepository->getAllEducationTypes();
     $schoolTypes = $this->schoolTypeRepository->getAllSchoolTypes();
     $grades = $this->gradeRepository->getAllGrades();
+    $types = $this->typeRepository->getAllTypes();
+
     $school = $this->schoolRepository->getSchoolById($school);
-    return view('admin.schools.edit', compact('school', 'educationalSubjects', 'educationTypes', 'schoolTypes', 'grades'));
+    return view('admin.schools.edit', compact('school', 'educationalSubjects', 'educationTypes', 'schoolTypes', 'grades', 'types'));
   } //end of edit
 
   public function update(SchoolFormRequest $request, School $school)

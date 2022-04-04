@@ -17,11 +17,14 @@ class SchoolFormRequest extends FormRequest
   public function rules()
   {
     $this->rules += [
-      'type' => ['required', 'in:' . types('asString')],
+      // 'type' => ['required', 'in:' . types('asString')],
       'available_seats' => ['nullable', 'integer'],
       'fees' => ['required', 'integer'],
       'lat' => ['nullable'],
       'lng' => ['nullable'],
+
+      'types' => 'nullable|array',
+      'types.*' => 'nullable|exists:types,id',
 
       'educationalSubjects' => 'nullable|array',
       'educationalSubjects.*' => 'nullable|exists:educational_subjects,id',

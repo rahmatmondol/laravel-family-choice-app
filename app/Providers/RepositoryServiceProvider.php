@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Repositories\CityRepository;
 use App\Repositories\RoleRepository;
+use App\Repositories\TypeRepository;
 use App\Repositories\AdminRepository;
 use App\Repositories\GradeRepository;
 use App\Repositories\SchoolRepository;
@@ -13,6 +14,7 @@ use App\Repositories\CustomerRepository;
 use App\Repositories\SchoolTypeRepository;
 use App\Interfaces\CityRepositoryInterface;
 use App\Interfaces\RoleRepositoryInterface;
+use App\Interfaces\TypeRepositoryInterface;
 use App\Interfaces\AdminRepositoryInterface;
 use App\Interfaces\GradeRepositoryInterface;
 use App\Interfaces\SchoolRepositoryInterface;
@@ -42,6 +44,7 @@ class RepositoryServiceProvider extends ServiceProvider
     $this->app->bind(EducationalSubjectRepositoryInterface::class, EducationalSubjectRepository::class);
     $this->app->bind(EducationTypeRepositoryInterface::class, EducationTypeRepository::class);
     $this->app->bind(SchoolTypeRepositoryInterface::class, SchoolTypeRepository::class);
+    $this->app->bind(TypeRepositoryInterface::class, TypeRepository::class);
     $this->app->bind(SchoolRepositoryInterface::class, SchoolRepository::class);
   }
   /**

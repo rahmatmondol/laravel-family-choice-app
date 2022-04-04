@@ -18,7 +18,7 @@ return new class extends Migration
       $table->boolean('status')->default(1); // default active
 
       $table->integer('order_column')->nullable();
-      $table->enum('type', types())->nullable();
+      // $table->enum('type', types())->nullable();
       $table->string('phone')->nullable()->unique();
       $table->string('whatsapp')->nullable()->unique();
       $table->string('email')->unique();

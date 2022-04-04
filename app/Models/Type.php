@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Scopes\OrderScope;
 use Illuminate\Database\Eloquent\Model;
 
-class Grade extends Model
+class Type extends Model
 {
   use \Astrotomic\Translatable\Translatable;
   protected $guarded = [];
@@ -22,7 +22,7 @@ class Grade extends Model
 
   public function getImagePathAttribute()
   {
-    return asset('uploads/grades/' . $this->image);
+    return asset('uploads/types/' . $this->image);
   } //end of image path attribute
 
   public function scopeIsActive($query, $status = null)
@@ -42,7 +42,6 @@ class Grade extends Model
   /////////////////// start relationships ///////////////////////////////
   public function schools()
   {
-    return $this->belongsToMany(School::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale())->withPivot(['administrative_expenses','fees']);
+    return $this->belongsToMany(SchoolType::class, 'school_types', 'school_id', 'type_id')->withTranslation(app()->getLocale());
   }
-  /////////////////// end relationships ///////////////////////////////
 }
