@@ -13,7 +13,6 @@ use App\Http\Resources\CustomerResource;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\CustomerFormRequest;
 use App\Http\Requests\Api\LoginFormRequest;
-use App\Http\Resources\AuthCustomerResource;
 use App\Http\Requests\Api\SendCodeFormRequest;
 use App\Interfaces\CustomerRepositoryInterface;
 use App\Http\Requests\Api\VerifyPhoneFormRequest;
@@ -53,11 +52,11 @@ class AuthController extends Controller
     }
 
     $customer = getCustomer();
-    if ($customer->status == 0 || $customer->verified == 0) {
-      return $this->sendError(__('site.User not verified'), '');
+    if ($customer->status == 0) {
+      return $this->sendError(__('site.User blocked from admin'), '');
     }
 
-    return $this->sendResponse(new AuthCustomerResource($customer), '');
+    return $this->sendResponse(new CustomerResource($customer), '');
   }
 
   // // send or resend code

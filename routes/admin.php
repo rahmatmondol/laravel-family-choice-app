@@ -68,7 +68,7 @@ Route::group(
         'educationTypes' => 'EducationTypeController',
         'schoolTypes' => 'SchoolTypeController',
         'schools.grades' => 'School\GradeController',
-        // 'schools.courses' => 'School/CourseController',
+        'courses' => 'CourseController',
 
         // 'user_types' => 'UserTypeController',
         // 'users' => 'UserController',

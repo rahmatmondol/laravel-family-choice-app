@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
       LaratrustSeeder::class,
       AdminTableSeeder::class,
       CitiesTableSeeder::class,
+      TypesTableSeeder::class,
       SchoolTypesTableSeeder::class,
       EducationalSubjectsTableSeeder::class,
       EducationTypesTableSeeder::class,

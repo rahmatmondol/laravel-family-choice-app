@@ -13,6 +13,7 @@ return [
     'educationTypes'        => 'c,r,u,d',
     'schoolTypes'        => 'c,r,u,d',
     'grades'        => 'c,r,u,d',
+    'courses'       => 'c,r,u,d',
     'cities'        => 'c,r,u,d',
     'sliders'       => 'c,r,u,d',
     // 'backgrounds'   => 'c,r,u,d',

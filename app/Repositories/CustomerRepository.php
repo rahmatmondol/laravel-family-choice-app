@@ -64,6 +64,11 @@ class CustomerRepository implements CustomerRepositoryInterface
     if ($request->password) {
       $request_data['password'] = bcrypt($request->password);
     }
+
+    if (request()->is('api/*')) {
+      $request_data['phone'] = $customer->phone;
+    }
+
     $customer->update($request_data);
 
     return true;

@@ -20,8 +20,8 @@ return new class extends Migration
       $table->string('image')->default('default.png');
       $table->boolean('status')->default(1); // default active
       $table->enum('type', ['summery', 'wintry']);
-      $table->date('from_data');
-      $table->date('to_data');
+      $table->date('from_date');
+      $table->date('to_date');
       $table->foreignId('school_id')->nullable()->constrained()->onDelete('cascade');
       $table->timestamps();
     });

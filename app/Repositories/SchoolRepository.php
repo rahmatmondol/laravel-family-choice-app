@@ -12,6 +12,10 @@ class SchoolRepository implements SchoolRepositoryInterface
 {
   use UploadFileTrait;
 
+  public function getAllSchools()
+  {
+    return School::isActive(true)->get();
+  }
   public function getFilteredSchools($request)
   {
     return  School::withoutGlobalScope(new OrderScope)

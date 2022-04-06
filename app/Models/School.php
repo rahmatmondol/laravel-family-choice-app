@@ -46,6 +46,11 @@ class School extends Model
     return $this->hasMany(SchoolImage::class);
   } // end of user
 
+  public function courses()
+  {
+    return $this->hasMany(Course::class);
+  } // end of user
+
   public function grades()
   {
     return $this->belongsToMany(Grade::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale())->withPivot(['administrative_expenses', 'fees']);

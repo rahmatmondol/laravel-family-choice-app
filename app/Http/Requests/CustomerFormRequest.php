@@ -13,7 +13,7 @@ class CustomerFormRequest extends BaseRequest
     'full_name' => 'required|string|max:255',
     'city_id' => 'nullable|exists:cities,id',
     'gender' => 'nullable|in:male,female',
-    'date_of_birth' => ['nullable', 'date', 'before:yesterday'],
+    'date_of_birth' => ['nullable', 'date', 'before:yesterday', 'date_format:Y-m-d'],
   ];
 
   public function authorize()
@@ -22,7 +22,6 @@ class CustomerFormRequest extends BaseRequest
   }
   public function rules()
   {
-    // dd(request()->all());
     if ($this->isMethod('post')) {
       return $this->createRules();
     } elseif ($this->isMethod('put')) {

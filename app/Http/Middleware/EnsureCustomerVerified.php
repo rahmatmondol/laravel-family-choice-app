@@ -22,7 +22,7 @@ class EnsureCustomerVerified
 
     if (!$customer || $customer->verified != "1") {
 
-      return $this->sendError(__('site.User not verified', ''));
+      return $this->sendError(__('site.User not verified', []));
     }
 
     return $next($request);
