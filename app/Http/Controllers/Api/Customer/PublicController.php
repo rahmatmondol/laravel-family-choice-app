@@ -13,17 +13,22 @@ use App\Http\Resources\CityResource;
 use App\Http\Resources\SliderResource;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\StaticPageResource;
+use App\Interfaces\CityRepositoryInterface;
 use App\Http\Resources\Collection\CityCollection;
 
 class PublicController extends Controller
 {
   use ResponseTrait;
 
+  public function __construct(
+    private CityRepositoryInterface $cityRepository
+  ) {
+  } //end of constructor
   public function cities(Request $request)
   {
-    return $this->sendResponse(CityResource::collection(City::latest()->get()), "");
+    $cities = $this->cityRepository->getAllCities();
 
-    return $this->sendResponse(new CityCollection(City::paginate($request->perPage ?? "20")), "");
+    return $this->sendResponse(CityResource::collection($cities), "");
   }
 
   // public function getCity(Request $request)

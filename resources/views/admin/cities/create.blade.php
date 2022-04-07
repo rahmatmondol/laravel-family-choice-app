@@ -6,8 +6,31 @@ $title = __('site.Create City');
 @section('title_page')
 {{ $title }}
 @endsection
-@section('content')
 
+
+@push('footer_js')
+
+<script type="text/javascript" src="{!! asset('admin/js/initMap.js') !!}"></script>
+
+
+<!-- en  get states and regoins and streests  -->
+<script>
+  // Initialize the map.
+  @php
+    $lat = !empty(old('lat')) ? old('lat') : 24.713552;
+    $lng = !empty(old('lng')) ? old('lng') : 46.675297;
+  @endphp
+  setCoords({{ $lat }},{{ $lng }})
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{env('MAP_KEY')}}&callback&callback=initMap&libraries=places"
+  async defer>
+</script>
+<script type="text/javascript" src="{!! asset('admin/js/locationpicker.jquery.js') !!}"></script>
+@endpush
+
+
+@section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -74,6 +97,21 @@ $title = __('site.Create City');
                   <option value="0" @if(old('status')==0) selected @endif>@lang('site.In-Active')</option>
                 </select>
               </div>
+
+
+              <div class="form-group">
+                <label>@lang('site.address')</label>
+                <input type="text" name='address' class="form-control" id="address" required>
+              </div>
+
+              <div class="form-group">
+                <div id="map" style="height:300px !important"></div>
+              </div>
+
+              <input type="hidden" class="form-control" id="lat" name="lat" value="{!! $lat !!}">
+
+              <input type="hidden" class="form-control" id="lng" name="lng" value="{!! $lng !!}">
+
 
             </div>
             <!-- /.card-body -->

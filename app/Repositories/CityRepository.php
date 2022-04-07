@@ -17,13 +17,12 @@ class CityRepository implements CityRepositoryInterface
       ->whenSearch($request->search)
       ->isActive($request->status)
       ->latest()
-      ->paginate(request()->perPage ?? 20);
+      ->paginate(request()->perPage ?? 30);
   }
 
   public function getAllCities()
   {
-    return  City::withoutGlobalScope(new OrderScope)
-      ->get();
+    return  City::whenLocation()->get();
   }
 
   public function getCityById($sliderId)
@@ -34,7 +33,7 @@ class CityRepository implements CityRepositoryInterface
 
   public function getCityRequestData($request)
   {
-    $request_data = array_merge(['status', 'name', 'order_column'], config('translatable.locales'));
+    $request_data = array_merge(['status', 'name', 'order_column', 'lat', 'lng'], config('translatable.locales'));
 
     return  $request->only($request_data);
   }
