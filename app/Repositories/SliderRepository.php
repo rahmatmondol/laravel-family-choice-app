@@ -20,6 +20,13 @@ class SliderRepository implements SliderRepositoryInterface
       ->paginate(request()->perPage ?? 20);
   }
 
+  public function getSliders($request)
+  {
+    return  Slider::isActive(true)
+      ->latest()
+      ->paginate($request->perPage ?? 20);
+  }
+
   public function getSliderById($sliderId)
   {
     $slider = Slider::findOrFail($sliderId);

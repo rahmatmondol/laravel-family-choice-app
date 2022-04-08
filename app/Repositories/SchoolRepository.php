@@ -16,6 +16,7 @@ class SchoolRepository implements SchoolRepositoryInterface
   {
     return School::isActive(true)->get();
   }
+
   public function getFilteredSchools($request)
   {
     return  School::withoutGlobalScope(new OrderScope)
@@ -23,6 +24,45 @@ class SchoolRepository implements SchoolRepositoryInterface
       ->isActive($request->status)
       ->latest()
       ->paginate(request()->perPage ?? 20);
+  }
+
+  public function getSchools($request)
+  {
+    $schools =  School::whenSearch($request->search)
+      ->isActive(true)
+      ->whenFromPrice()
+      ->whenToPrice()
+      ->WhenSortByName()
+      ->whenLocation()
+      ->latest()
+      ->paginate($request->perPage ?? 20);
+
+    $sorting = $this->getSorting();
+
+    return $schools->setCollection($schools->sortBy($sorting['column'], 0, $sorting['type']));
+  }
+
+  public function getSorting()
+  {
+    $column = '';
+    $type = '';
+
+    if (request()->sortType != null) {
+      $req = request()->sortType;
+      if ($req == 'priceHL') {
+        $column = 'fees';
+        $type = true;
+      }
+      if ($req == 'priceLH') {
+        $column = 'fees';
+        $type = false;
+      }
+      if ($req == 'mostReview') {
+        $column = 'review';
+        $type = true;
+      }
+    }
+    return ['column' => $column, 'type' => $type];
   }
 
   public function getSchoolById($schoolId)

@@ -13,27 +13,23 @@ Route::group(
     'namespace' => "Api", 'middleware' => 'localization',
   ],
   function () {
-
-    // Route::post('/getCity', 'PublicController@getCity')->name('getCity');
-    // // Route::post('/states', 'PublicController@states')->name('states');
-    // // Route::post('/regoins', 'PublicController@regoins')->name('regoins');
-
-    // authentication
+    #guest
     Route::group([
       'namespace' => 'Customer'
     ], function () {
+      # authentication
       // Route::post('social_login', 'Customer\AuthController@social_login');
-      Route::post('signup-customer', 'AuthController@signupCustomer');
       // Route::post('sendSms', 'SmsController@sendSms');
+      Route::post('signup-customer', 'AuthController@signupCustomer');
       Route::post('login', 'AuthController@login');
-
-      #register
       Route::post('send-code', 'AuthController@sendCode');
       Route::post('get-verificatin-code', 'AuthController@getVerificationCode');
       Route::post('verify-phone', 'AuthController@verifyPhone');
       Route::post('foreget-password', 'AuthController@foregetPassword');
-      Route::post('cities', 'PublicController@cities')->name('cities');
-      Route::post('get-all-cities', 'PublicController@cities')->name('cities');
+
+      Route::get('cities', 'PublicController@cities');
+      Route::get('sliders', 'PublicController@sliders');
+      Route::get('schools', 'SchoolController@schools');
     });
 
 

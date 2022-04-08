@@ -14,45 +14,32 @@ use App\Http\Resources\SliderResource;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\StaticPageResource;
 use App\Interfaces\CityRepositoryInterface;
-use App\Http\Resources\Collection\CityCollection;
+use App\Interfaces\SliderRepositoryInterface;
+use App\Http\Resources\Collection\SliderCollection;
 
 class PublicController extends Controller
 {
   use ResponseTrait;
 
   public function __construct(
-    private CityRepositoryInterface $cityRepository
+    private CityRepositoryInterface $cityRepository,
+    private SliderRepositoryInterface $sliderRepository
   ) {
   } //end of constructor
+
   public function cities(Request $request)
   {
     $cities = $this->cityRepository->getAllCities();
 
+    // dd($cities);
     return $this->sendResponse(CityResource::collection($cities), "");
   }
 
-  // public function getCity(Request $request)
-  // {
-
-  //   $validator = Validator::make($request->all(), [
-  //     'lat' => ['required', 'regex:/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/'],
-  //     'lng' => ['required', 'regex:/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/'],
-  //   ]);
-
-  //   if ($validator->fails()) {
-  //     return $this->sendError(' ', $validator->errors());
-  //   }
-
-  //   $city = City::WhenLocation()->first();
-
-  //   return $this->sendResponse(new CityResource($city), "");
-  // }
-
-
   public function sliders(Request $request)
   {
+    $sliders = $this->sliderRepository->getSliders($request);
 
-    return $this->sendResponse(SliderResource::collection(Slider::latest()->get()), "");
+    return $this->sendResponse(new SliderCollection($sliders), "");
   }
 
   public function staticPages(Request $request)

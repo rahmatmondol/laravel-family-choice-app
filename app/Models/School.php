@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Scopes\OrderScope;
+use App\Traits\LocationTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class School extends Model
 {
-  use \Astrotomic\Translatable\Translatable;
+  use \Astrotomic\Translatable\Translatable, LocationTrait;
+
   protected $guarded = [];
 
   public $translatedAttributes = ['title', 'address', 'description'];
@@ -26,6 +28,7 @@ class School extends Model
     return asset('uploads/schools/' . $this->image);
   } //end of image path attribute
 
+  /////////////////// start scopes ///////////////////////////////
   public function scopeIsActive($query, $status = null)
   {
     if ($status != null)
@@ -39,6 +42,40 @@ class School extends Model
       return $q->whereTranslationLike('title', '%' . $search . '%');
     });
   } // end of scopeWhenSearch
+
+  public function scopeWhenSortByName($query)
+  {
+    if (in_array(request()->sortType, ['nameAZ', 'nameZA'])) {
+      return $query->orderByTranslation('name', request()->sortType == 'nameAZ' ? 'asc' : 'desc');
+    }
+  } // end of scopeWhenSearch
+
+  public function scopeWhenFromPrice($query)
+  {
+    if (request()->from_price != null) {
+      return $query->where('fees', '>=', request()->from_price);
+    }
+  } // end of
+
+  public function scopeWhenToPrice($query)
+  {
+    if (request()->to_price != null) {
+      return $query->where('fees', '<=', request()->to_price);
+    }
+  } // end of
+
+  public function scopeWhenGrades($query, $grades)
+  {
+    return $query->when($grades, function ($q) use ($grades) {
+
+      return $q->whereHas('grades', function ($qu) use ($grades) {
+
+        return $qu->whereIn('grade_id', (array)$grades);
+      });
+    });
+  } // end of
+
+  /////////////////// end scopes ///////////////////////////////
 
   /////////////////// start relationships ///////////////////////////////
   public function schoolImages()

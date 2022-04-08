@@ -31,7 +31,7 @@ class SliderFormRequest extends FormRequest
     ];
 
     foreach (config('translatable.locales') as $locale) {
-      $this->rules += [$locale . '.title' => ['required', Rule::unique('slider_translations', 'title')]];
+      // $this->rules += [$locale . '.title' => ['required', Rule::unique('slider_translations', 'title')]];
     } // end of  for each
 
     return $this->rules;
@@ -47,7 +47,7 @@ class SliderFormRequest extends FormRequest
     ];
 
     foreach (config('translatable.locales') as $locale) {
-      $this->rules += [$locale . '.title' => ['required', Rule::unique('slider_translations', 'title')->ignore($slider->id, 'slider_id')]];
+      // $this->rules += [$locale . '.title' => ['required', Rule::unique('slider_translations', 'title')->ignore($slider->id, 'slider_id')]];
     } // end of  for each
 
     $this->rules += [];
