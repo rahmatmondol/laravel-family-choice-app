@@ -47,6 +47,11 @@ $title = __('site.Edit Course');
                   value="{{ old($locale . '.title',$course->translate($locale)->title) }}">
               </div>
               <div class="form-group">
+                <label>@lang('site.' . $locale . '.Short Description')</label>
+                <input required="required" type="text" name="{{ $locale }}[short_description]" class="form-control"
+                  value="{{ old($locale . '.short_description',$course->translate($locale)->short_description) }}">
+              </div>
+              <div class="form-group">
                 <label>@lang('site.' . $locale . '.Description')</label>
                 <textarea required="required" type="text" name="{{ $locale }}[description]"
                   class="form-control">{{ old($locale . '.description',$course->translate($locale)->description) }}</textarea>

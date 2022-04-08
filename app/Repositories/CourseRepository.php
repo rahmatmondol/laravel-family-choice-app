@@ -20,6 +20,15 @@ class CourseRepository implements CourseRepositoryInterface
       ->paginate(request()->perPage ?? 20);
   }
 
+  public function getCourses($request)
+  {
+    return  Course::whenSearch($request->search)
+      ->whenSchool()
+      ->isActive(true)
+      ->latest()
+      ->paginate(request()->perPage ?? 20);
+  }
+
   public function getCourseById($courseId)
   {
     $course = Course::findOrFail($courseId);

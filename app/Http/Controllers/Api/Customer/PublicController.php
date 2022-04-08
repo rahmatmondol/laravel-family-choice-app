@@ -10,12 +10,20 @@ use Illuminate\Http\Request;
 use App\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CityResource;
+use App\Http\Resources\GradeResource;
 use App\Http\Resources\SliderResource;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\SchoolTypeResource;
 use App\Http\Resources\StaticPageResource;
 use App\Interfaces\CityRepositoryInterface;
+use App\Interfaces\GradeRepositoryInterface;
+use App\Http\Resources\EducationTypeResource;
 use App\Interfaces\SliderRepositoryInterface;
+use App\Interfaces\SchoolTypeRepositoryInterface;
+use App\Http\Resources\EducationalSubjectResource;
 use App\Http\Resources\Collection\SliderCollection;
+use App\Interfaces\EducationTypeRepositoryInterface;
+use App\Interfaces\EducationalSubjectRepositoryInterface;
 
 class PublicController extends Controller
 {
@@ -23,9 +31,24 @@ class PublicController extends Controller
 
   public function __construct(
     private CityRepositoryInterface $cityRepository,
-    private SliderRepositoryInterface $sliderRepository
+    private SliderRepositoryInterface $sliderRepository,
+    private GradeRepositoryInterface $gradeRepository,
+    private EducationalSubjectRepositoryInterface $educationalSubjectRepository,
+    private EducationTypeRepositoryInterface $educationTypeRepository,
+    private SchoolTypeRepositoryInterface $schoolTypeRepository,
   ) {
   } //end of constructor
+
+  public function filterData(Request $request)
+  {
+    $data = [
+      'grades' =>  GradeResource::collection($this->gradeRepository->getAllGrades()),
+      'educationalSubjects' => EducationalSubjectResource::collection($this->educationalSubjectRepository->getAllEducationalSubjects()),
+      'educationTypes' => EducationTypeResource::collection($this->educationTypeRepository->getAllEducationTypes()),
+      'schoolTypes' => SchoolTypeResource::collection($this->schoolTypeRepository->getAllSchoolTypes()),
+    ];
+    return $this->sendResponse($data, "");
+  }
 
   public function cities(Request $request)
   {

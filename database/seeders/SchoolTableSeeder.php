@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Course;
 use App\Models\School;
 use App\Models\SchoolImage;
 use Illuminate\Database\Seeder;
@@ -57,6 +58,18 @@ class SchoolTableSeeder extends Seeder
       for ($k = 0; $k < 4; $k++) {
         SchoolImage::create([
           'school_id' => $school->id,
+          'image' => 'default.png',
+        ]);
+      }
+
+      for ($c = 0; $c < 20; $c++) {
+        Course::create([
+          'ar' => ['title' => '-دورة تعديل السلوك' . $c, 'short_description' => 'دورة صيفية', 'description' => "من عمر 10 سنين : 15 سنة"],
+          'en' => ['title' => '-دورة تعديل السلوك' . $c, 'short_description' => 'دورة صيفية', 'description' => "من عمر 10 سنين : 15 سنة"],
+          'status' => 1,
+          'school_id' => $school->id,
+          'from_date' => '2022-10-10',
+          'to_date' => '2022-10-20',
           'image' => 'default.png',
         ]);
       }

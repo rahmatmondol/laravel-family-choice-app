@@ -22,7 +22,7 @@ class SchoolTypeRepository implements SchoolTypeRepositoryInterface
 
   public function getAllSchoolTypes()
   {
-    return  SchoolType::withoutGlobalScope(new OrderScope)
+    return  SchoolType::isActive(true)
       ->get();
   }
 

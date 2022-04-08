@@ -12,7 +12,7 @@ class Course extends Model
   use \Astrotomic\Translatable\Translatable;
   protected $guarded = [];
 
-  public $translatedAttributes = ['title', 'description'];
+  public $translatedAttributes = ['title', 'description', 'short_description'];
   protected $appends = ['image_path'];
 
   protected static function boot()
@@ -27,6 +27,7 @@ class Course extends Model
     return asset('uploads/courses/' . $this->image);
   } //end of image path attribute
 
+  ////////////////// start scopes ////////////////////////////////
   public function scopeIsActive($query, $status = null)
   {
     if ($status != null)
@@ -41,6 +42,19 @@ class Course extends Model
     });
   } // end of scopeWhenSearch
 
+  public function scopeWhenSchool($query)
+  {
+    $school_id = request()->school_id;
+
+    return $query->when($school_id, function ($q) use ($school_id) {
+
+      return $q->whereHas('school', function ($qu) use ($school_id) {
+
+        return $qu->whereIn('school_id', (array)$school_id);
+      });
+    });
+  } // end of
+  ////////////////// start scopes ////////////////////////////////
 
   public function school()
   {

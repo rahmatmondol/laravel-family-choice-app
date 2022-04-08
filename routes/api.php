@@ -28,8 +28,10 @@ Route::group(
       Route::post('foreget-password', 'AuthController@foregetPassword');
 
       Route::get('cities', 'PublicController@cities');
+      Route::get('get-filter-data', 'PublicController@filterData');
       Route::get('sliders', 'PublicController@sliders');
       Route::get('schools', 'SchoolController@schools');
+      Route::get('courses', 'SchoolController@courses');
     });
 
 
