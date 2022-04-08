@@ -1,0 +1,77 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\School;
+use App\Models\SchoolImage;
+use Illuminate\Database\Seeder;
+use App\Models\EducationalSubject;
+use App\Models\EducationType;
+use App\Models\SchoolType;
+use App\Models\Type;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+class SchoolTableSeeder extends Seeder
+{
+  /**
+   * Run the database seeds.
+   *
+   * @return void
+   */
+  public function run()
+  {
+    $description = "Qimam Al-Hayat Schools is one of the oldest international schools in the center of Riyadh, and it has a group of experienced and competent people, including administrators, teachers, teachers, supervisors and supervisors.
+
+    Qimam Al-Hayat Schools have a clear vision and a specific goal, which is (graduating a generation capable of leadership). In order to implement and reach the goal and vision, the administration was required to promote and use additional values ​​and enablers to move at a clear and steady pace to achieve the goal.
+
+    The school sought to provide a distinct educational environment and climate for students and provided them with all modern educational means that help the teacher and the student to receive, learn and be creative, as well as the stadiums, sports and entertainment arenas.
+
+    Qimam Al-Hayat Global Schools are concerned with educational quality, not educational quantities, and using mechanisms to develop curricula according to the studied vision and policy, and quoting the successful experiences of the West in the whole world.
+
+    In addition to the advanced curricula, schools have added various programs to develop students' skills and abilities, such as programs of mental arithmetic, speech, dialogue, speech, extra-curricular activities, and attention to physical health through sports academies.
+
+    Schools also seek to deny the negative image of international schools that they are not interested in the Arabic language or the Qur’an, by promoting interest in the language and Quran memorization programs through the curriculum, as well as additional classes after the end of the school day.
+
+    The schools have opened all communication channels to facilitate the arrival of the guardian and the speed of providing the service as soon as possible through the website, social media pages, the class dojo program, official e-mails and student affairs.-";
+    $address = " Jeddah saudia arabia address-";
+    $title = "Rowad Al Khaleej International Schools - ";
+    for ($i = 0; $i < 5; $i++) {
+
+      $school = School::create([
+        'ar' => ['title' => $title . $i, 'address' => $address . $i, 'description' => $description . $i],
+        'en' => ['title' => $title . $i, 'address' => $address . $i, 'description' => $description . $i],
+        'status' => 1,
+        'fees' => \rand(1000, 5000),
+        'phone' => \rand(5, 10) . \rand(5, 10) . '015254' . $i * \rand(5, 10),
+        'whatsapp' =>  \rand(5, 10) . \rand(5, 10) . '012254' . $i * \rand(5, 10),
+        'email' => 'info' . \rand(5, 10) . \rand(5, 10) . \rand(5, 10) . '@gmail.com',
+        'available_seats' => \rand(5, 500),
+        'review' => \rand(1, 5),
+        'count_reviews' => \rand(10, 50),
+        'password' => bcrypt(123456),
+        'image' => 'default.png',
+        'lat' => '24.71429' . \rand(5, 10) . \rand(5, 10) . \rand(5, 10),
+        'lng' => '46.67091' . \rand(5, 10) . \rand(5, 10) . \rand(5, 10),
+      ]);
+
+      for ($k = 0; $k < 4; $k++) {
+        SchoolImage::create([
+          'school_id' => $school->id,
+          'image' => 'default.png',
+        ]);
+      }
+
+      $school->types()->attach(Type::pluck('id')->toArray());
+      $school->educationalSubjects()->attach(EducationalSubject::pluck('id')->toArray());
+      $school->schoolTypes()->attach(SchoolType::pluck('id')->toArray());
+      $school->educationTypes()->attach(EducationType::pluck('id')->toArray());
+
+      foreach (EducationType::pluck('id')->toArray() as $grade)
+        $school->grades()->attach($grade, [
+          'fees' => 1000,
+          'administrative_expenses' => 200,
+          'status' => 1
+        ]);
+    }
+  }
+}

@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\ProductImageResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SchoolResource extends JsonResource
@@ -11,22 +10,28 @@ class SchoolResource extends JsonResource
   public function toArray($request)
   {
     return [
-      'id'                =>  $this->id,
-      'title'             => $this->title,
-      'address'           => $this->address,
-      'description'       => $this->description,
-      'fees'              => (string) $this->fees,
-      'phone'             => (string)  $this->phone,
-      'whatsapp'          => (string) $this->whatsapp,
-      'email'             => (string) $this->email,
-      'available_seats'   => (string) $this->available_seats,
-      'image'             =>  $this->image_path,
-      // 'can_reviewed'          =>   (bool)$this->can_reviewed,
-      // 'is_favoired'          =>  (bool)$this->is_favoired,
-      // 'review'          => (string)$this->review,
-      // 'total_number_review' => (string)$this->reviews_count ?? 0,
-      // 'gallary' => SchoolImageResource::collection($this->productImages),
-      // 'reviews' => ReviewResource::collection($this->reiews),
+      'id'                  =>  $this->id,
+      'title'               => $this->title,
+      'address'             => $this->address,
+      'description'         => $this->description,
+      'fees'                => (string) $this->fees,
+      'phone'               => (string)  $this->phone,
+      'whatsapp'            => (string) $this->whatsapp,
+      'email'               => (string) $this->email,
+      'available_seats'     => (string) $this->available_seats,
+      'lat'                 => (string) $this->lat,
+      'lng'                 => (string) $this->lng,
+      'image'               =>  $this->image_path,
+      // 'can_reviewed'     =>   (bool)$this->can_reviewed,
+      // 'is_favoired'      =>  (bool)$this->is_favoired,
+      'review'              => (string)$this->review,
+      'total_number_review' => (string)$this->reviews_count ?? 0,
+      'educationalSubjects' => EducationalSubjectResource::collection($this->educationalSubjects),
+      'educationTypes'      => EducationTypeResource::collection($this->educationTypes),
+      'schoolTypes'         => SchoolTypeResource::collection($this->schoolTypes),
+      'grades'              => SchoolGradeResource::collection($this->grades),
+      'gallary'             => SchoolImageResource::collection($this->schoolImages),
+      // 'reviews'          => ReviewResource::collection($this->reiews),
     ];
   }
 }

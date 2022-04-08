@@ -35,8 +35,9 @@ class School extends Model
       return $query->where('status', (bool)$status);
   }
 
-  public function scopeWhenSearch($query, $search)
+  public function scopeWhenSearch($query)
   {
+    $search = request()->search;
     return $query->when($search, function ($q) use ($search) {
 
       return $q->whereTranslationLike('title', '%' . $search . '%');
@@ -46,7 +47,7 @@ class School extends Model
   public function scopeWhenSortByName($query)
   {
     if (in_array(request()->sortType, ['nameAZ', 'nameZA'])) {
-      return $query->orderByTranslation('name', request()->sortType == 'nameAZ' ? 'asc' : 'desc');
+      return $query->orderByTranslation('title', request()->sortType == 'nameAZ' ? 'asc' : 'desc');
     }
   } // end of scopeWhenSearch
 
@@ -64,8 +65,23 @@ class School extends Model
     }
   } // end of
 
-  public function scopeWhenGrades($query, $grades)
+  public function scopeWhenTypes($query)
   {
+    $type_id = request()->type_id;
+
+    return $query->when($type_id, function ($q) use ($type_id) {
+
+      return $q->whereHas('types', function ($qu) use ($type_id) {
+
+        return $qu->whereIn('grade_id', (array)$type_id);
+      });
+    });
+  } // end of
+
+  public function scopeWhenGrades($query)
+  {
+    $grades = request()->grade_id;
+
     return $query->when($grades, function ($q) use ($grades) {
 
       return $q->whereHas('grades', function ($qu) use ($grades) {
@@ -75,6 +91,45 @@ class School extends Model
     });
   } // end of
 
+  public function scopeWhenEducationalSubjects($query)
+  {
+    $educationalSubjects = request()->educational_subject_id;
+
+    return $query->when($educationalSubjects, function ($q) use ($educationalSubjects) {
+
+      return $q->whereHas('educationalSubjects', function ($qu) use ($educationalSubjects) {
+
+        return $qu->whereIn('educational_subject_id', (array)$educationalSubjects);
+      });
+    });
+  } // end of
+
+  public function scopeWhenEducationTypes($query)
+  {
+    $educationTypes = request()->education_type_id;
+    // $educationTypes = [1,2,3];
+
+    return $query->when($educationTypes, function ($q) use ($educationTypes) {
+
+      return $q->whereHas('educationTypes', function ($qu) use ($educationTypes) {
+
+        return $qu->whereIn('education_type_id', (array)$educationTypes);
+      });
+    });
+  } // end of
+
+  public function scopeWhenSchoolTypes($query)
+  {
+    $schoolTypes = request()->school_type_id;
+
+    return $query->when($schoolTypes, function ($q) use ($schoolTypes) {
+
+      return $q->whereHas('schoolTypes', function ($qu) use ($schoolTypes) {
+
+        return $qu->whereIn('school_type_id', (array)$schoolTypes);
+      });
+    });
+  } // end of
   /////////////////// end scopes ///////////////////////////////
 
   /////////////////// start relationships ///////////////////////////////

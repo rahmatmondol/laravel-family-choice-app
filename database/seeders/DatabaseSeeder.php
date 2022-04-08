@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
       EducationTypesTableSeeder::class,
       GradesTableSeeder::class,
       SlidersTableSeeder::class,
+      SchoolTableSeeder::class,
     ]);
   }
 }

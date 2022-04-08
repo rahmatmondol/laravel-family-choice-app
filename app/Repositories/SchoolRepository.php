@@ -20,7 +20,7 @@ class SchoolRepository implements SchoolRepositoryInterface
   public function getFilteredSchools($request)
   {
     return  School::withoutGlobalScope(new OrderScope)
-      ->whenSearch($request->search)
+      ->whenSearch()
       ->isActive($request->status)
       ->latest()
       ->paginate(request()->perPage ?? 20);
@@ -28,13 +28,19 @@ class SchoolRepository implements SchoolRepositoryInterface
 
   public function getSchools($request)
   {
-    $schools =  School::whenSearch($request->search)
+    $schools =  School::whenSearch()
       ->isActive(true)
       ->whenFromPrice()
       ->whenToPrice()
-      ->WhenSortByName()
+      ->whenSortByName()
       ->whenLocation()
+      ->whenGrades()
+      ->whenSchoolTypes()
+      ->whenEducationTypes()
+      ->whenEducationalSubjects()
       ->latest()
+      ->withTranslation()
+      ->with(['educationalSubjects', 'educationTypes', 'schoolTypes', 'grades'])
       ->paginate($request->perPage ?? 20);
 
     $sorting = $this->getSorting();

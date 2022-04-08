@@ -19,6 +19,8 @@ class SchoolController extends Controller
 
   public function schools(Request $request)
   {
+
+    // dd($request->all());
     $schools = $this->schoolRepository->getSchools($request);
     return $this->sendResponse(new SchoolCollection($schools), "");
   }
