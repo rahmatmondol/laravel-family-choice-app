@@ -6,28 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('user_manuals', function (Blueprint $table) {
-            $table->id();
-            $table->integer('order_column')->nullable();
-            $table->boolean('status')->default(1); // default active
-            $table->timestamps();
-        });
-    }
+  /**
+   * Run the migrations.
+   *
+   * @return void
+   */
+  public function up()
+  {
+    Schema::create('user_manuals', function (Blueprint $table) {
+      $table->id();
+      $table->integer('order_column')->nullable();
+      $table->boolean('status')->default(1); // default active
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('user_manuals');
-    }
+  /**
+   * Reverse the migrations.
+   *
+   * @return void
+   */
+  public function down()
+  {
+    Schema::dropIfExists('user_manuals');
+  }
 };

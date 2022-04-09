@@ -69,12 +69,8 @@ Route::group(
         'schoolTypes' => 'SchoolTypeController',
         'schools.grades' => 'School\GradeController',
         'courses' => 'CourseController',
-
-        // 'user_types' => 'UserTypeController',
-        // 'users' => 'UserController',
-        // 'principals' => 'PrincipalController',
         'sliders' => 'SliderController',
-        // 'backgrounds' => 'BackgroundController',
+        'user_manuals' => 'UserManualController',
       ]);
 
       Route::get('schools/deleteImage/{id}', 'SchoolController@deleteImage');

@@ -27,6 +27,8 @@ Route::group(
       Route::post('verify-phone', 'AuthController@verifyPhone');
       Route::post('foreget-password', 'AuthController@foregetPassword');
 
+      Route::get('user-manuals', 'PublicController@userManuals');
+      Route::get('contact-support', 'PublicController@contactSupport');
       Route::get('cities', 'PublicController@cities');
       Route::get('get-filter-data', 'PublicController@filterData');
       Route::get('sliders', 'PublicController@sliders');
@@ -63,8 +65,13 @@ Route::group(
       Route::post('reserve_provider', 'CustomerController@reserve_provider');
       Route::post('customer_reservations', 'CustomerController@customer_reservations');
 
-      Route::post('/toggle_favorite', 'FavoirteController@toggle_favorite')->name('toggle_favorite');
-      Route::post('/favoirtes', 'FavoirteController@favoirtes')->name('favoirtes');
+      #favorites
+      Route::post('toggle-favorite', 'FavoirteController@toggle_favorite')->name('toggle_favorite');
+      Route::get('favorites', 'FavoirteController@favorites')->name('favorites');
+
+      #review
+      Route::post('set-review', 'ReviewController@setReview');
+      Route::get('reviews-list', 'ReviewController@reviewsList');
 
       Route::get('logout', 'AuthController@logout');
       Route::post('change-password', 'AuthController@changePassword');

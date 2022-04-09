@@ -16,6 +16,7 @@ return [
     'courses'       => 'c,r,u,d',
     'cities'        => 'c,r,u,d',
     'sliders'       => 'c,r,u,d',
+    'user_manuals'       => 'c,r,u,d',
     // 'backgrounds'   => 'c,r,u,d',
   ],
 

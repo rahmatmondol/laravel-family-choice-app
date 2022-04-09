@@ -57,4 +57,18 @@ class Customer extends  Authenticatable
   {
     return $this->belongsTo(City::class);
   } //end fo category
+
+  public function favorites()
+  {
+    return $this->belongsToMany(
+      School::class,
+      'favorites',
+    );
+  }
+
+  public function schoolReviews()
+  {
+    return $this->hasMany(SchoolReview::class, 'customer_id', 'id');
+  } //end fo category
+
 }

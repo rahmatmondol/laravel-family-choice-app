@@ -28,6 +28,14 @@ class School extends Model
     return asset('uploads/schools/' . $this->image);
   } //end of image path attribute
 
+  public function getIsFavoriedAttribute()
+  {
+    if ($customer = getCustomer()) {
+      return  (bool) in_array($this->id, $customer->favorites->pluck('id')->toArray());
+    } //end of if
+
+    return false;
+  } // end of getIsFavoredAttribute
   /////////////////// start scopes ///////////////////////////////
   public function scopeIsActive($query, $status = null)
   {
@@ -167,5 +175,19 @@ class School extends Model
   {
     return $this->belongsToMany(SchoolType::class, 'school_type', 'school_id', 'type_id')->withTranslation(app()->getLocale());
   }
+
+  public function favorites()
+  {
+    return $this->belongsToMany(
+      School::class,
+      'favorites',
+    );
+  }
+
+  public function schoolReviews()
+  {
+    return $this->hasMany(SchoolReview::class, 'school_id', 'id');
+  } //end fo category
+
   /////////////////// end relationships ///////////////////////////////
 }

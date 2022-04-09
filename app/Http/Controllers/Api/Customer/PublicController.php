@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers\Api\Customer;
 
-
-use App\Models\City;
-
-use App\Models\Slider;
+use App\Models\Inbox;
 use Illuminate\Http\Request;
 use App\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CityResource;
 use App\Http\Resources\GradeResource;
-use App\Http\Resources\SliderResource;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\SchoolTypeResource;
 use App\Http\Resources\StaticPageResource;
@@ -20,9 +16,12 @@ use App\Interfaces\GradeRepositoryInterface;
 use App\Http\Resources\EducationTypeResource;
 use App\Interfaces\SliderRepositoryInterface;
 use App\Interfaces\SchoolTypeRepositoryInterface;
+use App\Interfaces\UserManualRepositoryInterface;
 use App\Http\Resources\EducationalSubjectResource;
 use App\Http\Resources\Collection\SliderCollection;
+use App\Http\Requests\Api\ContactSupportFormRequest;
 use App\Interfaces\EducationTypeRepositoryInterface;
+use App\Http\Resources\Collection\UserManualCollection;
 use App\Interfaces\EducationalSubjectRepositoryInterface;
 
 class PublicController extends Controller
@@ -36,6 +35,7 @@ class PublicController extends Controller
     private EducationalSubjectRepositoryInterface $educationalSubjectRepository,
     private EducationTypeRepositoryInterface $educationTypeRepository,
     private SchoolTypeRepositoryInterface $schoolTypeRepository,
+    private UserManualRepositoryInterface $userManualRepository,
   ) {
   } //end of constructor
 
@@ -54,7 +54,6 @@ class PublicController extends Controller
   {
     $cities = $this->cityRepository->getAllCities();
 
-    // dd($cities);
     return $this->sendResponse(CityResource::collection($cities), "");
   }
 
@@ -63,6 +62,13 @@ class PublicController extends Controller
     $sliders = $this->sliderRepository->getSliders($request);
 
     return $this->sendResponse(new SliderCollection($sliders), "");
+  }
+
+  public function userManuals(Request $request)
+  {
+    $sliders = $this->userManualRepository->getUserManuals($request);
+
+    return $this->sendResponse(new UserManualCollection($sliders), "");
   }
 
   public function staticPages(Request $request)
@@ -80,29 +86,13 @@ class PublicController extends Controller
     return $this->sendResponse(new StaticPageResource($page), "");
   }
 
-  // public function blogs(Request $request)
-  // {
-
-  //   return $this->sendResponse(BlogResource::collection(Blogs::latest()->get()), "");
-  // }
-  public function contactUs(Request $request)
+  public function contactSupport(ContactSupportFormRequest $request)
   {
-    $validator = Validator::make($request->all(), [
-      'name' => 'required',
-      'email' => 'required|email',
-      'phone' => 'required',
-      'message' => 'required',
+    Inbox::create([
+      'full_name' => $request->full_name,
+      'problem_title' => $request->problem_title,
+      'message' => $request->message,
     ]);
-
-    if ($validator->fails()) {
-      return $this->sendError(' ', $validator->errors());
-    }
-
-    $city = Inbox::create($request->all());
-    $message = __('site.Congratulation! Your Message Is Sent Successfully');
-    // QuickSendEmail($request->email, $message);
-
-
     return $this->sendResponse("", "");
   }
 }

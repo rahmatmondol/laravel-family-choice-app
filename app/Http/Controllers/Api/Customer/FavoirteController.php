@@ -4,32 +4,35 @@ namespace App\Http\Controllers\API\Customer;
 
 use App\Product;
 
+use App\Models\School;
 use Illuminate\Http\Request;
+
+
 use App\Traits\ResponseTrait;
-
-
 use App\Http\Controllers\Controller;
-use App\Traits\Models\FavoirteTrait;
-use App\Http\Requests\FavoirteFormRequest;
-use App\Http\Resources\Collection\ProductCollection;
+use App\Http\Requests\Api\FavoriteFormRequest;
+use App\Http\Resources\Collection\SchoolCollection;
 use App\Http\Resources\Collection\ProviderCollection;
 
 class FavoirteController  extends Controller
 {
 
-  use ResponseTrait, FavoirteTrait;
+  use ResponseTrait;
 
-  public function toggle_favorite(FavoirteFormRequest $request)
+  public function toggle_favorite(FavoriteFormRequest $request)
   {
-
-    $this->update_favorite($request->provider_id);
+    $school = School::find($request->school_id);
+    $customer = getCustomer();
+    $school->is_favoried
+      ? $customer->favorites()->detach($school->id)
+      : $customer->favorites()->attach($school->id);
 
     return $this->sendResponse("", "");
   }
 
-  public function favoirtes(Request $request)
+  public function favorites(Request $request)
   {
-    $providers = $this->get_favorites();
-    return $this->sendResponse(new ProviderCollection($providers), "");
+    $schools = getCustomer()->favorites()->latest()->paginate($request->perPage ?? 20);
+    return $this->sendResponse(new SchoolCollection($schools), "");
   }
 }

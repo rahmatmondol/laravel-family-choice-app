@@ -18,6 +18,7 @@ return new class extends Migration
       $table->string('full_name');
       $table->string('problem_title');
       $table->string('message');
+      $table->boolean('status')->default(0); // default active
       $table->timestamps();
     });
   }
