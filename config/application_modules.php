@@ -17,6 +17,7 @@ return [
     'cities'        => 'c,r,u,d',
     'sliders'       => 'c,r,u,d',
     'user_manuals'       => 'c,r,u,d',
+    'attachments'       => 'c,r,u,d',
     // 'backgrounds'   => 'c,r,u,d',
   ],
 

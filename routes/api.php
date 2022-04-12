@@ -30,6 +30,7 @@ Route::group(
       Route::get('user-manuals', 'PublicController@userManuals');
       Route::get('contact-support', 'PublicController@contactSupport');
       Route::get('cities', 'PublicController@cities');
+      Route::get('types', 'PublicController@types');
       Route::get('get-filter-data', 'PublicController@filterData');
       Route::get('sliders', 'PublicController@sliders');
       Route::get('schools', 'SchoolController@schools');
@@ -62,9 +63,6 @@ Route::group(
       Route::put('edit-customer-profile', 'AuthController@editCustomerProfile');
       Route::post('setReview', 'CustomerController@setReview');
 
-      Route::post('reserve_provider', 'CustomerController@reserve_provider');
-      Route::post('customer_reservations', 'CustomerController@customer_reservations');
-
       #favorites
       Route::post('toggle-favorite', 'FavoirteController@toggle_favorite')->name('toggle_favorite');
       Route::get('favorites', 'FavoirteController@favorites')->name('favorites');
@@ -77,6 +75,9 @@ Route::group(
       Route::post('change-password', 'AuthController@changePassword');
       Route::post('update-firebase-token', 'AuthController@updateFirebaseToken');
       Route::get('profile', 'AuthController@profile');
+
+      #reserve school
+      Route::get('school-attachments', 'ReserveSchoolController@school_attachments');
     });
   }
 );

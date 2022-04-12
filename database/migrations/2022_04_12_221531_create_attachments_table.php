@@ -13,12 +13,12 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('reservation_children', function (Blueprint $table) {
+    Schema::create('attachments', function (Blueprint $table) {
       $table->id();
-      $table->string('child_name');
-      $table->string('date_of_birth');
-      $table->enum('gender', ['male', 'female'])->nullable();
-      $table->foreignId('grade_id')->nullable()->constrained()->onDelete('cascade');
+      $table->integer('order_column')->nullable();
+      $table->string('file_type')->nullable();
+      $table->boolean('status')->default(1); // default active
+      $table->foreignId('school_id')->nullable()->constrained()->onDelete('cascade');
 
       $table->timestamps();
     });
@@ -31,6 +31,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('reservation_children');
+    Schema::dropIfExists('attachments');
   }
 };

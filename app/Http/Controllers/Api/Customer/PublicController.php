@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use App\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CityResource;
+use App\Http\Resources\TypeResource;
 use App\Http\Resources\GradeResource;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\SchoolTypeResource;
 use App\Http\Resources\StaticPageResource;
 use App\Interfaces\CityRepositoryInterface;
+use App\Interfaces\TypeRepositoryInterface;
 use App\Interfaces\GradeRepositoryInterface;
 use App\Http\Resources\EducationTypeResource;
 use App\Interfaces\SliderRepositoryInterface;
@@ -36,6 +38,7 @@ class PublicController extends Controller
     private EducationTypeRepositoryInterface $educationTypeRepository,
     private SchoolTypeRepositoryInterface $schoolTypeRepository,
     private UserManualRepositoryInterface $userManualRepository,
+    private TypeRepositoryInterface $typeRepository,
   ) {
   } //end of constructor
 
@@ -48,6 +51,13 @@ class PublicController extends Controller
       'schoolTypes' => SchoolTypeResource::collection($this->schoolTypeRepository->getAllSchoolTypes()),
     ];
     return $this->sendResponse($data, "");
+  }
+
+  public function types(Request $request)
+  {
+    $types = $this->typeRepository->getAllTypes();
+
+    return $this->sendResponse(TypeResource::collection($types), "");
   }
 
   public function cities(Request $request)

@@ -1,16 +1,5 @@
 <?php
 
-// // school types
-// if (!function_exists('types')) {
-//   function types($asStr = null)
-//   {
-//     if ($asStr == 'asString') {
-//       return 'school,nursery,school_and_nursery';
-//     }
-//     return ['school', 'nursery', 'school_and_nursery'];
-//   }
-// }
-
 if (!function_exists('checkAdminPermission')) {
   function checkAdminPermission($permission)
   {
@@ -25,41 +14,6 @@ if (!function_exists('getModules')) {
   }
 }
 
-if (!function_exists('background')) {
-  function background($key = '')
-  {
-    $backgroud = App\Models\Background::where('key', $key)->first();
-    return ($backgroud && $backgroud->image) ? $backgroud->image_path : asset('uploads/backgrounds/default.png');
-  }
-}
-if (!function_exists('isTimeOverlapped')) {
-  function isTimeOverlapped($periods)
-  {
-    if (count($periods) <= 1) {
-      return;
-    }
-    // order periods by start_time
-    usort($periods, function ($a, $b) {
-      return strtotime($a['start_time']) <=> strtotime($b['start_time']);
-    });
-
-    // check two periods overlap
-    foreach ($periods as $key => $period) {
-      if ($key != 0) {
-
-        $curr = $periods[$key];
-        $prev = $periods[$key - 1];
-
-        if (
-          strtotime($curr['start_time']) < strtotime($prev['end_time'])
-        ) {
-          return true; // already overlaped
-        }
-      }
-    }
-    return false;
-  }
-}
 if (!function_exists('getAdmin')) {
   function getAdmin()
   {
@@ -72,28 +26,6 @@ if (!function_exists('getCustomer')) {
     return auth()->guard('customer')->user() ?? auth()->guard('customer-api')->user();
   }
 }
-if (!function_exists('getPrincipal')) {
-  function getPrincipal()
-  {
-    return auth()->guard('principal')->user() ?? null;
-  }
-}
-if (!function_exists('weekDays')) {
-  function weekDays()
-  {
-    return ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
-  }
-}
-
-if (!function_exists('communicationTypes')) {
-  function communicationTypes()
-  {
-    return ['reserve_meeting', 'direct_contact'];
-  }
-}
-
-
-
 #validate helper function
 if (!function_exists('validateImage')) {
   function validateImage($ext = null)
@@ -171,21 +103,5 @@ if (!function_exists('perPage')) {
   function perPage()
   {
     return [1, 10, 20, 30, 40, 50];
-  }
-}
-
-if (!function_exists('timeOldValue')) {
-  function timeOldValue($value = null, $key = '0', $timeRange = null)
-  {
-    if (is_object($value)) { // from model
-      $slot = $key == 0 ? $value->from_time : $value->to_time;
-    } elseif ($value) { // from old value
-      $value = explode('-', $value);
-      $slot = $value[$key];
-    } else {
-      $slot = "00:00:00";
-    }
-
-    return $slot;
   }
 }

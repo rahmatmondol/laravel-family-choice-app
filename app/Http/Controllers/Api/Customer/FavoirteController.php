@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Customer;
-
-use App\Product;
+namespace App\Http\Controllers\Api\Customer;
 
 use App\Models\School;
 use Illuminate\Http\Request;
@@ -12,7 +10,6 @@ use App\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\FavoriteFormRequest;
 use App\Http\Resources\Collection\SchoolCollection;
-use App\Http\Resources\Collection\ProviderCollection;
 
 class FavoirteController  extends Controller
 {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Attachment;
 use App\Scopes\OrderScope;
 use App\Traits\LocationTrait;
 use Illuminate\Database\Eloquent\Model;
@@ -149,6 +150,11 @@ class School extends Model
   public function courses()
   {
     return $this->hasMany(Course::class);
+  } // end of user
+
+  public function attachments()
+  {
+    return $this->hasMany(Attachment::class);
   } // end of user
 
   public function grades()

@@ -71,6 +71,7 @@ Route::group(
         'courses' => 'CourseController',
         'sliders' => 'SliderController',
         'user_manuals' => 'UserManualController',
+        'attachments' => 'AttachmentController',
       ]);
 
       Route::get('schools/deleteImage/{id}', 'SchoolController@deleteImage');

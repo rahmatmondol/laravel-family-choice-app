@@ -13,14 +13,14 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('reservation_children', function (Blueprint $table) {
+    Schema::create('attachment_translations', function (Blueprint $table) {
       $table->id();
-      $table->string('child_name');
-      $table->string('date_of_birth');
-      $table->enum('gender', ['male', 'female'])->nullable();
-      $table->foreignId('grade_id')->nullable()->constrained()->onDelete('cascade');
 
-      $table->timestamps();
+      $table->string('title');
+
+      $table->string('locale')->index();
+      $table->foreignId('attachment_id')->nullable()->constrained()->onDelete('cascade');
+      $table->unique(['attachment_id', 'locale']);
     });
   }
 
@@ -31,6 +31,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('reservation_children');
+    Schema::dropIfExists('attachment_translations');
   }
 };
