@@ -19,4 +19,9 @@ class Reservation extends Model
   {
     return $this->belongsTo(School::class);
   }
+
+  public function children()
+  {
+    return $this->hasMany(Child::class);
+  }
 }

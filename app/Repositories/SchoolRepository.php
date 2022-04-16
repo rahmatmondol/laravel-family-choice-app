@@ -8,9 +8,8 @@ use App\Models\SchoolGrade;
 use App\Models\SchoolImage;
 use App\Traits\UploadFileTrait;
 use App\Models\Reservation;
-use Illuminate\Support\Facades\DB;
-use App\Models\ReservationChild;
-use App\Models\ReservationAttachment;
+use App\Models\Child;
+use App\Models\ChildAttachment;
 use App\Interfaces\SchoolRepositoryInterface;
 
 class SchoolRepository implements SchoolRepositoryInterface
@@ -214,57 +213,103 @@ class SchoolRepository implements SchoolRepositoryInterface
     return redirect()->back();
   }
 
-  #reserve-school
-  public function reserveSchool($request)
+  #addReservation
+  public function addReservation($request)
   {
     $customer = getCustomer();
     $totalFees = 0;
+
     $reservation = Reservation::create([
       'parent_name'           => $request->parent_name,
       'address'               => $request->address,
       'identification_number' => $request->identification_number,
       'school_id'             => $request->school_id,
-      'customer_id'            => $customer->id,
-
+      'customer_id'           => $customer->id,
     ]);
 
-    // dd($request->children);
-
-    foreach ($request->children as $child) {
+    foreach ($request->children as $item) {
 
       $schoolGrade = SchoolGrade::where([[
         'school_id', $request->school_id
       ], [
-        'grade_id',   $child['grade_id']
+        'grade_id',   $item['grade_id']
       ]])->first();
 
       // dd($schoolGrade);
       $subFees = $schoolGrade->fees + $schoolGrade->administrative_expenses;
-      $totalFees += $subFees;;
-      ReservationChild::create([
-        'child_name'            => $child['child_name'],
-        'date_of_birth'         => $child['date_of_birth'],
-        'gender'                => $child['gender'],
-        'grade_id'              => $child['grade_id'],
-        'reservation_id' => $reservation->id,
-        'total_fees' => $subFees,
+      $totalFees += $subFees;
+      $child = Child::create([
+        'child_name'            => $item['child_name'],
+        'date_of_birth'         => $item['date_of_birth'],
+        'gender'                => $item['gender'],
+        'grade_id'              => $item['grade_id'],
+        'reservation_id'        => $reservation->id,
+        'total_fees'            => $subFees,
       ]);
 
-      foreach ($child['attachments'] as $key => $attachment) {
+      foreach ($item['attachments'] as $key => $attachment) {
         $file_path = $this->uploadFile($attachment, 'attachment_reservation/', '');
 
         if ($file_path) {
-          ReservationAttachment::create([
-            'attachment_id'         => (int)$key,
-            'reservation_id' => $reservation->id,
-            'attachment'            => $file_path,
+          ChildAttachment::create([
+            'attachment_id' => (int)$key,
+            'child_id'      => $child->id,
+            'attachment'    => $file_path,
           ]);
         }
+        // dd('done');
       } // end $child['attachments']
     } // end $request->children
 
     $reservation->update([
       'total_fees' => $totalFees,
     ]);
+
+    return $reservation;
+  }
+
+  #addReservation
+  public function updateReservation($request)
+  {
+    $reservation = Reservation::findOrFail($request->reservation_id);
+    $reservation->update([
+      'parent_name'           => $request->parent_name,
+      'address'               => $request->address,
+      'identification_number' => $request->identification_number,
+    ]);
+
+    foreach ($request->children as $item) {
+
+      $child = Child::find($item['child_id']);
+
+      $child->update([
+        'child_name'            => $item['child_name'],
+        'date_of_birth'         => $item['date_of_birth'],
+        'gender'                => $item['gender'],
+        'reservation_id'        => $reservation->id,
+      ]);
+
+      foreach ($item['attachments'] as $key => $attachment) {
+        $file_path = $this->uploadFile($attachment, 'attachment_reservation/', '');
+
+        if ($file_path) {
+          ChildAttachment::create([
+            'attachment_id' => (int)$key,
+            'child_id'      => $child->id,
+            'attachment'    => $file_path,
+          ]);
+        }
+        // dd('done');
+      } // end $child['attachments']
+    } // end $request->children
+
+    return $reservation;
+  }
+
+  #customerReservations
+  public function customerReservations()
+  {
+    // dd(getCustomer()->reservations);
+    return getCustomer()->reservations()->with(['children.attachments'])->latest()->paginate(request()->perPage ?? 20);
   }
 }

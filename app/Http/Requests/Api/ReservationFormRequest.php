@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Models\School;
+use App\Models\Reservation;
 use App\Rules\CheckEmailExist;
 use App\Http\Requests\BaseRequest;
-use App\Models\School;
 
-class ReserveSchoolFormRequest extends BaseRequest
+class ReservationFormRequest extends BaseRequest
 {
   public $rules = [];
 
@@ -20,7 +21,6 @@ class ReserveSchoolFormRequest extends BaseRequest
       'parent_name' => 'required|string|max:255',
       'address' => 'required|string|max:255',
       'identification_number' => 'required|string|max:255',
-      'school_id' => ['required', 'bail', 'exists:schools,id'],
     ];
 
     if ($this->isMethod('post')) {
@@ -33,17 +33,16 @@ class ReserveSchoolFormRequest extends BaseRequest
   public function createRules()
   {
     $this->rules += [
+      'school_id' => ['required', 'bail', 'exists:schools,id'],
       'children' => ['required', 'array'],
       'children.*.child_name' => ['required', 'string', 'max:255'],
       'children.*.date_of_birth' => ['required', 'date', 'before:yesterday', 'date_format:Y-m-d'],
       'children.*.gender' => ['required', 'in:male,female'],
       'children.*.grade_id' => ['required', 'exists:grades,id'],
       'children.*.attachments' => ['required', 'array'],
-      // 'children.*.attachments.attachment_id' => ['required', 'exists:attachments,id'],
-      // 'children.*.attachments.attachment' => ['required'],
     ];
 
-    $school = School::findOrFail(request()->school_id);
+    $school = School::find(request()->school_id);
 
     // dd($school->attachments->pluck('id')->toArray());
     foreach ($school->attachments->pluck('id')->toArray() as $attachment_id) {
@@ -56,25 +55,25 @@ class ReserveSchoolFormRequest extends BaseRequest
 
   public function updateRules()
   {
-    $customer = $this->getCustomer();
     $this->rules += [
-      'email' => ['required', 'email', 'unique:customers,email,' . $customer->id, new CheckEmailExist("customers")],
-      'phone' => ['bail', 'required', 'unique:customers,phone,' . $customer->id],
-      'image' => validateImage(),
+      'reservation_id' => ['required', 'bail', 'exists:reservations,id'],
+      'children' => ['required', 'array'],
+      'children.*.child_name' => ['required', 'string', 'max:255'],
+      'children.*.date_of_birth' => ['required', 'date', 'before:yesterday', 'date_format:Y-m-d'],
+      'children.*.gender' => ['required', 'in:male,female'],
+      'children.*.attachments' => ['nullable', 'array'],
     ];
+
+    $reservation = Reservation::find(request()->reservation_id);
+    $school = School::find($reservation->school_id);
+    $children_ids = $reservation->children->pluck('id');
+    foreach ($school->attachments->pluck('id')->toArray() as $attachment_id) {
+      $this->rules += ['children.*.attachments.*.' . $attachment_id => ['nullable']];
+      $this->rules += ['children.*.child_id'  => ['required', 'exists:children,id']];
+      // $this->rules += ['children.*.child_id'  => ['required', 'exists:children,id', 'in:' . $children_ids]];
+    } // end of  for each
+
+    // dd($this->rules);
     return $this->rules;
-  }
-
-  public function getCustomer()
-  {
-    return   request()->is('api/*') ? getCustomer() : $this->route('customer');
-  }
-
-  public function messages()
-  {
-    return [
-      'lat.required' => __('site.Please choose your location.'),
-      'lng.required' => __('site.Please choose your location.'),
-    ];
   }
 }

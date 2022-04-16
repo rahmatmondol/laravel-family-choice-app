@@ -4,10 +4,10 @@ namespace App\Http\Resources\Collection;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class CategoryCollection extends ResourceCollection
+class ReservationCollection extends ResourceCollection
 {
 
-  public $collects = 'App\Http\Resources\CategoryResource';
+  public $collects = 'App\Http\Resources\ReservationResource';
 
   /**
    * Transform the resource into an array.
@@ -22,15 +22,12 @@ class CategoryCollection extends ResourceCollection
 
       'data' => $this->collection,
       "meta" => [
-
         "current_page" => $this->currentPage(),
         "last_page" =>  $this->lastPage(),
         "per_page" =>  $this->perPage(),
         "hasMorePages" =>  $this->hasMorePages(),
         "total" =>  $this->total(),
-
       ]
-
     ];
   }
 }

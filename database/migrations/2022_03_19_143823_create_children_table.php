@@ -13,7 +13,7 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('reservation_children', function (Blueprint $table) {
+    Schema::create('children', function (Blueprint $table) {
       $table->id();
       $table->string('child_name');
       $table->string('date_of_birth');
@@ -33,6 +33,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('reservation_children');
+    Schema::dropIfExists('children');
   }
 };

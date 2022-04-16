@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\ChildResource;
+use App\Http\Resources\LightSchoolResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ReservationResource extends JsonResource
@@ -14,14 +16,18 @@ class ReservationResource extends JsonResource
    */
   public function toArray($request)
   {
-    $isAuth = getCurrentCustomer();
+    // dd($this->reservationChildren);
     return [
       'id' =>  $this->id,
-      'full_name'  => $this->full_name,
-      'email'  => $this->email,
-      'phone'  => $this->phone,
-      'date_time'  => $this->date_time,
-      'provider' => new ProviderResource($this->provider),
+      'parent_name'  => $this->parent_name,
+      'address'  => $this->address,
+      'identification_number'  => $this->identification_number,
+      'total_fees'  => $this->total_fees,
+      'reason_of_refuse'  => $this->reason_of_refuse,
+      'status'  => $this->status,
+      'payment_status'  => $this->payment_status,
+      'school' => new LightSchoolResource($this->school),
+      'children' => ChildResource::collection($this->children),
       'created_at' => (string) $this->created_at,
       'updated_at' => (string) $this->updated_at,
     ];

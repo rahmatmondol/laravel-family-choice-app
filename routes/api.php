@@ -78,7 +78,9 @@ Route::group(
 
       #reserve school
       Route::get('school-attachments', 'ReserveSchoolController@school_attachments');
-      Route::post('reserve-school', 'ReserveSchoolController@reserve_school');
+      Route::post('add-reservation', 'ReservationsController@add_reservation');
+      Route::put('update-reservation', 'ReservationsController@update_reservation');
+      Route::get('customer-reservations', 'ReservationsController@customer_reservations');
     });
   }
 );

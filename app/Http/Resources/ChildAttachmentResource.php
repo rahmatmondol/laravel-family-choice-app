@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AttachmentResource extends JsonResource
+class ChildAttachmentResource extends JsonResource
 {
   /**
    * Transform the resource into an array.
@@ -16,8 +16,8 @@ class AttachmentResource extends JsonResource
   {
     return [
       'id'         =>  $this->id,
-      'title'      =>  $this->title,
-      // 'attachment' =>  $this->attachment_path,
+      'title'      =>  $this->attachment,
+      'attachment' =>  $this->attachment_path,
     ];
   }
 }
