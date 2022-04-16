@@ -43,9 +43,9 @@ class Customer extends  Authenticatable
       ->orwhere('email', 'like', '%' . $search . '%');
   } // end of scopeWhenSearch
   //////////////////// end scopes /////////////////////////////////////
-  public function reservations()
+  public function school_reservations()
   {
-    return $this->hasMany(Reservation::class);
+    return $this->hasMany(SchoolReservation::class);
   } //end fo category
 
   public function reviews()

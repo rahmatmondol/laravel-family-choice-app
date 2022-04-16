@@ -147,6 +147,11 @@ class School extends Model
     return $this->hasMany(SchoolImage::class);
   } // end of user
 
+  public function school_reservations()
+  {
+    return $this->hasMany(SchoolReservation::class);
+  } //end fo category
+  
   public function courses()
   {
     return $this->hasMany(Course::class);

@@ -13,12 +13,11 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('table_attachment_reservation', function (Blueprint $table) {
+    Schema::create('reservation_attachments', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('attachment_id')->nullable()->constrained()->onDelete('cascade');
-      $table->foreignId('school_id')->nullable()->constrained()->onDelete('cascade');
-      $table->string('attachment');
-
+      $table->foreignId('reservation_id')->constrained()->onDelete('cascade');
+      $table->foreignId('attachment_id')->constrained()->onDelete('cascade');
+      $table->string('attachment')->nullable();
       $table->timestamps();
     });
   }
@@ -30,6 +29,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('table_attachment_reservation');
+    Schema::dropIfExists('reservation_attachments');
   }
 };

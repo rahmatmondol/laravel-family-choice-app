@@ -2,14 +2,15 @@
 
 namespace Database\Seeders;
 
+use App\Models\Type;
 use App\Models\Course;
 use App\Models\School;
+use App\Models\Attachment;
+use App\Models\SchoolType;
 use App\Models\SchoolImage;
+use App\Models\EducationType;
 use Illuminate\Database\Seeder;
 use App\Models\EducationalSubject;
-use App\Models\EducationType;
-use App\Models\SchoolType;
-use App\Models\Type;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class SchoolTableSeeder extends Seeder
@@ -85,6 +86,27 @@ class SchoolTableSeeder extends Seeder
           'administrative_expenses' => 200,
           'status' => 1
         ]);
-    }
+
+      Attachment::create([
+        'ar' => ['title' => 'صورة الطالب'],
+        'en' => ['title' => 'student image'],
+        'status' => 1,
+        'school_id' => $school->id
+      ]);
+
+      Attachment::create([
+        'ar' => ['title' => 'شهادة الميلاد'],
+        'en' => ['title' => 'birth certificate'],
+        'status' => 1,
+        'school_id' => $school->id
+      ]);
+
+      Attachment::create([
+        'ar' => ['title' => 'البطاقة الصحية'],
+        'en' => ['title' => 'health card'],
+        'status' => 1,
+        'school_id' => $school->id
+      ]);
+    } // end for
   }
 }

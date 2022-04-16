@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -12,27 +13,32 @@ trait UploadFileTrait
   #upload image
   function uploadImages($req, $path, $deleteOldImage, $meta = null)
   {
-    // delete old image
-    if ($deleteOldImage != '' && $deleteOldImage != 'default.png') {
-      $this->removeImage($deleteOldImage, $path);
-    } //end of inner if
+    if ($req instanceof  UploadedFile) {
+      // delete old image
+      if ($deleteOldImage != '' && $deleteOldImage != 'default.png') {
+        $this->removeImage($deleteOldImage, $path);
+      } //end of inner if
 
-    Image::make($req)
-      ->save(public_path('uploads/' . $path . $req->hashName()));
-    return   $req->hashName();
+      Image::make($req)
+        ->save(public_path('uploads/' . $path . $req->hashName()));
+      return   $req->hashName();
+    }
   }
 
   #upload image
   function uploadFile($req, $path, $deleteOldFile)
   {
-    if ($deleteOldFile != '' && $deleteOldFile != 'default.png') {
-      $this->removeImage($deleteOldFile, $path);
+
+    if ($req instanceof  UploadedFile) {
+      if ($deleteOldFile != '' && $deleteOldFile != 'default.png') {
+        $this->removeImage($deleteOldFile, $path);
+      }
+
+      $fileName = time() . rand(1, 100) . '.' . $req->getClientOriginalExtension();
+
+      $req->move(public_path('uploads/' . $path), $fileName);
+      return   $fileName;
     }
-
-    $fileName = time() . rand(1, 100) . '.' . $req->getClientOriginalExtension();
-
-    $req->move(public_path('uploads/' . $path), $fileName);
-    return   $fileName;
   }
 
   // #multiple upload image

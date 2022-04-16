@@ -78,6 +78,7 @@ Route::group(
 
       #reserve school
       Route::get('school-attachments', 'ReserveSchoolController@school_attachments');
+      Route::post('reserve-school', 'ReserveSchoolController@reserve_school');
     });
   }
 );

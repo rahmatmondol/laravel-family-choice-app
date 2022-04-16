@@ -13,14 +13,18 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('school_reservations', function (Blueprint $table) {
+    Schema::create('reservations', function (Blueprint $table) {
       $table->id();
       $table->string('parent_name');
       $table->string('address');
-      $table->string('reason_of_refuse');
+      $table->double('total_fees')->nullable();
+      $table->text('reason_of_refuse')->nullable();
       $table->enum('status', ['pending', 'rejected', 'approved'])->default('pending'); // default active
       $table->enum('payment_status', ['failed', 'succeed'])->nullable();
       $table->string('identification_number'); // text
+      $table->foreignId('school_id')->nullable()->constrained()->onDelete('set null');
+      $table->foreignId('customer_id')->nullable()->constrained()->onDelete('set null');
+
       $table->timestamps();
     });
   }
@@ -32,6 +36,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('school_reservations');
+    Schema::dropIfExists('reservations');
   }
 };

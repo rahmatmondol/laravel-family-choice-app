@@ -4,9 +4,14 @@ namespace App\Repositories;
 
 use App\Models\School;
 use App\Scopes\OrderScope;
-use App\Traits\UploadFileTrait;
-use App\Interfaces\SchoolRepositoryInterface;
+use App\Models\SchoolGrade;
 use App\Models\SchoolImage;
+use App\Traits\UploadFileTrait;
+use App\Models\Reservation;
+use Illuminate\Support\Facades\DB;
+use App\Models\ReservationChild;
+use App\Models\ReservationAttachment;
+use App\Interfaces\SchoolRepositoryInterface;
 
 class SchoolRepository implements SchoolRepositoryInterface
 {
@@ -207,5 +212,59 @@ class SchoolRepository implements SchoolRepositoryInterface
 
     session()->flash('success', __('site.deleted_successfully'));
     return redirect()->back();
+  }
+
+  #reserve-school
+  public function reserveSchool($request)
+  {
+    $customer = getCustomer();
+    $totalFees = 0;
+    $reservation = Reservation::create([
+      'parent_name'           => $request->parent_name,
+      'address'               => $request->address,
+      'identification_number' => $request->identification_number,
+      'school_id'             => $request->school_id,
+      'customer_id'            => $customer->id,
+
+    ]);
+
+    // dd($request->children);
+
+    foreach ($request->children as $child) {
+
+      $schoolGrade = SchoolGrade::where([[
+        'school_id', $request->school_id
+      ], [
+        'grade_id',   $child['grade_id']
+      ]])->first();
+
+      // dd($schoolGrade);
+      $subFees = $schoolGrade->fees + $schoolGrade->administrative_expenses;
+      $totalFees += $subFees;;
+      ReservationChild::create([
+        'child_name'            => $child['child_name'],
+        'date_of_birth'         => $child['date_of_birth'],
+        'gender'                => $child['gender'],
+        'grade_id'              => $child['grade_id'],
+        'reservation_id' => $reservation->id,
+        'total_fees' => $subFees,
+      ]);
+
+      foreach ($child['attachments'] as $key => $attachment) {
+        $file_path = $this->uploadFile($attachment, 'attachment_reservation/', '');
+
+        if ($file_path) {
+          ReservationAttachment::create([
+            'attachment_id'         => (int)$key,
+            'reservation_id' => $reservation->id,
+            'attachment'            => $file_path,
+          ]);
+        }
+      } // end $child['attachments']
+    } // end $request->children
+
+    $reservation->update([
+      'total_fees' => $totalFees,
+    ]);
   }
 }

@@ -17,8 +17,10 @@ return new class extends Migration
       $table->id();
       $table->string('child_name');
       $table->string('date_of_birth');
+      $table->string('total_fees')->nullable();
       $table->enum('gender', ['male', 'female'])->nullable();
       $table->foreignId('grade_id')->nullable()->constrained()->onDelete('cascade');
+      $table->foreignId('reservation_id')->nullable()->constrained()->onDelete('cascade');
 
       $table->timestamps();
     });

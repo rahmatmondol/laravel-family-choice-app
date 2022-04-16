@@ -12,4 +12,7 @@ interface SchoolRepositoryInterface
   public function updateSchool($request, $school);
   public function deleteSchool($school);
   public function deleteAttachment($id);
+
+  #reserve-school
+  public function reserveSchool($request);
 }
