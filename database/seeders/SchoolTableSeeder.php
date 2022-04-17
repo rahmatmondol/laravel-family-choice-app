@@ -37,7 +37,7 @@ class SchoolTableSeeder extends Seeder
     The schools have opened all communication channels to facilitate the arrival of the guardian and the speed of providing the service as soon as possible through the website, social media pages, the class dojo program, official e-mails and student affairs.-";
     $address = " Jeddah saudia arabia address-";
     $title = "Rowad Al Khaleej International Schools - ";
-    for ($i = 0; $i < 5; $i++) {
+    for ($i = 0; $i < 50; $i++) {
 
       $school = School::create([
         'ar' => ['title' => $title . $i, 'address' => $address . $i, 'description' => $description . $i],
