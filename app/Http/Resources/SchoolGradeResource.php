@@ -17,8 +17,8 @@ class SchoolGradeResource extends JsonResource
     return [
       'id'                      =>  $this->id,
       'title'                   => $this->title,
-      'fees'                    => $this->pivot->fees,
-      'administrative_expenses' => $this->pivot->administrative_expenses,
+      'fees'                    => (string)$this->pivot->fees,
+      'administrative_expenses' => (string)$this->pivot->administrative_expenses,
     ];
   }
 }

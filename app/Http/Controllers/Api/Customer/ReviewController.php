@@ -21,7 +21,7 @@ class ReviewController  extends Controller
   public function setReview(SetReviewFormRequest $request)
   {
     $customer = getCustomer();
-    $customer->schoolReviews()->updateOrCreate(
+    $customer->reviews()->updateOrCreate(
       ['school_id' => request('school_id')],
       [
         'follow_up' => request('follow_up'),
@@ -37,9 +37,9 @@ class ReviewController  extends Controller
 
   public function setSchoolTotalReview($school)
   {
-    $follow_up = $school->schoolReviews()->avg('follow_up');
-    $quality_of_education = $school->schoolReviews()->avg('quality_of_education');
-    $cleanliness = $school->schoolReviews()->avg('cleanliness');
+    $follow_up = $school->reviews()->avg('follow_up');
+    $quality_of_education = $school->reviews()->avg('quality_of_education');
+    $cleanliness = $school->reviews()->avg('cleanliness');
 
     $avg = ($follow_up + $quality_of_education + $cleanliness) / 5;
 
@@ -48,7 +48,7 @@ class ReviewController  extends Controller
     ]);
 
     $school->update([
-      'count_reviews' => $school->schoolReviews()->count(),
+      'count_reviews' => $school->reviews()->count(),
     ]);
 
     return true;
@@ -56,7 +56,7 @@ class ReviewController  extends Controller
 
   public function reviewsList(Request $request)
   {
-    $schools = getCustomer()->schoolReviews()->latest()->paginate($request->perPage ?? 20);
-    return $this->sendResponse(new ReviewCollection($schools), "");
+    $reviews = getCustomer()->reviews()->latest()->paginate($request->perPage ?? 20);
+    return $this->sendResponse(new ReviewCollection($reviews), "");
   }
 }

@@ -22,7 +22,7 @@ class ReservationResource extends JsonResource
       'parent_name'  => $this->parent_name,
       'address'  => $this->address,
       'identification_number'  => $this->identification_number,
-      'total_fees'  => $this->total_fees,
+      'total_fees'  => (string)$this->total_fees,
       'reason_of_refuse'  => $this->reason_of_refuse,
       'status'  => $this->status,
       'payment_status'  => $this->payment_status,

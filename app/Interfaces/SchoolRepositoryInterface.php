@@ -17,4 +17,5 @@ interface SchoolRepositoryInterface
   public function addReservation($request);
   public function updateReservation($request);
   public function customerReservations();
+  public function schoolReviews($school);
 }

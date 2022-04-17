@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Customer;
 
 use App\Models\Inbox;
+use App\Models\School;
 use Illuminate\Http\Request;
 use App\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
@@ -49,6 +50,8 @@ class PublicController extends Controller
       'educationalSubjects' => EducationalSubjectResource::collection($this->educationalSubjectRepository->getAllEducationalSubjects()),
       'educationTypes' => EducationTypeResource::collection($this->educationTypeRepository->getAllEducationTypes()),
       'schoolTypes' => SchoolTypeResource::collection($this->schoolTypeRepository->getAllSchoolTypes()),
+      'max_fees' => School::max('fees'),
+      'min_fees' => School::min('fees'),
     ];
     return $this->sendResponse($data, "");
   }

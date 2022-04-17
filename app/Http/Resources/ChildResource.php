@@ -17,15 +17,16 @@ class ChildResource extends JsonResource
     // ReservationAttachment::where('id',$this->)
     // dd($this->attachments);
     return [
-      'id'            =>  $this->id,
-      'child_name'    => $this->child_name,
-      'date_of_birth' => $this->date_of_birth,
-      'total_fees'    => (string)$this->total_fees,
-      'gender'        => $this->gender,
-      'grade'         => new GradeResource($this->grade),
-      'attachments'   => ChildAttachmentResource::collection($this->attachments),
-      'created_at'    => (string) $this->created_at,
-      'updated_at'    => (string) $this->updated_at,
+      'id'                      =>  $this->id,
+      'child_name'              => $this->child_name,
+      'date_of_birth'           => $this->date_of_birth,
+      'grade'                   => new GradeResource($this->grade),
+      'fees'                    => (string)$this->fees,
+      'administrative_expenses' => (string)$this->administrative_expenses,
+      'gender'                  => $this->gender,
+      'attachments'             => ChildAttachmentResource::collection($this->attachments),
+      'created_at'              => (string) $this->created_at,
+      'updated_at'              => (string) $this->updated_at,
     ];
   }
 }

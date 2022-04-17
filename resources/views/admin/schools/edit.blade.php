@@ -127,8 +127,7 @@ $title = __('site.Edit School');
               {{-- types --}}
               <div class="form-group">
                 <label for="inputType">@lang('site.types')</label>
-                <select name="types[]" class="form-control selectric" multiple data-live-search="true"
-                  required>
+                <select name="types[]" class="form-control selectric" multiple data-live-search="true" required>
                   <option value="">@lang('site.types') </option>
                   @foreach( $types as $value )
                   <option value="{{ $value->id }}" @if( in_array($value->
@@ -240,7 +239,17 @@ $title = __('site.Edit School');
               </div>
 
               <div class="form-group">
-                <img src="{{ $school->image_path }}" style="width: 100px" class="img-thumbnail image-preview1" alt="">
+                <img src="{{ $school->image_path }}" style="width: 100px" class="img-thumbnail image-preview2" alt="">
+              </div>
+
+              {{-- cover --}}
+              <div class="form-group">
+                <label>@lang('site.Cover')</label>
+                <input type="file" id='cover' name="cover" class="form-control image3">
+              </div>
+
+              <div class="form-group">
+                <img src="{{ $school->cover_path }}" style="width: 100px" class="img-thumbnail image-preview3" alt="">
               </div>
 
               {{-- attachments --}}

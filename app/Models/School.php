@@ -29,6 +29,11 @@ class School extends Model
     return asset('uploads/schools/' . $this->image);
   } //end of image path attribute
 
+  public function getCoverPathAttribute()
+  {
+    return asset('uploads/schools/' . $this->cover);
+  } //end of image path attribute
+
   public function getIsFavoriedAttribute()
   {
     if ($customer = getCustomer()) {
@@ -37,6 +42,18 @@ class School extends Model
 
     return false;
   } // end of getIsFavoredAttribute
+
+  public function getCanReviewedAttribute()
+  {
+    if ($customer = getCustomer()) {
+      // dd($customer->reservations->where('status', 'approved')->pluck('school_id')->toArray());
+      // info(print_r($customer->reservations->where('states', 'approved')->pluck('school_id')->toArray()),true);
+      return  (bool) in_array($this->id, $customer->reservations->where('status', 'approved')->pluck('school_id')->toArray());
+    } //end of if
+
+    return false;
+  } // end of getIsFavoredAttribute
+
   /////////////////// start scopes ///////////////////////////////
   public function scopeIsActive($query, $status = null)
   {
@@ -151,7 +168,7 @@ class School extends Model
   {
     return $this->hasMany(SchoolReservation::class);
   } //end fo category
-  
+
   public function courses()
   {
     return $this->hasMany(Course::class);
@@ -195,9 +212,9 @@ class School extends Model
     );
   }
 
-  public function schoolReviews()
+  public function reviews()
   {
-    return $this->hasMany(SchoolReview::class, 'school_id', 'id');
+    return $this->hasMany(Review::class);
   } //end fo category
 
   /////////////////// end relationships ///////////////////////////////

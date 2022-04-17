@@ -233,6 +233,17 @@ $title = __('site.Create School');
                   alt="">
               </div>
 
+              {{-- cover --}}
+              <div class="form-group">
+                <label>@lang('site.Cover')</label>
+                <input required="required" type="file" id='cover' name="cover" class="form-control image3">
+              </div>
+
+              <div class="form-group">
+                <img src="{{ asset('uploads/default.png') }}" style="width: 100px" class="img-thumbnail image-preview3"
+                  alt="">
+              </div>
+
               {{-- attachments --}}
               <div class="form-group">
                 <label>@lang('site.attachments')</label>

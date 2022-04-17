@@ -98,6 +98,10 @@ class SchoolRepository implements SchoolRepositoryInterface
       $request_data['image'] = $this->uploadImages($request->image, 'schools/', '', '');
     } //end of if
 
+    if ($request->cover) {
+      $request_data['cover'] = $this->uploadImages($request->cover, 'schools/', '', '');
+    } //end of if
+
     if ($request->password) {
       $request_data['password'] = bcrypt($request->password);
     }
@@ -148,6 +152,10 @@ class SchoolRepository implements SchoolRepositoryInterface
 
     if ($request->image) {
       $request_data['image'] = $this->uploadImages($request->image, 'schools/', $school->image);
+    } //end of if
+
+    if ($request->cover) {
+      $request_data['cover'] = $this->uploadImages($request->cover, 'schools/', $school->cover);
     } //end of if
 
     if ($request->password) {
@@ -239,12 +247,14 @@ class SchoolRepository implements SchoolRepositoryInterface
       $subFees = $schoolGrade->fees + $schoolGrade->administrative_expenses;
       $totalFees += $subFees;
       $child = Child::create([
-        'child_name'            => $item['child_name'],
-        'date_of_birth'         => $item['date_of_birth'],
-        'gender'                => $item['gender'],
-        'grade_id'              => $item['grade_id'],
-        'reservation_id'        => $reservation->id,
-        'total_fees'            => $subFees,
+        'child_name'              => $item['child_name'],
+        'date_of_birth'           => $item['date_of_birth'],
+        'gender'                  => $item['gender'],
+        'grade_id'                => $item['grade_id'],
+        'reservation_id'          => $reservation->id,
+        'fees'                    => $schoolGrade->fees,
+        'administrative_expenses' => $schoolGrade->administrative_expenses,
+        // 'total_fees'            => $subFees,
       ]);
 
       foreach ($item['attachments'] as $key => $attachment) {
@@ -311,5 +321,11 @@ class SchoolRepository implements SchoolRepositoryInterface
   {
     // dd(getCustomer()->reservations);
     return getCustomer()->reservations()->with(['children.attachments'])->latest()->paginate(request()->perPage ?? 20);
+  }
+  #customerReservations
+  public function schoolReviews($school)
+  {
+    // dd($school->reviews()->latest()->get());
+    return $school->reviews()->latest()->paginate(request()->perPage ?? 20);
   }
 }

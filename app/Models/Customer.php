@@ -66,11 +66,6 @@ class Customer extends  Authenticatable
     );
   }
 
-  public function schoolReviews()
-  {
-    return $this->hasMany(SchoolReview::class, 'customer_id', 'id');
-  } //end fo category
-
   public function reservations()
   {
     return $this->hasMany(Reservation::class);

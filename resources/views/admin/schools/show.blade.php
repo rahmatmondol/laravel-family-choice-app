@@ -85,6 +85,11 @@ $title = __('site.Show school');
               </td>
             </tr>
             <tr>
+              <td>@lang('site.Cover')</td>
+              <td><img src="{{ $school->cover_path }}" style="width: 100px" class="img-thumbnail image-preview1" alt="">
+              </td>
+            </tr>
+            <tr>
               <td>@lang('site.Attachments')</td>
               <td>
                 @foreach ($school->schoolImages as $img )

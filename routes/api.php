@@ -35,6 +35,7 @@ Route::group(
       Route::get('sliders', 'PublicController@sliders');
       Route::get('schools', 'SchoolController@schools');
       Route::get('courses', 'SchoolController@courses');
+      Route::get('school-reviews', 'SchoolController@school_reviews');
     });
 
 

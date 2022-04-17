@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
       GradesTableSeeder::class,
       SlidersTableSeeder::class,
       SchoolTableSeeder::class,
+      CustomerTableSeeder::class,
     ]);
   }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('school_reviews', function (Blueprint $table) {
+    Schema::create('reviews', function (Blueprint $table) {
       $table->id();
       $table->double('follow_up')->nullable();
       $table->double('quality_of_education')->nullable();
@@ -37,6 +37,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('school_reviews');
+    Schema::dropIfExists('reviews');
   }
 };

@@ -29,6 +29,7 @@ return new class extends Migration
       $table->double('fees')->nullable();
       $table->string('password');
       $table->string('image')->default('default.png');
+      $table->string('cover')->default('default.png');
 
       $table->double('lat')->nullable();
       $table->double('lng')->nullable();
