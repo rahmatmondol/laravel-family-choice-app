@@ -39,6 +39,7 @@ trait UploadFileTrait
       $req->move(public_path('uploads/' . $path), $fileName);
       return   $fileName;
     }
+    return '';
   }
 
   // #multiple upload image

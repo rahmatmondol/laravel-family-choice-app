@@ -11,7 +11,7 @@ return [
   'Old password not correct' => 'Old password not correct',
   'Confirm the phone first.' => 'Confirm the phone first.',
   'User not verified' => 'User not verified',
-  '' => '',
+  'you can not review this school' => 'you can not review this school',
   '' => '',
   '' => '',
   '' => '',

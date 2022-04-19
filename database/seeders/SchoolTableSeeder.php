@@ -46,7 +46,7 @@ class SchoolTableSeeder extends Seeder
         'fees' => \rand(1000, 5000),
         'phone' => \rand(5, 10) . \rand(5, 10) . '015254' . $i * \rand(5, 10),
         'whatsapp' =>  \rand(5, 10) . \rand(5, 10) . '012254' . $i * \rand(5, 10),
-        'email' => 'info' . \rand(5, 10) . \rand(5, 10) . \rand(5, 10) . '@gmail.com',
+        'email' => 'info' . \rand(5, 100) . \rand(5, 100) . \rand(5, 100) . '@gmail.com',
         'available_seats' => \rand(5, 500),
         'review' => \rand(1, 5),
         'count_reviews' => \rand(10, 50),

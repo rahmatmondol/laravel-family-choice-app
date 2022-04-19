@@ -12,6 +12,7 @@ return [
     'educationalSubjects'        => 'c,r,u,d',
     'educationTypes'        => 'c,r,u,d',
     'schoolTypes'        => 'c,r,u,d',
+    'services'        => 'c,r,u,d',
     'grades'        => 'c,r,u,d',
     'courses'       => 'c,r,u,d',
     'cities'        => 'c,r,u,d',

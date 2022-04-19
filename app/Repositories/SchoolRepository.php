@@ -243,9 +243,9 @@ class SchoolRepository implements SchoolRepositoryInterface
         'grade_id',   $item['grade_id']
       ]])->first();
 
-      // dd($schoolGrade);
       $subFees = $schoolGrade->fees + $schoolGrade->administrative_expenses;
       $totalFees += $subFees;
+      
       $child = Child::create([
         'child_name'              => $item['child_name'],
         'date_of_birth'           => $item['date_of_birth'],
@@ -319,9 +319,9 @@ class SchoolRepository implements SchoolRepositoryInterface
   #customerReservations
   public function customerReservations()
   {
-    // dd(getCustomer()->reservations);
     return getCustomer()->reservations()->with(['children.attachments'])->latest()->paginate(request()->perPage ?? 20);
   }
+
   #customerReservations
   public function schoolReviews($school)
   {

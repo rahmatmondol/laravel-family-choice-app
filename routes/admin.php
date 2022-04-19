@@ -57,21 +57,22 @@ Route::group(
       //   Route::post('principal/reservations/reject-reservation/{reservation}', 'PrincipalReservationController@reject_reservation')->name('principal.reservations.reject_reservation');
 
       Route::resources([
-        'admins' => 'AdminController',
-        'roles' => 'RoleController',
-        'customers' => 'CustomerController',
-        'cities' => 'CityController',
-        'types' => 'TypeController',
-        'schools' => 'School\SchoolController',
-        'grades' => 'GradeController',
+        'admins'              => 'AdminController',
+        'roles'               => 'RoleController',
+        'customers'           => 'CustomerController',
+        'cities'              => 'CityController',
+        'types'               => 'TypeController',
+        'schools'             => 'School\SchoolController',
+        'grades'              => 'GradeController',
         'educationalSubjects' => 'EducationalSubjectController',
-        'educationTypes' => 'EducationTypeController',
-        'schoolTypes' => 'SchoolTypeController',
-        'schools.grades' => 'School\GradeController',
-        'courses' => 'CourseController',
-        'sliders' => 'SliderController',
-        'user_manuals' => 'UserManualController',
-        'attachments' => 'AttachmentController',
+        'educationTypes'      => 'EducationTypeController',
+        'services'            => 'ServiceController',
+        'schoolTypes'         => 'SchoolTypeController',
+        'schools.grades'      => 'School\GradeController',
+        'courses'             => 'CourseController',
+        'sliders'             => 'SliderController',
+        'user_manuals'        => 'UserManualController',
+        'attachments'         => 'AttachmentController',
       ]);
 
       Route::get('schools/deleteImage/{id}', 'SchoolController@deleteImage');

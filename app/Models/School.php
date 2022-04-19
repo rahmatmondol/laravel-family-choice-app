@@ -46,8 +46,6 @@ class School extends Model
   public function getCanReviewedAttribute()
   {
     if ($customer = getCustomer()) {
-      // dd($customer->reservations->where('status', 'approved')->pluck('school_id')->toArray());
-      // info(print_r($customer->reservations->where('states', 'approved')->pluck('school_id')->toArray()),true);
       return  (bool) in_array($this->id, $customer->reservations->where('status', 'approved')->pluck('school_id')->toArray());
     } //end of if
 

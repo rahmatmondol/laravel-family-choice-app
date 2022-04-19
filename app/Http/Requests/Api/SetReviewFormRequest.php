@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api;
 
 use App\Http\Requests\BaseRequest;
+use App\Models\School;
 
 class SetReviewFormRequest extends BaseRequest
 {
@@ -18,7 +19,12 @@ class SetReviewFormRequest extends BaseRequest
   {
     $this->rules += [
       'comment' => 'required',
-      'school_id' => 'required|exists:schools,id',
+      'school_id' => ['bail', 'required', 'exists:schools,id', function ($attribute, $value, $fail) {
+        $school = School::find($value);
+        if (!$school->can_reviewed) {
+          $fail(__('site.you can not review this school'));
+        }
+      }],
       'follow_up' => 'required|integer|min:1|max:5',
       'quality_of_education' => 'required|integer|min:1|max:5',
       'cleanliness' => 'required|integer|min:1|max:5',
