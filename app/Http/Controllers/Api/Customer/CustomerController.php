@@ -6,13 +6,10 @@ use Exception;
 use App\Provider;
 
 use Illuminate\Http\Request;
-use App\Mail\ReservationMail;
 use App\Traits\ResponseTrait;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use SebastianBergmann\Environment\Console;
 use App\Http\Resources\ReservationResource;
 
 class CustomerController extends Controller

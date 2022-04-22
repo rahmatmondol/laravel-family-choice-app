@@ -107,7 +107,8 @@ class CustomerRepository implements CustomerRepositoryInterface
 
   public function sendVerificationCode($customer)
   {
-    $code = rand(1000, 9000);
+
+    $code = rand(100000, 999999);
     $customer->update([
       'verification_code' => $code,
     ]);
@@ -116,10 +117,10 @@ class CustomerRepository implements CustomerRepositoryInterface
   }
 
   // used only for developers to get the code sent throught sms
-  public function getCustomerVerificationCode($request)
-  {
-    return Verification::where('phone', request('phone'))->first() ?? null;
-  }
+  // public function getCustomerVerificationCode($request)
+  // {
+  //   return Verification::where('phone', request('phone'))->first() ?? null;
+  // }
 
   public function verifyCustomerPhone($request)
   {
