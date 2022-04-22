@@ -40,14 +40,6 @@ class CustomerFormRequest extends BaseRequest
       'image' => validateImage(),
     ];
 
-    if (request()->is('api/*')) {
-      $this->rules += [
-        'lat' => ['required'],
-        'lng' => ['required'],
-      ];
-      // unset($this->rules['lat']);
-      // unset($this->rules['lng']);
-    }
     return $this->rules;
   }
 
