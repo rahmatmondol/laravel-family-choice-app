@@ -11,8 +11,10 @@ use Illuminate\Http\Request;
 use App\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\SetReviewFormRequest;
+use App\Http\Requests\Api\DeleteReviewFormRequest;
 use App\Http\Resources\Collection\ReviewCollection;
 use App\Http\Resources\Collection\SchoolCollection;
+use App\Models\Review;
 
 class ReviewController  extends Controller
 {
@@ -58,5 +60,12 @@ class ReviewController  extends Controller
   {
     $reviews = getCustomer()->reviews()->latest()->paginate($request->perPage ?? 20);
     return $this->sendResponse(new ReviewCollection($reviews), "");
+  }
+
+
+  public function deleteReview(DeleteReviewFormRequest $request)
+  {
+    Review::find(request('review_id'))->delete();
+    return $this->sendResponse("", "");
   }
 }

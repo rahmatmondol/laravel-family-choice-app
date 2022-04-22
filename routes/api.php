@@ -71,6 +71,7 @@ Route::group(
       #review
       Route::post('set-review', 'ReviewController@setReview');
       Route::get('reviews-list', 'ReviewController@reviewsList');
+      Route::delete('delete-review', 'ReviewController@deleteReview');
 
       Route::get('logout', 'AuthController@logout');
       Route::post('change-password', 'AuthController@changePassword');

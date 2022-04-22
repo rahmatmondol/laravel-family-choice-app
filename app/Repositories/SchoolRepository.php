@@ -245,7 +245,7 @@ class SchoolRepository implements SchoolRepositoryInterface
 
       $subFees = $schoolGrade->fees + $schoolGrade->administrative_expenses;
       $totalFees += $subFees;
-      
+
       $child = Child::create([
         'child_name'              => $item['child_name'],
         'date_of_birth'           => $item['date_of_birth'],
@@ -300,12 +300,14 @@ class SchoolRepository implements SchoolRepositoryInterface
       ]);
 
       foreach ($item['attachments'] as $key => $attachment) {
+
         $file_path = $this->uploadFile($attachment, 'attachment_reservation/', '');
 
         if ($file_path) {
-          ChildAttachment::create([
+          ChildAttachment::updateOrCreate([
             'attachment_id' => (int)$key,
-            'child_id'      => $child->id,
+            'child_id'      => $item['child_id']
+          ], [
             'attachment'    => $file_path,
           ]);
         }

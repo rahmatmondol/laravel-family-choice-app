@@ -55,6 +55,7 @@ class ReservationFormRequest extends BaseRequest
 
   public function updateRules()
   {
+
     $this->rules += [
       'reservation_id' => ['required', 'bail', 'exists:reservations,id'],
       'children' => ['required', 'array'],
@@ -65,8 +66,11 @@ class ReservationFormRequest extends BaseRequest
     ];
 
     $reservation = Reservation::find(request()->reservation_id);
+
+    
     $school = School::find($reservation->school_id);
     $children_ids = $reservation->children->pluck('id');
+
     foreach ($school->attachments->pluck('id')->toArray() as $attachment_id) {
       $this->rules += ['children.*.attachments.*.' . $attachment_id => ['nullable']];
       $this->rules += ['children.*.child_id'  => ['required', 'exists:children,id']];
