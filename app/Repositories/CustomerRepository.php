@@ -113,6 +113,8 @@ class CustomerRepository implements CustomerRepositoryInterface
       'verification_code' => $code,
     ]);
 
+    // return $code;
+
     // $this->sendSms($phone, $code);
   }
 

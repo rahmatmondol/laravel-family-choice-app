@@ -83,6 +83,7 @@ class AuthController extends Controller
     return $this->sendResponse($customer->verification_code ?? "", "");
   }
 
+  #used for verify phone and forget password
   public function verifyPhone(VerifyPhoneFormRequest $request)
   {
     $customer = Customer::where('phone', $request->phone)->firstOrFail();

@@ -22,9 +22,9 @@ class VerifyPhoneFormRequest extends BaseRequest
         if (!$customer) {
           $fail(__('site.User not found'));
         }
-        if ($customer->verified == 1) {
-          $fail(__('site.User already verified'));
-        }
+        // if ($customer->verified == 1) {
+        //   $fail(__('site.User already verified'));
+        // }
       }],
     ];
   }
