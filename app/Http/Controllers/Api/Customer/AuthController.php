@@ -88,7 +88,7 @@ class AuthController extends Controller
   {
     $customer = Customer::where('phone', $request->phone)->firstOrFail();
     $customer->update(['verified' => 1]);
-    $this->resetVerificationCode($customer);
+    // $this->resetVerificationCode($customer);
 
     return $this->sendResponse("", "");
   }
@@ -124,7 +124,6 @@ class AuthController extends Controller
 
     return $this->sendResponse("", "");
   }
-
 
   public function resetVerificationCode($customer)
   {
