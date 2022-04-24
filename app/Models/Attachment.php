@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Scopes\OrderScope;
+use Illuminate\Support\Facades\File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -20,6 +21,13 @@ class Attachment extends Model
 
     static::addGlobalScope(new OrderScope);
   }
+
+  public function getTemplateFilePathAttribute()
+  {
+    if ($this->template_file != null && File::exists(public_path('uploads/attachments/' . $this->template_file))) {
+      return asset('uploads/attachments/' . $this->template_file);
+    }
+  } //end of get image path
 
   public function scopeIsActive($query, $status = null)
   {
@@ -47,7 +55,7 @@ class Attachment extends Model
       });
     });
   } // end of
-  
+
   public function school()
   {
     return $this->belongsTo(School::class);

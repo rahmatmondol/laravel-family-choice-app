@@ -79,7 +79,7 @@ Route::group(
       Route::get('profile', 'AuthController@profile');
 
       #reserve school
-      Route::get('school-attachments', 'ReserveSchoolController@school_attachments');
+      Route::get('school-attachments', 'ReservationsController@school_attachments');
       Route::post('add-reservation', 'ReservationsController@add_reservation');
       Route::put('update-reservation', 'ReservationsController@update_reservation');
       Route::get('customer-reservations', 'ReservationsController@customer_reservations');

@@ -71,6 +71,14 @@ $title = __('site.Edit Attachment');
                 <a href="{{ route('admin.schools.create') }}">@lang('site.Create new school')</a>
               </div>
 
+              <div class="form-group">
+                <label>@lang('site.Template File')</label>
+                <input type="file" id='template_file' name="template_file" class="form-control">
+                @if($attachment->template_file_path)
+                <a href="{{ $attachment->template_file_path }}" target="_blank">@lang('site.Download')</a>
+                @endif
+              </div>
+
               {{-- order_column --}}
               <div class="form-group">
                 <label>@lang('site.Order Item')</label>
@@ -84,7 +92,8 @@ $title = __('site.Edit Attachment');
                 <label for="inputStatus">@lang('site.Status')</label>
                 <select id="inputStatus" name="status" required class="form-control custom-select">
                   <option value='' selected disabled>@lang('site.Status')</option>
-                  <option value="1" @if(old('status',$attachment->status)==1) selected @endif>@lang('site.Active')</option>
+                  <option value="1" @if(old('status',$attachment->status)==1) selected @endif>@lang('site.Active')
+                  </option>
                   <option value="0" @if(old('status',$attachment->status)==0) selected @endif>@lang('site.In-Active')
                   </option>
                 </select>

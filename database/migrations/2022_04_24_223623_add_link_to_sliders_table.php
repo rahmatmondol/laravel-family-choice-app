@@ -13,15 +13,9 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('sliders', function (Blueprint $table) {
-      $table->id();
-      $table->boolean('status')->default(1); // default active
-      $table->integer('order_column')->nullable();
-      $table->string('image')->default('default.png');
+    Schema::table('sliders', function (Blueprint $table) {
       $table->string('link')->nullable();
       $table->foreignId('school_id')->nullable()->constrained()->onDelete('set null');
-
-      $table->timestamps();
     });
   }
 
@@ -32,6 +26,8 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('sliders');
+    Schema::table('sliders', function (Blueprint $table) {
+      //
+    });
   }
 };

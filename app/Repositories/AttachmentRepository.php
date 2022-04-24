@@ -46,8 +46,8 @@ class AttachmentRepository implements AttachmentRepositoryInterface
   {
     $request_data = $this->getAttachmentRequestData($request);
 
-    if ($request->image) {
-      $request_data['image'] = $this->uploadImages($request->image, 'attachments/', '', '');
+    if ($request->template_file) {
+      $request_data['template_file'] = $this->uploadFile($request->template_file, 'attachments/', '', '');
     } //end of if
 
     $attachment = Attachment::create($request_data);
@@ -59,8 +59,8 @@ class AttachmentRepository implements AttachmentRepositoryInterface
   {
     $request_data = $this->getAttachmentRequestData($request);
 
-    if ($request->image) {
-      $request_data['image'] = $this->uploadImages($request->image, 'attachments/', $attachment->image);
+    if ($request->template_file) {
+      $request_data['template_file'] = $this->uploadFile($request->template_file, 'attachments/', $attachment->template_file);
     } //end of if
 
     $attachment->update($request_data);
@@ -70,7 +70,7 @@ class AttachmentRepository implements AttachmentRepositoryInterface
 
   public function deleteAttachment($attachment)
   {
-    $this->removeImage($attachment->image, 'attachments');
+    $this->removeImage($attachment->template_file, 'attachments');
     $attachment->delete();
     return true;
   }

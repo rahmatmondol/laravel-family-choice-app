@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Interfaces\SchoolRepositoryInterface;
 use App\Interfaces\SliderRepositoryInterface;
 use App\Http\Requests\Admin\SliderFormRequest;
 
@@ -12,6 +13,8 @@ class SliderController extends Controller
 {
 
   public function __construct(
+
+    private SchoolRepositoryInterface $schoolRepository,
     private SliderRepositoryInterface $sliderRepository
   ) {
     //create read update delete
@@ -32,9 +35,9 @@ class SliderController extends Controller
 
   public function create(Request $request)
   {
-    // $roles = $this->roleRepository->getAllRoles();
-    $roles = '';
-    return view('admin.sliders.create', compact('roles'));
+    $schools = $this->schoolRepository->getAllSchools();
+
+    return view('admin.sliders.create', compact('schools'));
   } //end of create
 
   public function show($slider)
@@ -60,10 +63,10 @@ class SliderController extends Controller
   {
 
     $slider = $this->sliderRepository->getSliderById($slider);
+    $schools = $this->schoolRepository->getAllSchools();
 
-    // $roles = $this->roleRepository->getAllRoles();
 
-    return view('admin.sliders.edit', compact('slider',));
+    return view('admin.sliders.edit', compact('slider','schools'));
   } //end of edit
 
   public function update(SliderFormRequest $request, Slider $slider)

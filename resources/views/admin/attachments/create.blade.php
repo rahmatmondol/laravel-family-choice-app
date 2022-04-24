@@ -71,6 +71,11 @@ $title = __('site.Create Attachment');
                 <a href="{{ route('admin.schools.create') }}">@lang('site.Create new school')</a>
               </div>
 
+              <div class="form-group">
+                <label>@lang('site.Template File')</label>
+                <input type="file" id='template_file' name="template_file" class="form-control">
+              </div>
+
               {{-- order_column --}}
               <div class="form-group">
                 <label>@lang('site.Order Item')</label>

@@ -71,6 +71,26 @@ $title = __('site.Edit Slider');
                   oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
               </div>
 
+              {{-- schools --}}
+              <div class="form-group">
+                <label>@lang('site.Schools')</label>
+                <select name="school_id" class="form-control">
+                  <option value='' selected>@lang('site.Schools')</option>
+                  @foreach ($schools as $school)
+                  <option value="{{ $school->id }}" @if(old('school_id',$slider->school_id)==$school->id) selected
+                    @endif>{{
+                    $school->title }}</option>
+                  @endforeach
+                </select>
+                <a href="{{ route('admin.schools.create') }}">@lang('site.Create new school')</a>
+              </div>
+
+              {{-- link --}}
+              <div class="form-group">
+                <label>@lang('site.Link')</label>
+                <input type="text" name="link" value="{{ old('link',$slider->link) }}" class="form-control">
+              </div>
+
               {{-- status --}}
               <div class="form-group">
                 <label for="inputStatus">@lang('site.Status')</label>
@@ -83,7 +103,7 @@ $title = __('site.Edit Slider');
               </div>
               <div class="form-group">
                 <label>@lang('site.Image')</label>
-                <input type="file" id='image' name="image" class="form-control image1" >
+                <input type="file" id='image' name="image" class="form-control image1">
               </div>
 
               <div class="form-group">

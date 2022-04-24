@@ -35,7 +35,7 @@ class SliderRepository implements SliderRepositoryInterface
 
   public function getSliderRequestData($request)
   {
-    $request_data = array_merge(['status', 'name', 'order_column'], config('translatable.locales'));
+    $request_data = array_merge(['status', 'name', 'order_column', 'school_id', 'link'], config('translatable.locales'));
 
     return  $request->only($request_data);
   }

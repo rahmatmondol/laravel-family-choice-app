@@ -28,6 +28,8 @@ class SliderFormRequest extends FormRequest
 
     $this->rules += [
       'image' => 'required|' . validateImage(),
+      'link' => ['required_without:school_id'],
+      'school_id' => ['bail', 'exists:schools,id', 'required_without:link'],
     ];
 
     foreach (config('translatable.locales') as $locale) {

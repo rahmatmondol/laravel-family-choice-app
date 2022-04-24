@@ -9,7 +9,6 @@ use Intervention\Image\Facades\Image;
 
 trait UploadFileTrait
 {
-
   #upload image
   function uploadImages($req, $path, $deleteOldImage, $meta = null)
   {
@@ -59,7 +58,6 @@ trait UploadFileTrait
   // delete main image for model
   function removeImage($imageName, $path)
   {
-
     $DeleteFileWithName = public_path('uploads/' . $path . '/' . $imageName);
 
     if ($imageName != 'default.png' && file_exists($DeleteFileWithName)) {

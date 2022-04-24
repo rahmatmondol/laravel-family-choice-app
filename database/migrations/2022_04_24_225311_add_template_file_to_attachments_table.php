@@ -13,15 +13,8 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('attachments', function (Blueprint $table) {
-      $table->id();
-      $table->integer('order_column')->nullable();
-      $table->string('file_type')->nullable();
+    Schema::table('attachments', function (Blueprint $table) {
       $table->string('template_file')->nullable();
-      $table->boolean('status')->default(1); // default active
-      $table->foreignId('school_id')->nullable()->constrained()->onDelete('cascade');
-
-      $table->timestamps();
     });
   }
 
@@ -32,6 +25,8 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('attachments');
+    Schema::table('attachments', function (Blueprint $table) {
+      //
+    });
   }
 };

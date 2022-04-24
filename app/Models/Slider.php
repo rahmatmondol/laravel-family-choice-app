@@ -39,4 +39,8 @@ class Slider extends Model
     });
   } // end of scopeWhenSearch
 
+  public function school()
+  {
+    return $this->belongsTo(School::class);
+  }
 }

@@ -44,6 +44,14 @@ $title = __('site.Show Slider');
               <td>{{ $slider->description }}</td>
             </tr>
             <tr>
+              <td>@lang('site.School')</td>
+              <td>{{ $slider->school?->title }}</td>
+            </tr>
+            <tr>
+              <td>@lang('site.Link')</td>
+              <td>{{ $slider->link }}</td>
+            </tr>
+            <tr>
               <td>@lang('site.Order Item')</td>
               <td>{{ $slider->order_column }}</td>
             </tr>
