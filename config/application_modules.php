@@ -6,6 +6,7 @@ return [
     'roles'         => 'c,r,u,d',
     'admins'        => 'c,r,u,d',
     'customers'       => 'c,r,u,d',
+    'reservations'       => 'c,r,u,d',
     // 'users'         => 'c,r,u,d',
     'types'       => 'c,r,u,d',
     'schools'       => 'c,r,u,d',

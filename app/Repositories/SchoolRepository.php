@@ -45,9 +45,13 @@ class SchoolRepository implements SchoolRepositoryInterface
       ->latest()
       ->withTranslation()
       ->with(['educationalSubjects', 'educationTypes', 'schoolTypes', 'grades'])
+      // ->limit(5)
       ->paginate($request->perPage ?? 20);
 
     $sorting = $this->getSorting();
+    return $schools;
+    // dd($schools);
+    // dd($sorting);
 
     return $schools->setCollection($schools->sortBy($sorting['column'], 0, $sorting['type']));
   }

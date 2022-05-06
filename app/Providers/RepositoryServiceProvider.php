@@ -18,6 +18,7 @@ use App\Repositories\UserManualRepository;
 use App\Interfaces\CityRepositoryInterface;
 use App\Interfaces\RoleRepositoryInterface;
 use App\Interfaces\TypeRepositoryInterface;
+use App\Repositories\ReservationRepository;
 use App\Interfaces\AdminRepositoryInterface;
 use App\Interfaces\GradeRepositoryInterface;
 use App\Interfaces\CourseRepositoryInterface;
@@ -28,6 +29,7 @@ use App\Interfaces\CustomerRepositoryInterface;
 use App\Interfaces\AttachmentRepositoryInterface;
 use App\Interfaces\SchoolTypeRepositoryInterface;
 use App\Interfaces\UserManualRepositoryInterface;
+use App\Interfaces\ReservationRepositoryInterface;
 use App\Repositories\EducationalSubjectRepository;
 use App\Interfaces\EducationTypeRepositoryInterface;
 use App\Interfaces\EducationalSubjectRepositoryInterface;
@@ -55,6 +57,7 @@ class RepositoryServiceProvider extends ServiceProvider
     $this->app->bind(CourseRepositoryInterface::class, CourseRepository::class);
     $this->app->bind(UserManualRepositoryInterface::class, UserManualRepository::class);
     $this->app->bind(AttachmentRepositoryInterface::class, AttachmentRepository::class);
+    $this->app->bind(ReservationRepositoryInterface::class, ReservationRepository::class);
   }
   /**
    * Bootstrap services.

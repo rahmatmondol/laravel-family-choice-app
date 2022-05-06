@@ -76,6 +76,8 @@ Route::group(
       ]);
 
       Route::get('schools/deleteImage/{id}', 'SchoolController@deleteImage');
+      #reservations
+      Route::resource('reservations', 'ReservationController')->only(['index', 'show', 'update', 'edit']);
 
 
       // });
