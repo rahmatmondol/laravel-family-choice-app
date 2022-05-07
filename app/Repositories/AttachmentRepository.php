@@ -25,7 +25,7 @@ class AttachmentRepository implements AttachmentRepositoryInterface
     return  Attachment::whenSearch($request->search)
       ->whenSchool()
       ->isActive(true)
-      ->latest()
+      // ->latest()
       ->paginate(request()->perPage ?? 20);
   }
 

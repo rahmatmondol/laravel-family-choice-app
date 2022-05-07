@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Attachment;
 use App\Scopes\OrderScope;
 use App\Traits\LocationTrait;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -72,6 +73,24 @@ class School extends Model
   {
     if (in_array(request()->sortType, ['nameAZ', 'nameZA'])) {
       return $query->orderByTranslation('title', request()->sortType == 'nameAZ' ? 'asc' : 'desc');
+    }
+  } // end of scopeWhenSearch
+
+  public function scopeWhenSortByReview($query)
+  {
+    if (request()->sortType == 'mostReview') {
+      return $query->orderBy('review', 'desc');
+    }
+  } // end of scopeWhenSearch
+
+  public function scopeWhenSortByPrice($query)
+  {
+    if (request()->sortType == 'priceLH') {
+      return $query->orderBy('fees', 'asc');
+    }
+
+    if (request()->sortType == 'priceHL') {
+      return $query->orderBy('fees', 'desc');
     }
   } // end of scopeWhenSearch
 

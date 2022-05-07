@@ -2,14 +2,16 @@
 
 namespace App\Repositories;
 
+use App\Models\Child;
 use App\Models\School;
 use App\Scopes\OrderScope;
+use App\Models\Reservation;
 use App\Models\SchoolGrade;
 use App\Models\SchoolImage;
-use App\Traits\UploadFileTrait;
-use App\Models\Reservation;
-use App\Models\Child;
 use App\Models\ChildAttachment;
+use App\Traits\UploadFileTrait;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Interfaces\SchoolRepositoryInterface;
 
 class SchoolRepository implements SchoolRepositoryInterface
@@ -32,51 +34,25 @@ class SchoolRepository implements SchoolRepositoryInterface
 
   public function getSchools($request)
   {
+
+    DB::enableQueryLog();
     $schools =  School::whenSearch()
       ->isActive(true)
       ->whenFromPrice()
       ->whenToPrice()
       ->whenSortByName()
+      ->whenSortByPrice()
+      ->whenSortByReview()
       ->whenLocation()
       ->whenGrades()
       ->whenSchoolTypes()
       ->whenEducationTypes()
       ->whenEducationalSubjects()
-      ->latest()
       ->withTranslation()
       ->with(['educationalSubjects', 'educationTypes', 'schoolTypes', 'grades'])
-      // ->limit(5)
       ->paginate($request->perPage ?? 20);
 
-    $sorting = $this->getSorting();
     return $schools;
-    // dd($schools);
-    // dd($sorting);
-
-    return $schools->setCollection($schools->sortBy($sorting['column'], 0, $sorting['type']));
-  }
-
-  public function getSorting()
-  {
-    $column = '';
-    $type = '';
-
-    if (request()->sortType != null) {
-      $req = request()->sortType;
-      if ($req == 'priceHL') {
-        $column = 'fees';
-        $type = true;
-      }
-      if ($req == 'priceLH') {
-        $column = 'fees';
-        $type = false;
-      }
-      if ($req == 'mostReview') {
-        $column = 'review';
-        $type = true;
-      }
-    }
-    return ['column' => $column, 'type' => $type];
   }
 
   public function getSchoolById($schoolId)

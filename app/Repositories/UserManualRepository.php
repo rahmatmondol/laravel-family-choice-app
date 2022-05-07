@@ -23,7 +23,7 @@ class UserManualRepository implements UserManualRepositoryInterface
   public function getUserManuals($request)
   {
     return  UserManual::isActive(true)
-      ->latest()
+      // ->latest()
       ->paginate($request->perPage ?? 20);
   }
 

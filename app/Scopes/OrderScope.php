@@ -17,6 +17,6 @@ class OrderScope implements Scope
    */
   public function apply(Builder $builder, Model $model)
   {
-    $builder->orderByRaw('-order_column desc');
+    $builder->orderByRaw('-order_column desc')->latest();
   }
 }

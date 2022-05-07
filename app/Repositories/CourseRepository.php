@@ -25,7 +25,7 @@ class CourseRepository implements CourseRepositoryInterface
     return  Course::whenSearch($request->search)
       ->whenSchool()
       ->isActive(true)
-      ->latest()
+      // ->latest()
       ->paginate(request()->perPage ?? 20);
   }
 
