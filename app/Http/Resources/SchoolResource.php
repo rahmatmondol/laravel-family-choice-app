@@ -31,6 +31,7 @@ class SchoolResource extends JsonResource
       'educationTypes'      => EducationTypeResource::collection($this->educationTypes),
       'schoolTypes'         => SchoolTypeResource::collection($this->schoolTypes),
       'grades'              => SchoolGradeResource::collection($this->grades),
+      'types'               => TypeResource::collection($this->types),
       'gallary'             => SchoolImageResource::collection($this->schoolImages),
       // 'reviews'          => ReviewResource::collection($this->reiews),
     ];
