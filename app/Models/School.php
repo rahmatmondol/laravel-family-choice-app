@@ -221,6 +221,11 @@ class School extends Model
     return $this->belongsToMany(Type::class, 'school_type', 'school_id', 'type_id')->withTranslation(app()->getLocale());
   }
 
+  public function services()
+  {
+    return $this->belongsToMany(Service::class, 'school_service')->withTranslation(app()->getLocale());
+  }
+
   public function favorites()
   {
     return $this->belongsToMany(

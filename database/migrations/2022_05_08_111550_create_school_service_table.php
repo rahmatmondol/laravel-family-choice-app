@@ -13,9 +13,12 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::table('sliders', function (Blueprint $table) {
-      $table->string('link')->nullable();
-      $table->foreignId('school_id')->nullable()->constrained()->onDelete('set null');
+    Schema::create('school_service', function (Blueprint $table) {
+      $table->id();
+      $table->foreignId('service_id')->nullable()->constrained()->onDelete('cascade');
+      $table->foreignId('school_id')->nullable()->constrained()->onDelete('cascade');
+
+      $table->timestamps();
     });
   }
 
@@ -26,8 +29,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::table('sliders', function (Blueprint $table) {
-      //
-    });
+    Schema::dropIfExists('school_service');
   }
 };

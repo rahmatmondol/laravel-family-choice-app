@@ -182,6 +182,19 @@ $title = __('site.Edit School');
                 </select>
               </div>
 
+              {{-- services --}}
+              <div class="form-group">
+                <label for="inputType">@lang('site.services')</label>
+                <select name="services[]" class="form-control selectric" multiple data-live-search="true" required>
+                  <option value="">@lang('site.services') </option>
+                  @foreach( $services as $value )
+                  <option value="{{ $value->id }}" @if( in_array($value->
+                    id,$school->services->pluck('id')->toArray())
+                    || in_array($value->id,(array)old('services'))) selected @endif >
+                    {{ $value->title }}</option>
+                  @endforeach
+                </select>
+              </div>
 
               {{-- order_column --}}
               <div class="form-group">

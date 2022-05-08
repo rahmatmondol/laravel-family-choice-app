@@ -11,6 +11,7 @@ use App\Interfaces\GradeRepositoryInterface;
 use App\Interfaces\SchoolRepositoryInterface;
 use App\Repositories\EducationTypeRepository;
 use App\Http\Requests\Admin\SchoolFormRequest;
+use App\Interfaces\ServiceRepositoryInterface;
 use App\Repositories\EducationalSubjectRepository;
 
 class SchoolController extends Controller
@@ -23,6 +24,7 @@ class SchoolController extends Controller
     private SchoolTypeRepository $schoolTypeRepository,
     private GradeRepositoryInterface $gradeRepository,
     private TypeRepositoryInterface $typeRepository,
+    private ServiceRepositoryInterface $serviceRepository,
   ) {
     // create read update delete
     $this->middleware(['permission:read_schools'])->only('index');
@@ -47,8 +49,9 @@ class SchoolController extends Controller
     $schoolTypes = $this->schoolTypeRepository->getAllSchoolTypes();
     $grades = $this->gradeRepository->getAllGrades();
     $types = $this->typeRepository->getAllTypes();
+    $services = $this->serviceRepository->getAllServices();
 
-    return view('admin.schools.create', compact('educationalSubjects', 'educationTypes', 'schoolTypes', 'grades', 'types'));
+    return view('admin.schools.create', compact('educationalSubjects', 'educationTypes', 'schoolTypes', 'grades', 'types','services'));
   } //end of create
 
   public function show($school)
@@ -77,9 +80,11 @@ class SchoolController extends Controller
     $schoolTypes = $this->schoolTypeRepository->getAllSchoolTypes();
     $grades = $this->gradeRepository->getAllGrades();
     $types = $this->typeRepository->getAllTypes();
+    $services = $this->serviceRepository->getAllServices();
+
 
     $school = $this->schoolRepository->getSchoolById($school);
-    return view('admin.schools.edit', compact('school', 'educationalSubjects', 'educationTypes', 'schoolTypes', 'grades', 'types'));
+    return view('admin.schools.edit', compact('school', 'educationalSubjects', 'educationTypes', 'schoolTypes', 'grades', 'types','services'));
   } //end of edit
 
   public function update(SchoolFormRequest $request, School $school)
