@@ -42,6 +42,6 @@ class Service extends Model
   /////////////////// start relationships ///////////////////////////////
   public function schools()
   {
-    return $this->belongsToMany(Service::class, 'school_services')->withTranslation(app()->getLocale());
+    return $this->belongsToMany(Service::class, 'school_service')->withTranslation(app()->getLocale());
   }
 }
