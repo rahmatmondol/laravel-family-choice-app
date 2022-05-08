@@ -73,11 +73,12 @@ Route::group(
         'sliders'             => 'SliderController',
         'user_manuals'        => 'UserManualController',
         'attachments'         => 'AttachmentController',
+        'reservations'         => 'ReservationController',
       ]);
 
       Route::get('schools/deleteImage/{id}', 'SchoolController@deleteImage');
       #reservations
-      Route::resource('reservations', 'ReservationController')->only(['index', 'show', 'update', 'edit']);
+      // Route::resource('reservations', 'ReservationController')->only(['index', 'show', 'update', 'edit']);
 
 
       // });
