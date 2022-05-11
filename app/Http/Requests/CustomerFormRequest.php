@@ -49,6 +49,7 @@ class CustomerFormRequest extends BaseRequest
     $this->rules += [
       'email' => ['required', 'email', 'unique:customers,email,' . $customer->id, new CheckEmailExist("customers")],
       'phone' => ['bail', 'required', 'unique:customers,phone,' . $customer->id],
+      'password' => 'nullable|confirmed',
       'image' => validateImage(),
     ];
     return $this->rules;
