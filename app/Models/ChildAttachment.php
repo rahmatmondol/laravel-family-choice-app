@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ChildAttachment extends Model
 {
   use HasFactory;
+  protected $guarded = [];
   public function getAttachmentPathAttribute()
   {
     return asset('uploads/child_attachments/' . $this->attachment);

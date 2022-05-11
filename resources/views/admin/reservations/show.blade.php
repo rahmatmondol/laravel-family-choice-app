@@ -36,25 +36,39 @@ $title = __('site.Show Reservation');
         <table class="table table-striped table-bordered">
           <tbody>
             <tr>
-              <td>@lang('site.Name')</td>
-              <td>{{ $admin->name }}</td>
+              <td>@lang('site.Parent Name')</td>
+              <td>{{ $reservation->parent_name }}</td>
+            </tr>
+            <tr>
+              <td>@lang('site.Total Fees')</td>
+              <td>{{ $reservation->total_fees }} </td>
+            </tr>
+            <tr>
+              <td>@lang('site.Address')</td>
+              <td>{{ $reservation->address }}</td>
+            </tr>
+            <tr>
+              <td>@lang('site.Identification Number')</td>
+              <td>{{ $reservation->identification_number }}</td>
+            </tr>
+            <tr>
+              <td>@lang('site.School')</td>
+              <td>
+                <a href="{{ route('admin.schools.show', ['school'=>$reservation->school_id]) }}"
+                  class="btn btn-primary btn-sm" target="_blank">{{ $reservation->school?->title }}</a>
+              </td>
+            </tr>
+            <tr>
+              <td>@lang('site.Customer')</td>
+              <td>
+                <a href="{{ route('admin.customers.show', ['customer'=>$reservation->customer_id]) }}"
+                  class="btn btn-primary btn-sm" target="_blank">{{ $reservation->customer?->full_name }}</a>
+              </td>
             </tr>
             <tr>
               <td>@lang('site.Status')</td>
-              <td>@include('admin.partials._render_status',['status'=>$admin->status])</td>
-            </tr>
-            <tr>
-              <td>@lang('site.Permissions')</td>
-              <td>
-                @foreach ($admin->permissions as $permission)
-                <span class="btn btn-primary btn-customs py-1 px-2">{{ $permission->name }}</span>
-                @endforeach
-              </td>
-            </tr>
-            <tr>
-              <td>@lang('site.Image')</td>
-              <td><img src="{{ $admin->image_path }}" style="width: 100px" class="img-thumbnail image-preview1" alt="">
-              </td>
+              <td>@lang("site.reservation_status.{$reservation->status}")</td>
+              {{-- <td>@include('admin.partials._render_status',['status'=>$reservation->status])</td> --}}
             </tr>
           </tbody>
         </table>

@@ -220,6 +220,8 @@ class SchoolRepository implements SchoolRepositoryInterface
     $customer = getCustomer();
     $totalFees = 0;
 
+    // dd($request->all());
+
     $reservation = Reservation::create([
       'parent_name'           => $request->parent_name,
       'address'               => $request->address,
@@ -250,14 +252,17 @@ class SchoolRepository implements SchoolRepositoryInterface
         // 'total_fees'            => $subFees,
       ]);
 
-      foreach ($item['attachments'] as $key => $attachment) {
-        $file_path = $this->uploadFile($attachment, 'attachment_reservation/', '');
+      // dd($item['attachments']);
 
-        if ($file_path) {
+      foreach ($item['attachments'] as $key => $attachment) {
+        $file_name = $this->uploadFile($attachment, 'child_attachments/', '');
+        // dd($key);
+
+        if ($file_name) {
           ChildAttachment::create([
             'attachment_id' => (int)$key,
             'child_id'      => $child->id,
-            'attachment'    => $file_path,
+            'attachment'    => $file_name,
           ]);
         }
         // dd('done');

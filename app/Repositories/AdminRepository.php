@@ -38,6 +38,8 @@ class AdminRepository implements AdminRepositoryInterface
   {
     $request_data = $this->getAdminRequestData($request);
 
+    $request_data['status'] = $request->boolean('status', 0);
+
     if ($request->image) {
       $request_data['image'] = $this->uploadImages($request->image, 'admins/', '', '');
     } //end of if
@@ -58,6 +60,8 @@ class AdminRepository implements AdminRepositoryInterface
   public function updateAdmin($request, $admin)
   {
     $request_data = $this->getAdminRequestData($request);
+
+    $request_data['status'] = $request->boolean('status', 0);
 
     if ($request->image) {
       $request_data['image'] = $this->uploadImages($request->image, 'admins/', $admin->image);

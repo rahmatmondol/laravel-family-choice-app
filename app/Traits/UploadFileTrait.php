@@ -28,6 +28,8 @@ trait UploadFileTrait
   function uploadFile($req, $path, $deleteOldFile)
   {
 
+    // dd($req);
+    // dd($req instanceof  UploadedFile ? 'file' : 'not file');
     if ($req instanceof  UploadedFile) {
       if ($deleteOldFile != '' && $deleteOldFile != 'default.png') {
         $this->removeImage($deleteOldFile, $path);

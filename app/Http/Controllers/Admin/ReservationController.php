@@ -44,6 +44,7 @@ class ReservationController extends Controller
     return view('admin.reservations.show', compact('reservation'));
   } //end of create
 
+  // new Enum(TicketStatus::class)]
   public function store(ReservationFormRequest $request)
   {
     $this->reservationRepository->createReservation($request);

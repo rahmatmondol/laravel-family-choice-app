@@ -26,8 +26,7 @@ class ReservationRepository implements ReservationRepositoryInterface
   }
   public function getReservationById($reservationId)
   {
-    $reservation = Reservation::findOrFail($reservationId);
-    return $reservation;
+    return Reservation::findOrFail($reservationId);
   }
 
   public function getReservationRequestData($request)

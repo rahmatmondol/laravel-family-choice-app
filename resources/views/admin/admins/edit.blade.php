@@ -80,6 +80,8 @@ $title = __('site.Edit Admin');
               <div class="form-group">
                 <label>@lang('site.Roles')</label>
                 <select name="roles[]" class="form-control selectric" multiple required>
+                  <option value="">@lang('site.Roles')</option>
+
                   @foreach ($roles as $role)
                   <option value="{{ $role->id }}" @if( in_array($role->id,$admin->roles->pluck('id')->toArray()) ||
                     in_array($role->id,(array)old('roles'))) selected @endif>{{

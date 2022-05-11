@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Enums\PaymentStatus;
+use App\Enums\ReservationStatus;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -19,8 +21,8 @@ return new class extends Migration
       $table->string('address');
       $table->double('total_fees')->nullable();
       $table->text('reason_of_refuse')->nullable();
-      $table->enum('status', ['pending', 'rejected', 'approved'])->default('pending'); // default active
-      $table->enum('payment_status', ['failed', 'succeed'])->nullable();
+      $table->enum('status', ['pending', 'rejected', 'accepted'])->default(ReservationStatus::Pending->value); // default active
+      $table->enum('payment_status', ['pending', 'failed', 'succeeded', 'refunded'])->default(PaymentStatus::Pending->value)->nullable();
       $table->string('identification_number'); // text
       $table->foreignId('school_id')->nullable()->constrained()->onDelete('set null');
       $table->foreignId('customer_id')->nullable()->constrained()->onDelete('set null');
