@@ -42,6 +42,10 @@ class AdminRepository implements AdminRepositoryInterface
       $request_data['image'] = $this->uploadImages($request->image, 'admins/', '', '');
     } //end of if
 
+    if ($request->password) {
+      $request_data['password'] = bcrypt($request->password);
+    }
+
     $admin = Admin::create($request_data);
 
     if ($request->roles) {
