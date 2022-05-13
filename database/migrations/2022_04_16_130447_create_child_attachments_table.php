@@ -17,7 +17,7 @@ return new class extends Migration
       $table->id();
       $table->foreignId('child_id')->constrained()->onDelete('cascade');
       $table->foreignId('attachment_id')->constrained()->onDelete('cascade');
-      $table->string('attachment')->nullable();
+      $table->string('attachment_file')->nullable();
       $table->timestamps();
     });
   }

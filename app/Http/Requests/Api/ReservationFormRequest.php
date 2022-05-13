@@ -44,7 +44,6 @@ class ReservationFormRequest extends BaseRequest
 
     $school = School::find(request()->school_id);
 
-    // dd($school->attachments->pluck('id')->toArray());
     foreach ($school->attachments->pluck('id')->toArray() as $attachment_id) {
       $this->rules += ['children.*.attachments.*.' . $attachment_id => ['required']];
     } // end of  for each
@@ -67,7 +66,7 @@ class ReservationFormRequest extends BaseRequest
 
     $reservation = Reservation::find(request()->reservation_id);
 
-    
+
     $school = School::find($reservation->school_id);
     $children_ids = $reservation->children->pluck('id');
 

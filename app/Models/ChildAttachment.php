@@ -9,9 +9,9 @@ class ChildAttachment extends Model
 {
   use HasFactory;
   protected $guarded = [];
-  public function getAttachmentPathAttribute()
+  public function getAttachmentFilePathAttribute()
   {
-    return asset('uploads/child_attachments/' . $this->attachment);
+    return asset('uploads/child_attachments/' . $this->attachment_file);
   } //end of image path attribute
 
   public function child()

@@ -262,7 +262,7 @@ class SchoolRepository implements SchoolRepositoryInterface
           ChildAttachment::create([
             'attachment_id' => (int)$key,
             'child_id'      => $child->id,
-            'attachment'    => $file_name,
+            'attachment_file'    => $file_name,
           ]);
         }
         // dd('done');

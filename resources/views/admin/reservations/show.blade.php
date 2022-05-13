@@ -32,7 +32,8 @@ $title = __('site.Show Reservation');
   <!-- Content -->
   <div class="card mt-4 content-table">
     <div class="card-body">
-      <div class="table-responsive">
+      <h4>@lang('site.Reservation Details')</h4>
+      <div class="table-res ponsive">
         <table class="table table-striped table-bordered">
           <tbody>
             <tr>
@@ -74,6 +75,55 @@ $title = __('site.Show Reservation');
         </table>
       </div>
     </div>
+
+    @foreach($reservation->children as $key => $child)
+    <div class="card-body">
+      <h4>@lang('site.Student Details')</h4>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <tbody>
+            <tr>
+              <td>@lang('site.Child Name')</td>
+              <td>{{ $child->child_name }}</td>
+            </tr>
+            <tr>
+              <td>@lang('site.Date of birth')</td>
+              <td>{{ $child->date_of_birth }} </td>
+            </tr>
+            <tr>
+              <td>@lang('site.Gender')</td>
+              <td>@lang('site.'.$child->gender)</td>
+            </tr>
+            <tr>
+              <td>@lang('site.Grade')</td>
+              <td>{{ $child->grade?->title }}</td>
+            </tr>
+            <tr>
+              <td>@lang('site.Fees')</td>
+              <td>{{ $child->fees }}</td>
+            </tr>
+            <tr>
+              <td>@lang('site.Administrative Expenses')</td>
+              <td> {{ $child->administrative_expenses}}</td>
+            </tr>
+            <tr>
+              <td>@lang('site.Status')</td>
+              <td>@lang("site.reservation_status.".$reservation->status)</td>
+              {{-- <td>@include('admin.partials._render_status',['status'=>$reservation->status])</td> --}}
+            </tr>
+            @foreach ($child->attachments as $attachment)
+            <tr>
+              <td>{{ $attachment->attachment?->title }}</td>
+              <td><a href="{{ $attachment->attachment_file_path }}" class="btn btn-primary btn-sm"
+                  target="_blank">@lang('site.Download')</a></td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+    @endforeach
+
   </div>
   <!-- //Content -->
 </div>
