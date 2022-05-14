@@ -16,7 +16,6 @@ class ReservationResource extends JsonResource
    */
   public function toArray($request)
   {
-    // dd($this->reservationChildren);
     return [
       'id' =>  $this->id,
       'parent_name'  => $this->parent_name,

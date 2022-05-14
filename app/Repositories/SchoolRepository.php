@@ -228,7 +228,6 @@ class SchoolRepository implements SchoolRepositoryInterface
       'identification_number' => $request->identification_number,
       'school_id'             => $request->school_id,
       'customer_id'           => $customer->id,
-      'status'                => $request->status,
     ]);
 
     if ($child = $request->child) {
@@ -277,6 +276,8 @@ class SchoolRepository implements SchoolRepositoryInterface
   #addReservation
   public function updateReservation($request)
   {
+    // dd($request->child);
+    // dd($request->all());
     $reservation = Reservation::findOrFail($request->reservation_id);
     $reservation->update([
       'parent_name'           => $request->parent_name,
@@ -284,31 +285,44 @@ class SchoolRepository implements SchoolRepositoryInterface
       'identification_number' => $request->identification_number,
     ]);
 
-    foreach ($request->children as $item) {
+    $child = $reservation->child;
+    if ($request->child) {
+      $child->update([
+        'child_name'            => $child['child_name'],
+        'date_of_birth'         => $child['date_of_birth'],
+        'gender'                => $child['gender'],
+      ]);
+    }
 
-      $child = Child::find($item['child_id']);
+    if ($request_child = $request->child) {
 
       $child->update([
-        'child_name'            => $item['child_name'],
-        'date_of_birth'         => $item['date_of_birth'],
-        'gender'                => $item['gender'],
-        'reservation_id'        => $reservation->id,
+        'child_name'            => $request_child['child_name'],
+        'date_of_birth'         => $request_child['date_of_birth'],
+        'gender'                => $request_child['gender'],
       ]);
 
-      foreach ($item['attachments'] as $key => $attachment) {
-
-        $file_path = $this->uploadFile($attachment, 'attachment_reservation/', '');
-
-        if ($file_path) {
-          ChildAttachment::updateOrCreate([
-            'attachment_id' => (int)$key,
-            'child_id'      => $item['child_id']
+      if ($request_child['attachments']) {
+        foreach ($request_child['attachments'] as $id => $attachment) {
+          $child_attachment =  ChildAttachment::where([[
+            'attachment_id', $id
           ], [
-            'attachment'    => $file_path,
-          ]);
-        }
-        // dd('done');
-      } // end $child['attachments']
+            'child_id', $child->id
+          ]])->first();
+
+          $file_name = $this->uploadFile($attachment, 'child_attachments/', $child_attachment->attachment_file);
+
+          if ($file_name) {
+            ChildAttachment::where([[
+              'attachment_id', $id
+            ], [
+              'child_id', $child->id
+            ]])->update([
+              'attachment_file'    => $file_name,
+            ]);
+          }
+        } // end $child['attachments']
+      }
     } // end $request->children
 
     return $reservation;
@@ -317,7 +331,7 @@ class SchoolRepository implements SchoolRepositoryInterface
   #customerReservations
   public function customerReservations()
   {
-    return getCustomer()->reservations()->with(['children.attachments'])->latest()->paginate(request()->perPage ?? 20);
+    return getCustomer()->reservations()->with(['child.attachments'])->latest()->paginate(request()->perPage ?? 20);
   }
 
   #customerReservations

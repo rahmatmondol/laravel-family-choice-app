@@ -27,6 +27,6 @@ return [
     PaymentStatus::Refunded->value => 'Refunded',
   ],
   'this course not related to current school' => 'this course not related to current school',
-  '' => '',
+  'this child not related to current reservation' => 'this child not related to current reservation',
   '' => '',
 ];
