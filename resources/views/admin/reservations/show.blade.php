@@ -76,7 +76,7 @@ $title = __('site.Show Reservation');
       </div>
     </div>
 
-    @foreach($reservation->children as $key => $child)
+    @if($child=$reservation->child)
     <div class="card-body">
       <h4>@lang('site.Student Details')</h4>
       <div class="table-responsive">
@@ -122,7 +122,7 @@ $title = __('site.Show Reservation');
         </table>
       </div>
     </div>
-    @endforeach
+    @endif
 
   </div>
   <!-- //Content -->

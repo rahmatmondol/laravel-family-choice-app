@@ -9,9 +9,13 @@ use Intervention\Image\Facades\Image;
 
 trait UploadFileTrait
 {
-  #upload image
+  # upload image
   function uploadImages($req, $path, $deleteOldImage, $meta = null)
   {
+    if (!is_dir(public_path('uploads') . '/' . $path)) {
+      File::makeDirectory(public_path('uploads/' . $path), 0755, true, true);
+    }
+
     if ($req instanceof  UploadedFile) {
       // delete old image
       if ($deleteOldImage != '' && $deleteOldImage != 'default.png') {

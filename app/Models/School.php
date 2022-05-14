@@ -181,9 +181,9 @@ class School extends Model
     return $this->hasMany(SchoolImage::class);
   } // end of user
 
-  public function school_reservations()
+  public function reservations()
   {
-    return $this->hasMany(SchoolReservation::class);
+    return $this->hasMany(Reservation::class);
   } //end fo category
 
   public function courses()

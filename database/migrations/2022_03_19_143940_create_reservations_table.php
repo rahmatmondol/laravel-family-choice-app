@@ -25,6 +25,7 @@ return new class extends Migration
       $table->enum('payment_status', ['pending', 'failed', 'succeeded', 'refunded'])->default(PaymentStatus::Pending->value)->nullable();
       $table->string('identification_number'); // text
       $table->foreignId('school_id')->nullable()->constrained()->onDelete('set null');
+      $table->foreignId('course_id')->nullable()->constrained()->onDelete('set null');
       $table->foreignId('customer_id')->nullable()->constrained()->onDelete('set null');
 
       $table->timestamps();

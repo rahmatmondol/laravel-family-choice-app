@@ -16,8 +16,8 @@ class ChildAttachmentResource extends JsonResource
   {
     return [
       'id'         =>  $this->id,
-      'title'      =>  $this->attachment,
-      'attachment' =>  $this->attachment_path,
+      'title'      =>  $this->attachment?->title,
+      'attachment' =>  $this->attachment_file_path,
     ];
   }
 }

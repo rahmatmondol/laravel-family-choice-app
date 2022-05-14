@@ -230,33 +230,28 @@ class SchoolRepository implements SchoolRepositoryInterface
       'customer_id'           => $customer->id,
     ]);
 
-    foreach ($request->children as $item) {
+    if ($child = $request->child) {
 
       $schoolGrade = SchoolGrade::where([[
         'school_id', $request->school_id
       ], [
-        'grade_id',   $item['grade_id']
+        'grade_id',   $child['grade_id']
       ]])->first();
 
-      $subFees = $schoolGrade->fees + $schoolGrade->administrative_expenses;
-      $totalFees += $subFees;
+      $totalFees = $schoolGrade->fees + $schoolGrade->administrative_expenses;
 
-      $child = Child::create([
-        'child_name'              => $item['child_name'],
-        'date_of_birth'           => $item['date_of_birth'],
-        'gender'                  => $item['gender'],
-        'grade_id'                => $item['grade_id'],
+      $child = $reservation->child()->create([
+        'child_name'              => $child['child_name'],
+        'date_of_birth'           => $child['date_of_birth'],
+        'gender'                  => $child['gender'],
+        'grade_id'                => $child['grade_id'],
         'reservation_id'          => $reservation->id,
         'fees'                    => $schoolGrade->fees,
         'administrative_expenses' => $schoolGrade->administrative_expenses,
-        // 'total_fees'            => $subFees,
       ]);
 
-      // dd($item['attachments']);
-
-      foreach ($item['attachments'] as $key => $attachment) {
+      foreach ($request->child['attachments'] as $key => $attachment) {
         $file_name = $this->uploadFile($attachment, 'child_attachments/', '');
-        // dd($key);
 
         if ($file_name) {
           ChildAttachment::create([
@@ -265,13 +260,15 @@ class SchoolRepository implements SchoolRepositoryInterface
             'attachment_file'    => $file_name,
           ]);
         }
-        // dd('done');
       } // end $child['attachments']
+
+
     } // end $request->children
 
     $reservation->update([
       'total_fees' => $totalFees,
     ]);
+    // dd('done');
 
     return $reservation;
   }

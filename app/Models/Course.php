@@ -61,5 +61,9 @@ class Course extends Model
     return $this->belongsTo(School::class);
   } //end fo category
 
+  public function reservations()
+  {
+    return $this->hasMany(Reservation::class);
+  } //end fo category
 
 }

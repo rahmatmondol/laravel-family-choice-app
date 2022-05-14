@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\Api;
 
+use Carbon\Carbon;
 use App\Models\School;
 use App\Models\Reservation;
 use App\Rules\CheckEmailExist;
 use App\Http\Requests\BaseRequest;
+use App\Models\Course;
 
 class ReservationFormRequest extends BaseRequest
 {
@@ -34,18 +36,24 @@ class ReservationFormRequest extends BaseRequest
   {
     $this->rules += [
       'school_id' => ['required', 'bail', 'exists:schools,id'],
-      'children' => ['required', 'array'],
-      'children.*.child_name' => ['required', 'string', 'max:255'],
-      'children.*.date_of_birth' => ['required', 'date', 'before:yesterday', 'date_format:Y-m-d'],
-      'children.*.gender' => ['required', 'in:male,female'],
-      'children.*.grade_id' => ['required', 'exists:grades,id'],
-      'children.*.attachments' => ['required', 'array'],
+      'course_id' => ['required', 'bail', 'exists:courses,id', function ($attribute, $value, $fail) {
+        $course = Course::find($value);
+        if ($course->school_id != request()->school_id) {
+          $fail('site.this course not related to current school');
+        }
+      }],
+      'child' => ['required'],
+      'child.child_name' => ['required', 'string', 'max:255'],
+      'child.date_of_birth' => ['required', 'date', 'before:' . Carbon::now()->subYear(2)->format('Y-m-d'), 'date_format:Y-m-d'],
+      'child.gender' => ['required', 'in:male,female'],
+      'child.grade_id' => ['required', 'exists:grades,id'],
+      // 'child.attachments' => ['required', 'array'],
     ];
 
     $school = School::find(request()->school_id);
 
     foreach ($school->attachments->pluck('id')->toArray() as $attachment_id) {
-      $this->rules += ['children.*.attachments.*.' . $attachment_id => ['required']];
+      $this->rules += ['child.attachments.' . $attachment_id => ['required']];
     } // end of  for each
 
     // dd($this->rules);

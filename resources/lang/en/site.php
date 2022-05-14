@@ -26,7 +26,7 @@ return [
     PaymentStatus::Failed->value => 'Failed',
     PaymentStatus::Refunded->value => 'Refunded',
   ],
-  '' => '',
+  'this course not related to current school' => 'this course not related to current school',
   '' => '',
   '' => '',
 ];
