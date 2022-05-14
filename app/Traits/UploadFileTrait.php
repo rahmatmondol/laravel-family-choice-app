@@ -32,7 +32,10 @@ trait UploadFileTrait
   function uploadFile($req, $path, $deleteOldFile)
   {
 
-    // dd($req);
+    if (!is_dir(public_path('uploads') . '/' . $path)) {
+      File::makeDirectory(public_path('uploads/' . $path), 0755, true, true);
+    }
+
     // dd($req instanceof  UploadedFile ? 'file' : 'not file');
     if ($req instanceof  UploadedFile) {
       if ($deleteOldFile != '' && $deleteOldFile != 'default.png') {

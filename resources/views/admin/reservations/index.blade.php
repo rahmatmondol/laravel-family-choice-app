@@ -115,7 +115,7 @@ $title = __('site.Reservations');
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->customer?->full_name }}</a>
               </td>
               <td class="project-state">
-                @include('admin.partials._render_status',['status'=>$reservation->status])
+                @include('admin.partials._render_reservation_status',['status'=>$reservation->status])
               </td>
               <td class="project-actions text-right">
 

@@ -68,8 +68,8 @@ $title = __('site.Show Reservation');
             </tr>
             <tr>
               <td>@lang('site.Status')</td>
-              <td>@lang("site.reservation_status.{$reservation->status}")</td>
-              {{-- <td>@include('admin.partials._render_status',['status'=>$reservation->status])</td> --}}
+              {{-- <td>@lang("site.reservation_status.{$reservation->status}")</td> --}}
+              <td>@include('admin.partials._render_reservation_status',['status'=>$reservation->status])</td>
             </tr>
           </tbody>
         </table>

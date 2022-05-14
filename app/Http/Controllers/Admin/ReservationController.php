@@ -30,32 +30,12 @@ class ReservationController extends Controller
     return view('admin.reservations.index', compact('reservations'));
   } // end of index
 
-  public function create(Request $request)
-  {
-    // $roles = $this->roleRepository->getAllRoles();
-    $roles = '';
-    return view('admin.reservations.create', compact('roles'));
-  } //end of create
-
   public function show($reservation)
   {
     $reservation = $this->reservationRepository->getReservationById($reservation);
 
     return view('admin.reservations.show', compact('reservation'));
   } //end of create
-
-  // new Enum(TicketStatus::class)]
-  public function store(ReservationFormRequest $request)
-  {
-    $this->reservationRepository->createReservation($request);
-
-    session()->flash('success', __('site.Data added successfully'));
-
-    if ($request->continue) {
-      return redirect()->route('admin.reservations.index', ['page' => session('currentPage')]);
-    }
-    return redirect()->back();
-  } //end of store
 
   public function edit($reservation)
   {

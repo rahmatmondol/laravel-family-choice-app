@@ -29,54 +29,21 @@ class ReservationRepository implements ReservationRepositoryInterface
     return Reservation::findOrFail($reservationId);
   }
 
-  public function getReservationRequestData($request)
-  {
-    $request_data = array_merge([
-      'status', 'order_column', 'type', 'phone', 'whatsapp', 'email', 'available_seats', 'fees', 'lat', 'lng'
-    ], config('translatable.locales'));
-
-    return  $request->only($request_data);
-  }
-
   public function updateReservation($request, $reservation)
   {
-    $request_data = $this->getReservationRequestData($request);
 
-    if ($request->image) {
-      $request_data['image'] = $this->uploadImages($request->image, 'reservations/', $reservation->image);
-    } //end of if
+    $reservation->update([
+      'status' => $request->status,
+      'reason_of_refuse' => $request->reason_of_refuse,
+    ]);
 
-    if ($request->cover) {
-      $request_data['cover'] = $this->uploadImages($request->cover, 'reservations/', $reservation->cover);
-    } //end of if
-
-    if ($request->password) {
-      $request_data['password'] = bcrypt($request->password);
-    }
-
-    $reservation->update($request_data);
+    $messages = [
+      'pending' => __('site.Your reservatin number is pending', ['reservation_number' => $reservation->id]),
+      'accepted' => __('site.Your reservatin number is accepted', ['reservation_number' => $reservation->id]),
+      'rejected' => __('site.Your reservatin number is rejected', ['reservation_number' => $reservation->id]),
+    ];
 
 
-    $educationalSubjects = array_filter((array)$request->educationalSubjects, function ($value) {
-      return !is_null($value);
-    });
-
-    $educationTypes = array_filter((array)$request->educationTypes, function ($value) {
-      return !is_null($value);
-    });
-
-    $reservationTypes = array_filter((array)$request->reservationTypes, function ($value) {
-      return !is_null($value);
-    });
-
-    $types = array_filter((array)$request->types, function ($value) {
-      return !is_null($value);
-    });
-
-    $reservation->educationalSubjects()->sync($educationalSubjects);
-    $reservation->educationTypes()->sync($educationTypes);
-    $reservation->reservationTypes()->sync($reservationTypes);
-    $reservation->reservationTypes()->sync($types);
     return true;
   }
 
