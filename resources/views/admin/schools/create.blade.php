@@ -11,7 +11,6 @@ $title = __('site.Create School');
 
 <script type="text/javascript" src="{!! asset('admin/js/initMap.js') !!}"></script>
 
-
 <!-- en  get states and regoins and streests  -->
 <script>
   // Initialize the map.
@@ -19,7 +18,7 @@ $title = __('site.Create School');
     $lat = !empty(old('lat')) ? old('lat') : 24.713552;
     $lng = !empty(old('lng')) ? old('lng') : 46.675297;
   @endphp
-  setCoords({{ $lat }},{{ $lng }})
+  setCoordinates({{ $lat }},{{ $lng }})
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key={{env('MAP_KEY')}}&callback&callback=initMap&libraries=places"

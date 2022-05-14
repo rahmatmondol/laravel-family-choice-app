@@ -18,7 +18,7 @@ $title = __('site.Edit City');
     $lat = old('lat',$city->lat)??24.713552;
     $lng = old('lng',$city->lng)??46.675297;
   @endphp
-  setCoords({{ $lat }},{{ $lng }})
+  setCoordinates({{ $lat }},{{ $lng }})
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key={{env('MAP_KEY')}}&callback&callback=initMap&libraries=places"

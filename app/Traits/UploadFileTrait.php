@@ -16,7 +16,7 @@ trait UploadFileTrait
       File::makeDirectory(public_path('uploads/' . $path), 0755, true, true);
     }
 
-    if ($req instanceof  UploadedFile) {
+    if ($req instanceof  UploadedFile && $req->isValid()) {
       // delete old image
       if ($deleteOldImage != '' && $deleteOldImage != 'default.png') {
         $this->removeImage($deleteOldImage, $path);
@@ -37,7 +37,7 @@ trait UploadFileTrait
     }
 
     // dd($req instanceof  UploadedFile ? 'file' : 'not file');
-    if ($req instanceof  UploadedFile) {
+    if ($req instanceof  UploadedFile && $req->isValid()) {
       if ($deleteOldFile != '' && $deleteOldFile != 'default.png') {
         $this->removeImage($deleteOldFile, $path);
       }

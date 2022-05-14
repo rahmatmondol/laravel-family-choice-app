@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Reservation extends Model
 {
@@ -57,7 +57,7 @@ class Reservation extends Model
 
   public function course()
   {
-    return $this->belongsTo(Course::class);
+    return  this->belongsTo(Course::class);
   }
 
   public function child()

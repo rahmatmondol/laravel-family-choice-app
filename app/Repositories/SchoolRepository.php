@@ -228,6 +228,7 @@ class SchoolRepository implements SchoolRepositoryInterface
       'identification_number' => $request->identification_number,
       'school_id'             => $request->school_id,
       'customer_id'           => $customer->id,
+      'status'                => $request->status,
     ]);
 
     if ($child = $request->child) {

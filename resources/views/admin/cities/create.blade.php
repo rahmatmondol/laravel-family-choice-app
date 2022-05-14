@@ -20,7 +20,7 @@ $title = __('site.Create City');
     $lat = !empty(old('lat')) ? old('lat') : 24.713552;
     $lng = !empty(old('lng')) ? old('lng') : 46.675297;
   @endphp
-  setCoords({{ $lat }},{{ $lng }})
+  setCoordinates({{ $lat }},{{ $lng }})
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key={{env('MAP_KEY')}}&callback&callback=initMap&libraries=places"
