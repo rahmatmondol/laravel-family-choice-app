@@ -23,7 +23,7 @@ $title = __('site.Reservations');
 
         </div>
         <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
+          <ol class="breadcrumb float-sm-center">
             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -87,37 +87,38 @@ $title = __('site.Reservations');
               <th style="width: 20%" class="text-center">
                 @lang('site.Customer')
               </th>
-              <th style="width: 20%">
+              <th style="width: 20%" class="text-center">
               </th>
             </tr>
           </thead>
           <tbody>
             @forelse ($reservations as $reservation )
             <tr>
-              <td>
+              <td class="text-center">
                 {{ $loop->iteration }}
               </td>
-              <td>
+              <td class="text-center">
                 {{ $reservation->parent_name }}
               </td>
-              <td>
-                @lang('site.'.$reservation->status)
+              <td class="text-center">
+                @include('admin.partials._render_reservation_status',['status'=>$reservation->status])
               </td>
-              <td>
-                @lang('site.'.$reservation->payment_status)
+              <td class="text-center">
+
+                @include('admin.partials._render_payment_status',['status'=>$reservation->payment_status])
               </td>
-              <td>
+              <td class="text-center">
+
                 <a href="{{ route('admin.schools.show', ['school'=>$reservation->school_id]) }}"
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->school?->title }}</a>
               </td>
-              <td>
+              <td class="text-center">
+
                 <a href="{{ route('admin.customers.show', ['customer'=>$reservation->customer_id]) }}"
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->customer?->full_name }}</a>
               </td>
-              <td class="project-state">
-                @include('admin.partials._render_reservation_status',['status'=>$reservation->status])
-              </td>
-              <td class="project-actions text-right">
+
+              <td class="text-center">
 
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
@@ -133,7 +134,8 @@ $title = __('site.Reservations');
             </tr>
             @empty
             <tr>
-              <td>
+              <td class="text-center">
+
                 @include('admin.partials.no_data_found')
               </td>
             </tr>
