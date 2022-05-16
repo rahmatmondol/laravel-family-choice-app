@@ -276,7 +276,6 @@ class SchoolRepository implements SchoolRepositoryInterface
   #addReservation
   public function updateReservation($request)
   {
-    // dd($request->child);
     // dd($request->all());
     $reservation = Reservation::findOrFail($request->reservation_id);
     $reservation->update([
@@ -302,7 +301,7 @@ class SchoolRepository implements SchoolRepositoryInterface
         'gender'                => $request_child['gender'],
       ]);
 
-      if ($request_child['attachments']) {
+      if (isset($request->child['attachments'])) {
         foreach ($request_child['attachments'] as $id => $attachment) {
           $child_attachment =  ChildAttachment::where([[
             'attachment_id', $id

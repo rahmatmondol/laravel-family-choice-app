@@ -57,7 +57,7 @@ class ReservationFormRequest extends BaseRequest
 
     if ($school) {
       foreach (optional($school)->attachments->pluck('id')->toArray() as $attachment_id) {
-        $this->rules += ['child.attachments.' . $attachment_id => ['required']];
+        $this->rules += ['child.attachments.' . $attachment_id => ['required', 'file']];
       } // end of  for each
     }
 
@@ -83,12 +83,14 @@ class ReservationFormRequest extends BaseRequest
       'child.grade_id' => ['required', 'exists:grades,id'],
     ];
 
+    // dd($reservation->school->attachments);
     if ($reservation) {
       foreach ($reservation->school->attachments->pluck('id')->toArray() as $attachment_id) {
-        $this->rules += ['child.attachments.' . $attachment_id => ['nullable']];
+        $this->rules += ['child.attachments.' . $attachment_id => ['nullable', 'file']];
       } // end of  for each
     }
 
+    // dd($reservation);
     return $this->rules;
   }
 }
