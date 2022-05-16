@@ -14,6 +14,8 @@ class ReservationFormRequest extends BaseRequest
 {
   public $rules = [];
 
+  protected $stopOnFirstFailure = true;
+
   public function authorize()
   {
     return true;
@@ -27,7 +29,7 @@ class ReservationFormRequest extends BaseRequest
       'course_id' => ['required', 'bail', 'exists:courses,id', function ($attribute, $value, $fail) {
         $course = Course::find($value);
         if ($course->school_id != request()->school_id) {
-          $fail('site.this course not related to current school');
+          $fail(__('site.this course not related to current school'));
         }
       }],
     ];
@@ -53,9 +55,11 @@ class ReservationFormRequest extends BaseRequest
 
     $school = School::find(request()->school_id);
 
-    foreach ($school->attachments->pluck('id')->toArray() as $attachment_id) {
-      $this->rules += ['child.attachments.' . $attachment_id => ['required']];
-    } // end of  for each
+    if ($school) {
+      foreach (optional($school)->attachments->pluck('id')->toArray() as $attachment_id) {
+        $this->rules += ['child.attachments.' . $attachment_id => ['required']];
+      } // end of  for each
+    }
 
     return $this->rules;
   }
@@ -79,9 +83,11 @@ class ReservationFormRequest extends BaseRequest
       'child.grade_id' => ['required', 'exists:grades,id'],
     ];
 
-    foreach ($reservation->school->attachments->pluck('id')->toArray() as $attachment_id) {
-      $this->rules += ['child.attachments.' . $attachment_id => ['nullable']];
-    } // end of  for each
+    if ($reservation) {
+      foreach ($reservation->school->attachments->pluck('id')->toArray() as $attachment_id) {
+        $this->rules += ['child.attachments.' . $attachment_id => ['nullable']];
+      } // end of  for each
+    }
 
     return $this->rules;
   }
