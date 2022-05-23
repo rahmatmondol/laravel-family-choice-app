@@ -19,6 +19,7 @@ class SchoolResource extends JsonResource
       'whatsapp'            => (string) $this->whatsapp,
       'email'               => (string) $this->email,
       'available_seats'     => (string) $this->available_seats,
+      'total_seats'     => (string) $this->total_seats,
       'lat'                 => (string) $this->lat,
       'lng'                 => (string) $this->lng,
       'image'               =>  $this->image_path,

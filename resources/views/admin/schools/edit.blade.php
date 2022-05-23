@@ -212,6 +212,13 @@ $title = __('site.Edit School');
                   oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
               </div>
 
+              {{-- total_seats --}}
+              <div class="form-group">
+                <label>@lang('site.Total seats')</label>
+                <input required="required" type="text" name="total_seats" class="form-control"
+                  value="{{old('total_seats',$school->total_seats)}}"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+              </div>
 
               {{-- fees --}}
               <div class="form-group">

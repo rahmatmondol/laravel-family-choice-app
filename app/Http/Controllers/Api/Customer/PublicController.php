@@ -25,6 +25,7 @@ use App\Http\Resources\Collection\SliderCollection;
 use App\Http\Requests\Api\ContactSupportFormRequest;
 use App\Interfaces\EducationTypeRepositoryInterface;
 use App\Http\Resources\Collection\UserManualCollection;
+use App\Http\Resources\SliderResource;
 use App\Interfaces\EducationalSubjectRepositoryInterface;
 
 class PublicController extends Controller
@@ -74,7 +75,8 @@ class PublicController extends Controller
   {
     $sliders = $this->sliderRepository->getSliders($request);
 
-    return $this->sendResponse(new SliderCollection($sliders), "");
+    return $this->sendResponse(SliderResource::collection($sliders), "");
+    // return $this->sendResponse(new SliderCollection($sliders), "");
   }
 
   public function userManuals(Request $request)

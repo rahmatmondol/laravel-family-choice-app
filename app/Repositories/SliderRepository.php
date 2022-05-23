@@ -22,9 +22,7 @@ class SliderRepository implements SliderRepositoryInterface
 
   public function getSliders($request)
   {
-    return  Slider::isActive(true)
-      // ->latest()
-      ->paginate($request->perPage ?? 20);
+    return  Slider::isActive(true)->get();
   }
 
   public function getSliderById($sliderId)

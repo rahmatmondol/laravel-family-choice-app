@@ -24,6 +24,7 @@ return new class extends Migration
       $table->string('whatsapp')->nullable()->unique();
       $table->string('email')->unique();
       $table->integer('available_seats')->nullable();
+      $table->integer('total_seats')->nullable();
       $table->double('review')->default(0);
       $table->integer('count_reviews')->default(0);
       $table->double('fees')->nullable();

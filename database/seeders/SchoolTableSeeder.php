@@ -47,7 +47,8 @@ class SchoolTableSeeder extends Seeder
         'phone' => \rand(5, 10) . \rand(5, 10) . '015254' . $i * \rand(5, 10),
         'whatsapp' =>  \rand(5, 10) . \rand(5, 10) . '012254' . $i * \rand(5, 10),
         'email' => 'info' . \rand(5, 100) . \rand(5, 100) . \rand(5, 100) . '@gmail.com',
-        'available_seats' => \rand(5, 500),
+        'available_seats' => $available_seats = \rand(5, 500),
+        'total_seats' => $available_seats + 100,
         'review' => \rand(1, 5),
         'count_reviews' => \rand(10, 50),
         'password' => bcrypt(123456),
@@ -57,14 +58,14 @@ class SchoolTableSeeder extends Seeder
       ]);
 
       for ($k = 0; $k < 4; $k++) {
-        SchoolImage::create([
+        $school->schoolImages()->create([
           'school_id' => $school->id,
           'image' => 'default.png',
         ]);
       }
 
       for ($c = 0; $c < 20; $c++) {
-        Course::create([
+        $school->courses()->create([
           'ar' => ['title' => '-دورة تعديل السلوك' . $c, 'short_description' => 'دورة صيفية', 'description' => "من عمر 10 سنين : 15 سنة"],
           'en' => ['title' => '-دورة تعديل السلوك' . $c, 'short_description' => 'دورة صيفية', 'description' => "من عمر 10 سنين : 15 سنة"],
           'status' => 1,
