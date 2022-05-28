@@ -198,27 +198,27 @@ class School extends Model
 
   public function grades()
   {
-    return $this->belongsToMany(Grade::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale())->withPivot(['administrative_expenses', 'fees']);
+    return $this->belongsToMany(Grade::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale())->withPivot(['administrative_expenses', 'fees'])->withoutGlobalScope(new OrderScope);
   }
 
   public function educationalSubjects()
   {
-    return $this->belongsToMany(EducationalSubject::class, 'school_education_subject', 'school_id', 'educational_subject_id')->withTranslation(app()->getLocale());
+    return $this->belongsToMany(EducationalSubject::class, 'school_education_subject', 'school_id', 'educational_subject_id')->withTranslation(app()->getLocale())->withoutGlobalScope(new OrderScope);
   }
 
   public function educationTypes()
   {
-    return $this->belongsToMany(EducationType::class, 'school_education_type', 'school_id', 'education_type_id')->withTranslation(app()->getLocale());
+    return $this->belongsToMany(EducationType::class, 'school_education_type', 'school_id', 'education_type_id')->withTranslation(app()->getLocale())->withoutGlobalScope(new OrderScope);
   }
 
   public function schoolTypes()
   {
-    return $this->belongsToMany(SchoolType::class, 'school_school_type', 'school_id', 'school_type_id')->withTranslation(app()->getLocale());
+    return $this->belongsToMany(SchoolType::class, 'school_school_type', 'school_id', 'school_type_id')->withTranslation(app()->getLocale())->withoutGlobalScope(new OrderScope);
   }
 
   public function types()
   {
-    return $this->belongsToMany(Type::class, 'school_type', 'school_id', 'type_id')->withTranslation(app()->getLocale());
+    return $this->belongsToMany(Type::class, 'school_type', 'school_id', 'type_id')->withTranslation(app()->getLocale())->withoutGlobalScope(new OrderScope);
   }
 
   public function services()
