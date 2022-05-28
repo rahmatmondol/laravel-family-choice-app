@@ -116,7 +116,7 @@ class School extends Model
 
       return $q->whereHas('types', function ($qu) use ($type_id) {
 
-        return $qu->whereIn('grade_id', (array)$type_id);
+        return $qu->whereIn('type_id', (array)$type_id);
       });
     });
   } // end of
@@ -137,7 +137,6 @@ class School extends Model
   public function scopeWhenEducationalSubjects($query)
   {
     $educationalSubjects = request()->educational_subject_id;
-
     return $query->when($educationalSubjects, function ($q) use ($educationalSubjects) {
 
       return $q->whereHas('educationalSubjects', function ($qu) use ($educationalSubjects) {
@@ -150,7 +149,6 @@ class School extends Model
   public function scopeWhenEducationTypes($query)
   {
     $educationTypes = request()->education_type_id;
-    // $educationTypes = [1,2,3];
 
     return $query->when($educationTypes, function ($q) use ($educationTypes) {
 

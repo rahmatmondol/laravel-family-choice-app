@@ -35,7 +35,7 @@ class SchoolRepository implements SchoolRepositoryInterface
   public function getSchools($request)
   {
 
-    DB::enableQueryLog();
+    // DB::enableQueryLog();
     $schools =  School::whenSearch()
       ->isActive(true)
       ->whenFromPrice()
@@ -44,6 +44,7 @@ class SchoolRepository implements SchoolRepositoryInterface
       ->whenSortByPrice()
       ->whenSortByReview()
       ->whenLocation()
+      ->WhenTypes()
       ->whenGrades()
       ->whenSchoolTypes()
       ->whenEducationTypes()
