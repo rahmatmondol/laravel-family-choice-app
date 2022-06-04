@@ -21,8 +21,15 @@
     "maatwebsite/excel": "^3.1",
     "mcamara/laravel-localization": "^1.7",
     "psr/simple-cache": "1.0",
-    "santigarcor/laratrust": "^7.1"
+    "santigarcor/laratrust": "^7.1",
+    "edujugon/push-notification": "*"
   },
+  "repositories": [
+    {
+      "url": "https://github.com/xHeinrich/PushNotification.git",
+      "type": "vcs"
+    }
+  ],
   "require-dev": {
     "fakerphp/faker": "^1.9.1",
     "laravel/sail": "^1.0.1",
