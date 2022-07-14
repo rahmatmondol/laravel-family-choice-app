@@ -6,6 +6,7 @@ use App\Models\Reservation;
 use App\Scopes\OrderScope;
 use App\Traits\UploadFileTrait;
 use App\Interfaces\ReservationRepositoryInterface;
+use App\Services\NotificationService;
 
 class ReservationRepository implements ReservationRepositoryInterface
 {
@@ -31,18 +32,14 @@ class ReservationRepository implements ReservationRepositoryInterface
 
   public function updateReservation($request, $reservation)
   {
-
     $reservation->update([
       'status' => $request->status,
       'reason_of_refuse' => $request->reason_of_refuse,
     ]);
 
-    $messages = [
-      'pending' => __('site.Your reservatin number is pending', ['reservation_number' => $reservation->id]),
-      'accepted' => __('site.Your reservatin number is accepted', ['reservation_number' => $reservation->id]),
-      'rejected' => __('site.Your reservatin number is rejected', ['reservation_number' => $reservation->id]),
-    ];
+    $customer = $reservation->customer;
 
+    NotificationService::sendReservationNotification($request->status, $customer, $reservation);
 
     return true;
   }

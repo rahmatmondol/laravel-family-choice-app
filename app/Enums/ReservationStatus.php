@@ -2,8 +2,11 @@
 
 namespace App\Enums;
 
+use ArchTech\Enums\Values;
+
 enum ReservationStatus: string
 {
+  use Values;
   case Pending  = "pending";
   case Accepted = "accepted";
   case Rejected = "rejected";

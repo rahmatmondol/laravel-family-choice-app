@@ -39,7 +39,6 @@ class ReservationController extends Controller
 
   public function edit($reservation)
   {
-
     $reservation = $this->reservationRepository->getReservationById($reservation);
 
     return view('admin.reservations.edit', compact('reservation',));

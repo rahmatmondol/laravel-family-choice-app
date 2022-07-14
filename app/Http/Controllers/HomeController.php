@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PaymentStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Enums\ReservationStatus;
+use Illuminate\Validation\Rules\Enum;
 use Edujugon\PushNotification\PushNotification;
 
 class HomeController extends Controller
 {
   public function test()
   {
+    dd(PaymentStatus::values() );
+    dd(ReservationStatus::values() );
     $dataIos = [
       'title' => 'test title ',
       'body' => 'tset body',
