@@ -2,17 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\PaymentStatus;
 use Carbon\Carbon;
+use App\Enums\PaymentStatus;
 use Illuminate\Http\Request;
 use App\Enums\ReservationStatus;
 use Illuminate\Validation\Rules\Enum;
+use App\Notifications\SmsCodeNotification;
+use Illuminate\Support\Facades\Notification;
 use Edujugon\PushNotification\PushNotification;
 
 class HomeController extends Controller
 {
   public function test()
   {
+
+    Notification::route('mail', "mahmoud@g.com")
+      ->notify(new SmsCodeNotification(115427));
+
+  dd(config('mail'));
+
     dd(PaymentStatus::values() );
     dd(ReservationStatus::values() );
     $dataIos = [

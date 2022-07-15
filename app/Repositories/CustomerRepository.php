@@ -8,7 +8,9 @@ use App\Models\Verification;
 use App\Traits\UploadFileTrait;
 use Illuminate\Support\Facades\Auth;
 use App\Interfaces\CustomerRepositoryInterface;
+use App\Notifications\SmsCodeNotification;
 use App\Traits\AuthenticateCustomer;
+use Illuminate\Support\Facades\Notification;
 
 class CustomerRepository implements CustomerRepositoryInterface
 {
@@ -112,6 +114,10 @@ class CustomerRepository implements CustomerRepositoryInterface
     $customer->update([
       'verification_code' => $code,
     ]);
+
+    Notification::route('mail', $customer->email)
+      ->notify(new SmsCodeNotification($code));
+
 
     // return $code;
 
