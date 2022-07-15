@@ -1,5 +1,12 @@
 <?php
 
+if (!function_exists('appName')) {
+  function appName()
+  {
+    return "Family Choice App";
+  }
+}
+
 if (!function_exists('checkAdminPermission')) {
   function checkAdminPermission($permission)
   {

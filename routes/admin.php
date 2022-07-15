@@ -15,7 +15,7 @@ Route::group(
   function () {
 
     # must guest
-    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => "Auth", 'middleware' => 'guest'], function () {
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => "Auth", 'middleware' => 'guest:admin'], function () {
       #login
       Route::get('login', 'LoginController@showLoginForm')->name('login');
 

@@ -31,7 +31,7 @@ return [
   'pending_reservation_body' => 'The reservation has been successfully booked, and the data and attachments will be reviewed by the school administration and contact you as soon as possible',
   'accepted_reservation_body' => 'The reservation data has been approved by the school administration. You can make the payment now to complete the reservation process',
   'rejected_reservation_body' => '',
-  '' => '',
+  'Total' => 'Total',
   '' => '',
   '' => '',
   '' => '',
