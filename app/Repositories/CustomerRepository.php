@@ -115,9 +115,10 @@ class CustomerRepository implements CustomerRepositoryInterface
       'verification_code' => $code,
     ]);
 
-    Notification::route('mail', $customer->email)
-      ->notify(new SmsCodeNotification($code));
-
+    if ($customer->email) {
+      Notification::route('mail', $customer->email)
+        ->notify(new SmsCodeNotification($code));
+    }
 
     // return $code;
 

@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 <?php
 $page = 'user_manuals';
-$title = __('site.Edit User Manual ');
+$title = __('site.Edit User Manual');
 ?>
 @section('title_page')
 {{ $title }}
@@ -20,8 +20,7 @@ $title = __('site.Edit User Manual ');
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.user_manuals.index') }}">@lang('site.User Manual
-                s')</a>
+            <li class="breadcrumb-item"><a href="{{ route('admin.user_manuals.index') }}">@lang('site.User Manuals')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>

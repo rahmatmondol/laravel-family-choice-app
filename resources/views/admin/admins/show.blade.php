@@ -37,7 +37,7 @@ $title = __('site.Show Admin');
           <tbody>
             <tr>
               <td>@lang('site.Name')</td>
-              <td>{{ $admin->name }}</td>
+              <td>{{ $admin->full_name }}</td>
             </tr>
             <tr>
               <td>@lang('site.Status')</td>

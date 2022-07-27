@@ -38,7 +38,7 @@
           <a href="{{ route('admin.'.$item.'.index') }}" class="nav-link @if( $page == $item )   active  @endif">
             <i class="nav-icon fas fa-columns"></i>
             <p>
-              {{ucfirst(__('site.'.$item))}}
+              {{__('site.'.ucfirst($item))}}
             </p>
           </a>
         </li>

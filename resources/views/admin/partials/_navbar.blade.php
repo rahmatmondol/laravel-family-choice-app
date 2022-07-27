@@ -18,12 +18,14 @@
     </li>
 
     @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+    @if(app()->getLocale()!=$localeCode)
     <li class="nav-item d-none d-sm-inline-block">
       <a class="nav-link" rel="alternate" hreflang="{{ $localeCode }}"
         href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
         {{ $properties['native'] }}
       </a>
     </li>
+    @endif
     @endforeach
   </ul>
 

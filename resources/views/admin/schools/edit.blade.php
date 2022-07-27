@@ -102,7 +102,7 @@ $title = __('site.Edit School');
 
 
               <div class="form-group">
-                <label>@lang('site.address')</label>
+                <label>@lang('site.Address')</label>
                 <input type="text" name='address' class="form-control" id="address">
               </div>
 
@@ -126,9 +126,9 @@ $title = __('site.Edit School');
 
               {{-- types --}}
               <div class="form-group">
-                <label for="inputType">@lang('site.types')</label>
+                <label for="inputType">@lang('site.Types')</label>
                 <select name="types[]" class="form-control selectric" multiple data-live-search="true" required>
-                  <option value="">@lang('site.types') </option>
+                  <option value="">@lang('site.Types') </option>
                   @foreach( $types as $value )
                   <option value="{{ $value->id }}" @if( in_array($value->
                     id,$school->types->pluck('id')->toArray())
@@ -140,10 +140,10 @@ $title = __('site.Edit School');
 
               {{-- educationalSubjects --}}
               <div class="form-group">
-                <label for="inputType">@lang('site.educationalSubjects')</label>
+                <label for="inputType">@lang('site.EducationalSubjects')</label>
                 <select name="educationalSubjects[]" class="form-control selectric" multiple data-live-search="true"
                   required>
-                  <option value="">@lang('site.educationalSubjects') </option>
+                  <option value="">@lang('site.EducationalSubjects') </option>
                   @foreach( $educationalSubjects as $value )
                   <option value="{{ $value->id }}" @if( in_array($value->
                     id,$school->educationalSubjects->pluck('id')->toArray())
@@ -155,10 +155,10 @@ $title = __('site.Edit School');
 
               {{-- educationTypes --}}
               <div class="form-group">
-                <label for="inputType">@lang('site.educationTypes')</label>
+                <label for="inputType">@lang('site.EducationTypes')</label>
                 <select name="educationTypes[]" class="form-control selectric" multiple data-live-search="true"
                   required>
-                  <option value="">@lang('site.educationTypes') </option>
+                  <option value="">@lang('site.EducationTypes') </option>
                   @foreach( $educationTypes as $value )
                   <option value="{{ $value->id }}" @if( in_array($value->
                     id,$school->educationTypes->pluck('id')->toArray())
@@ -170,9 +170,9 @@ $title = __('site.Edit School');
 
               {{-- schoolTypes --}}
               <div class="form-group">
-                <label for="inputType">@lang('site.schoolTypes')</label>
+                <label for="inputType">@lang('site.SchoolTypes')</label>
                 <select name="schoolTypes[]" class="form-control selectric" multiple data-live-search="true" required>
-                  <option value="">@lang('site.schoolTypes') </option>
+                  <option value="">@lang('site.SchoolTypes') </option>
                   @foreach( $schoolTypes as $value )
                   <option value="{{ $value->id }}" @if( in_array($value->
                     id,$school->schoolTypes->pluck('id')->toArray())
@@ -184,9 +184,9 @@ $title = __('site.Edit School');
 
               {{-- services --}}
               <div class="form-group">
-                <label for="inputType">@lang('site.services')</label>
+                <label for="inputType">@lang('site.Services')</label>
                 <select name="services[]" class="form-control selectric" multiple data-live-search="true" required>
-                  <option value="">@lang('site.services') </option>
+                  <option value="">@lang('site.Services') </option>
                   @foreach( $services as $value )
                   <option value="{{ $value->id }}" @if( in_array($value->
                     id,$school->services->pluck('id')->toArray())
@@ -198,7 +198,7 @@ $title = __('site.Edit School');
 
               {{-- order_column --}}
               <div class="form-group">
-                <label>@lang('site.Order It ')</label>
+                <label>@lang('site.Order Item')</label>
                 <input type="text" name="order_column" value="{{ old('order_column',$school->order_column) }}"
                   class="form-control"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
@@ -242,7 +242,7 @@ $title = __('site.Edit School');
 
               {{-- passwrod --}}
               <div class="form-group">
-                <label>@lang('site.password')</label>
+                <label>@lang('site.Password')</label>
                 <input type="password" name="password" class="form-control">
               </div>
 
@@ -254,7 +254,7 @@ $title = __('site.Edit School');
 
               {{-- image --}}
               <div class="form-group">
-                <label>@lang('site.image')</label>
+                <label>@lang('site.Image')</label>
                 <input type="file" id='image' name="image" class="form-control image2">
               </div>
 
@@ -274,7 +274,7 @@ $title = __('site.Edit School');
 
               {{-- attachments --}}
               <div class="form-group">
-                <label>@lang('site.attachments')</label>
+                <label>@lang('site.Attachments')</label>
                 <input type="file" name="attachments[]" multiple class="form-control" enctype="multipart/form-data">
                 @foreach ( $school->schoolImages as $imgs )
                 <a href="{{url('admin/schools/deleteImage').'/'.$imgs['id']}}"

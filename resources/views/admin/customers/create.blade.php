@@ -57,7 +57,7 @@ $title = __('site.Create Customer');
               </div>
               {{-- passwrod --}}
               <div class="form-group">
-                <label>@lang('site.password')</label>
+                <label>@lang('site.Password')</label>
                 <input type="password" name="password" class="form-control" required>
               </div>
               {{-- password_confirmation --}}

@@ -97,7 +97,7 @@ $title = __('site.Create School');
               </div>
 
               <div class="form-group">
-                <label>@lang('site.address')</label>
+                <label>@lang('site.Address')</label>
                 <input type="text" name='address' class="form-control" id="address" required>
               </div>
 
@@ -122,9 +122,9 @@ $title = __('site.Create School');
 
               {{-- types --}}
               <div class="form-group">
-                <label for="inputType">@lang('site.types')</label>
+                <label for="inputType">@lang('site.Types')</label>
                 <select name="types[]" class="form-control selectric" multiple data-live-search="true" required>
-                  <option value="">@lang('site.types') </option>
+                  <option value="">@lang('site.Types') </option>
                   @foreach( $types as $value )
                   <option value="{{ $value->id}}" @if( in_array($value->id,(array)old('types'))) selected
                     @endif >
@@ -135,10 +135,10 @@ $title = __('site.Create School');
 
               {{-- educationalSubjects --}}
               <div class="form-group">
-                <label for="inputType">@lang('site.educationalSubjects')</label>
+                <label for="inputType">@lang('site.EducationalSubjects')</label>
                 <select name="educationalSubjects[]" class="form-control selectric" multiple data-live-search="true"
                   required>
-                  <option value="">@lang('site.educationalSubjects') </option>
+                  <option value="">@lang('site.EducationalSubjects') </option>
                   @foreach( $educationalSubjects as $value )
                   <option value="{{ $value->id}}" @if( in_array($value->id,(array)old('educationalSubjects'))) selected
                     @endif >
@@ -149,10 +149,10 @@ $title = __('site.Create School');
 
               {{-- educationTypes --}}
               <div class="form-group">
-                <label for="inputType">@lang('site.educationTypes')</label>
+                <label for="inputType">@lang('site.EducationTypes')</label>
                 <select name="educationTypes[]" class="form-control selectric" multiple data-live-search="true"
                   required>
-                  <option value="">@lang('site.educationTypes') </option>
+                  <option value="">@lang('site.EducationTypes') </option>
                   @foreach( $educationTypes as $value )
                   <option value="{{ $value->id}}" @if( in_array($value->id,(array)old('educationTypes'))) selected
                     @endif >
@@ -163,9 +163,9 @@ $title = __('site.Create School');
 
               {{-- schoolTypes --}}
               <div class="form-group">
-                <label for="inputType">@lang('site.schoolTypes')</label>
+                <label for="inputType">@lang('site.SchoolTypes')</label>
                 <select name="schoolTypes[]" class="form-control selectric" multiple data-live-search="true" required>
-                  <option value="">@lang('site.schoolTypes') </option>
+                  <option value="">@lang('site.SchoolTypes') </option>
                   @foreach( $schoolTypes as $value )
                   <option value="{{ $value->id}}" @if( in_array($value->id,(array)old('schoolTypes'))) selected
                     @endif >
@@ -176,9 +176,9 @@ $title = __('site.Create School');
 
               {{-- services --}}
               <div class="form-group">
-                <label for="inputType">@lang('site.services')</label>
+                <label for="inputType">@lang('site.Services')</label>
                 <select name="services[]" class="form-control selectric" multiple data-live-search="true" required>
-                  <option value="">@lang('site.services') </option>
+                  <option value="">@lang('site.Services') </option>
                   @foreach( $services as $value )
                   <option value="{{ $value->id}}" @if( in_array($value->id,(array)old('services'))) selected
                     @endif >
@@ -190,7 +190,7 @@ $title = __('site.Create School');
 
               {{-- order_column --}}
               <div class="form-group">
-                <label>@lang('site.Order It ')</label>
+                <label>@lang('site.Order Item')</label>
                 <input type="text" name="order_column" value="{{ old('order_column') }}" class="form-control"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
               </div>
@@ -232,7 +232,7 @@ $title = __('site.Create School');
 
               {{-- passwrod --}}
               <div class="form-group">
-                <label>@lang('site.password')</label>
+                <label>@lang('site.Password')</label>
                 <input type="password" name="password" class="form-control" required>
               </div>
 
@@ -244,7 +244,7 @@ $title = __('site.Create School');
 
               {{-- image --}}
               <div class="form-group">
-                <label>@lang('site.image')</label>
+                <label>@lang('site.Image')</label>
                 <input required="required" type="file" id='image' name="image" class="form-control image2">
               </div>
 
@@ -266,7 +266,7 @@ $title = __('site.Create School');
 
               {{-- attachments --}}
               <div class="form-group">
-                <label>@lang('site.attachments')</label>
+                <label>@lang('site.Attachments')</label>
                 <input required="required" type="file" id="gallery-photo-attachments" name="attachments[]" multiple
                   class="form-control image">
               </div>

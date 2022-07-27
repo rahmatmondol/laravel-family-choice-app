@@ -39,7 +39,7 @@ $title = __('site.Dashboard');
             <div class="inner">
               <h3>{{ $countAllReservation }}</h3>
 
-              <p>@lang('site.Count All Reservations')</p>
+              <p>@lang('site.Number Of Reservations')</p>
             </div>
             <div class="icon">
               {{-- <i class="ion ion-bag"></i> --}}
@@ -54,7 +54,7 @@ $title = __('site.Dashboard');
             <div class="inner">
               <h3>{{ $countPendingReservations }}</h3>
 
-              <p>@lang('site.Count Pending Reservations')</p>
+              <p>@lang('site.Number Of Pending Reservations')</p>
             </div>
             <div class="icon">
               {{-- <i class="ion ion-stats-bars"></i> --}}
@@ -69,7 +69,7 @@ $title = __('site.Dashboard');
             <div class="inner">
               <h3>{{ $countOfCities }}</h3>
 
-              <p>@lang('Count Of Cities')</p>
+              <p>@lang('Number Of Cities')</p>
             </div>
             <div class="icon">
               {{-- <i class="ion ion-person-add"></i> --}}
@@ -84,7 +84,7 @@ $title = __('site.Dashboard');
             <div class="inner">
               <h3>{{ $countOfSchools }}</h3>
 
-              <p>@lang('site.Count Of Schools')</p>
+              <p>@lang('site.Number Of Schools')</p>
             </div>
             <div class="icon">
               {{-- <i class="ion ion-pie-graph"></i> --}}
@@ -103,7 +103,7 @@ $title = __('site.Dashboard');
             <div class="inner">
               <h3>{{ $countOfCourses }}</h3>
 
-              <p>@lang('site.Count All courses')</p>
+              <p>@lang('site.Number Of courses')</p>
             </div>
             <div class="icon">
               {{-- <i class="ion ion-bag"></i> --}}
@@ -118,7 +118,7 @@ $title = __('site.Dashboard');
             <div class="inner">
               <h3>{{ $countOfGrades }}</h3>
 
-              <p>@lang('site.Count Grades')</p>
+              <p>@lang('site.Number Of Grades')</p>
             </div>
             <div class="icon">
               {{-- <i class="ion ion-stats-bars"></i> --}}
@@ -133,7 +133,7 @@ $title = __('site.Dashboard');
             <div class="inner">
               <h3>{{ $countOfServices }}</h3>
 
-              <p>@lang('Count Of Services')</p>
+              <p>@lang('site.Number Of Services')</p>
             </div>
             <div class="icon">
               {{-- <i class="ion ion-person-add"></i> --}}
@@ -148,7 +148,7 @@ $title = __('site.Dashboard');
             <div class="inner">
               <h3>{{ $countCustomers }}</h3>
 
-              <p>@lang('site.Count Of Customers')</p>
+              <p>@lang('site.Number Of Customers')</p>
             </div>
             <div class="icon">
               {{-- <i class="ion ion-pie-graph"></i> --}}

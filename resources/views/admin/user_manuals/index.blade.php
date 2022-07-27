@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 <?php
 $page = 'user_manuals';
-$title = __('site.Customers');
+$title = __('site.User Manuals');
 ?>
 @section('title_page')
 {{ $title }}

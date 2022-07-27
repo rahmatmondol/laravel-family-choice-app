@@ -20,7 +20,7 @@ $title = __('site.Show school');
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.schools.index') }}">@lang('site.schools')</a>
+            <li class="breadcrumb-item"><a href="{{ route('admin.schools.index') }}">@lang('site.Schools')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>

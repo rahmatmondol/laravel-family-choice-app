@@ -57,12 +57,12 @@ $title = __('site.Create Admin');
               </div>
               {{-- passwrod --}}
               <div class="form-group">
-                <label>@lang('site.password')</label>
+                <label>@lang('site.Password')</label>
                 <input type="password" name="password" class="form-control" required>
               </div>
               {{-- password_confirmation --}}
               <div class="form-group">
-                <label>@lang('site.password_confirmation')</label>
+                <label>@lang('site.Password Confirmation')</label>
                 <input type="password" name="password_confirmation" class="form-control" required>
               </div>
 
@@ -97,7 +97,7 @@ $title = __('site.Create Admin');
               </div>
 
               <div class="form-group">
-                <label>@lang('site.image')</label>
+                <label>@lang('site.Image')</label>
                 <input type="file" id='image' name="image" class="form-control image1">
               </div>
 

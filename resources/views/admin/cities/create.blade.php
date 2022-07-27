@@ -100,7 +100,7 @@ $title = __('site.Create City');
 
 
               <div class="form-group">
-                <label>@lang('site.address')</label>
+                <label>@lang('site.Address')</label>
                 <input type="text" name='address' class="form-control" id="address" required>
               </div>
 

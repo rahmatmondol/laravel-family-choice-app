@@ -59,7 +59,7 @@ $title = __('site.Edit Customer');
               </div>
               {{-- passwrod --}}
               <div class="form-group">
-                <label>@lang('site.password')</label>
+                <label>@lang('site.Password')</label>
                 <input type="password" name="password" class="form-control" >
               </div>
               {{-- password_confirmation --}}
