@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="{{ LaravelLocalization::getCurrentLocaleDirection() }}">
 
 <head>
   <meta charset="utf-8">
@@ -21,8 +21,18 @@
   <!-- JQVMap -->
   {{--
   <link rel="stylesheet" href="{{ asset('admin/') }}/plugins/jqvmap/jqvmap.min.css"> --}}
+
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('admin/') }}/dist/css/adminlte.min.css">
+
+  @if (app()->getLocale() == 'ar')
+    <!-- Bootstrap 4 RTL -->
+    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
+    <!-- Custom style for RTL -->
+    <link rel="stylesheet" href="dist/css/custom.css">
+  @else
+  @endif
+
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="{{ asset('admin/') }}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Daterange picker -->
@@ -40,6 +50,8 @@
   <script src="{{ asset('admin/plugins/noty/noty.min.js') }}"></script>
   <!-- fancybox -->
   <link rel="stylesheet" href="{{ asset('admin/') }}/css/admin.css">
+
+
 
   <script>
     let appUrl     = @json(config('myconfig.appUrl'));
@@ -116,6 +128,10 @@
     $('.selectric').selectric();
   </script>
 
+  @if (app()->getLocale() == 'ar')
+  <!-- Bootstrap 4 rtl -->
+  <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"></script>
+  @endif
   <script>
     $(document).ready(function () {
       //delete modal
