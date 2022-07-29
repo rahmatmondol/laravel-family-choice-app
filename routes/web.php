@@ -21,3 +21,4 @@ Route::get('/', function () {
 })->name('home');
 
 require 'admin.php';
+require 'school.php';

@@ -20,7 +20,7 @@ class SchoolRepository implements SchoolRepositoryInterface
 
   public function getAllSchools()
   {
-    return School::isActive(true)->get();
+    return School::isActive(true)->listsTranslations('title')->get();
   }
 
   public function getFilteredSchools($request)
@@ -228,6 +228,7 @@ class SchoolRepository implements SchoolRepositoryInterface
       'address'               => $request->address,
       'identification_number' => $request->identification_number,
       'school_id'             => $request->school_id,
+      'course_id'             => $request->course_id,
       'customer_id'           => $customer->id,
     ]);
 

@@ -16,15 +16,17 @@ class ReservationRepository implements ReservationRepositoryInterface
   {
     $reservations =  Reservation::withoutGlobalScope(new OrderScope)
       ->whenSearch($request->search)
-      ->whenSchool()
+      ->whenSchool($request->school_id)
+      ->whenSchool($request->course_id)
       ->whenPaymentStatus($request->payment_status)
       ->whenStatus($request->status)
       ->latest()
-      ->with(['school', 'customer'])
+      ->with(['school', 'customer','course'])
       ->paginate($request->perPage ?? 50);
 
     return $reservations;
   }
+  
   public function getReservationById($reservationId)
   {
     return Reservation::findOrFail($reservationId);

@@ -7,6 +7,13 @@ if (!function_exists('appName')) {
   }
 }
 
+if (!function_exists('appCurrency')) {
+  function appCurrency()
+  {
+    return __('site.app.Currency');
+  }
+}
+
 if (!function_exists('checkAdminPermission')) {
   function checkAdminPermission($permission)
   {

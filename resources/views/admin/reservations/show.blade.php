@@ -42,7 +42,7 @@ $title = __('site.Show Reservation');
             </tr>
             <tr>
               <td>@lang('site.Total Fees')</td>
-              <td>{{ $reservation->total_fees }} </td>
+              <td>{{ $reservation->total_fees }} {{ appCurrency() }} </td>
             </tr>
             <tr>
               <td>@lang('site.Address')</td>
@@ -92,7 +92,7 @@ $title = __('site.Show Reservation');
             </tr>
             <tr>
               <td>@lang('site.Gender')</td>
-              <td>@lang('site.'.$child->gender)</td>
+              <td>@lang('site.'.ucfirst($child->gender))</td>
             </tr>
             <tr>
               <td>@lang('site.Grade')</td>
@@ -100,11 +100,11 @@ $title = __('site.Show Reservation');
             </tr>
             <tr>
               <td>@lang('site.Fees')</td>
-              <td>{{ $child->fees }}</td>
+              <td>{{ $child->fees }} {{ appCurrency() }}</td>
             </tr>
             <tr>
               <td>@lang('site.Administrative Expenses')</td>
-              <td> {{ $child->administrative_expenses}}</td>
+              <td> {{ $child->administrative_expenses}} {{ appCurrency() }}</td>
             </tr>
             <tr>
               <td>@lang('site.Status')</td>

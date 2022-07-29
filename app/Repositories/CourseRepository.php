@@ -15,6 +15,7 @@ class CourseRepository implements CourseRepositoryInterface
   {
     return  Course::withoutGlobalScope(new OrderScope)
       ->whenSearch($request->search)
+      ->whenSchool($request->school_id)
       ->isActive($request->status)
       ->latest()
       ->paginate(request()->perPage ?? 20);
@@ -23,9 +24,8 @@ class CourseRepository implements CourseRepositoryInterface
   public function getCourses($request)
   {
     return  Course::whenSearch($request->search)
-      ->whenSchool()
+      ->whenSchool($request->school_id)
       ->isActive(true)
-      // ->latest()
       ->paginate(request()->perPage ?? 20);
   }
 

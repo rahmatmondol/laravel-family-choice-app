@@ -28,8 +28,9 @@ class CourseController extends Controller
     session(['currentPage' => request('page', 1)]);
 
     $courses = $this->courseRepository->getFilteredCourses($request);
+    $schools = $this->schoolRepository->getSchools($request);
 
-    return view('admin.courses.index', compact('courses'));
+    return view('admin.courses.index', compact('courses','schools'));
   } // end of index
 
   public function create(Request $request)

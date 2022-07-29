@@ -44,12 +44,14 @@ return [
       'driver' => 'session',
       'provider' => 'admins',
     ],
-
+    'school' => [
+      'driver' => 'session',
+      'provider' => 'schools',
+    ],
     'customer' => [
       'driver' => 'session',
       'provider' => 'customers',
     ],
-
     'customer-api' => [
       'driver' => 'passport',
       'provider' => 'customers',
@@ -83,7 +85,10 @@ return [
       'driver' => 'eloquent',
       'model' => App\Models\Admin::class,
     ],
-
+    'schools' => [
+      'driver' => 'eloquent',
+      'model' => App\Models\School::class,
+    ],
     'customers' => [
       'driver' => 'eloquent',
       'model' => App\Models\Customer::class,

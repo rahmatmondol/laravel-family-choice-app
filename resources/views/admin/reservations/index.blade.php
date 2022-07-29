@@ -35,13 +35,63 @@ $title = __('site.Reservations');
             <div class="row">
 
               <div class="col-md-4">
-                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
+                <div class="form-group">
+                  <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
                   value="{{ request()->search }}">
+                </div>
               </div>
 
               <div class="col-md-4">
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
-                  @lang('site.Search')</button>
+                <div class="form-group">
+                  <select name="school_id" class="form-control"  data-live-search="true">
+                    <option value="">@lang('site.Schools') </option>
+                    @foreach( $schools as $value )
+                    <option value="{{ $value->id}}" @selected(request('school_id')==$value->id) >
+                      {{ $value->title }}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+
+              {{-- <div class="col-md-4">
+                <div class="form-group">
+                  <select name="course_id" class="form-control"  data-live-search="true">
+                    <option value="">@lang('site.Courses') </option>
+                    @foreach( $courses as $value )
+                    <option value="{{ $value->id}}" @selected(request('course_id')==$value->id) >
+                      {{ $value->title }}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div> --}}
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <select id="inputStatus" name="status" class="form-control custom-select">
+                    <option value='' selected >@lang('site.reservation_status.Status')</option>
+                    @foreach(App\Enums\ReservationStatus::values() as $status)
+                      <option value="{{ $status }}" @selected(request('status')==$status)>@lang('site.reservation_status.'.$status)</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <select  name="payment_status" class="form-control custom-select">
+                    <option value='' selected >@lang('site.payment_status.Status')</option>
+                    @foreach(App\Enums\PaymentStatus::values() as $payment_status)
+                      <option value="{{ $payment_status }}" @selected(request('payment_status')==$payment_status)>@lang('site.payment_status.'.$payment_status)</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
+                    @lang('site.Search')</button>
+                </div>
               </div>
 
             </div>
@@ -79,10 +129,13 @@ $title = __('site.Reservations');
                 @lang('site.Status')
               </th>
               <th style="width: 20%" class="text-center">
-                @lang('site.Payment Status')
+                @lang('site.payment_status.Status')
               </th>
               <th style="width: 20%" class="text-center">
                 @lang('site.School')
+              </th>
+              <th style="width: 20%" class="text-center">
+                @lang('site.Course')
               </th>
               <th style="width: 20%" class="text-center">
                 @lang('site.Customer')
@@ -108,9 +161,14 @@ $title = __('site.Reservations');
                 @include('admin.partials._render_payment_status',['status'=>$reservation->payment_status])
               </td>
               <td class="text-center">
-
                 <a href="{{ route('admin.schools.show', ['school'=>$reservation->school_id]) }}"
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->school?->title }}</a>
+              </td>
+              <td class="text-center">
+                @if($reservation->course_id)
+                <a href="{{ route('admin.courses.show', ['course'=>$reservation->course_id]) }}"
+                  class="btn btn-primary btn-sm" target="_blank">{{ $reservation->course?->title }}</a>
+                @endif
               </td>
               <td class="text-center">
 
@@ -135,7 +193,6 @@ $title = __('site.Reservations');
             @empty
             <tr>
               <td class="text-center">
-
                 @include('admin.partials.no_data_found')
               </td>
             </tr>

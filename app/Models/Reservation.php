@@ -32,15 +32,24 @@ class Reservation extends Model
     });
   } // end of scopeWhenPaymentStatus
 
-  public function scopeWhenSchool($query)
+  public function scopeWhenSchool($query,$school_id)
   {
-    $school_id = request()->school_id;
-
     return $query->when($school_id, function ($q) use ($school_id) {
 
       return $q->whereHas('school', function ($qu) use ($school_id) {
 
         return $qu->where('school_id', $school_id);
+      });
+    });
+  } // end of
+
+  public function scopeWhenCourse($query,$course_id)
+  {
+    return $query->when($course_id, function ($q) use ($course_id) {
+
+      return $q->whereHas('course', function ($qu) use ($course_id) {
+
+        return $qu->where('course_id', $course_id);
       });
     });
   } // end of
@@ -57,7 +66,7 @@ class Reservation extends Model
 
   public function course()
   {
-    return  this->belongsTo(Course::class);
+    return  $this->belongsTo(Course::class);
   }
 
   public function child()

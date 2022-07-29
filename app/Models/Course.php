@@ -42,9 +42,8 @@ class Course extends Model
     });
   } // end of scopeWhenSearch
 
-  public function scopeWhenSchool($query)
+  public function scopeWhenSchool($query,$school_id)
   {
-    $school_id = request()->school_id;
 
     return $query->when($school_id, function ($q) use ($school_id) {
 

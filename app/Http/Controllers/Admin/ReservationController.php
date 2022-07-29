@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\School;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Interfaces\SchoolRepositoryInterface;
 use App\Interfaces\ReservationRepositoryInterface;
 use App\Http\Requests\Admin\ReservationFormRequest;
+use App\Interfaces\CourseRepositoryInterface;
 
 class ReservationController extends Controller
 {
 
   public function __construct(
-    private ReservationRepositoryInterface $reservationRepository
+    private ReservationRepositoryInterface $reservationRepository,
+    private SchoolRepositoryInterface $schoolRepository,
+    private CourseRepositoryInterface $courseRepository
   ) {
     //create read update delete
     $this->middleware(['permission:read_reservations'])->only('index');
@@ -24,10 +29,11 @@ class ReservationController extends Controller
   public function index(Request $request)
   {
     session(['currentPage' => request('page', 1)]);
-
+    $schools = $this->schoolRepository->getAllSchools();
+    // $courses = $this->courseRepository->getCourses($request);
     $reservations = $this->reservationRepository->getFilteredReservations($request);
 
-    return view('admin.reservations.index', compact('reservations'));
+    return view('admin.reservations.index', compact('reservations', 'schools'));
   } // end of index
 
   public function show($reservation)
