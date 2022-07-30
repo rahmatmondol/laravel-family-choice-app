@@ -10,6 +10,7 @@ class BaseController extends Controller
 {
   public  $globalSchool;
   public  $masterLayout="school.layouts.master";
+  public  $mainRoutePrefix="school";
   public  $sideBarItems = ['courses','attachments','reservations',];
   public function __construct()
   {
@@ -23,6 +24,7 @@ class BaseController extends Controller
       View::share('globalSchool', $this->globalSchool);
       View::share('sideBarItems', $this->sideBarItems);
       View::share('masterLayout', $this->masterLayout);
+      View::share('mainRoutePrefix', $this->mainRoutePrefix);
       return $next($request);
     });
 

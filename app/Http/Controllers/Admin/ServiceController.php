@@ -52,7 +52,7 @@ class ServiceController extends BaseController
     session()->flash('success', __('site.Data added successfully'));
 
     if ($request->continue) {
-      return redirect()->route($mainRoutePrefix.'.services.index', ['page' => session('currentPage')]);
+      return redirect()->route($this->mainRoutePrefix.'.services.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of store
@@ -74,7 +74,7 @@ class ServiceController extends BaseController
     session()->flash('success', __('Data updated successfully'));
 
     if ($request->continue) {
-      return redirect()->route($mainRoutePrefix.'.services.index', ['page' => session('currentPage')]);
+      return redirect()->route($this->mainRoutePrefix.'.services.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of update
@@ -87,7 +87,7 @@ class ServiceController extends BaseController
     $this->serviceRepository->deleteService($service);
 
     session()->flash('success', __('Data deleted successfully'));
-    return redirect()->route($mainRoutePrefix.'.services.index', ['page' => session('currentPage')]);
+    return redirect()->route($this->mainRoutePrefix.'.services.index', ['page' => session('currentPage')]);
   } //end of destroy
 
 }//end of controller

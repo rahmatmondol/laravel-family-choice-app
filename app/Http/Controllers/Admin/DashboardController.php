@@ -65,6 +65,6 @@ class DashboardController extends BaseController
   {
     Auth::guard('admin')->logout();
     // $request->session()->invalidate();
-    return redirect()->route($mainRoutePrefix.'.login');
+    return redirect()->route($this->mainRoutePrefix.'.login');
   }
 }

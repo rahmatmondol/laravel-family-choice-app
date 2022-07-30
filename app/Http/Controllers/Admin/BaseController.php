@@ -15,14 +15,15 @@ class BaseController extends Controller
   public function __construct()
   {
 
-    $this->middleware(['auth:admin']);
+    // $this->middleware(['auth:admin']);
 
     $this->middleware(function ($request, $next) {
 
-      $this->globalAdmin = Auth::user();
+      $this->globalAdmin = Auth::guard('admin')->user();
       View::share('globalAdmin', $this->globalAdmin);
       View::share('sideBarItems', $this->sideBarItems);
       View::share('masterLayout', $this->masterLayout);
+      View::share('mainRoutePrefix', $this->mainRoutePrefix);
       // dd('in middleware',$this->globalAdmin,$this->masterLayout);
       return $next($request);
     });

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin\Auth;
 
-use App\Http\Controllers\Admin\BaseController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Admin\BaseController;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends BaseController
@@ -26,7 +26,7 @@ class LoginController extends BaseController
    */
   public function __construct()
   {
-    Parent::__construct();
+    parent::__construct();
     $this->middleware(['guest'])->except('logout');
   }
 
@@ -47,7 +47,7 @@ class LoginController extends BaseController
       'password' => $request->password,
       'status' => 1
     ], $request->get('remember'))) {
-      return redirect()->intended(route($mainRoutePrefix.'.dashboard'));
+      return redirect()->intended(route($this->mainRoutePrefix.'.dashboard'));
       return redirect()->intended(route('home'));
     }
     return back()->withInput($request->only('phone', 'remember'))->withErrors(__('site.Invalid Credentials'));;

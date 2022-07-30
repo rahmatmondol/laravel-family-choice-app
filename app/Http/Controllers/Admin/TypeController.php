@@ -54,7 +54,7 @@ class TypeController extends BaseController
     session()->flash('success', __('site.Data added successfully'));
 
     if ($request->continue) {
-      return redirect()->route($mainRoutePrefix.'.types.index', ['page' => session('currentPage')]);
+      return redirect()->route($this->mainRoutePrefix.'.types.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of store
@@ -76,7 +76,7 @@ class TypeController extends BaseController
     session()->flash('success', __('Data updated successfully'));
 
     if ($request->continue) {
-      return redirect()->route($mainRoutePrefix.'.types.index', ['page' => session('currentPage')]);
+      return redirect()->route($this->mainRoutePrefix.'.types.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of update
@@ -89,7 +89,7 @@ class TypeController extends BaseController
     $this->typeRepository->deleteType($type);
 
     session()->flash('success', __('Data deleted successfully'));
-    return redirect()->route($mainRoutePrefix.'.types.index', ['page' => session('currentPage')]);
+    return redirect()->route($this->mainRoutePrefix.'.types.index', ['page' => session('currentPage')]);
   } //end of destroy
 
 }//end of controller

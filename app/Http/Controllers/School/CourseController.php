@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
 use App\Interfaces\CourseRepositoryInterface;
+use App\Http\Controllers\School\BaseController;
 use App\Http\Requests\Admin\CourseFormRequest;
 
 class CourseController extends BaseController
@@ -15,7 +16,7 @@ class CourseController extends BaseController
   public function __construct(
     private CourseRepositoryInterface $courseRepository,
   ) {
-    Parent::__construct();
+    parent::__construct();
   } //end of constructor
 
   public function index(Request $request)
