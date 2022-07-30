@@ -45,23 +45,9 @@ class AppServiceProvider extends ServiceProvider
 
     #admin dashboard
     View::creator('admin/*', function ($view) {
-
       $view->with([
         'globalAdmin' => getAdmin(),
       ]);
     });
-
-    // #admin dashboard
-    // View::creator('dashboard/*', function ($view) {
-
-    //   $view->with([
-    //     'totalOrders' => Order::count(),
-    //     'totalPenddingOrders' => Order::where('status', 'inPreparation')->count(),
-    //     'totalInboxes' => Inbox::count(),
-    //     'totalInActiveInboxes' => Inbox::where('status', 0)->count(),
-    //     'totalComplaints' => Complaint::count(),
-    //     'totalInActiveComplaints' => Complaint::where('status', 0)->count(),
-    //   ]);
-    // });
   }
 }

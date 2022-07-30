@@ -51,8 +51,6 @@
   <!-- fancybox -->
   <link rel="stylesheet" href="{{ asset('admin/') }}/css/admin.css">
 
-
-
   <script>
     let appUrl     = @json(config('myconfig.appUrl'));
     let appLocale  = @json(app()->getLocale());
@@ -65,15 +63,15 @@
 <body class="hold-transition sidebar-mini layout-fixed">
   <div class="wrapper">
 
-    @include('admin.partials._navbar')
+    @include('school.partials._navbar')
 
-    @include('admin.partials._sidebar')
+    @include('school.partials._sidebar')
 
     @yield('content')
 
-    @include('admin.partials._session')
+    @include('school.partials._session')
 
-    @include('admin.partials._footer')
+    @include('school.partials._footer')
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">

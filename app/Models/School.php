@@ -6,10 +6,11 @@ use App\Models\Attachment;
 use App\Scopes\OrderScope;
 use App\Traits\LocationTrait;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class School extends Model
+class School extends Authenticatable
 {
   use \Astrotomic\Translatable\Translatable, LocationTrait;
 

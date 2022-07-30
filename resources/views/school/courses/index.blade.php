@@ -1,7 +1,7 @@
-@extends('admin.layouts.master')
+@extends($masterLayout)
 <?php
-$page = 'schools';
-$title = __('site.Schools');
+$page = 'courses';
+$title = __('site.Courses');
 ?>
 @section('title_page')
 {{ $title }}
@@ -17,7 +17,7 @@ $title = __('site.Schools');
         <div class="col-sm-6">
           <h6>{{ $title }}
             <small>
-              ( {{ $schools->total() }} )
+              ( {{ $courses->total() }} )
             </small>
           </h6>
 
@@ -30,23 +30,27 @@ $title = __('site.Schools');
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route('admin.schools.index') }}" method="get">
+          <form action="{{ route('admin.courses.index') }}" method="get">
 
             <div class="row">
 
               <div class="col-md-4">
-                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
-                  value="{{ request()->search }}">
-              </div>
+                <div class="form-group">
+                  <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
+                    value="{{ request()->search }}">
+                </div>
+            </div>
 
-              <div class="col-md-4">
+            <div class="col-md-4">
+              <div class="form-group">
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                   @lang('site.Search')</button>
-                @if (checkAdminPermission('create_schools'))
-                <a href="{{ route('admin.schools.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
+                @if (checkAdminPermission('create_courses'))
+                <a href="{{ route('admin.courses.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
                   @lang('site.Add')</a>
                 @endif
               </div>
+            </div>
 
             </div>
           </form><!-- end of form -->
@@ -80,10 +84,19 @@ $title = __('site.Schools');
                 @lang('site.Title')
               </th>
               <th style="width: 20%">
-                @lang('site.E-mail')
+                @lang('site.School')
               </th>
               <th style="width: 20%">
-                @lang('site.Grades')
+                @lang('site.Type')
+              </th>
+              <th style="width: 20%">
+                @lang('site.From Date')
+              </th>
+              <th style="width: 20%">
+                @lang('site.To Date')
+              </th>
+              <th style="width: 20%">
+                @lang('site.Image')
               </th>
               <th style="width: 8%" class="text-center">
                 @lang('site.Status')
@@ -96,45 +109,53 @@ $title = __('site.Schools');
             </tr>
           </thead>
           <tbody>
-            @forelse ($schools as $school )
+            @forelse ($courses as $course )
             <tr>
               <td>
                 {{ $loop->iteration }}
               </td>
               <td>
-                {{ $school->title }}
+                {{ $course->title }}
+              </td>
+              <td class="text-center">
+                <a href="{{ route('admin.schools.show', ['school'=>$course->school_id]) }}"
+                  class="btn btn-primary btn-sm" target="_blank">{{ $course->school?->title }}</a>
               </td>
               <td>
-                {{ $school->email }}
+                @lang('site.'.$course->type)
               </td>
               <td>
-                @include('admin.partials._view_btn',[
-                'txt'=>__('site.Grades'),
-                'route'=>route('admin.schools.grades.index', ['school'=>$school->id]),
-                ])
+                {{ $course->from_date }}
+              </td>
+              <td>
+                {{ $course->to_date }}
+              </td>
+              <td>
+                <a href="{{ $course->image_path }}" data-fancybox data-caption="Caption for single image">
+                  <img src="{{ $course->image_path }}" style="width: 100px;" class="img-thumbnail" alt="">
+                </a>
               </td>
               <td class="project-state">
-                @include('admin.partials._render_status',['status'=>$school->status])
+                @include('admin.partials._render_status',['status'=>$course->status])
               </td>
-
               <td>
-                {{ $school->order_column }}
+                {{ $course->order_column }}
               </td>
               <td class="project-actions text-right">
 
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route('admin.schools.show', ['school'=>$school->id]),
+                'route'=>route('admin.courses.show', ['course'=>$course->id]),
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
-                'route'=>route('admin.schools.edit', ['school'=>$school->id]),
+                'route'=>route('admin.courses.edit', ['course'=>$course->id]),
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route('admin.schools.destroy', $school->id),
+                'route'=>route('admin.courses.destroy', $course->id),
                 ])
 
               </td>
@@ -149,7 +170,7 @@ $title = __('site.Schools');
 
           </tbody>
         </table>
-        {{ $schools->appends(request()->query())->links() }}
+        {{ $courses->appends(request()->query())->links() }}
 
       </div>
       <!-- /.card-body -->

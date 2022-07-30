@@ -34,6 +34,14 @@ if (!function_exists('getAdmin')) {
     return auth()->guard('admin')->user() ?? null;
   }
 }
+
+if (!function_exists('getAuthSchool')) {
+  function getAuthSchool()
+  {
+    return auth()->guard('school')->user() ?? null;
+  }
+}
+
 if (!function_exists('getCustomer')) {
   function getCustomer()
   {

@@ -16,7 +16,11 @@ class CourseFormRequest extends FormRequest
   public function rules()
   {
     $this->rules += [
-      'school_id' => ['required', 'exists:schools,id'],
+      'school_id' => ['required', 'exists:schools,id', function ($attribute, $value, $fail) {
+        if (auth('school')->check() && auth('school')->id != $value) {
+          $fail(__('site.school id not valid'));
+        }
+      }],
       'type' => ['required', 'in:summery,wintry'],
       'from_date' => ['required', 'date', 'after:yesterday'],
       'to_date' => ['required', 'date', 'after:yesterday'],

@@ -5,14 +5,11 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Models\City;
-use App\Models\User;
 use App\Models\Grade;
 use App\Models\Course;
 use App\Models\School;
 use App\Models\Service;
-use App\Models\Subject;
 use App\Models\Customer;
-use App\Models\Principal;
 use App\Models\Reservation;
 use App\Enums\ReservationStatus;
 use Illuminate\Support\Facades\DB;
@@ -22,10 +19,17 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DashboardController extends Controller
 {
-
+  private $id ;
   public function __construct()
   {
     $this->middleware(['auth:admin']);
+
+    $this->middleware('auth');
+    $this->middleware(function ($request, $next) {
+        $this->id = Auth::user();
+        return $next($request);
+    });
+
   }
 
   public function dashboard(Request $request)
@@ -63,7 +67,7 @@ class DashboardController extends Controller
   public function logout(Request $request)
   {
     Auth::guard('admin')->logout();
-    $request->session()->invalidate();
+    // $request->session()->invalidate();
     return redirect()->route('admin.login');
   }
 }

@@ -15,14 +15,14 @@ Route::group(
   function () {
 
     # must guest
-    Route::group(['prefix' => 'school', 'as' => 'school.', 'namespace' => "Auth", 'middleware' => 'guest:school'], function () {
+    Route::group(['prefix' => 'school', 'as' => 'school.', 'namespace' => "School\Auth", 'middleware' => 'guest:school'], function () {
       #login
       Route::get('login', 'LoginController@showLoginForm')->name('login');
 
       Route::post('login-post', 'LoginController@login')->name('login-post');
     });
 
-    Route::group(['prefix' => 'school', 'as' => 'school.', 'middleware' => 'auth:school'], function () {
+    Route::group(['prefix' => 'school', 'as' => 'school.','namespace' => "School", 'middleware' => 'auth:school'], function () {
 
       Route::get('/dashboard', 'DashboardController@dashboard')->name('dashboard');
 
@@ -30,11 +30,10 @@ Route::group(
       Route::get('logout', 'DashboardController@logout')->name('logout');
 
       Route::resources([
-        'schools'             => 'School\SchoolController',
-        'schools.grades'      => 'School\GradeController',
         'courses'             => 'CourseController',
+        'schools'             => 'School\SchoolController',
         'attachments'         => 'AttachmentController',
-        'reservations'         => 'ReservationController',
+        'reservations'        => 'ReservationController',
       ]);
 
       Route::get('schools/deleteImage/{id}', 'SchoolController@deleteImage');
