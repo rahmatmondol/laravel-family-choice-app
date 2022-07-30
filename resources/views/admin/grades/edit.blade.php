@@ -19,8 +19,8 @@ $title = __('site.Edit Grade');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.grades.index') }}">@lang('site.Grades')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.grades.index') }}">@lang('site.Grades')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -31,7 +31,7 @@ $title = __('site.Edit Grade');
 
   <!-- Main content -->
   <section class="content">
-    <form method="post" action="{{ route('admin.grades.update',$grade->id)}}" enctype="multipart/form-data">
+    <form method="post" action="{{ route($mainRoutePrefix.'.grades.update',$grade->id)}}" enctype="multipart/form-data">
       @csrf
       @method('put')
       @include('admin.partials._errors')

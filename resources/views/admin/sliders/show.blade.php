@@ -19,8 +19,8 @@ $title = __('site.Show Slider');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.sliders.index') }}">@lang('site.Sliders')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.sliders.index') }}">@lang('site.Sliders')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>

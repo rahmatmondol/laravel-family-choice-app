@@ -24,13 +24,13 @@ $title = __('site.User Manuals');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route('admin.user_manuals.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.user_manuals.index') }}" method="get">
 
             <div class="row">
 
@@ -43,7 +43,7 @@ $title = __('site.User Manuals');
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                   @lang('site.Search')</button>
                 @if (checkAdminPermission('create_user_manuals'))
-                <a href="{{ route('admin.user_manuals.create') }}" class="btn btn-sm btn-primary"><i
+                <a href="{{ route($mainRoutePrefix.'.user_manuals.create') }}" class="btn btn-sm btn-primary"><i
                     class="fa fa-plus"></i>
                   @lang('site.Add')</a>
                 @endif
@@ -118,17 +118,17 @@ $title = __('site.User Manuals');
 
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route('admin.user_manuals.show', ['user_manual'=>$user_manual->id]),
+                'route'=>route($mainRoutePrefix.'.user_manuals.show', ['user_manual'=>$user_manual->id]),
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
-                'route'=>route('admin.user_manuals.edit', ['user_manual'=>$user_manual->id]),
+                'route'=>route($mainRoutePrefix.'.user_manuals.edit', ['user_manual'=>$user_manual->id]),
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route('admin.user_manuals.destroy', $user_manual->id),
+                'route'=>route($mainRoutePrefix.'.user_manuals.destroy', $user_manual->id),
                 ])
 
               </td>

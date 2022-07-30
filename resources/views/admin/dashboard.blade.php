@@ -44,7 +44,7 @@ $title = __('site.Dashboard');
             <div class="icon">
               {{-- <i class="ion ion-bag"></i> --}}
             </div>
-            <a href="{{ route('admin.reservations.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route($mainRoutePrefix.'.reservations.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -59,7 +59,7 @@ $title = __('site.Dashboard');
             <div class="icon">
               {{-- <i class="ion ion-stats-bars"></i> --}}
             </div>
-            <a href="{{ route('admin.reservations.index',['status'=>'pending']) }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route($mainRoutePrefix.'.reservations.index',['status'=>'pending']) }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -74,7 +74,7 @@ $title = __('site.Dashboard');
             <div class="icon">
               {{-- <i class="ion ion-person-add"></i> --}}
             </div>
-            <a href="{{ route('admin.cities.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route($mainRoutePrefix.'.cities.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -89,7 +89,7 @@ $title = __('site.Dashboard');
             <div class="icon">
               {{-- <i class="ion ion-pie-graph"></i> --}}
             </div>
-            <a href="{{ route('admin.schools.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route($mainRoutePrefix.'.schools.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -108,7 +108,7 @@ $title = __('site.Dashboard');
             <div class="icon">
               {{-- <i class="ion ion-bag"></i> --}}
             </div>
-            <a href="{{ route('admin.courses.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route($mainRoutePrefix.'.courses.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -123,7 +123,7 @@ $title = __('site.Dashboard');
             <div class="icon">
               {{-- <i class="ion ion-stats-bars"></i> --}}
             </div>
-            <a href="{{ route('admin.grades.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route($mainRoutePrefix.'.grades.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -138,7 +138,7 @@ $title = __('site.Dashboard');
             <div class="icon">
               {{-- <i class="ion ion-person-add"></i> --}}
             </div>
-            <a href="{{ route('admin.services.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route($mainRoutePrefix.'.services.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -153,7 +153,7 @@ $title = __('site.Dashboard');
             <div class="icon">
               {{-- <i class="ion ion-pie-graph"></i> --}}
             </div>
-            <a href="{{ route('admin.customers.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route($mainRoutePrefix.'.customers.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -205,7 +205,7 @@ $title = __('site.Dashboard');
             </div>
             <!-- /.box-body -->
             <div class="box-footer text-center">
-              <a href="{{ route('admin.customers.index') }}" class="uppercase">@lang('site.List Customers')</a>
+              <a href="{{ route($mainRoutePrefix.'.customers.index') }}" class="uppercase">@lang('site.List Customers')</a>
             </div>
             <!-- /.box-footer -->
           </div>

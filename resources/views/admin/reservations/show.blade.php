@@ -19,8 +19,8 @@ $title = __('site.Show Reservation');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.reservations.index') }}">@lang('site.Reservations')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.reservations.index') }}">@lang('site.Reservations')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -55,14 +55,14 @@ $title = __('site.Show Reservation');
             <tr>
               <td>@lang('site.School')</td>
               <td>
-                <a href="{{ route('admin.schools.show', ['school'=>$reservation->school_id]) }}"
+                <a href="{{ route($mainRoutePrefix.'.schools.show', ['school'=>$reservation->school_id]) }}"
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->school?->title }}</a>
               </td>
             </tr>
             <tr>
               <td>@lang('site.Customer')</td>
               <td>
-                <a href="{{ route('admin.customers.show', ['customer'=>$reservation->customer_id]) }}"
+                <a href="{{ route($mainRoutePrefix.'.customers.show', ['customer'=>$reservation->customer_id]) }}"
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->customer?->full_name }}</a>
               </td>
             </tr>

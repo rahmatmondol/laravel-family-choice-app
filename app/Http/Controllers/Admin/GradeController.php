@@ -53,7 +53,7 @@ class GradeController extends Controller
     session()->flash('success', __('site.Data added successfully'));
 
     if ($request->continue) {
-      return redirect()->route('admin.grades.index', ['page' => session('currentPage')]);
+      return redirect()->route($mainRoutePrefix.'.grades.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of store
@@ -75,7 +75,7 @@ class GradeController extends Controller
     session()->flash('success', __('Data updated successfully'));
 
     if ($request->continue) {
-      return redirect()->route('admin.grades.index', ['page' => session('currentPage')]);
+      return redirect()->route($mainRoutePrefix.'.grades.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of update
@@ -88,7 +88,7 @@ class GradeController extends Controller
     $this->gradeRepository->deleteGrade($grade);
 
     session()->flash('success', __('Data deleted successfully'));
-    return redirect()->route('admin.grades.index', ['page' => session('currentPage')]);
+    return redirect()->route($mainRoutePrefix.'.grades.index', ['page' => session('currentPage')]);
   } //end of destroy
 
 }//end of controller

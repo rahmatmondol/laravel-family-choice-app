@@ -24,13 +24,13 @@ $title = __('site.EducationTypes');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route('admin.educationTypes.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.educationTypes.index') }}" method="get">
 
             <div class="row">
 
@@ -43,7 +43,7 @@ $title = __('site.EducationTypes');
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                   @lang('site.Search')</button>
                 @if (checkAdminPermission('create_educationTypes'))
-                <a href="{{ route('admin.educationTypes.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
+                <a href="{{ route($mainRoutePrefix.'.educationTypes.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
                   @lang('site.Add')</a>
                 @endif
               </div>
@@ -109,17 +109,17 @@ $title = __('site.EducationTypes');
 
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route('admin.educationTypes.show', ['educationType'=>$educationType->id]),
+                'route'=>route($mainRoutePrefix.'.educationTypes.show', ['educationType'=>$educationType->id]),
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
-                'route'=>route('admin.educationTypes.edit', ['educationType'=>$educationType->id]),
+                'route'=>route($mainRoutePrefix.'.educationTypes.edit', ['educationType'=>$educationType->id]),
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route('admin.educationTypes.destroy', $educationType->id),
+                'route'=>route($mainRoutePrefix.'.educationTypes.destroy', $educationType->id),
                 ])
 
               </td>

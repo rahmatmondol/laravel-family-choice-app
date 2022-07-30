@@ -24,13 +24,13 @@ $title = __('site.SchoolTypes');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route('admin.types.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.types.index') }}" method="get">
 
             <div class="row">
 
@@ -43,7 +43,7 @@ $title = __('site.SchoolTypes');
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                   @lang('site.Search')</button>
                 @if (checkAdminPermission('create_types'))
-                <a href="{{ route('admin.types.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
+                <a href="{{ route($mainRoutePrefix.'.types.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
                   @lang('site.Add')</a>
                 @endif
               </div>
@@ -109,17 +109,17 @@ $title = __('site.SchoolTypes');
 
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route('admin.types.show', ['type'=>$type->id]),
+                'route'=>route($mainRoutePrefix.'.types.show', ['type'=>$type->id]),
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
-                'route'=>route('admin.types.edit', ['type'=>$type->id]),
+                'route'=>route($mainRoutePrefix.'.types.edit', ['type'=>$type->id]),
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route('admin.types.destroy', $type->id),
+                'route'=>route($mainRoutePrefix.'.types.destroy', $type->id),
                 ])
 
               </td>

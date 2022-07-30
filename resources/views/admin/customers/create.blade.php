@@ -19,8 +19,8 @@ $title = __('site.Create Customer');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.customers.index') }}">@lang('site.Customers')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.customers.index') }}">@lang('site.Customers')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -31,7 +31,7 @@ $title = __('site.Create Customer');
 
   <!-- Main content -->
   <section class="content">
-    <form method="post" action="{{ route('admin.customers.store')}}" enctype="multipart/form-data">
+    <form method="post" action="{{ route($mainRoutePrefix.'.customers.store')}}" enctype="multipart/form-data">
       @csrf
       @method('post')
       @include('admin.partials._errors')
@@ -83,7 +83,7 @@ $title = __('site.Create Customer');
                     $role->name }}</option>
                   @endforeach
                 </select>
-                <a href="{{ route('admin.cities.create') }}">@lang('site.Create new city')</a>
+                <a href="{{ route($mainRoutePrefix.'.cities.create') }}">@lang('site.Create new city')</a>
               </div> --}}
               {{-- date_of_birth --}}
               <div class="form-group">

@@ -24,13 +24,13 @@ $title = __('site.Admins');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route('admin.admins.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.admins.index') }}" method="get">
 
             <div class="row">
 
@@ -43,7 +43,7 @@ $title = __('site.Admins');
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                   @lang('site.Search')</button>
                 @if (checkAdminPermission('create_admins'))
-                <a href="{{ route('admin.admins.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
+                <a href="{{ route($mainRoutePrefix.'.admins.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
                   @lang('site.Add')</a>
                 @endif
               </div>
@@ -122,17 +122,17 @@ $title = __('site.Admins');
 
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route('admin.admins.show', ['admin'=>$admin->id]),
+                'route'=>route($mainRoutePrefix.'.admins.show', ['admin'=>$admin->id]),
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
-                'route'=>route('admin.admins.edit', ['admin'=>$admin->id]),
+                'route'=>route($mainRoutePrefix.'.admins.edit', ['admin'=>$admin->id]),
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route('admin.admins.destroy', $admin->id),
+                'route'=>route($mainRoutePrefix.'.admins.destroy', $admin->id),
                 ])
 
               </td>

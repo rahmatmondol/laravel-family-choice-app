@@ -52,7 +52,7 @@ class AttachmentController extends Controller
     session()->flash('success', __('site.Data added successfully'));
 
     if ($request->continue) {
-      return redirect()->route('admin.attachments.index', ['page' => session('currentPage')]);
+      return redirect()->route($mainRoutePrefix.'.attachments.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of store
@@ -73,7 +73,7 @@ class AttachmentController extends Controller
     session()->flash('success', __('Data updated successfully'));
 
     if ($request->continue) {
-      return redirect()->route('admin.attachments.index', ['page' => session('currentPage')]);
+      return redirect()->route($mainRoutePrefix.'.attachments.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of update
@@ -86,7 +86,7 @@ class AttachmentController extends Controller
     $this->attachmentRepository->deleteAttachment($attachment);
 
     session()->flash('success', __('Data deleted successfully'));
-    return redirect()->route('admin.attachments.index', ['page' => session('currentPage')]);
+    return redirect()->route($mainRoutePrefix.'.attachments.index', ['page' => session('currentPage')]);
   } //end of destroy
 
 }//end of controller

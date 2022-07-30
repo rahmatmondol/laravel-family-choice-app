@@ -19,8 +19,8 @@ $title = __('site.Edit Admin');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.admins.index') }}">@lang('site.Admins')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.admins.index') }}">@lang('site.Admins')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -31,7 +31,7 @@ $title = __('site.Edit Admin');
 
   <!-- Main content -->
   <section class="content">
-    <form method="post" action="{{ route('admin.admins.update',$admin->id)}}" enctype="multipart/form-data">
+    <form method="post" action="{{ route($mainRoutePrefix.'.admins.update',$admin->id)}}" enctype="multipart/form-data">
       @csrf
       @method('put')
       @include('admin.partials._errors')
@@ -88,7 +88,7 @@ $title = __('site.Edit Admin');
                     $role->name }}</option>
                   @endforeach
                 </select>
-                <a href="{{ route('admin.roles.create') }}">@lang('site.Create new role')</a>
+                <a href="{{ route($mainRoutePrefix.'.roles.create') }}">@lang('site.Create new role')</a>
               </div>
               {{-- status --}}
               <div class="form-group">

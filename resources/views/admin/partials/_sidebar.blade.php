@@ -24,7 +24,7 @@
         {{-- <li class="nav-header">EXAMPLES</li> --}}
 
         <li class="nav-item">
-          <a href="{{ route('admin.dashboard') }}" class="nav-link @if( $page == 'dashboard' )   active  @endif">
+          <a href="{{ route($mainRoutePrefix.'.dashboard') }}" class="nav-link @if( $page == 'dashboard' )   active  @endif">
             <i class="nav-icon fas fa-columns"></i>
             <p>
               {{ucfirst(__('site.Dashboard'))}}
@@ -35,7 +35,7 @@
         @foreach( getModules() as $item)
         {{-- @if (auth()->user()->hasPermission('read_'.$item)) --}}
         <li class="nav-item  active ">
-          <a href="{{ route('admin.'.$item.'.index') }}" class="nav-link @if( $page == $item )   active  @endif">
+          <a href="{{ route($mainRoutePrefix.'.'.$item.'.index') }}" class="nav-link @if( $page == $item )   active  @endif">
             <i class="nav-icon fas fa-columns"></i>
             <p>
               {{__('site.'.ucfirst($item))}}

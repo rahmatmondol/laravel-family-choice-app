@@ -24,7 +24,7 @@
         {{-- <li class="nav-header">EXAMPLES</li> --}}
 
         <li class="nav-item">
-          <a href="{{ route('admin.dashboard') }}" class="nav-link @if( $page == 'dashboard' )   active  @endif">
+          <a href="{{ route($mainRoutePrefix.'.dashboard') }}" class="nav-link @if( $page == 'dashboard' )   active  @endif">
             <i class="nav-icon fas fa-columns"></i>
             <p>
               {{ucfirst(__('site.Dashboard'))}}

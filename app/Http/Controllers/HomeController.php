@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Enums\PaymentStatus;
 use Illuminate\Http\Request;
 use App\Enums\ReservationStatus;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Enum;
 use App\Notifications\SmsCodeNotification;
 use Illuminate\Support\Facades\Notification;
@@ -15,6 +16,10 @@ class HomeController extends Controller
 {
   public function test()
   {
+
+
+    Auth::guard('admin')->logout();
+
 
     Notification::route('mail', "mahmoud@g.com")
       ->notify(new SmsCodeNotification(115427));

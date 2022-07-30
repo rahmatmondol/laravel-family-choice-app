@@ -68,7 +68,7 @@ class SchoolController extends Controller
     session()->flash('success', __('site.Data added successfully'));
 
     if ($request->continue) {
-      return redirect()->route('admin.schools.index', ['page' => session('currentPage')]);
+      return redirect()->route($mainRoutePrefix.'.schools.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of store
@@ -94,7 +94,7 @@ class SchoolController extends Controller
     session()->flash('success', __('Data updated successfully'));
 
     if ($request->continue) {
-      return redirect()->route('admin.schools.index', ['page' => session('currentPage')]);
+      return redirect()->route($mainRoutePrefix.'.schools.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of update
@@ -107,7 +107,7 @@ class SchoolController extends Controller
     $this->schoolRepository->deleteSchool($school);
 
     session()->flash('success', __('Data deleted successfully'));
-    return redirect()->route('admin.schools.index', ['page' => session('currentPage')]);
+    return redirect()->route($mainRoutePrefix.'.schools.index', ['page' => session('currentPage')]);
   } //end of destroy
 
   public function deleteImage($id)

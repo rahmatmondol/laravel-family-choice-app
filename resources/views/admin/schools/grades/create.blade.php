@@ -19,9 +19,9 @@ $title = __('site.Create Grade');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
             <li class="breadcrumb-item"><a
-                href="{{ route('admin.schools.grades.index',['school' => $school->id]) }}">@lang('site.Grades')</a>
+                href="{{ route($mainRoutePrefix.'.schools.grades.index',['school' => $school->id]) }}">@lang('site.Grades')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -32,7 +32,7 @@ $title = __('site.Create Grade');
 
   <!-- Main content -->
   <section class="content">
-    <form method="post" action="{{ route('admin.schools.grades.store',['school'=>$school->id])}}"
+    <form method="post" action="{{ route($mainRoutePrefix.'.schools.grades.store',['school'=>$school->id])}}"
       enctype="multipart/form-data">
       @csrf
       @method('post')

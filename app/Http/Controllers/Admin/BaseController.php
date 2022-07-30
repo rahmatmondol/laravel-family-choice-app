@@ -10,6 +10,7 @@ class BaseController extends Controller
 {
   public  $globalAdmin;
   public  $masterLayout = "admin.layouts.master";
+  public  $mainRoutePrefix = "admin";
   public  $sideBarItems = ['courses','attachments','reservations',];
   public function __construct()
   {

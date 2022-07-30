@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/test', "HomeController@test");
 
 Route::get('/', function () {
+  
   return redirect()->route('admin.login');
   return view('welcome');
 })->name('home');

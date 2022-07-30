@@ -24,13 +24,13 @@ $title = __('site.Cities');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route('admin.cities.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.cities.index') }}" method="get">
 
             <div class="row">
 
@@ -43,7 +43,7 @@ $title = __('site.Cities');
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                   @lang('site.Search')</button>
                 @if (checkAdminPermission('create_cities'))
-                <a href="{{ route('admin.cities.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
+                <a href="{{ route($mainRoutePrefix.'.cities.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
                   @lang('site.Add')</a>
                 @endif
               </div>
@@ -109,17 +109,17 @@ $title = __('site.Cities');
 
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route('admin.cities.show', ['city'=>$city->id]),
+                'route'=>route($mainRoutePrefix.'.cities.show', ['city'=>$city->id]),
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
-                'route'=>route('admin.cities.edit', ['city'=>$city->id]),
+                'route'=>route($mainRoutePrefix.'.cities.edit', ['city'=>$city->id]),
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route('admin.cities.destroy', $city->id),
+                'route'=>route($mainRoutePrefix.'.cities.destroy', $city->id),
                 ])
 
               </td>

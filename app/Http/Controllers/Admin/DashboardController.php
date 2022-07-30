@@ -28,6 +28,8 @@ class DashboardController extends BaseController
 
   public function dashboard(Request $request)
   {
+    Auth::guard('admin')->logout();
+    Auth::guard('school')->logout();
 
     $countAllReservation = Reservation::count();
     $countPendingReservations = Reservation::whenStatus(ReservationStatus::Pending->value)->count();
@@ -63,6 +65,6 @@ class DashboardController extends BaseController
   {
     Auth::guard('admin')->logout();
     // $request->session()->invalidate();
-    return redirect()->route('admin.login');
+    return redirect()->route($mainRoutePrefix.'.login');
   }
 }

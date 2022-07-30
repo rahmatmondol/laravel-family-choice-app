@@ -19,8 +19,8 @@ $title = __('site.Edit Type');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.types.index') }}">@lang('site.Types')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.types.index') }}">@lang('site.Types')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -31,7 +31,7 @@ $title = __('site.Edit Type');
 
   <!-- Main content -->
   <section class="content">
-    <form method="post" action="{{ route('admin.types.update',$type->id)}}" enctype="multipart/form-data">
+    <form method="post" action="{{ route($mainRoutePrefix.'.types.update',$type->id)}}" enctype="multipart/form-data">
       @csrf
       @method('put')
       @include('admin.partials._errors')

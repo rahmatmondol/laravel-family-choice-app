@@ -42,8 +42,8 @@ $title = __('site.Create City');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.cities.index') }}">@lang('site.Cities')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.cities.index') }}">@lang('site.Cities')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -54,7 +54,7 @@ $title = __('site.Create City');
 
   <!-- Main content -->
   <section class="content">
-    <form method="post" action="{{ route('admin.cities.store')}}" enctype="multipart/form-data">
+    <form method="post" action="{{ route($mainRoutePrefix.'.cities.store')}}" enctype="multipart/form-data">
       @csrf
       @method('post')
       @include('admin.partials._errors')

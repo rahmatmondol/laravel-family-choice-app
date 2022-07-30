@@ -39,8 +39,8 @@ $title = __('site.Create School');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.schools.index') }}">@lang('site.Schools')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.schools.index') }}">@lang('site.Schools')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -51,7 +51,7 @@ $title = __('site.Create School');
 
   <!-- Main content -->
   <section class="content">
-    <form method="post" action="{{ route('admin.schools.store')}}" enctype="multipart/form-data">
+    <form method="post" action="{{ route($mainRoutePrefix.'.schools.store')}}" enctype="multipart/form-data">
       @csrf
       @method('post')
       @include('admin.partials._errors')

@@ -57,7 +57,7 @@ class ReservationController extends Controller
     session()->flash('success', __('Data updated successfully'));
 
     if ($request->continue) {
-      return redirect()->route('admin.reservations.index', ['page' => session('currentPage')]);
+      return redirect()->route($mainRoutePrefix.'.reservations.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of update
@@ -70,7 +70,7 @@ class ReservationController extends Controller
     $this->reservationRepository->deleteReservation($reservation);
 
     session()->flash('success', __('Data deleted successfully'));
-    return redirect()->route('admin.reservations.index', ['page' => session('currentPage')]);
+    return redirect()->route($mainRoutePrefix.'.reservations.index', ['page' => session('currentPage')]);
   } //end of destroy
 
 }//end of controller

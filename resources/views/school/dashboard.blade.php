@@ -44,7 +44,7 @@ $title = __('site.Dashboard');
             <div class="icon">
               {{-- <i class="ion ion-bag"></i> --}}
             </div>
-            <a href="{{ route('admin.reservations.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route($mainRoutePrefix.'.reservations.index') }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -59,7 +59,7 @@ $title = __('site.Dashboard');
             <div class="icon">
               {{-- <i class="ion ion-stats-bars"></i> --}}
             </div>
-            <a href="{{ route('admin.reservations.index',['status'=>'pending']) }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route($mainRoutePrefix.'.reservations.index',['status'=>'pending']) }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -74,7 +74,7 @@ $title = __('site.Dashboard');
             <div class="icon">
               {{-- <i class="ion ion-stats-bars"></i> --}}
             </div>
-            <a href="{{ route('admin.reservations.index',['status'=>'pending']) }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{ route($mainRoutePrefix.'.reservations.index',['status'=>'pending']) }}" class="small-box-footer">@lang('site.More info') <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

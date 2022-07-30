@@ -14,6 +14,8 @@ class CourseRepository implements CourseRepositoryInterface
   public function getFilteredCourses($request)
   {
     return  Course::withoutGlobalScope(new OrderScope)
+      ->withTranslation()
+      ->with(['school'])
       ->whenSearch($request->search)
       ->whenSchool($request->school_id)
       ->isActive($request->status)

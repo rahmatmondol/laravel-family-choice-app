@@ -15,7 +15,7 @@ class CourseController extends BaseController
   public function __construct(
     private CourseRepositoryInterface $courseRepository,
   ) {
-
+    Parent::__construct();
   } //end of constructor
 
   public function index(Request $request)

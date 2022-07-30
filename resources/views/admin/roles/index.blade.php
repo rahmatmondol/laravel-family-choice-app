@@ -24,13 +24,13 @@ $title = __('site.Roles');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route('admin.roles.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.roles.index') }}" method="get">
 
             <div class="row">
 
@@ -43,7 +43,7 @@ $title = __('site.Roles');
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                   @lang('site.Search')</button>
                 @if (checkAdminPermission('create_roles'))
-                <a href="{{ route('admin.roles.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
+                <a href="{{ route($mainRoutePrefix.'.roles.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
                   @lang('site.Add')</a>
                 @endif
               </div>
@@ -102,17 +102,17 @@ $title = __('site.Roles');
 
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route('admin.roles.show', ['role'=>$role->id]),
+                'route'=>route($mainRoutePrefix.'.roles.show', ['role'=>$role->id]),
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
-                'route'=>route('admin.roles.edit', ['role'=>$role->id]),
+                'route'=>route($mainRoutePrefix.'.roles.edit', ['role'=>$role->id]),
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route('admin.roles.destroy', $role->id),
+                'route'=>route($mainRoutePrefix.'.roles.destroy', $role->id),
                 ])
 
               </td>

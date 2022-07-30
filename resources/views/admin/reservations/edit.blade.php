@@ -19,8 +19,8 @@ $title = __('site.Edit Reservation');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.reservations.index') }}">@lang('site.Reservations')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.reservations.index') }}">@lang('site.Reservations')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -31,7 +31,7 @@ $title = __('site.Edit Reservation');
 
   <!-- Main content -->
   <section class="content">
-    <form method="post" action="{{ route('admin.reservations.update',$reservation->id)}}" enctype="multipart/form-data">
+    <form method="post" action="{{ route($mainRoutePrefix.'.reservations.update',$reservation->id)}}" enctype="multipart/form-data">
       @csrf
       @method('put')
       @include('admin.partials._errors')

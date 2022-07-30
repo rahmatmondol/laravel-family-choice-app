@@ -19,8 +19,8 @@ $title = __('site.Create Type');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.types.index') }}">@lang('site.Types')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.types.index') }}">@lang('site.Types')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -31,7 +31,7 @@ $title = __('site.Create Type');
 
   <!-- Main content -->
   <section class="content">
-    <form method="post" action="{{ route('admin.types.store')}}" enctype="multipart/form-data">
+    <form method="post" action="{{ route($mainRoutePrefix.'.types.store')}}" enctype="multipart/form-data">
       @csrf
       @method('post')
       @include('admin.partials._errors')

@@ -7,11 +7,11 @@
     </li>
     <li class="nav-item d-none d-sm-inline-block">
 
-      <a href="{{ route('admin.logout') }}" onclick="event.preventDefault();
+      <a href="{{ route($mainRoutePrefix.'.logout') }}" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();" class="nav-link">
         @lang('site.Logout')
       </a>
-      <form id="logout-form" action="{{ route('admin.logout') }}" method="get" style="display: none;">
+      <form id="logout-form" action="{{ route($mainRoutePrefix.'.logout') }}" method="get" style="display: none;">
         @csrf
       </form>
 

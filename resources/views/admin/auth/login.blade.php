@@ -25,7 +25,7 @@
     <div class="card">
       <div class="card-body login-card-body">
         <p class="login-box-msg">@lang('site.Sign in to start your session')</p>
-        <form action="{{ route('admin.login-post') }}" method="post">
+        <form action="{{ route($mainRoutePrefix.'.login-post') }}" method="post">
           @csrf
           @method('post')
           @include('admin.partials._errors')

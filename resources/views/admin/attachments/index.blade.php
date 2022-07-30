@@ -24,13 +24,13 @@ $title = __('site.Attachments');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route('admin.attachments.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.attachments.index') }}" method="get">
 
             <div class="row">
 
@@ -43,7 +43,7 @@ $title = __('site.Attachments');
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                   @lang('site.Search')</button>
                 @if (checkAdminPermission('create_attachments'))
-                <a href="{{ route('admin.attachments.create') }}" class="btn btn-sm btn-primary"><i
+                <a href="{{ route($mainRoutePrefix.'.attachments.create') }}" class="btn btn-sm btn-primary"><i
                     class="fa fa-plus"></i>
                   @lang('site.Add')</a>
                 @endif
@@ -115,17 +115,17 @@ $title = __('site.Attachments');
 
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route('admin.attachments.show', ['attachment'=>$attachment->id]),
+                'route'=>route($mainRoutePrefix.'.attachments.show', ['attachment'=>$attachment->id]),
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
-                'route'=>route('admin.attachments.edit', ['attachment'=>$attachment->id]),
+                'route'=>route($mainRoutePrefix.'.attachments.edit', ['attachment'=>$attachment->id]),
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route('admin.attachments.destroy', $attachment->id),
+                'route'=>route($mainRoutePrefix.'.attachments.destroy', $attachment->id),
                 ])
 
               </td>

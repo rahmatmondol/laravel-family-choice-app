@@ -19,8 +19,8 @@ $title = __('site.Show Service');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.services.index') }}">@lang('site.Services')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.services.index') }}">@lang('site.Services')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>

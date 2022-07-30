@@ -51,7 +51,7 @@ class RoleController extends Controller
     session()->flash('success', __('site.Data added successfully'));
 
     if ($request->continue) {
-      return redirect()->route('admin.roles.index', ['page' => session('currentPage')]);
+      return redirect()->route($mainRoutePrefix.'.roles.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of store
@@ -72,7 +72,7 @@ class RoleController extends Controller
     session()->flash('success', __('Data updated successfully'));
 
     if ($request->continue) {
-      return redirect()->route('admin.roles.index', ['page' => session('currentPage')]);
+      return redirect()->route($mainRoutePrefix.'.roles.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of update
@@ -83,7 +83,7 @@ class RoleController extends Controller
       return redirect()->back();
     }
     session()->flash('success', __('Data deleted successfully'));
-    return redirect()->route('admin.roles.index', ['page' => session('currentPage')]);
+    return redirect()->route($mainRoutePrefix.'.roles.index', ['page' => session('currentPage')]);
   } //end of destroy
 
 }//end of controller

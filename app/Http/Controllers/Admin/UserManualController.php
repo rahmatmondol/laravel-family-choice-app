@@ -51,7 +51,7 @@ class UserManualController extends Controller
     session()->flash('success', __('site.Data added successfully'));
 
     if ($request->continue) {
-      return redirect()->route('admin.user_manuals.index', ['page' => session('currentPage')]);
+      return redirect()->route($mainRoutePrefix.'.user_manuals.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of store
@@ -71,7 +71,7 @@ class UserManualController extends Controller
     session()->flash('success', __('Data updated successfully'));
 
     if ($request->continue) {
-      return redirect()->route('admin.user_manuals.index', ['page' => session('currentPage')]);
+      return redirect()->route($mainRoutePrefix.'.user_manuals.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of update
@@ -84,7 +84,7 @@ class UserManualController extends Controller
     $this->userManualRepository->deleteUserManual($user_manual);
 
     session()->flash('success', __('Data deleted successfully'));
-    return redirect()->route('admin.user_manuals.index', ['page' => session('currentPage')]);
+    return redirect()->route($mainRoutePrefix.'.user_manuals.index', ['page' => session('currentPage')]);
   } //end of destroy
 
 }//end of controller

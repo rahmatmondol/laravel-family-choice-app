@@ -24,13 +24,13 @@ $title = __('site.Reservations');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-center">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route('admin.reservations.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.reservations.index') }}" method="get">
 
             <div class="row">
 
@@ -161,18 +161,18 @@ $title = __('site.Reservations');
                 @include('admin.partials._render_payment_status',['status'=>$reservation->payment_status])
               </td>
               <td class="text-center">
-                <a href="{{ route('admin.schools.show', ['school'=>$reservation->school_id]) }}"
+                <a href="{{ route($mainRoutePrefix.'.schools.show', ['school'=>$reservation->school_id]) }}"
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->school?->title }}</a>
               </td>
               <td class="text-center">
                 @if($reservation->course_id)
-                <a href="{{ route('admin.courses.show', ['course'=>$reservation->course_id]) }}"
+                <a href="{{ route($mainRoutePrefix.'.courses.show', ['course'=>$reservation->course_id]) }}"
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->course?->title }}</a>
                 @endif
               </td>
               <td class="text-center">
 
-                <a href="{{ route('admin.customers.show', ['customer'=>$reservation->customer_id]) }}"
+                <a href="{{ route($mainRoutePrefix.'.customers.show', ['customer'=>$reservation->customer_id]) }}"
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->customer?->full_name }}</a>
               </td>
 
@@ -180,12 +180,12 @@ $title = __('site.Reservations');
 
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route('admin.reservations.show', ['reservation'=>$reservation->id]),
+                'route'=>route($mainRoutePrefix.'.reservations.show', ['reservation'=>$reservation->id]),
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
-                'route'=>route('admin.reservations.edit', ['reservation'=>$reservation->id]),
+                'route'=>route($mainRoutePrefix.'.reservations.edit', ['reservation'=>$reservation->id]),
                 ])
 
               </td>

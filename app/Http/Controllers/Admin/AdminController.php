@@ -9,7 +9,7 @@ use App\Interfaces\AdminRepositoryInterface;
 use App\Http\Requests\Admin\AdminFormRequest;
 use App\Interfaces\RoleRepositoryInterface;
 
-class AdminController extends Controller
+class AdminController extends BaseController
 {
 
   // use AdminTrait, PermissionTrait;
@@ -18,6 +18,8 @@ class AdminController extends Controller
     private AdminRepositoryInterface $adminRepository,
     private RoleRepositoryInterface $roleRepository
   ) {
+
+    Parent::__construct();
     //create read update delete
     $this->middleware(['permission:read_admins'])->only('index');
     $this->middleware(['permission:create_admins'])->only('create');
@@ -54,7 +56,7 @@ class AdminController extends Controller
     session()->flash('success', __('site.Data added successfully'));
 
     if ($request->continue) {
-      return redirect()->route('admin.admins.index', ['page' => session('currentPage')]);
+      return redirect()->route($mainRoutePrefix.'.admins.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of store
@@ -76,7 +78,7 @@ class AdminController extends Controller
     session()->flash('success', __('Data updated successfully'));
 
     if ($request->continue) {
-      return redirect()->route('admin.admins.index', ['page' => session('currentPage')]);
+      return redirect()->route($mainRoutePrefix.'.admins.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of update
@@ -89,7 +91,7 @@ class AdminController extends Controller
     $this->adminRepository->deleteAdmin($admin);
 
     session()->flash('success', __('Data deleted successfully'));
-    return redirect()->route('admin.admins.index', ['page' => session('currentPage')]);
+    return redirect()->route($mainRoutePrefix.'.admins.index', ['page' => session('currentPage')]);
   } //end of destroy
 
 }//end of controller

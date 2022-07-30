@@ -19,8 +19,8 @@ $title = __('site.Create Course');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('admin.courses.index') }}">@lang('site.Courses')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.courses.index') }}">@lang('site.Courses')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -31,7 +31,7 @@ $title = __('site.Create Course');
 
   <!-- Main content -->
   <section class="content">
-    <form method="post" action="{{ route('admin.courses.store')}}" enctype="multipart/form-data">
+    <form method="post" action="{{ route($mainRoutePrefix.'.courses.store')}}" enctype="multipart/form-data">
       @csrf
       @method('post')
       @include('admin.partials._errors')
@@ -89,7 +89,7 @@ $title = __('site.Create Course');
                     $school->title }}</option>
                   @endforeach
                 </select>
-                <a href="{{ route('admin.schools.create') }}">@lang('site.Create new school')</a>
+                <a href="{{ route($mainRoutePrefix.'.schools.create') }}">@lang('site.Create new school')</a>
               </div>
               {{-- type --}}
               <div class="form-group">
