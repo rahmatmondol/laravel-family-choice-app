@@ -36,6 +36,7 @@ Route::group(
         'reservations'        => 'ReservationController',
       ]);
 
+      Route::get('reservations/customers/{customer}', 'ReservationController@show_customer')->name('customers.show');
       Route::get('schools/deleteImage/{id}', 'SchoolController@deleteImage');
     });
   }

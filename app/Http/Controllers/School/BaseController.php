@@ -15,7 +15,7 @@ class BaseController extends Controller
   public  $sideBarItems = ['courses','attachments','reservations',];
   public function __construct()
   {
-    // $this->middleware(['auth:school']);
+    $this->middleware(['auth:school']);
     $this->middleware(function ($request, $next) {
 
       $this->globalSchool = Auth::guard('school')->user();

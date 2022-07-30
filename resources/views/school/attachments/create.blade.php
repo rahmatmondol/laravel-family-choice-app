@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'courses';
-$title = __('site.Create Course');
+$page = 'attachments';
+$title = __('site.Create Attachment');
 ?>
 @section('title_page')
 {{ $title }}
@@ -19,8 +19,8 @@ $title = __('site.Create Course');
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('school.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('school.courses.index') }}">@lang('site.Courses')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.attachments.index') }}">@lang('site.Attachments')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -31,10 +31,10 @@ $title = __('site.Create Course');
 
   <!-- Main content -->
   <section class="content">
-    <form method="post" action="{{ route('school.courses.store')}}" enctype="multipart/form-data">
+    <form method="post" action="{{ route($mainRoutePrefix.'.attachments.store')}}" enctype="multipart/form-data">
       @csrf
       @method('post')
-      @include('school.partials._errors')
+      @include('admin.partials._errors')
       <input type="hidden" name="school_id" value="{{ $globalSchool->id }}">
       <div class="row">
         <div class="col-md-6">
@@ -47,30 +47,9 @@ $title = __('site.Create Course');
                 <input required="required" type="text" name="{{ $locale }}[title]" class="form-control"
                   value="{{ old($locale . '.title') }}">
               </div>
-              <div class="form-group">
-                <label>@lang('site.' . $locale . '.Short Description')</label>
-                <input required="required" type="text" name="{{ $locale }}[short_description]" class="form-control"
-                  value="{{ old($locale . '.short_description') }}">
-              </div>
-              <div class="form-group">
-                <label>@lang('site.' . $locale . '.Description')</label>
-                <textarea required="required" type="text" name="{{ $locale }}[description]"
-                  class="form-control">{{ old($locale . '.description') }}</textarea>
-              </div>
               <div class="  with-border"></div><br>
               @endforeach
 
-              {{-- from_date --}}
-              <div class="form-group">
-                <label>@lang('site.From Date')</label>
-                <input type="date" name="from_date" value="{{ old('from_date') }}" class="form-control">
-              </div>
-
-              {{-- to_date --}}
-              <div class="form-group">
-                <label>@lang('site.To Date')</label>
-                <input type="date" name="to_date" value="{{ old('to_date') }}" class="form-control">
-              </div>
             </div>
             <!-- /.card-body -->
           </div>
@@ -80,14 +59,9 @@ $title = __('site.Create Course');
           <div class="card card-primary">
             <div class="card-body">
 
-              {{-- type --}}
               <div class="form-group">
-                <label for="inputType">@lang('site.Type')</label>
-                <select id="inputType" name="type" required class="form-control custom-select">
-                  <option value='' selected disabled>@lang('site.Type')</option>
-                  <option value="summery" @if(old('type')=='summery' ) selected @endif>@lang('site.Summery')</option>
-                  <option value="wintry" @if(old('type')=='wintry' ) selected @endif>@lang('site.Wintry')</option>
-                </select>
+                <label>@lang('site.Template File')</label>
+                <input type="file" id='template_file' name="template_file" class="form-control">
               </div>
 
               {{-- order_column --}}
@@ -105,15 +79,6 @@ $title = __('site.Create Course');
                   <option value="1" @if(old('status')==1) selected @endif>@lang('site.Active')</option>
                   <option value="0" @if(old('status')==0) selected @endif>@lang('site.In-Active')</option>
                 </select>
-              </div>
-              <div class="form-group">
-                <label>@lang('site.Image')</label>
-                <input type="file" id='image' name="image" class="form-control image1" required>
-              </div>
-
-              <div class="form-group">
-                <img src="{{ asset('uploads/default.png') }}" style="width: 100px" class="img-thumbnail image-preview1"
-                  alt="">
               </div>
 
             </div>

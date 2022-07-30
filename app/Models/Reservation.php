@@ -34,6 +34,7 @@ class Reservation extends Model
 
   public function scopeWhenSchool($query,$school_id)
   {
+    $school_id = getAuthSchool() ? getAuthSchool()->id : $school_id;
     return $query->when($school_id, function ($q) use ($school_id) {
 
       return $q->whereHas('school', function ($qu) use ($school_id) {

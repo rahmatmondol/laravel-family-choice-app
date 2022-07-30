@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class School extends Authenticatable
 {
   use \Astrotomic\Translatable\Translatable, LocationTrait;
-
   protected $guarded = [];
 
   public $translatedAttributes = ['title', 'address', 'description'];

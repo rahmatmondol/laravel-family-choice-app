@@ -23,12 +23,18 @@ class RedirectIfAuthenticated
 
     // dd($guards[0]);
     if (count($guards)) {
+      // dd($guards[0]);
 
       // dd(Auth::guard($guards[0])->check());
       switch ($guards[0]) {
         case 'admin':
           if (Auth::guard($guards[0])->check()) {
             return redirect('admin/dashboard');
+          }
+          break;
+        case 'school':
+          if (Auth::guard($guards[0])->check()) {
+            return redirect('school/dashboard');
           }
           break;
         case 'web':

@@ -15,6 +15,7 @@ class AttachmentRepository implements AttachmentRepositoryInterface
   {
     return  Attachment::withoutGlobalScope(new OrderScope)
       ->whenSearch($request->search)
+      ->whenSchool($request->school_id)
       ->isActive($request->status)
       ->latest()
       ->paginate(request()->perPage ?? 20);

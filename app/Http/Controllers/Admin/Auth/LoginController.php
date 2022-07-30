@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\BaseController;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class LoginController extends BaseController
+class LoginController extends Controller
 {
   use AuthenticatesUsers;
 
@@ -26,14 +26,12 @@ class LoginController extends BaseController
    */
   public function __construct()
   {
-    parent::__construct();
-
     $this->middleware(['guest'])->except('logout');
   }
 
   public function showLoginForm()
   {
-    return view($this->mainViewPrefix.'.auth.login');
+    return view('admin.auth.login');
   }
 
   public function login(Request $request)
@@ -48,7 +46,7 @@ class LoginController extends BaseController
       'password' => $request->password,
       'status' => 1
     ], $request->get('remember'))) {
-      return redirect()->intended(route($this->mainRoutePrefix.'.dashboard'));
+      return redirect()->intended(route('admin.dashboard'));
       return redirect()->intended(route('home'));
     }
     return back()->withInput($request->only('phone', 'remember'))->withErrors(__('site.Invalid Credentials'));;

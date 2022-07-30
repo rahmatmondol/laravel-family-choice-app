@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Validation\Rule;
+use App\Rules\ValidateCurrentSchool;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AttachmentFormRequest extends FormRequest
@@ -17,7 +18,7 @@ class AttachmentFormRequest extends FormRequest
   public function rules()
   {
     $this->rules += [
-      'school_id' => ['required', 'exists:schools,id'],
+      'school_id' => ['required', 'exists:schools,id', new ValidateCurrentSchool()],
     ];
 
     if ($this->isMethod('post')) {
@@ -30,12 +31,11 @@ class AttachmentFormRequest extends FormRequest
   public function createRules()
   {
     foreach (config('translatable.locales') as $locale) {
-      $this->rules += [$locale . '.title' => ['required', Rule::unique('attachment_translations', 'title')]];
+      $this->rules += [$locale . '.title' => ['required']];
     } // end of  for each
 
     return $this->rules;
   }
-
 
   public function updateRules()
   {
@@ -43,7 +43,8 @@ class AttachmentFormRequest extends FormRequest
     $attachment = $this->route('attachment');
 
     foreach (config('translatable.locales') as $locale) {
-      $this->rules += [$locale . '.title' => ['required', Rule::unique('attachment_translations', 'title')->ignore($attachment->id, 'attachment_id')]];
+      $this->rules += [$locale . '.title' => ['required']];
+      // $this->rules += [$locale . '.title' => ['required', Rule::unique('attachment_translations', 'title')->ignore($attachment->id, 'attachment_id')]];
     } // end of  for each
 
     $this->rules += [];

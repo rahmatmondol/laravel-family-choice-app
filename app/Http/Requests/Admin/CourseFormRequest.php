@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Rules\ValidateCurrentSchool;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -16,11 +17,7 @@ class CourseFormRequest extends FormRequest
   public function rules()
   {
     $this->rules += [
-      'school_id' => ['required', 'exists:schools,id', function ($attribute, $value, $fail) {
-        if (auth('school')->check() && auth('school')->id != $value) {
-          $fail(__('site.school id not valid'));
-        }
-      }],
+      'school_id' => ['required', 'exists:schools,id', new ValidateCurrentSchool()],
       'type' => ['required', 'in:summery,wintry'],
       'from_date' => ['required', 'date', 'after:yesterday'],
       'to_date' => ['required', 'date', 'after:yesterday'],
@@ -40,7 +37,7 @@ class CourseFormRequest extends FormRequest
     ];
 
     foreach (config('translatable.locales') as $locale) {
-      $this->rules += [$locale . '.title' => ['required', Rule::unique('course_translations', 'title')]];
+      $this->rules += [$locale . '.title' => ['required']];
     } // end of  for each
 
     return $this->rules;
@@ -56,7 +53,8 @@ class CourseFormRequest extends FormRequest
     ];
 
     foreach (config('translatable.locales') as $locale) {
-      $this->rules += [$locale . '.title' => ['required', Rule::unique('course_translations', 'title')->ignore($course->id, 'course_id')]];
+      $this->rules += [$locale . '.title' => ['required']];
+      // $this->rules += [$locale . '.title' => ['required', Rule::unique('course_translations', 'title')->ignore($course->id, 'course_id')]];
     } // end of  for each
 
     $this->rules += [];

@@ -33,7 +33,6 @@
         </li>
 
         @foreach( $sideBarItems as $item)
-        {{-- @if (auth()->user()->hasPermission('read_'.$item)) --}}
         <li class="nav-item  active ">
           <a href="{{ route('school.'.$item.'.index') }}" class="nav-link @if( $page == $item )   active  @endif">
             <i class="nav-icon fas fa-columns"></i>
@@ -42,7 +41,6 @@
             </p>
           </a>
         </li>
-        {{-- @endif --}}
         @endforeach
 
       </ul>

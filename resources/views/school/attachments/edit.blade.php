@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'courses';
-$title = __('site.Edit Course');
+$page = 'attachments';
+$title = __('site.Edit Attachment');
 ?>
 @section('title_page')
 {{ $title }}
@@ -20,7 +20,7 @@ $title = __('site.Edit Course');
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.courses.index') }}">@lang('site.Courses')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.attachments.index') }}">@lang('site.Attachments')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -31,7 +31,7 @@ $title = __('site.Edit Course');
 
   <!-- Main content -->
   <section class="content">
-    <form method="post" action="{{ route($mainRoutePrefix.'.courses.update',$course->id)}}" enctype="multipart/form-data">
+    <form method="post" action="{{ route($mainRoutePrefix.'.attachments.update',$attachment->id)}}" enctype="multipart/form-data">
       @csrf
       @method('put')
       @include('admin.partials._errors')
@@ -45,33 +45,11 @@ $title = __('site.Edit Course');
               <div class="form-group">
                 <label>@lang('site.' . $locale . '.Title')</label>
                 <input required="required" type="text" name="{{ $locale }}[title]" class="form-control"
-                  value="{{ old($locale . '.title',$course->translate($locale)->title) }}">
-              </div>
-              <div class="form-group">
-                <label>@lang('site.' . $locale . '.Short Description')</label>
-                <input required="required" type="text" name="{{ $locale }}[short_description]" class="form-control"
-                  value="{{ old($locale . '.short_description',$course->translate($locale)->short_description) }}">
-              </div>
-              <div class="form-group">
-                <label>@lang('site.' . $locale . '.Description')</label>
-                <textarea required="required" type="text" name="{{ $locale }}[description]"
-                  class="form-control">{{ old($locale . '.description',$course->translate($locale)->description) }}</textarea>
+                  value="{{ old($locale . '.title',$attachment->translate($locale)->title) }}">
               </div>
               <div class="  with-border"></div><br>
               @endforeach
 
-              {{-- from_date --}}
-              <div class="form-group">
-                <label>@lang('site.From Date')</label>
-                <input type="date" name="from_date" value="{{ old('from_date',$course->from_date) }}"
-                  class="form-control">
-              </div>
-
-              {{-- to_date --}}
-              <div class="form-group">
-                <label>@lang('site.To Date')</label>
-                <input type="date" name="to_date" value="{{ old('to_date',$course->to_date) }}" class="form-control">
-              </div>
             </div>
             <!-- /.card-body -->
           </div>
@@ -81,22 +59,18 @@ $title = __('site.Edit Course');
           <div class="card card-primary">
             <div class="card-body">
 
-              {{-- type --}}
               <div class="form-group">
-                <label for="inputType">@lang('site.Type')</label>
-                <select id="inputType" name="type" required class="form-control custom-select">
-                  <option value='' selected disabled>@lang('site.Type')</option>
-                  <option value="summery" @if(old('type',$course->type)=='summery' ) selected
-                    @endif>@lang('site.Summery')</option>
-                  <option value="wintry" @if(old('type',$course->type)=='wintry' ) selected @endif>@lang('site.Wintry')
-                  </option>
-                </select>
+                <label>@lang('site.Template File')</label>
+                <input type="file" id='template_file' name="template_file" class="form-control">
+                @if($attachment->template_file_path)
+                <a href="{{ $attachment->template_file_path }}" target="_blank">@lang('site.Download')</a>
+                @endif
               </div>
 
               {{-- order_column --}}
               <div class="form-group">
                 <label>@lang('site.Order Item')</label>
-                <input type="text" name="order_column" value="{{ old('order_column',$course->order_column) }}"
+                <input type="text" name="order_column" value="{{ old('order_column',$attachment->order_column) }}"
                   class="form-control"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
               </div>
@@ -106,19 +80,11 @@ $title = __('site.Edit Course');
                 <label for="inputStatus">@lang('site.Status')</label>
                 <select id="inputStatus" name="status" required class="form-control custom-select">
                   <option value='' selected disabled>@lang('site.Status')</option>
-                  <option value="1" @if(old('status',$course->status)==1) selected @endif>@lang('site.Active')</option>
-                  <option value="0" @if(old('status',$course->status)==0) selected @endif>@lang('site.In-Active')
+                  <option value="1" @if(old('status',$attachment->status)==1) selected @endif>@lang('site.Active')
+                  </option>
+                  <option value="0" @if(old('status',$attachment->status)==0) selected @endif>@lang('site.In-Active')
                   </option>
                 </select>
-              </div>
-
-              <div class="form-group">
-                <label>@lang('site.Image')</label>
-                <input type="file" id='image' name="image" class="form-control image1">
-              </div>
-
-              <div class="form-group">
-                <img src="{{ $course->image_path }}" style="width: 100px" class="img-thumbnail image-preview1" alt="">
               </div>
 
             </div>

@@ -17,7 +17,7 @@ if (!function_exists('appCurrency')) {
 if (!function_exists('checkAdminPermission')) {
   function checkAdminPermission($permission)
   {
-    return getAdmin()?->hasPermission($permission) || getAuthSchool() ? true : false;
+    return (!empty(getAdmin()) && getAdmin()->hasPermission($permission)) || getAuthSchool() ? true : false;
   }
 }
 

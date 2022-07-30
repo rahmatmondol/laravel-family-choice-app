@@ -5,7 +5,6 @@ namespace App\Http\Controllers\School;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\View;
 use App\Interfaces\CourseRepositoryInterface;
 use App\Http\Controllers\School\BaseController;
 use App\Http\Requests\Admin\CourseFormRequest;

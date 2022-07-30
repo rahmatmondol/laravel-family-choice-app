@@ -19,7 +19,7 @@ return new class extends Migration
       $table->integer('order_column')->nullable();
       $table->string('image')->default('default.png');
       $table->boolean('status')->default(1); // default active
-      // $table->enum('type', ['summery', 'wintry'])->nullable();
+      $table->enum('type', ['summery', 'wintry'])->nullable();
       $table->date('from_date');
       $table->date('to_date');
       $table->foreignId('school_id')->nullable()->constrained()->onDelete('cascade');

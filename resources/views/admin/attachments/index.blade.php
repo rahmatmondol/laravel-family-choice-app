@@ -35,18 +35,34 @@ $title = __('site.Attachments');
             <div class="row">
 
               <div class="col-md-4">
-                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
-                  value="{{ request()->search }}">
+                <div class="form-group">
+                  <select name="school_id" class="form-control"  data-live-search="true">
+                    <option value="">@lang('site.Schools') </option>
+                    @foreach( $schools as $value )
+                    <option value="{{ $value->id}}" @selected(request('school_id')==$value->id) >
+                      {{ $value->title }}</option>
+                    @endforeach
+                  </select>
+                </div>
               </div>
 
               <div class="col-md-4">
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
-                  @lang('site.Search')</button>
-                @if (checkAdminPermission('create_attachments'))
-                <a href="{{ route($mainRoutePrefix.'.attachments.create') }}" class="btn btn-sm btn-primary"><i
-                    class="fa fa-plus"></i>
-                  @lang('site.Add')</a>
-                @endif
+                <div class="form-group">
+                  <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
+                    value="{{ request()->search }}">
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
+                    @lang('site.Search')</button>
+                  @if (checkAdminPermission('create_attachments'))
+                  <a href="{{ route($mainRoutePrefix.'.attachments.create') }}" class="btn btn-sm btn-primary"><i
+                      class="fa fa-plus"></i>
+                    @lang('site.Add')</a>
+                  @endif
+                </div>
               </div>
 
             </div>

@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'courses';
-$title = __('site.Courses');
+$page = 'attachments';
+$title = __('site.Attachments');
 ?>
 @section('title_page')
 {{ $title }}
@@ -17,7 +17,7 @@ $title = __('site.Courses');
         <div class="col-sm-6">
           <h6>{{ $title }}
             <small>
-              ( {{ $courses->total() }} )
+              ( {{ $attachments->total() }} )
             </small>
           </h6>
 
@@ -30,27 +30,24 @@ $title = __('site.Courses');
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route($mainRoutePrefix.'.courses.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.attachments.index') }}" method="get">
 
             <div class="row">
 
               <div class="col-md-4">
-                <div class="form-group">
-                  <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
-                    value="{{ request()->search }}">
-                </div>
-            </div>
+                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
+                  value="{{ request()->search }}">
+              </div>
 
-            <div class="col-md-4">
-              <div class="form-group">
+              <div class="col-md-4">
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                   @lang('site.Search')</button>
-                @if (checkAdminPermission('create_courses'))
-                <a href="{{ route($mainRoutePrefix.'.courses.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
+                @if (checkAdminPermission('create_attachments'))
+                <a href="{{ route($mainRoutePrefix.'.attachments.create') }}" class="btn btn-sm btn-primary"><i
+                    class="fa fa-plus"></i>
                   @lang('site.Add')</a>
                 @endif
               </div>
-            </div>
 
             </div>
           </form><!-- end of form -->
@@ -83,18 +80,6 @@ $title = __('site.Courses');
               <th style="width: 20%">
                 @lang('site.Title')
               </th>
-              <th style="width: 20%">
-                @lang('site.Type')
-              </th>
-              <th style="width: 20%">
-                @lang('site.From Date')
-              </th>
-              <th style="width: 20%">
-                @lang('site.To Date')
-              </th>
-              <th style="width: 20%">
-                @lang('site.Image')
-              </th>
               <th style="width: 8%" class="text-center">
                 @lang('site.Status')
               </th>
@@ -106,49 +91,35 @@ $title = __('site.Courses');
             </tr>
           </thead>
           <tbody>
-            @forelse ($courses as $course )
+            @forelse ($attachments as $attachment )
             <tr>
               <td>
                 {{ $loop->iteration }}
               </td>
               <td>
-                {{ $course->title }}
-              </td>
-              <td>
-                @lang('site.'.$course->type)
-              </td>
-              <td>
-                {{ $course->from_date }}
-              </td>
-              <td>
-                {{ $course->to_date }}
-              </td>
-              <td>
-                <a href="{{ $course->image_path }}" data-fancybox data-caption="Caption for single image">
-                  <img src="{{ $course->image_path }}" style="width: 100px;" class="img-thumbnail" alt="">
-                </a>
+                {{ $attachment->title }}
               </td>
               <td class="project-state">
-                @include('admin.partials._render_status',['status'=>$course->status])
+                @include('admin.partials._render_status',['status'=>$attachment->status])
               </td>
               <td>
-                {{ $course->order_column }}
+                {{ $attachment->order_column }}
               </td>
               <td class="project-actions text-right">
 
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route($mainRoutePrefix.'.courses.show', ['course'=>$course->id]),
+                'route'=>route($mainRoutePrefix.'.attachments.show', ['attachment'=>$attachment->id]),
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
-                'route'=>route($mainRoutePrefix.'.courses.edit', ['course'=>$course->id]),
+                'route'=>route($mainRoutePrefix.'.attachments.edit', ['attachment'=>$attachment->id]),
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route($mainRoutePrefix.'.courses.destroy', $course->id),
+                'route'=>route($mainRoutePrefix.'.attachments.destroy', $attachment->id),
                 ])
 
               </td>
@@ -163,7 +134,7 @@ $title = __('site.Courses');
 
           </tbody>
         </table>
-        {{ $courses->appends(request()->query())->links() }}
+        {{ $attachments->appends(request()->query())->links() }}
 
       </div>
       <!-- /.card-body -->

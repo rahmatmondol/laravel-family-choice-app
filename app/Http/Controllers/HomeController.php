@@ -20,7 +20,8 @@ class HomeController extends Controller
 
 
     Auth::guard('admin')->logout();
-
+    Auth::guard('school')->logout();
+    dd('done');
 
     Notification::route('mail', "mahmoud@g.com")
       ->notify(new SmsCodeNotification(115427));

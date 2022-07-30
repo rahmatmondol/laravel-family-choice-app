@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\School;
 
 use App\Models\Attachment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Interfaces\SchoolRepositoryInterface;
-use App\Http\Controllers\Admin\BaseController;
+use App\Http\Controllers\School\BaseController;
 use App\Interfaces\AttachmentRepositoryInterface;
 use App\Http\Requests\Admin\AttachmentFormRequest;
 
@@ -19,22 +19,14 @@ class AttachmentController extends BaseController
   ) {
     parent::__construct();
     //create read update delete
-    $this->middleware(['permission:read_attachments'])->only('index');
-    $this->middleware(['permission:create_attachments'])->only('create');
-    $this->middleware(['permission:update_attachments'])->only('edit');
-    $this->middleware(['permission:delete_attachments'])->only('destroy');
   } //end of constructor
 
   public function index(Request $request)
   {
-    dd('admin');
     session(['currentPage' => request('page', 1)]);
 
-    $schools = $this->schoolRepository->getAllSchools();
-
     $attachments = $this->attachmentRepository->getFilteredAttachments($request);
-
-    return view($this->mainViewPrefix.'.attachments.index', compact('attachments','schools'));
+    return view($this->mainViewPrefix.'.attachments.index', compact('attachments'));
   } // end of index
 
   public function create(Request $request)
