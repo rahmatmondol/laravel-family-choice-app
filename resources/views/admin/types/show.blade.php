@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends($masterLayout)
 <?php
 $page = 'types';
 $title = __('site.Show Type');

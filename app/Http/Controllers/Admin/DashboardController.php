@@ -16,24 +16,19 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Request;
+use App\Http\Controllers\Admin\BaseController;
 
-class DashboardController extends Controller
+class DashboardController extends BaseController
 {
-  private $id ;
   public function __construct()
   {
+    Parent::__construct();
     $this->middleware(['auth:admin']);
-
-    $this->middleware('auth');
-    $this->middleware(function ($request, $next) {
-        $this->id = Auth::user();
-        return $next($request);
-    });
-
   }
 
   public function dashboard(Request $request)
   {
+
     $countAllReservation = Reservation::count();
     $countPendingReservations = Reservation::whenStatus(ReservationStatus::Pending->value)->count();
     $countOfCities = City::count();

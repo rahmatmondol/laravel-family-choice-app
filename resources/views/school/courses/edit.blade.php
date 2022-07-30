@@ -1,4 +1,4 @@
-@extends('school.layouts.master')
+@extends($masterLayout)
 <?php
 $page = 'courses';
 $title = __('site.Edit Course');

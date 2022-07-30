@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends($masterLayout)
 <?php
 $page = 'roles';
 $title = __('site.Create Role');

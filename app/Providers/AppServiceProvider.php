@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Schema;
@@ -30,24 +31,6 @@ class AppServiceProvider extends ServiceProvider
     Schema::defaultStringLength(191);
     Paginator::useBootstrap();
 
-    // Model::preventLazyLoading(!app()->isProduction());
-
-    // View::creator('*', function ($view) {
-
-    //   $view->with([
-    //     'globalCustomer' => getCustomer(),
-    //   ]);
-    // });
-
-    // View::composer('frontend.components.app.header', 'App\Http\View\Composers\CategoryList');
-    // View::composer('frontend.components.app.footer', 'App\Http\View\Composers\SocialMediaList');
-    // View::composer('frontend.components.app.footer', 'App\Http\View\Composers\FooterList');
-
-    #admin dashboard
-    View::creator('admin/*', function ($view) {
-      $view->with([
-        'globalAdmin' => getAdmin(),
-      ]);
-    });
+    Model::preventLazyLoading(!app()->isProduction());
   }
 }

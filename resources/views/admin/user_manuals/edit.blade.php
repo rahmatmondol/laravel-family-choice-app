@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends($masterLayout)
 <?php
 $page = 'user_manuals';
 $title = __('site.Edit User Manual');

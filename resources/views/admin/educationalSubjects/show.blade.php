@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends($masterLayout)
 <?php
 $page = 'educationalSubjects';
 $title = __('site.Show EducationalSubject');
