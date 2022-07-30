@@ -5,10 +5,11 @@ namespace App\Http\Controllers\API\Customer;
 use Illuminate\Http\Request;
 use App\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\BaseController;
 use App\Traits\Models\ResetPasswordTrait;
 use Illuminate\Support\Facades\Validator;
 
-class PasswordResetController extends Controller
+class PasswordResetController extends BaseController
 {
 
   use ResetPasswordTrait, ResponseTrait;

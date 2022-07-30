@@ -6,11 +6,12 @@ use Carbon\Carbon;
 use App\Models\Admin;
 use App\Models\PasswordReset;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\BaseController;
 use App\Traits\Admin\AdminResetPasswordTrait;
 use App\Http\Requests\Admin\AdminResetPasswordFormRequest;
 use App\Http\Requests\Admin\AdminSendResetPasswordLinkFormRequest;
 
-class PasswordResetController extends Controller
+class PasswordResetController extends BaseController
 {
 
   use AdminResetPasswordTrait;

@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Interfaces\RoleRepositoryInterface;
 use App\Http\Requests\Admin\RoleFormRequest;
+use App\Http\Controllers\Admin\BaseController;
 
-class RoleController extends Controller
+class RoleController extends BaseController
 {
 
   // use RoleTrait, PermissionTrait;

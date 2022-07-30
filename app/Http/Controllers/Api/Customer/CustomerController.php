@@ -9,10 +9,11 @@ use Illuminate\Http\Request;
 use App\Traits\ResponseTrait;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\BaseController;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\ReservationResource;
 
-class CustomerController extends Controller
+class CustomerController extends BaseController
 {
 
   use ResponseTrait;

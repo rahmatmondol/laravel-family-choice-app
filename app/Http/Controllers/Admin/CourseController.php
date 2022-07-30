@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Interfaces\CourseRepositoryInterface;
 use App\Interfaces\SchoolRepositoryInterface;
+use App\Http\Controllers\Admin\BaseController;
 use App\Http\Requests\Admin\CourseFormRequest;
 
-class CourseController extends Controller
+class CourseController extends BaseController
 {
 
   public function __construct(

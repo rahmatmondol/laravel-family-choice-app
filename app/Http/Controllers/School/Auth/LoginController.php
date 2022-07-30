@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Http\Controllers\Admin\BaseController;
 
-class LoginController extends Controller
+class LoginController extends BaseController
 {
   use AuthenticatesUsers;
 

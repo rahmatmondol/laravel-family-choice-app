@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\BaseController;
 use App\Interfaces\TypeRepositoryInterface;
 use App\Http\Requests\Admin\TypeFormRequest;
 
-class TypeController extends Controller
+class TypeController extends BaseController
 {
 
   // use TypeTrait, PermissionTrait;

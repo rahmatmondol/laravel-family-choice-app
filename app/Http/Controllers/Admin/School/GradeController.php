@@ -8,11 +8,12 @@ use App\Models\SchoolGrade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\BaseController;
 use App\Interfaces\GradeRepositoryInterface;
 use App\Http\Requests\Admin\GradeFormRequest;
 use App\Http\Requests\Admin\SchoolGradeFormRequest;
 
-class GradeController extends Controller
+class GradeController extends BaseController
 {
 
   // use GradeTrait, PermissionTrait;

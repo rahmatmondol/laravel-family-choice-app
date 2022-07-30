@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Models\UserManual;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\BaseController;
 use App\Interfaces\UserManualRepositoryInterface;
 use App\Http\Requests\Admin\UserManualFormRequest;
 
-class UserManualController extends Controller
+class UserManualController extends BaseController
 {
 
   public function __construct(

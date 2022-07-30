@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\School;
 use App\Models\School;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\BaseController;
 use App\Repositories\SchoolTypeRepository;
 use App\Interfaces\TypeRepositoryInterface;
 use App\Interfaces\GradeRepositoryInterface;
@@ -14,7 +15,7 @@ use App\Http\Requests\Admin\SchoolFormRequest;
 use App\Interfaces\ServiceRepositoryInterface;
 use App\Repositories\EducationalSubjectRepository;
 
-class SchoolController extends Controller
+class SchoolController extends BaseController
 {
 
   public function __construct(

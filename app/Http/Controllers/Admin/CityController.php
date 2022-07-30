@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Interfaces\CityRepositoryInterface;
 use App\Http\Requests\Admin\CityFormRequest;
+use App\Http\Controllers\Admin\BaseController;
 
-class CityController extends Controller
+class CityController extends BaseController
 {
 
   // use CityTrait, PermissionTrait;

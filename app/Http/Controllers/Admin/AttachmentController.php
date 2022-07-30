@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Attachment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Interfaces\AttachmentRepositoryInterface;
 use App\Interfaces\SchoolRepositoryInterface;
+use App\Http\Controllers\Admin\BaseController;
+use App\Interfaces\AttachmentRepositoryInterface;
 use App\Http\Requests\Admin\AttachmentFormRequest;
 
-class AttachmentController extends Controller
+class AttachmentController extends BaseController
 {
 
   public function __construct(

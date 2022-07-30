@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\BaseController;
 use App\Interfaces\SchoolRepositoryInterface;
 use App\Interfaces\SliderRepositoryInterface;
 use App\Http\Requests\Admin\SliderFormRequest;
 
-class SliderController extends Controller
+class SliderController extends BaseController
 {
 
   public function __construct(

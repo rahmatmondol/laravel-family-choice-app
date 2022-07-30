@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Models\SchoolType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\BaseController;
 use App\Interfaces\SchoolTypeRepositoryInterface;
 use App\Http\Requests\Admin\SchoolTypeFormRequest;
 
-class SchoolTypeController extends Controller
+class SchoolTypeController extends BaseController
 {
 
   // use SchoolTypeTrait, PermissionTrait;

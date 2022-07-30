@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\BaseController;
 use App\Traits\AuthenticateCustomer;
 use App\Http\Resources\CustomerResource;
 use Illuminate\Support\Facades\Validator;
@@ -20,7 +21,7 @@ use App\Http\Requests\Api\ForgetPasswordFormRequest;
 use App\Http\Requests\Api\UpdateFirebaseTokenFormRequest;
 use App\Http\Requests\Api\CustomerChangePasswordFormRequest;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
   use ResponseTrait, AuthenticateCustomer;
 

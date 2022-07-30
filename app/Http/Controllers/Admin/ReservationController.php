@@ -6,12 +6,13 @@ use App\Models\School;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Interfaces\CourseRepositoryInterface;
 use App\Interfaces\SchoolRepositoryInterface;
+use App\Http\Controllers\Admin\BaseController;
 use App\Interfaces\ReservationRepositoryInterface;
 use App\Http\Requests\Admin\ReservationFormRequest;
-use App\Interfaces\CourseRepositoryInterface;
 
-class ReservationController extends Controller
+class ReservationController extends BaseController
 {
 
   public function __construct(

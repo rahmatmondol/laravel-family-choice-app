@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\BaseController;
 use App\Interfaces\ServiceRepositoryInterface;
 use App\Http\Requests\Admin\ServiceFormRequest;
 
-class ServiceController extends Controller
+class ServiceController extends BaseController
 {
 
   public function __construct(

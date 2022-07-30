@@ -10,9 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Enum;
 use App\Notifications\SmsCodeNotification;
 use Illuminate\Support\Facades\Notification;
+use App\Http\Controllers\Admin\BaseController;
 use Edujugon\PushNotification\PushNotification;
 
-class HomeController extends Controller
+class HomeController extends BaseController
 {
   public function test()
   {

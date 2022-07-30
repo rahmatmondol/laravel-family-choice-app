@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Interfaces\GradeRepositoryInterface;
 use App\Http\Requests\Admin\GradeFormRequest;
+use App\Http\Controllers\Admin\BaseController;
 
-class GradeController extends Controller
+class GradeController extends BaseController
 {
 
   // use GradeTrait, PermissionTrait;

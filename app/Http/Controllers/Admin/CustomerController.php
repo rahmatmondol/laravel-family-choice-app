@@ -6,9 +6,10 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerFormRequest;
+use App\Http\Controllers\Admin\BaseController;
 use App\Interfaces\CustomerRepositoryInterface;
 
-class CustomerController extends Controller
+class CustomerController extends BaseController
 {
 
   // use CustomerTrait, PermissionTrait;

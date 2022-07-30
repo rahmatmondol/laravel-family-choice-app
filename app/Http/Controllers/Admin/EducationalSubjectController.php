@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\EducationalSubject;
 use Illuminate\Http\Request;
+use App\Models\EducationalSubject;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\BaseController;
 use App\Interfaces\EducationalSubjectRepositoryInterface;
 use App\Http\Requests\Admin\EducationalSubjectFormRequest;
 
-class EducationalSubjectController extends Controller
+class EducationalSubjectController extends BaseController
 {
 
   // use EducationalSubjectTrait, PermissionTrait;
