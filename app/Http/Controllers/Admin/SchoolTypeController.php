@@ -17,6 +17,7 @@ class SchoolTypeController extends BaseController
   public function __construct(
     private SchoolTypeRepositoryInterface $schoolTypeRepository
   ) {
+    parent::__construct();
     //create read update delete
     $this->middleware(['permission:read_schoolTypes'])->only('index');
     $this->middleware(['permission:create_schoolTypes'])->only('create');
@@ -30,21 +31,21 @@ class SchoolTypeController extends BaseController
 
     $schoolTypes = $this->schoolTypeRepository->getFilteredSchoolTypes($request);
 
-    return view('admin.schoolTypes.index', compact('schoolTypes'));
+    return view($this->mainViewPrefix.'.schoolTypes.index', compact('schoolTypes'));
   } // end of index
 
   public function create(Request $request)
   {
     // $roles = $this->roleRepository->getAllRoles();
     $roles = '';
-    return view('admin.schoolTypes.create', compact('roles'));
+    return view($this->mainViewPrefix.'.schoolTypes.create', compact('roles'));
   } //end of create
 
   public function show($schoolType)
   {
     $schoolType = $this->schoolTypeRepository->getSchoolTypeById($schoolType);
 
-    return view('admin.schoolTypes.show', compact('schoolType'));
+    return view($this->mainViewPrefix.'.schoolTypes.show', compact('schoolType'));
   } //end of create
 
   public function store(SchoolTypeFormRequest $request)
@@ -66,7 +67,7 @@ class SchoolTypeController extends BaseController
 
     // $roles = $this->roleRepository->getAllRoles();
 
-    return view('admin.schoolTypes.edit', compact('schoolType',));
+    return view($this->mainViewPrefix.'.schoolTypes.edit', compact('schoolType',));
   } //end of edit
 
   public function update(SchoolTypeFormRequest $request, SchoolType $schoolType)

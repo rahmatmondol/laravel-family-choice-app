@@ -31,7 +31,7 @@ class DashboardController extends BaseController
         DB::raw('SUM(total_fees) as sum')
       )->groupBy('month')
       ->get();
-    return view('school.dashboard', compact(
+    return view($this->mainViewPrefix.'.dashboard', compact(
       'countAllReservation',
       'countPendingReservations',
       'countOfCourses',

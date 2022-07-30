@@ -18,8 +18,7 @@ class AdminController extends BaseController
     private AdminRepositoryInterface $adminRepository,
     private RoleRepositoryInterface $roleRepository
   ) {
-
-    Parent::__construct();
+    parent::__construct();
     //create read update delete
     $this->middleware(['permission:read_admins'])->only('index');
     $this->middleware(['permission:create_admins'])->only('create');
@@ -33,20 +32,20 @@ class AdminController extends BaseController
 
     $admins = $this->adminRepository->getFilteredAdmins($request);
 
-    return view('admin.admins.index', compact('admins'));
+    return view($this->mainViewPrefix.'.admins.index', compact('admins'));
   } // end of index
 
   public function create(Request $request)
   {
     $roles = $this->roleRepository->getAllRoles();
-    return view('admin.admins.create', compact('roles'));
+    return view($this->mainViewPrefix.'.admins.create', compact('roles'));
   } //end of create
 
   public function show($admin)
   {
     $admin = $this->adminRepository->getAdminById($admin);
 
-    return view('admin.admins.show', compact('admin'));
+    return view($this->mainViewPrefix.'.admins.show', compact('admin'));
   } //end of create
 
   public function store(AdminFormRequest $request)
@@ -68,7 +67,7 @@ class AdminController extends BaseController
 
     $roles = $this->roleRepository->getAllRoles();
 
-    return view('admin.admins.edit', compact('admin', 'roles'));
+    return view($this->mainViewPrefix.'.admins.edit', compact('admin', 'roles'));
   } //end of edit
 
   public function update(AdminFormRequest $request, Admin $admin)

@@ -25,19 +25,19 @@ class CourseController extends BaseController
 
     $courses = $this->courseRepository->getFilteredCourses($request);
 
-    return view('school.courses.index', compact('courses'));
+    return view($this->mainViewPrefix.'.courses.index', compact('courses'));
   } // end of index
 
   public function create(Request $request)
   {
-    return view('school.courses.create');
+    return view($this->mainViewPrefix.'.courses.create');
   } //end of create
 
   public function show($course)
   {
     $course = $this->courseRepository->getCourseById($course);
 
-    return view('school.courses.show', compact('course'));
+    return view($this->mainViewPrefix.'.courses.show', compact('course'));
   } //end of create
 
   public function store(CourseFormRequest $request)
@@ -57,7 +57,7 @@ class CourseController extends BaseController
 
     $course = $this->courseRepository->getCourseById($course);
 
-    return view('school.courses.edit', compact('course'));
+    return view($this->mainViewPrefix.'.courses.edit', compact('course'));
   } //end of edit
 
   public function update(CourseFormRequest $request, Course $course)

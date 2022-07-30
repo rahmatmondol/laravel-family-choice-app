@@ -17,6 +17,7 @@ class AttachmentController extends BaseController
     private AttachmentRepositoryInterface $attachmentRepository,
     private SchoolRepositoryInterface $schoolRepository
   ) {
+    parent::__construct();
     //create read update delete
     $this->middleware(['permission:read_attachments'])->only('index');
     $this->middleware(['permission:create_attachments'])->only('create');
@@ -30,20 +31,20 @@ class AttachmentController extends BaseController
 
     $attachments = $this->attachmentRepository->getFilteredAttachments($request);
 
-    return view('admin.attachments.index', compact('attachments'));
+    return view($this->mainViewPrefix.'.attachments.index', compact('attachments'));
   } // end of index
 
   public function create(Request $request)
   {
     $schools = $this->schoolRepository->getAllSchools();
-    return view('admin.attachments.create', compact('schools'));
+    return view($this->mainViewPrefix.'.attachments.create', compact('schools'));
   } //end of create
 
   public function show($attachment)
   {
     $attachment = $this->attachmentRepository->getAttachmentById($attachment);
 
-    return view('admin.attachments.show', compact('attachment'));
+    return view($this->mainViewPrefix.'.attachments.show', compact('attachment'));
   } //end of create
 
   public function store(AttachmentFormRequest $request)
@@ -64,7 +65,7 @@ class AttachmentController extends BaseController
     $attachment = $this->attachmentRepository->getAttachmentById($attachment);
     $schools = $this->schoolRepository->getAllSchools();
 
-    return view('admin.attachments.edit', compact('attachment', 'schools'));
+    return view($this->mainViewPrefix.'.attachments.edit', compact('attachment', 'schools'));
   } //end of edit
 
   public function update(AttachmentFormRequest $request, Attachment $attachment)

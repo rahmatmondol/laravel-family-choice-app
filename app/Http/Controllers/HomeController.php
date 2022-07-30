@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Http\Controllers\Admin\BaseController;
 use Edujugon\PushNotification\PushNotification;
 
-class HomeController extends BaseController
+class HomeController extends Controller
 {
   public function test()
   {

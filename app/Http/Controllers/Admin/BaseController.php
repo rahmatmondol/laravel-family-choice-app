@@ -11,20 +11,21 @@ class BaseController extends Controller
   public  $globalAdmin;
   public  $masterLayout = "admin.layouts.master";
   public  $mainRoutePrefix = "admin";
-  public  $sideBarItems = ['courses','attachments','reservations',];
+  public  $mainViewPrefix = "admin";
   public function __construct()
   {
 
     // $this->middleware(['auth:admin']);
 
-    $this->middleware(function ($request, $next) {
+    // dd('in BaseController',$this->mainRoutePrefix,$this->masterLayout);
+    View::share('masterLayout', $this->masterLayout);
+    View::share('mainRoutePrefix', $this->mainRoutePrefix);
+    View::share('mainViewPrefix', $this->mainViewPrefix);
 
+    $this->middleware(function ($request, $next) {
       $this->globalAdmin = Auth::guard('admin')->user();
       View::share('globalAdmin', $this->globalAdmin);
-      View::share('sideBarItems', $this->sideBarItems);
-      View::share('masterLayout', $this->masterLayout);
-      View::share('mainRoutePrefix', $this->mainRoutePrefix);
-      // dd('in middleware',$this->globalAdmin,$this->masterLayout);
+      // dd('in BaseController',$this->globalAdmin,$this->masterLayout);
       return $next($request);
     });
 

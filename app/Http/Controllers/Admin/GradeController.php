@@ -17,6 +17,9 @@ class GradeController extends BaseController
   public function __construct(
     private GradeRepositoryInterface $gradeRepository
   ) {
+
+    parent::__construct();
+    // dd('in in controller',$this->globalAdmin,$this->masterLayout);
     //create read update delete
     $this->middleware(['permission:read_grades'])->only('index');
     $this->middleware(['permission:create_grades'])->only('create');
@@ -30,21 +33,21 @@ class GradeController extends BaseController
 
     $grades = $this->gradeRepository->getFilteredGrades($request);
 
-    return view('admin.grades.index', compact('grades'));
+    return view($this->mainViewPrefix.'.grades.index', compact('grades'));
   } // end of index
 
   public function create(Request $request)
   {
     // $roles = $this->roleRepository->getAllRoles();
     $roles = '';
-    return view('admin.grades.create', compact('roles'));
+    return view($this->mainViewPrefix.'.grades.create', compact('roles'));
   } //end of create
 
   public function show($grade)
   {
     $grade = $this->gradeRepository->getGradeById($grade);
 
-    return view('admin.grades.show', compact('grade'));
+    return view($this->mainViewPrefix.'.grades.show', compact('grade'));
   } //end of create
 
   public function store(GradeFormRequest $request)
@@ -66,7 +69,7 @@ class GradeController extends BaseController
 
     // $roles = $this->roleRepository->getAllRoles();
 
-    return view('admin.grades.edit', compact('grade',));
+    return view($this->mainViewPrefix.'.grades.edit', compact('grade',));
   } //end of edit
 
   public function update(GradeFormRequest $request, Grade $grade)

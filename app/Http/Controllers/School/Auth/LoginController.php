@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use App\Http\Controllers\Admin\BaseController;
+use App\Http\Controllers\School\BaseController;
 
 class LoginController extends BaseController
 {
@@ -27,12 +27,13 @@ class LoginController extends BaseController
    */
   public function __construct()
   {
+    parent::__construct();
     $this->middleware(['guest'])->except('logout');
   }
 
   public function showLoginForm()
   {
-    return view('school.auth.login');
+    return view($this->mainViewPrefix.'.auth.login');
   }
 
   public function login(Request $request)

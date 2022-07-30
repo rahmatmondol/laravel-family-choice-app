@@ -16,6 +16,16 @@ class RoleController extends BaseController
 
   public function __construct(private RoleRepositoryInterface $roleRepository)
   {
+    parent::__construct();
+
+    // $class_vars = get_class_vars(get_class( $this ));
+
+    // dd($class_vars);
+
+    // dd(parent::class);
+    // dd('in child',$this->globalAdmin,$this->masterLayout,$this->mainRoutePrefix);
+
+
     //create read update delete
     $this->middleware(['permission:read_roles'])->only('index');
     $this->middleware(['permission:create_roles'])->only('create');
@@ -29,20 +39,20 @@ class RoleController extends BaseController
 
     $roles = $this->roleRepository->getFilteredRoles($request);
 
-    return view('admin.roles.index', compact('roles'));
+    return view($this->mainViewPrefix.'.roles.index', compact('roles'));
   } // end of index
 
   public function create(Request $request)
   {
 
-    return view('admin.roles.create');
+    return view($this->mainViewPrefix.'.roles.create');
   } //end of create
 
   public function show($role)
   {
     $role = $this->roleRepository->getRoleById($role);
 
-    return view('admin.roles.show', compact('role'));
+    return view($this->mainViewPrefix.'.roles.show', compact('role'));
   } //end of create
 
   public function store(RoleFormRequest $request)
@@ -63,7 +73,7 @@ class RoleController extends BaseController
     $role = $role->load('permissions');
 
     // dd($role);
-    return view('admin.roles.edit', compact('role'));
+    return view($this->mainViewPrefix.'.roles.edit', compact('role'));
   } //end of edit
 
   public function update(RoleFormRequest $request, Role $role)

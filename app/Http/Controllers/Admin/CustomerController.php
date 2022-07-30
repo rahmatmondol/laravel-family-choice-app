@@ -17,6 +17,7 @@ class CustomerController extends BaseController
   public function __construct(
     private CustomerRepositoryInterface $customerRepository
   ) {
+    parent::__construct();
     //create read update delete
     $this->middleware(['permission:read_customers'])->only('index');
     $this->middleware(['permission:create_customers'])->only('create');
@@ -30,21 +31,21 @@ class CustomerController extends BaseController
 
     $customers = $this->customerRepository->getFilteredCustomers($request);
 
-    return view('admin.customers.index', compact('customers'));
+    return view($this->mainViewPrefix.'.customers.index', compact('customers'));
   } // end of index
 
   public function create(Request $request)
   {
     // $roles = $this->roleRepository->getAllRoles();
     $roles = '';
-    return view('admin.customers.create', compact('roles'));
+    return view($this->mainViewPrefix.'.customers.create', compact('roles'));
   } //end of create
 
   public function show($customer)
   {
     $customer = $this->customerRepository->getCustomerById($customer);
 
-    return view('admin.customers.show', compact('customer'));
+    return view($this->mainViewPrefix.'.customers.show', compact('customer'));
   } //end of create
 
   public function store(CustomerFormRequest $request)
@@ -66,7 +67,7 @@ class CustomerController extends BaseController
 
     // $roles = $this->roleRepository->getAllRoles();
 
-    return view('admin.customers.edit', compact('customer',));
+    return view($this->mainViewPrefix.'.customers.edit', compact('customer',));
   } //end of edit
 
   public function update(CustomerFormRequest $request, Customer $customer)

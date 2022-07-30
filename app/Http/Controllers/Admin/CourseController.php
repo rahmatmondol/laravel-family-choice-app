@@ -17,6 +17,7 @@ class CourseController extends BaseController
     private CourseRepositoryInterface $courseRepository,
     private SchoolRepositoryInterface $schoolRepository
   ) {
+    parent::__construct();
     //create read update delete
     $this->middleware(['permission:read_courses'])->only('index');
     $this->middleware(['permission:create_courses'])->only('create');
@@ -31,20 +32,20 @@ class CourseController extends BaseController
     $courses = $this->courseRepository->getFilteredCourses($request);
     $schools = $this->schoolRepository->getSchools($request);
 
-    return view('admin.courses.index', compact('courses','schools'));
+    return view($this->mainViewPrefix.'.courses.index', compact('courses','schools'));
   } // end of index
 
   public function create(Request $request)
   {
     $schools = $this->schoolRepository->getAllSchools();
-    return view('admin.courses.create', compact('schools'));
+    return view($this->mainViewPrefix.'.courses.create', compact('schools'));
   } //end of create
 
   public function show($course)
   {
     $course = $this->courseRepository->getCourseById($course);
 
-    return view('admin.courses.show', compact('course'));
+    return view($this->mainViewPrefix.'.courses.show', compact('course'));
   } //end of create
 
   public function store(CourseFormRequest $request)
@@ -65,7 +66,7 @@ class CourseController extends BaseController
     $course = $this->courseRepository->getCourseById($course);
     $schools = $this->schoolRepository->getAllSchools();
 
-    return view('admin.courses.edit', compact('course','schools'));
+    return view($this->mainViewPrefix.'.courses.edit', compact('course','schools'));
   } //end of edit
 
   public function update(CourseFormRequest $request, Course $course)

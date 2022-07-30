@@ -22,7 +22,7 @@ class DashboardController extends BaseController
 {
   public function __construct()
   {
-    Parent::__construct();
+    parent::__construct();
     $this->middleware(['auth:admin']);
   }
 
@@ -47,7 +47,7 @@ class DashboardController extends BaseController
       DB::raw('SUM(total_fees) as sum')
     )->groupBy('month')
       ->get();
-    return view('admin.dashboard', compact(
+    return view($this->mainViewPrefix.'.dashboard', compact(
       'countAllReservation',
       'countPendingReservations',
       'countOfCities',

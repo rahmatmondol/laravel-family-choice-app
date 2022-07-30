@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\City;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Interfaces\CityRepositoryInterface;
 use App\Http\Requests\Admin\CityFormRequest;
 use App\Http\Controllers\Admin\BaseController;
@@ -17,6 +16,7 @@ class CityController extends BaseController
   public function __construct(
     private CityRepositoryInterface $cityRepository
   ) {
+    parent::__construct();
     //create read update delete
     $this->middleware(['permission:read_cities'])->only('index');
     $this->middleware(['permission:create_cities'])->only('create');
@@ -30,21 +30,21 @@ class CityController extends BaseController
 
     $cities = $this->cityRepository->getFilteredCities($request);
 
-    return view('admin.cities.index', compact('cities'));
+    return view($this->mainViewPrefix.'.cities.index', compact('cities'));
   } // end of index
 
   public function create(Request $request)
   {
     // $roles = $this->roleRepository->getAllRoles();
     $roles = '';
-    return view('admin.cities.create', compact('roles'));
+    return view($this->mainViewPrefix.'.cities.create', compact('roles'));
   } //end of create
 
   public function show($city)
   {
     $city = $this->cityRepository->getCityById($city);
 
-    return view('admin.cities.show', compact('city'));
+    return view($this->mainViewPrefix.'.cities.show', compact('city'));
   } //end of create
 
   public function store(CityFormRequest $request)
@@ -66,7 +66,7 @@ class CityController extends BaseController
 
     // $roles = $this->roleRepository->getAllRoles();
 
-    return view('admin.cities.edit', compact('city',));
+    return view($this->mainViewPrefix.'.cities.edit', compact('city',));
   } //end of edit
 
   public function update(CityFormRequest $request, City $city)

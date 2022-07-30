@@ -13,6 +13,7 @@ class SettingController extends BaseController
 
   public function __construct()
   {
+    parent::__construct();
     //create read update delete
     $this->middleware(['permission:read_settings'])->only('index');
     $this->middleware(['permission:create_settings'])->only('create');

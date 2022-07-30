@@ -17,6 +17,7 @@ class EducationalSubjectController extends BaseController
   public function __construct(
     private EducationalSubjectRepositoryInterface $educationalSubjectRepository
   ) {
+    parent::__construct();
     //create read update delete
     $this->middleware(['permission:read_educationalSubjects'])->only('index');
     $this->middleware(['permission:create_educationalSubjects'])->only('create');
@@ -30,21 +31,21 @@ class EducationalSubjectController extends BaseController
 
     $educationalSubjects = $this->educationalSubjectRepository->getFilteredEducationalSubjects($request);
 
-    return view('admin.educationalSubjects.index', compact('educationalSubjects'));
+    return view($this->mainViewPrefix.'.educationalSubjects.index', compact('educationalSubjects'));
   } // end of index
 
   public function create(Request $request)
   {
     // $roles = $this->roleRepository->getAllRoles();
     $roles = '';
-    return view('admin.educationalSubjects.create', compact('roles'));
+    return view($this->mainViewPrefix.'.educationalSubjects.create', compact('roles'));
   } //end of create
 
   public function show($educationalSubject)
   {
     $educationalSubject = $this->educationalSubjectRepository->getEducationalSubjectById($educationalSubject);
 
-    return view('admin.educationalSubjects.show', compact('educationalSubject'));
+    return view($this->mainViewPrefix.'.educationalSubjects.show', compact('educationalSubject'));
   } //end of create
 
   public function store(EducationalSubjectFormRequest $request)
@@ -66,7 +67,7 @@ class EducationalSubjectController extends BaseController
 
     // $roles = $this->roleRepository->getAllRoles();
 
-    return view('admin.educationalSubjects.edit', compact('educationalSubject',));
+    return view($this->mainViewPrefix.'.educationalSubjects.edit', compact('educationalSubject',));
   } //end of edit
 
   public function update(EducationalSubjectFormRequest $request, EducationalSubject $educationalSubject)

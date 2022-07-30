@@ -17,6 +17,7 @@ class TypeController extends BaseController
   public function __construct(
     private TypeRepositoryInterface $typeRepository
   ) {
+    parent::__construct();
     //create read update delete
     $this->middleware(['permission:read_types'])->only('index');
     $this->middleware(['permission:create_types'])->only('create');
@@ -30,21 +31,21 @@ class TypeController extends BaseController
 
     $types = $this->typeRepository->getFilteredTypes($request);
 
-    return view('admin.types.index', compact('types'));
+    return view($this->mainViewPrefix.'.types.index', compact('types'));
   } // end of index
 
   public function create(Request $request)
   {
     // $roles = $this->roleRepository->getAllRoles();
     $roles = '';
-    return view('admin.types.create', compact('roles'));
+    return view($this->mainViewPrefix.'.types.create', compact('roles'));
   } //end of create
 
   public function show($type)
   {
     $type = $this->typeRepository->getTypeById($type);
 
-    return view('admin.types.show', compact('type'));
+    return view($this->mainViewPrefix.'.types.show', compact('type'));
   } //end of create
 
   public function store(TypeFormRequest $request)
@@ -66,7 +67,7 @@ class TypeController extends BaseController
 
     // $roles = $this->roleRepository->getAllRoles();
 
-    return view('admin.types.edit', compact('type',));
+    return view($this->mainViewPrefix.'.types.edit', compact('type',));
   } //end of edit
 
   public function update(TypeFormRequest $request, Type $type)

@@ -20,6 +20,7 @@ class ReservationController extends BaseController
     private SchoolRepositoryInterface $schoolRepository,
     private CourseRepositoryInterface $courseRepository
   ) {
+    parent::__construct();
     //create read update delete
     $this->middleware(['permission:read_reservations'])->only('index');
     $this->middleware(['permission:create_reservations'])->only('create');
@@ -34,21 +35,21 @@ class ReservationController extends BaseController
     // $courses = $this->courseRepository->getCourses($request);
     $reservations = $this->reservationRepository->getFilteredReservations($request);
 
-    return view('admin.reservations.index', compact('reservations', 'schools'));
+    return view($this->mainViewPrefix.'.reservations.index', compact('reservations', 'schools'));
   } // end of index
 
   public function show($reservation)
   {
     $reservation = $this->reservationRepository->getReservationById($reservation);
 
-    return view('admin.reservations.show', compact('reservation'));
+    return view($this->mainViewPrefix.'.reservations.show', compact('reservation'));
   } //end of create
 
   public function edit($reservation)
   {
     $reservation = $this->reservationRepository->getReservationById($reservation);
 
-    return view('admin.reservations.edit', compact('reservation',));
+    return view($this->mainViewPrefix.'.reservations.edit', compact('reservation',));
   } //end of edit
 
   public function update(ReservationFormRequest $request, Reservation $reservation)

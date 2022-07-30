@@ -15,6 +15,7 @@ class UserManualController extends BaseController
   public function __construct(
     private UserManualRepositoryInterface $userManualRepository
   ) {
+    parent::__construct();
     //create read update delete
     $this->middleware(['permission:read_user_manuals'])->only('index');
     $this->middleware(['permission:create_user_manuals'])->only('create');
@@ -28,21 +29,21 @@ class UserManualController extends BaseController
 
     $user_manuals = $this->userManualRepository->getFilteredUserManuals($request);
 
-    return view('admin.user_manuals.index', compact('user_manuals'));
+    return view($this->mainViewPrefix.'.user_manuals.index', compact('user_manuals'));
   } // end of index
 
   public function create(Request $request)
   {
     // $roles = $this->roleRepository->getAllRoles();
     $roles = '';
-    return view('admin.user_manuals.create', compact('roles'));
+    return view($this->mainViewPrefix.'.user_manuals.create', compact('roles'));
   } //end of create
 
   public function show($user_manual)
   {
     $user_manual = $this->userManualRepository->getUserManualById($user_manual);
 
-    return view('admin.user_manuals.show', compact('user_manual'));
+    return view($this->mainViewPrefix.'.user_manuals.show', compact('user_manual'));
   } //end of create
 
   public function store(UserManualFormRequest $request)
@@ -62,7 +63,7 @@ class UserManualController extends BaseController
 
     $user_manual = $this->userManualRepository->getUserManualById($user_manual);
 
-    return view('admin.user_manuals.edit', compact('user_manual',));
+    return view($this->mainViewPrefix.'.user_manuals.edit', compact('user_manual',));
   } //end of edit
 
   public function update(UserManualFormRequest $request, UserManual $user_manual)

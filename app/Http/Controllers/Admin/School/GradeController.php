@@ -32,20 +32,20 @@ class GradeController extends BaseController
   {
     $grades = $school->grades;
     // dd($grades);
-    return view('admin.schools.grades.index', compact('school', 'grades'));
+    return view($this->mainViewPrefix.'.schools.grades.index', compact('school', 'grades'));
   } // end of index
 
   public function create(Request $request, School $school)
   {
     $grades = $this->gradeRepository->getAllGrades();
-    return view('admin.schools.grades.create', compact('school', 'grades'));
+    return view($this->mainViewPrefix.'.schools.grades.create', compact('school', 'grades'));
   } //end of create
 
   public function show(School $school, Grade $grade)
   {
     $schoolGrade = SchoolGrade::where([['school_id', $school->id], ['grade_id', $grade->id]])->first();
     // dd($schoolGrade->school);
-    return view('admin.schools.grades.show', compact('schoolGrade'));
+    return view($this->mainViewPrefix.'.schools.grades.show', compact('schoolGrade'));
   } //end of create
 
   public function store(SchoolGradeFormRequest $request, School $school)
@@ -70,7 +70,7 @@ class GradeController extends BaseController
 
     // $grade = $this->gradeRepository->getGradeById($grade->id);
     $schoolGrade  = SchoolGrade::where('grade_id', $grade->id)->where('school_id', $school->id)->first();
-    return view('admin.schools.grades.edit', compact('grades', 'schoolGrade', 'school'));
+    return view($this->mainViewPrefix.'.schools.grades.edit', compact('grades', 'schoolGrade', 'school'));
   } //end of edit
 
   public function update(SchoolGradeFormRequest $request, School $school, Grade $grade)

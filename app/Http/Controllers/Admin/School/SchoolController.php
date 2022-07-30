@@ -40,7 +40,7 @@ class SchoolController extends BaseController
 
     $schools = $this->schoolRepository->getFilteredSchools($request);
 
-    return view('admin.schools.index', compact('schools'));
+    return view($this->mainViewPrefix.'.schools.index', compact('schools'));
   } // end of index
 
   public function create(Request $request)
@@ -52,14 +52,14 @@ class SchoolController extends BaseController
     $types = $this->typeRepository->getAllTypes();
     $services = $this->serviceRepository->getAllServices();
 
-    return view('admin.schools.create', compact('educationalSubjects', 'educationTypes', 'schoolTypes', 'grades', 'types','services'));
+    return view($this->mainViewPrefix.'.schools.create', compact('educationalSubjects', 'educationTypes', 'schoolTypes', 'grades', 'types','services'));
   } //end of create
 
   public function show($school)
   {
     $school = $this->schoolRepository->getSchoolById($school);
 
-    return view('admin.schools.show', compact('school'));
+    return view($this->mainViewPrefix.'.schools.show', compact('school'));
   } //end of create
 
   public function store(SchoolFormRequest $request)
@@ -85,7 +85,7 @@ class SchoolController extends BaseController
 
 
     $school = $this->schoolRepository->getSchoolById($school);
-    return view('admin.schools.edit', compact('school', 'educationalSubjects', 'educationTypes', 'schoolTypes', 'grades', 'types','services'));
+    return view($this->mainViewPrefix.'.schools.edit', compact('school', 'educationalSubjects', 'educationTypes', 'schoolTypes', 'grades', 'types','services'));
   } //end of edit
 
   public function update(SchoolFormRequest $request, School $school)

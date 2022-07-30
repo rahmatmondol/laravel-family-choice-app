@@ -27,12 +27,13 @@ class LoginController extends BaseController
   public function __construct()
   {
     parent::__construct();
+
     $this->middleware(['guest'])->except('logout');
   }
 
   public function showLoginForm()
   {
-    return view('admin.auth.login');
+    return view($this->mainViewPrefix.'.auth.login');
   }
 
   public function login(Request $request)

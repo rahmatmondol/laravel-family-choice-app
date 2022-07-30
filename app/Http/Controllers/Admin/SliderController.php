@@ -18,6 +18,7 @@ class SliderController extends BaseController
     private SchoolRepositoryInterface $schoolRepository,
     private SliderRepositoryInterface $sliderRepository
   ) {
+    parent::__construct();
     //create read update delete
     $this->middleware(['permission:read_sliders'])->only('index');
     $this->middleware(['permission:create_sliders'])->only('create');
@@ -31,21 +32,21 @@ class SliderController extends BaseController
 
     $sliders = $this->sliderRepository->getFilteredSliders($request);
 
-    return view('admin.sliders.index', compact('sliders'));
+    return view($this->mainViewPrefix.'.sliders.index', compact('sliders'));
   } // end of index
 
   public function create(Request $request)
   {
     $schools = $this->schoolRepository->getAllSchools();
 
-    return view('admin.sliders.create', compact('schools'));
+    return view($this->mainViewPrefix.'.sliders.create', compact('schools'));
   } //end of create
 
   public function show($slider)
   {
     $slider = $this->sliderRepository->getSliderById($slider);
 
-    return view('admin.sliders.show', compact('slider'));
+    return view($this->mainViewPrefix.'.sliders.show', compact('slider'));
   } //end of create
 
   public function store(SliderFormRequest $request)
@@ -67,7 +68,7 @@ class SliderController extends BaseController
     $schools = $this->schoolRepository->getAllSchools();
 
 
-    return view('admin.sliders.edit', compact('slider','schools'));
+    return view($this->mainViewPrefix.'.sliders.edit', compact('slider','schools'));
   } //end of edit
 
   public function update(SliderFormRequest $request, Slider $slider)

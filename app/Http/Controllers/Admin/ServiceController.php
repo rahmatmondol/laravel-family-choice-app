@@ -15,6 +15,7 @@ class ServiceController extends BaseController
   public function __construct(
     private ServiceRepositoryInterface $serviceRepository
   ) {
+    parent::__construct();
     //create read update delete
     $this->middleware(['permission:read_services'])->only('index');
     $this->middleware(['permission:create_services'])->only('create');
@@ -28,21 +29,21 @@ class ServiceController extends BaseController
 
     $services = $this->serviceRepository->getFilteredServices($request);
 
-    return view('admin.services.index', compact('services'));
+    return view($this->mainViewPrefix.'.services.index', compact('services'));
   } // end of index
 
   public function create(Request $request)
   {
     // $roles = $this->roleRepository->getAllRoles();
     $roles = '';
-    return view('admin.services.create', compact('roles'));
+    return view($this->mainViewPrefix.'.services.create', compact('roles'));
   } //end of create
 
   public function show($service)
   {
     $service = $this->serviceRepository->getServiceById($service);
 
-    return view('admin.services.show', compact('service'));
+    return view($this->mainViewPrefix.'.services.show', compact('service'));
   } //end of create
 
   public function store(ServiceFormRequest $request)
@@ -64,7 +65,7 @@ class ServiceController extends BaseController
 
     // $roles = $this->roleRepository->getAllRoles();
 
-    return view('admin.services.edit', compact('service',));
+    return view($this->mainViewPrefix.'.services.edit', compact('service',));
   } //end of edit
 
   public function update(ServiceFormRequest $request, Service $service)
