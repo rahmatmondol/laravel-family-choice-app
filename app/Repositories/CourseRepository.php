@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Scopes\OrderScope;
 use App\Traits\UploadFileTrait;
 use App\Interfaces\CourseRepositoryInterface;
+use Illuminate\Database\Eloquent\Model;
 
 class CourseRepository implements CourseRepositoryInterface
 {
@@ -31,9 +32,9 @@ class CourseRepository implements CourseRepositoryInterface
       ->paginate(request()->perPage ?? 20);
   }
 
-  public function getCourseById($courseId)
+  public function getCourseById($course)
   {
-    $course = Course::findOrFail($courseId);
+    $course = Course::findOrFail($course);
     return $course;
   }
 

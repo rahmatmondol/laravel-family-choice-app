@@ -34,6 +34,7 @@ Route::group(
         'schools'             => 'School\SchoolController',
         'attachments'         => 'AttachmentController',
         'reservations'        => 'ReservationController',
+        'grades'              => 'GradeController',
       ]);
 
       Route::get('reservations/customers/{customer}', 'ReservationController@show_customer')->name('customers.show');

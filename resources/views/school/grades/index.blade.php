@@ -1,6 +1,6 @@
 @extends($masterLayout)
 <?php
-$page = 'grades';
+$page = 'schools';
 $title = __('site.Grades');
 ?>
 @section('title_page')
@@ -30,7 +30,7 @@ $title = __('site.Grades');
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route($mainRoutePrefix.'.schools.grades.index',['school'=>$school->id]) }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.grades.index') }}" method="get">
 
             <div class="row">
 
@@ -43,7 +43,7 @@ $title = __('site.Grades');
                 {{-- <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                   @lang('site.Search')</button> --}}
                 @if (checkAdminPermission('create_grades'))
-                <a href="{{ route($mainRoutePrefix.'.schools.grades.create',['school'=>$school->id]) }}"
+                <a href="{{ route($mainRoutePrefix.'.grades.create') }}"
                   class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
                   @lang('site.Add')</a>
                 @endif
@@ -121,17 +121,17 @@ $title = __('site.Grades');
               <td class="project-actions text-right">
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route($mainRoutePrefix.'.schools.grades.show', ['school'=>$school->id,'grade'=>$grade->id]),
+                'route'=>route($mainRoutePrefix.'.grades.show', ['grade'=>$grade->id]),
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
-                'route'=>route($mainRoutePrefix.'.schools.grades.edit', ['school'=>$school->id,'grade'=>$grade->id]),
+                'route'=>route($mainRoutePrefix.'.grades.edit', ['grade'=>$grade->id]),
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route($mainRoutePrefix.'.schools.grades.destroy', ['school'=>$school->id,'grade'=>$grade->id]),
+                'route'=>route($mainRoutePrefix.'.grades.destroy', ['grade'=>$grade->id]),
                 ])
               </td>
             </tr>

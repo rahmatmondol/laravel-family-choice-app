@@ -11,6 +11,7 @@ use App\Http\Controllers\School\BaseController;
 use App\Interfaces\ReservationRepositoryInterface;
 use App\Http\Requests\Admin\ReservationFormRequest;
 use App\Interfaces\CustomerRepositoryInterface;
+use Illuminate\Support\Facades\Gate;
 use App\Models\Customer;
 
 class ReservationController extends BaseController
@@ -35,6 +36,9 @@ class ReservationController extends BaseController
 
   public function show($reservation)
   {
+    if (!Gate::allows('show-reservation', $reservation)) {
+      abort(403);
+    }
     $reservation = $this->reservationRepository->getReservationById($reservation);
 
     return view($this->mainViewPrefix.'.reservations.show', compact('reservation'));
@@ -42,6 +46,9 @@ class ReservationController extends BaseController
 
   public function edit($reservation)
   {
+    if (!Gate::allows('show-reservation', $reservation)) {
+      abort(403);
+    }
     $reservation = $this->reservationRepository->getReservationById($reservation);
 
     return view($this->mainViewPrefix.'.reservations.edit', compact('reservation',));

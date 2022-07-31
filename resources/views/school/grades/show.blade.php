@@ -21,7 +21,7 @@ $title = __('site.Show Grade');
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
             <li class="breadcrumb-item"><a
-              href="{{ route($mainRoutePrefix.'.schools.grades.index',['school' => $schoolGrade->school_id]) }}">@lang('site.Grades')</a>
+              href="{{ route($mainRoutePrefix.'.grades.index') }}">@lang('site.Grades')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>

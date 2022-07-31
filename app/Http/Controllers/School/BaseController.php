@@ -12,7 +12,7 @@ class BaseController extends Controller
   public  $masterLayout="school.layouts.master";
   public  $mainRoutePrefix="school";
   public  $mainViewPrefix = "school";
-  public  $sideBarItems = ['courses','attachments','reservations',];
+  public  $sideBarItems = ['courses','attachments','reservations','grades'];
   public function __construct()
   {
     $this->middleware(['auth:school']);

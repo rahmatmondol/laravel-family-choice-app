@@ -1,6 +1,6 @@
 @extends($masterLayout)
 <?php
-$page = 'grades';
+$page = 'schools';
 $title = __('site.Create Grade');
 ?>
 @section('title_page')
@@ -45,9 +45,9 @@ $title = __('site.Create Grade');
 
               {{-- grades --}}
               <div class="form-group">
-                <label for="inputType">@lang('site.grades')</label>
+                <label for="inputType">@lang('site.Grades')</label>
                 <select name="grade_id" class="form-control" required>
-                  <option value="">@lang('site.grades') </option>
+                  <option value="">@lang('site.Grades') </option>
                   @foreach( $grades as $value )
                   <option value="{{ $value->id}}" @if( old('grade_id')==$value->id ) selected @endif>
                     {{ $value->title }}</option>
@@ -83,7 +83,7 @@ $title = __('site.Create Grade');
 
               {{-- administrative_expenses --}}
               <div class="form-group">
-                <label>@lang('site.Administrative expenses')</label>
+                <label>@lang('site.Administrative Expenses')</label>
                 <input required="required" type="text" name="administrative_expenses" class="form-control"
                   value="{{old('administrative_expenses')}}"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">

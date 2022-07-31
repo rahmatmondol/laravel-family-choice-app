@@ -27,6 +27,7 @@ class SchoolController extends BaseController
     private TypeRepositoryInterface $typeRepository,
     private ServiceRepositoryInterface $serviceRepository,
   ) {
+    parent::__construct();  
     // create read update delete
     $this->middleware(['permission:read_schools'])->only('index');
     $this->middleware(['permission:create_schools'])->only('create');

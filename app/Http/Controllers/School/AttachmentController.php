@@ -9,6 +9,7 @@ use App\Interfaces\SchoolRepositoryInterface;
 use App\Http\Controllers\School\BaseController;
 use App\Interfaces\AttachmentRepositoryInterface;
 use App\Http\Requests\Admin\AttachmentFormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class AttachmentController extends BaseController
 {
@@ -37,6 +38,10 @@ class AttachmentController extends BaseController
 
   public function show($attachment)
   {
+    if (!Gate::allows('show-attachment', $attachment)) {
+      abort(403);
+    }
+
     $attachment = $this->attachmentRepository->getAttachmentById($attachment);
 
     return view($this->mainViewPrefix.'.attachments.show', compact('attachment'));
@@ -56,7 +61,9 @@ class AttachmentController extends BaseController
 
   public function edit($attachment)
   {
-
+    if (!Gate::allows('show-attachment', $attachment)) {
+      abort(403);
+    }
     $attachment = $this->attachmentRepository->getAttachmentById($attachment);
     $schools = $this->schoolRepository->getAllSchools();
 
