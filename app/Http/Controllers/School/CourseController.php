@@ -85,7 +85,7 @@ class CourseController extends BaseController
     }
     $this->courseRepository->deleteCourse($course);
 
-    session()->flash('success', __('Data deleted successfully'));
+    session()->flash('success', __('site.Data deleted successfully'));
     return redirect()->route('school.courses.index', ['page' => session('currentPage')]);
   } //end of destroy
 

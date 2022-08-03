@@ -71,7 +71,7 @@ class ReservationController extends BaseController
     }
     $this->reservationRepository->deleteReservation($reservation);
 
-    session()->flash('success', __('Data deleted successfully'));
+    session()->flash('success', __('site.Data deleted successfully'));
     return redirect()->route($this->mainRoutePrefix.'.reservations.index', ['page' => session('currentPage')]);
   } //end of destroy
 

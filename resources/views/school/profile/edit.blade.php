@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
 $page = 'schools';
-$title = __('site.Edit School');
+$title = __('site.Edit Profile');
 ?>
 @section('title_page')
 {{ $title }}
@@ -52,7 +52,7 @@ $title = __('site.Edit School');
 
   <!-- Main content -->
   <section class="content">
-    <form method="post" action="{{ route($mainRoutePrefix.'.schools.update',$school->id)}}" enctype="multipart/form-data">
+    <form method="post" action="{{ route($mainRoutePrefix.'.profile.update')}}" enctype="multipart/form-data">
       @csrf
       @method('put')
       @include('admin.partials._errors')
@@ -196,14 +196,6 @@ $title = __('site.Edit School');
                 </select>
               </div>
 
-              {{-- order_column --}}
-              <div class="form-group">
-                <label>@lang('site.Order Item')</label>
-                <input type="text" name="order_column" value="{{ old('order_column',$school->order_column) }}"
-                  class="form-control"
-                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
-              </div>
-
               {{-- available_seats --}}
               <div class="form-group">
                 <label>@lang('site.Available seats')</label>
@@ -277,7 +269,7 @@ $title = __('site.Edit School');
                 <label>@lang('site.Attachments')</label>
                 <input type="file" name="attachments[]" multiple class="form-control" enctype="multipart/form-data">
                 @foreach ( $school->schoolImages as $imgs )
-                <a href="{{url('admin/schools/deleteImage').'/'.$imgs['id']}}"
+                <a href="{{url('school/profile/deleteImage').'/'.$imgs['id']}}"
                   onclick="return confirm('{{trans('site.Confirm Delete')}}')"
                   class="confirm btn btn-danger img-thumbnail image-preview" style="width: 100px;"
                   title="Delete this item">

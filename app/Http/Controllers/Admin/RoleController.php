@@ -93,7 +93,7 @@ class RoleController extends BaseController
     if (!$role) {
       return redirect()->back();
     }
-    session()->flash('success', __('Data deleted successfully'));
+    session()->flash('success', __('site.Data deleted successfully'));
     return redirect()->route($this->mainRoutePrefix.'.roles.index', ['page' => session('currentPage')]);
   } //end of destroy
 

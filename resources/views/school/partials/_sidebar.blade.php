@@ -32,6 +32,15 @@
           </a>
         </li>
 
+        <li class="nav-item">
+          <a href="{{ route($mainRoutePrefix.'.profile.show') }}" class="nav-link @if( $page == 'profile' )   active  @endif">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+              {{ucfirst(__('site.Profile'))}}
+            </p>
+          </a>
+        </li>
+
         @foreach( $sideBarItems as $item)
         <li class="nav-item  active ">
           <a href="{{ route('school.'.$item.'.index') }}" class="nav-link @if( $page == $item )   active  @endif">
@@ -42,6 +51,16 @@
           </a>
         </li>
         @endforeach
+
+        <li class="nav-item">
+          <a href="{{ route($mainRoutePrefix.'.profile.change-password') }}" class="nav-link @if( $page == 'changePassword' )   active  @endif">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+              {{ucfirst(__('site.Change Password'))}}
+            </p>
+          </a>
+        </li>
+
 
       </ul>
     </nav>

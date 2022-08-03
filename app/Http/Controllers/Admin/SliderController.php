@@ -90,7 +90,7 @@ class SliderController extends BaseController
     }
     $this->sliderRepository->deleteSlider($slider);
 
-    session()->flash('success', __('Data deleted successfully'));
+    session()->flash('success', __('site.Data deleted successfully'));
     return redirect()->route($this->mainRoutePrefix.'.sliders.index', ['page' => session('currentPage')]);
   } //end of destroy
 

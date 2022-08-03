@@ -73,7 +73,7 @@ class SchoolFormRequest extends FormRequest
 
   public function updateRules()
   {
-    $school = $this->route('school');
+    $school = request()->is('school/*') ? getAuthSchool() : $this->route('school');
 
     $this->rules += [
       'email' => ['required', 'email', 'unique:schools,email,' . $school->id, new CheckEmailExist("schools")],

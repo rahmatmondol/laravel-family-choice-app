@@ -89,7 +89,7 @@ class AdminController extends BaseController
     }
     $this->adminRepository->deleteAdmin($admin);
 
-    session()->flash('success', __('Data deleted successfully'));
+    session()->flash('success', __('site.Data deleted successfully'));
     return redirect()->route($this->mainRoutePrefix.'.admins.index', ['page' => session('currentPage')]);
   } //end of destroy
 

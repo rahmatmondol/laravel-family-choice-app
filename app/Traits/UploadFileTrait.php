@@ -89,7 +89,6 @@ trait UploadFileTrait
   {
     $query = DB::table($table)->where('id', $id);
     $image = $query->first();
-
     $this->removeImage($image->image, $folder);
     $query->delete();
     return true;

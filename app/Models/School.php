@@ -221,7 +221,7 @@ class School extends Authenticatable
 
   public function services()
   {
-    return $this->belongsToMany(Service::class, 'school_service')->withTranslation(app()->getLocale());
+    return $this->belongsToMany(Service::class, 'school_service', 'school_id', 'service_id')->withTranslation(app()->getLocale())->withoutGlobalScope(new OrderScope);
   }
 
   public function favorites()

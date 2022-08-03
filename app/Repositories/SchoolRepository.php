@@ -12,6 +12,7 @@ use App\Models\ChildAttachment;
 use App\Traits\UploadFileTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\Eloquent\Model;
 use App\Interfaces\SchoolRepositoryInterface;
 
 class SchoolRepository implements SchoolRepositoryInterface
@@ -58,7 +59,11 @@ class SchoolRepository implements SchoolRepositoryInterface
 
   public function getSchoolById($schoolId)
   {
-    $school = School::findOrFail($schoolId);
+    if($schoolId instanceof Model){
+      $school = $schoolId ;
+    }else{
+      $school = School::findOrFail($schoolId);
+    }
     return $school;
   }
 

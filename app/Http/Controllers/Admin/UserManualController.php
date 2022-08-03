@@ -85,7 +85,7 @@ class UserManualController extends BaseController
     }
     $this->userManualRepository->deleteUserManual($user_manual);
 
-    session()->flash('success', __('Data deleted successfully'));
+    session()->flash('success', __('site.Data deleted successfully'));
     return redirect()->route($this->mainRoutePrefix.'.user_manuals.index', ['page' => session('currentPage')]);
   } //end of destroy
 

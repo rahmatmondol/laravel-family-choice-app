@@ -58,15 +58,15 @@ $title = __('site.Edit Customer');
                   oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
               </div>
               {{-- passwrod --}}
-              <div class="form-group">
+              {{-- <div class="form-group">
                 <label>@lang('site.Password')</label>
                 <input type="password" name="password" class="form-control" >
-              </div>
+              </div> --}}
               {{-- password_confirmation --}}
-              <div class="form-group">
+              {{-- <div class="form-group">
                 <label>@lang('site.Password Confirmation')</label>
                 <input type="password" name="password_confirmation" class="form-control" >
-              </div>
+              </div> --}}
 
             </div>
             <!-- /.card-body -->

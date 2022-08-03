@@ -22,6 +22,7 @@ class DashboardController extends BaseController
   {
     $countAllReservation = Reservation::whenSchool($this->globalSchool->id)->count();
     $countPendingReservations = Reservation::whenSchool($this->globalSchool->id)->whenStatus(ReservationStatus::Pending->value)->count();
+    $latestReservations = Reservation::whenSchool($this->globalSchool->id)->latest()->limit(8)->get();
     $countOfCourses = Course::whenSchool($this->globalSchool->id)->count();
 
     $reservationData = Reservation::whenSchool($this->globalSchool->id)
@@ -34,6 +35,7 @@ class DashboardController extends BaseController
     return view($this->mainViewPrefix.'.dashboard', compact(
       'countAllReservation',
       'countPendingReservations',
+      'latestReservations',
       'countOfCourses',
       'reservationData',
     ));

@@ -89,7 +89,7 @@ class TypeController extends BaseController
     }
     $this->typeRepository->deleteType($type);
 
-    session()->flash('success', __('Data deleted successfully'));
+    session()->flash('success', __('site.Data deleted successfully'));
     return redirect()->route($this->mainRoutePrefix.'.types.index', ['page' => session('currentPage')]);
   } //end of destroy
 

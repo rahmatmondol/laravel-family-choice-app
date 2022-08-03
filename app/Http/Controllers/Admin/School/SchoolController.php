@@ -27,7 +27,7 @@ class SchoolController extends BaseController
     private TypeRepositoryInterface $typeRepository,
     private ServiceRepositoryInterface $serviceRepository,
   ) {
-    parent::__construct();  
+    parent::__construct();
     // create read update delete
     $this->middleware(['permission:read_schools'])->only('index');
     $this->middleware(['permission:create_schools'])->only('create');
@@ -108,14 +108,14 @@ class SchoolController extends BaseController
     }
     $this->schoolRepository->deleteSchool($school);
 
-    session()->flash('success', __('Data deleted successfully'));
+    session()->flash('success', __('site.Data deleted successfully'));
     return redirect()->route($this->mainRoutePrefix.'.schools.index', ['page' => session('currentPage')]);
   } //end of destroy
 
   public function deleteImage($id)
   {
     $this->schoolRepository->deleteAttachment($id);
-    session()->flash('success', __('Data deleted successfully'));
+    session()->flash('success', __('site.Data deleted successfully'));
     return redirect()->back();
   }
 }//end of controller

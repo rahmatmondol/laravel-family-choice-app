@@ -1,6 +1,6 @@
 @extends($masterLayout)
 <?php
-$page = 'schools';
+$page = 'profile';
 $title = __('site.Show school');
 ?>
 @section('title_page')
@@ -20,7 +20,7 @@ $title = __('site.Show school');
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.schools.index') }}">@lang('site.Schools')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.profile.show') }}">@lang('site.School')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -32,9 +32,9 @@ $title = __('site.Show school');
   <!-- Content -->
   <div class="card mt-4 content-table">
     <div class="card-body">
-      @include('admin.partials._edit_btn',[
-        'txt'=>__('site.Edit School'),
-        'route'=>route($mainRoutePrefix.'.schools.edit',['school'=>$school->id]),
+      @include('school.partials._edit_btn',[
+        'txt'=>__('site.Edit Profile'),
+        'route'=>route($mainRoutePrefix.'.profile.edit'),
         ])
     </div>
     <div class="card-body">
@@ -116,10 +116,6 @@ $title = __('site.Show school');
             <tr>
               <td>@lang('site.Fees')</td>
               <td>{{ $school->fees }}</td>
-            </tr>
-            <tr>
-              <td>@lang('site.Order Item')</td>
-              <td>{{ $school->order_column }}</td>
             </tr>
             <tr>
               <td>@lang('site.Status')</td>

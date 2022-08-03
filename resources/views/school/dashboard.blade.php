@@ -97,6 +97,39 @@ $title = __('site.Dashboard');
             <!-- /.box-body -->
           </div>
         </div>
+        <div class="col-md-4">
+          <div class="box box-danger">
+            <div class="box-header with-border">
+              <h3 class="box-title">@lang('site.Latest Reservations')</h3>
+
+              <div class="box-tools pull-right">
+                <span class="label label-danger">@lang('site.8 New Reservations')</span>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+              <ul class="users-list clearfix">
+                @foreach ( $latestReservations as $reservation )
+                <li>
+                  <img src="{{ $reservation->customer->image_path }}" alt="User Image">
+                  <a class="users-list-name" href="{{ route('school.reservations.show', ['reservation'=>$reservation->id]) }}">{{ $reservation->parent_name }}</a>
+                  <span class="users-list-date">{{ $reservation->created_at }}</span>
+                </li>
+                @endforeach
+              </ul>
+              <!-- /.users-list -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer text-center">
+              <a href="{{ route('school.reservations.index') }}" class="uppercase">@lang('site.List Reservations')</a>
+            </div>
+            <!-- /.box-footer -->
+          </div>
+        </div>
       </div>
       <!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -111,7 +144,6 @@ $title = __('site.Dashboard');
 {{-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> --}}
 <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
-
 
 <script>
   //line chart

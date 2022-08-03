@@ -89,7 +89,7 @@ class SchoolTypeController extends BaseController
     }
     $this->schoolTypeRepository->deleteSchoolType($schoolType);
 
-    session()->flash('success', __('Data deleted successfully'));
+    session()->flash('success', __('site.Data deleted successfully'));
     return redirect()->route($this->mainRoutePrefix.'.schoolTypes.index', ['page' => session('currentPage')]);
   } //end of destroy
 

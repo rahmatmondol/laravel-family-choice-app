@@ -90,7 +90,7 @@ class AttachmentController extends BaseController
     }
     $this->attachmentRepository->deleteAttachment($attachment);
 
-    session()->flash('success', __('Data deleted successfully'));
+    session()->flash('success', __('site.Data deleted successfully'));
     return redirect()->route($this->mainRoutePrefix.'.attachments.index', ['page' => session('currentPage')]);
   } //end of destroy
 

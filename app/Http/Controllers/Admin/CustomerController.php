@@ -89,7 +89,7 @@ class CustomerController extends BaseController
     }
     $this->customerRepository->deleteCustomer($customer);
 
-    session()->flash('success', __('Data deleted successfully'));
+    session()->flash('success', __('site.Data deleted successfully'));
     return redirect()->route($this->mainRoutePrefix.'.customers.index', ['page' => session('currentPage')]);
   } //end of destroy
 

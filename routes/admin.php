@@ -53,7 +53,7 @@ Route::group(
       // Route::get('edit-settings', 'SettingController@edit')->name('edit-settings');
       // Route::get('update-settings', 'SettingController@update')->name('update-settings');
 
-      Route::get('schools/deleteImage/{id}', 'SchoolController@deleteImage');
+      Route::get('schools/deleteImage/{id}', 'School\SchoolController@deleteImage');
     });
   }
 );

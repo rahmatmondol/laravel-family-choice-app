@@ -88,7 +88,7 @@ class GradeController extends BaseController
     }
     SchoolGradeService::deleteSchoolGrade($school,$grade);
 
-    session()->flash('success', __('Data deleted successfully'));
+    session()->flash('success', __('site.Data deleted successfully'));
     return redirect()->route($this->mainRoutePrefix . '.schools.grades.index', ['school' => $school->id, 'page' => session('currentPage')]);
 
   } //end of destroy
