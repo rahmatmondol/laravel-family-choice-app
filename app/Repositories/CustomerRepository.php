@@ -21,6 +21,8 @@ class CustomerRepository implements CustomerRepositoryInterface
     return  Customer::withoutGlobalScope(new OrderScope)
       ->with(['roles'])
       ->whenSearch($request->search)
+      ->whenStatus($request->status)
+      ->whenVerified($request->verified)
       ->isActive($request->status)
       ->latest()
       ->paginate(request()->perPage ?? 20);

@@ -55,6 +55,17 @@ class Reservation extends Model
     });
   } // end of
 
+  public function scopeWhenCustomer($query,$customer_id)
+  {
+    return $query->when($customer_id, function ($q) use ($customer_id) {
+
+      return $q->whereHas('customer', function ($qu) use ($customer_id) {
+
+        return $qu->where('customer_id', $customer_id);
+      });
+    });
+  } // end of
+
   public function customer()
   {
     return $this->belongsTo(Customer::class);

@@ -39,6 +39,18 @@ $title = __('site.Schools');
                   value="{{ request()->search }}">
               </div>
 
+              {{-- status --}}
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="inputStatus">@lang('site.Status')</label>
+                  <select id="inputStatus" name="status"  class="form-control custom-select">
+                    <option value='' selected>@lang('site.Status') </option>
+                    <option value="1" @if(request('status')==1) selected @endif>@lang('site.Active')</option>
+                    <option value="0" @if(request('status')!==null && request('status')=='0') selected @endif>@lang('site.In-Active')</option>
+                  </select>
+                </div>
+              </div>
+
               <div class="col-md-4">
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                   @lang('site.Search')</button>

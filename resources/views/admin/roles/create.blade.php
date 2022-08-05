@@ -80,6 +80,10 @@ $title = __('site.Create Role');
                         <th style="width: 15%;">@lang('site.Model')</th>
                         <th>@lang('site.Permissions')</th>
                       </tr>
+                      <tr>
+                        <input type="button"  onclick='selects(true)' value="@lang('site.Select All')"/>
+                        <input type="button" onclick='selects(false)' value="@lang('site.Deselect All')"/>
+                      </tr>
                     </thead>
 
                     <tbody>

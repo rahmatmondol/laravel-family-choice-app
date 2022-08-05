@@ -29,9 +29,16 @@ class Customer extends  Authenticatable
       return $query->where('status', (bool)$status);
   }
 
+  public function scopeWhenVerified($query, $verified)
+  {
+    if ($verified !== null) {
+      return $query->where('verified', $verified);
+    }
+  }
+
   public function scopeWhenStatus($query, $status)
   {
-    if ($status != null) {
+    if ($status !== null) {
       return $query->where('status', $status);
     }
   }

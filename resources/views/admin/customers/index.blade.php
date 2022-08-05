@@ -39,6 +39,28 @@ $title = __('site.Customers');
                   value="{{ request()->search }}">
               </div>
 
+              {{-- status --}}
+              <div class="col-md-4">
+                <div class="form-group">
+                  <select id="inputStatus" name="status"  class="form-control custom-select">
+                    <option value='' selected>@lang('site.Status') </option>
+                    <option value="1" @if(request('status')==1) selected @endif>@lang('site.Active')</option>
+                    <option value="0" @if(request('status')!==null && request('status')=='0') selected @endif>@lang('site.In-Active')</option>
+                  </select>
+                </div>
+              </div>
+
+              {{-- verified --}}
+              <div class="col-md-4">
+                <div class="form-group">
+                  <select id="inputverified" name="verified"  class="form-control custom-select">
+                    <option value='' selected>@lang('site.Verification') </option>
+                    <option value="1" @if(request('verified')==1) selected @endif>@lang('site.Verified')</option>
+                    <option value="0" @if(request('verified')!==null && request('verified')=='0') selected @endif>@lang('site.Not Verified')</option>
+                  </select>
+                </div>
+              </div>
+
               <div class="col-md-4">
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                   @lang('site.Search')</button>
@@ -87,6 +109,9 @@ $title = __('site.Customers');
                 @lang('site.E-mail')
               </th>
               <th style="width: 20%">
+                @lang('site.Reservations')
+              </th>
+              <th style="width: 20%">
                 @lang('site.Image')
               </th>
               <th style="width: 8%" class="text-center">
@@ -113,6 +138,12 @@ $title = __('site.Customers');
               </td>
               <td>
                 {{ $customer->email }}
+              </td>
+              <td>
+                @include('admin.partials._view_btn',[
+                'txt'=>__('site.Reservations'),
+                'route'=>route($mainRoutePrefix.'.reservations.index', ['customer_id'=>$customer->id]),
+                ])
               </td>
               <td>
                 <a href="{{ $customer->image_path }}" data-fancybox data-caption="Caption for single image">
