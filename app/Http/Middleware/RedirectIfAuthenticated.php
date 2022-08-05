@@ -21,11 +21,9 @@ class RedirectIfAuthenticated
   {
     $guards = empty($guards) ? [null] : $guards;
 
-    // dd($guards[0]);
     if (count($guards)) {
       // dd($guards[0]);
 
-      // dd(Auth::guard($guards[0])->check());
       switch ($guards[0]) {
         case 'admin':
           if (Auth::guard($guards[0])->check()) {
