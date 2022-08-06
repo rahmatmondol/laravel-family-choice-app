@@ -29,6 +29,8 @@ Route::group(
       //   #start profile
       Route::get('logout', 'DashboardController@logout')->name('logout');
 
+      Route::get('reservations/export', 'ReservationController@export')->name('reservations.export');
+
       Route::resources([
         'admins'              => 'AdminController',
         'roles'               => 'RoleController',

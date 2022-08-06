@@ -205,7 +205,7 @@ return [
   'Verification' => 'Verification',
   'Created At' => 'Created At',
   'Actions' => 'Actions',
-  '' => '',
+  'Export' => 'Export',
   '' => '',
   '' => '',
   '' => '',
