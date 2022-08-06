@@ -120,7 +120,8 @@ $title = __('site.Customers');
               <th style="width: 8%" class="text-center">
                 @lang('site.Verified')
               </th>
-              <th style="width: 20%">
+              <th style="width: 20%" class="text-center">
+                @lang('site.Actions')
               </th>
             </tr>
           </thead>

@@ -23,7 +23,6 @@ $(function () {
     imagesPreview(this, 'div.gallery_attachments');
   });
 
-
 });
 
 $('.btn').on('click', function () {
@@ -37,11 +36,6 @@ $('.btn').on('click', function () {
 
 });
 
-function selects(status=true) {
+function selects(status = true) {
   $("input[type=checkbox]").prop('checked', status);
 }
-
-
-
-
-

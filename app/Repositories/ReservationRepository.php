@@ -21,6 +21,7 @@ class ReservationRepository implements ReservationRepositoryInterface
       ->whenCustomer($request->customer_id)
       ->whenPaymentStatus($request->payment_status)
       ->whenStatus($request->status)
+      ->whenDateRange($request->date_range)
       ->latest()
       ->with(['school', 'customer','course'])
       ->paginate($request->perPage ?? 50);

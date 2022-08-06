@@ -42,7 +42,6 @@ $title = __('site.Schools');
               {{-- status --}}
               <div class="col-md-4">
                 <div class="form-group">
-                  <label for="inputStatus">@lang('site.Status')</label>
                   <select id="inputStatus" name="status"  class="form-control custom-select">
                     <option value='' selected>@lang('site.Status') </option>
                     <option value="1" @if(request('status')==1) selected @endif>@lang('site.Active')</option>
@@ -103,7 +102,8 @@ $title = __('site.Schools');
               <th style="width: 8%" class="text-center">
                 @lang('site.Order Item')
               </th>
-              <th style="width: 20%">
+              <th style="width: 20%" class="text-center">
+                @lang('site.Actions')
               </th>
             </tr>
           </thead>

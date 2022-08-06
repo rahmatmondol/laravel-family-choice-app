@@ -89,6 +89,20 @@ $title = __('site.Reservations');
 
               <div class="col-md-4">
                 <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="far fa-calendar-alt"></i>
+                      </span>
+                    </div>
+                    <input type="text" name="date_range" class="form-control float-right" id="reservation_date_range" value="{{ request('date_range') }}">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
                   <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                     @lang('site.Search')</button>
                 </div>
@@ -141,6 +155,9 @@ $title = __('site.Reservations');
                 @lang('site.Customer')
               </th>
               <th style="width: 20%" class="text-center">
+                @lang('site.Created At')
+              </th>
+              <th style="width: 20%" class="text-center">
               </th>
             </tr>
           </thead>
@@ -170,10 +187,14 @@ $title = __('site.Reservations');
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->course?->title }}</a>
                 @endif
               </td>
-              <td class="text-center">
 
+              <td class="text-center">
                 <a href="{{ route($mainRoutePrefix.'.customers.show', ['customer'=>$reservation->customer_id]) }}"
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->customer?->full_name }}</a>
+              </td>
+
+              <td class="text-center">
+                {{ $reservation->created_at }}
               </td>
 
               <td class="text-center">

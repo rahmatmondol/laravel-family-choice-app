@@ -126,6 +126,17 @@
   <script src="{{ asset('admin/') }}/js/admin.js"></script>
   <script>
     $('.selectric').selectric();
+
+    //Date range picker
+    $('#reservation_date_range').daterangepicker({
+        locale: 'ar',
+        locale: { cancelLabel: 'Clear', }
+    })
+
+    $('#reservation_date_range').on('cancel.daterangepicker', function(ev, picker) {
+      //do something, like clearing an input
+      $('#reservation_date_range').val('');
+    });
   </script>
 
   @if (app()->getLocale() == 'ar')

@@ -32,7 +32,7 @@ class Reservation extends Model
     });
   } // end of scopeWhenPaymentStatus
 
-  public function scopeWhenSchool($query,$school_id)
+  public function scopeWhenSchool($query, $school_id)
   {
     $school_id = getAuthSchool() ? getAuthSchool()->id : $school_id;
     return $query->when($school_id, function ($q) use ($school_id) {
@@ -44,7 +44,7 @@ class Reservation extends Model
     });
   } // end of
 
-  public function scopeWhenCourse($query,$course_id)
+  public function scopeWhenCourse($query, $course_id)
   {
     return $query->when($course_id, function ($q) use ($course_id) {
 
@@ -55,7 +55,7 @@ class Reservation extends Model
     });
   } // end of
 
-  public function scopeWhenCustomer($query,$customer_id)
+  public function scopeWhenCustomer($query, $customer_id)
   {
     return $query->when($customer_id, function ($q) use ($customer_id) {
 
@@ -64,6 +64,16 @@ class Reservation extends Model
         return $qu->where('customer_id', $customer_id);
       });
     });
+  } // end of
+
+  public function scopeWhenDateRange($query, $date_range)
+  {
+    if ($date_range !== null && $date_range != (date('m/d/Y').' - '.date('m/d/Y'))) {
+      $arr = explode('-', $date_range);
+      $from_date = date('Y-m-d',strtotime(trim($arr[0])));
+      $to_date = date('Y-m-d',strtotime(trim($arr[1])));
+      return $query->whereDate('created_at', '>=',$from_date)->whereDate('created_at', '<=',$to_date);
+    }
   } // end of
 
   public function customer()

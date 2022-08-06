@@ -82,7 +82,8 @@ $title = __('site.Roles');
               <th style="width: 8%" class="text-center">
                 @lang('site.Status')
               </th>
-              <th style="width: 20%">
+              <th style="width: 20%" class="text-center">
+                @lang('site.Actions')
               </th>
             </tr>
           </thead>

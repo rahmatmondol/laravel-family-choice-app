@@ -101,7 +101,8 @@ $title = __('site.Courses');
               <th style="width: 8%" class="text-center">
                 @lang('site.Order Item')
               </th>
-              <th style="width: 20%">
+              <th style="width: 20%" class="text-center">
+                @lang('site.Actions')
               </th>
             </tr>
           </thead>

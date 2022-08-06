@@ -27,7 +27,6 @@ class AttachmentController extends BaseController
 
   public function index(Request $request)
   {
-    dd('admin');
     session(['currentPage' => request('page', 1)]);
 
     $schools = $this->schoolRepository->getAllSchools();
