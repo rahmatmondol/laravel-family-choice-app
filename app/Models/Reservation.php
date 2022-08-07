@@ -2,13 +2,28 @@
 
 namespace App\Models;
 
+use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Reservation extends Model
 {
   use HasFactory;
+  // use LogsActivity;
+
   protected $guarded = [];
+
+  // public function getActivitylogOptions(): LogOptions
+  // {
+  //   return LogOptions::defaults()->logOnly(['*'])->logOnlyDirty();
+  // }
+
+  // public function getActivitylogOptions(): LogOptions
+  // {
+  //   $eventNameArray = ['created' => 'created', 'updated' => 'updated', 'deleted' => 'deleted'];
+  //   return LogOptions::defaults()->setDescriptionForEvent(fn (string $eventName) => "Este registro foi {$eventNameArray[$eventName]}")->useLogName('Usuário')->logOnly(['*'])->logOnlyDirty()->logFillable()->dontSubmitEmptyLogs();
+  // }
 
   public function scopeWhenSearch($query, $search)
   {
@@ -68,11 +83,11 @@ class Reservation extends Model
 
   public function scopeWhenDateRange($query, $date_range)
   {
-    if ($date_range !== null && $date_range != (date('m/d/Y').' - '.date('m/d/Y'))) {
+    if ($date_range !== null && $date_range != (date('m/d/Y') . ' - ' . date('m/d/Y'))) {
       $arr = explode('-', $date_range);
-      $from_date = date('Y-m-d',strtotime(trim($arr[0])));
-      $to_date = date('Y-m-d',strtotime(trim($arr[1])));
-      return $query->whereDate('created_at', '>=',$from_date)->whereDate('created_at', '<=',$to_date);
+      $from_date = date('Y-m-d', strtotime(trim($arr[0])));
+      $to_date = date('Y-m-d', strtotime(trim($arr[1])));
+      return $query->whereDate('created_at', '>=', $from_date)->whereDate('created_at', '<=', $to_date);
     }
   } // end of
 

@@ -2,16 +2,23 @@
 
 namespace App\Repositories;
 
-use App\Models\Reservation;
 use App\Scopes\OrderScope;
+use App\Models\Reservation;
 use App\Traits\UploadFileTrait;
-use App\Interfaces\ReservationRepositoryInterface;
+use Spatie\Activitylog\LogOptions;
 use App\Services\NotificationService;
+use Spatie\Activitylog\Traits\LogsActivity;
+use App\Interfaces\ReservationRepositoryInterface;
 
 class ReservationRepository implements ReservationRepositoryInterface
 {
   use UploadFileTrait;
+  use LogsActivity;
 
+  public function getActivitylogOptions(): LogOptions
+  {
+      return LogOptions::defaults();
+  }
   public function getFilteredReservations($request)
   {
     $reservations =  Reservation::withoutGlobalScope(new OrderScope)
@@ -43,9 +50,22 @@ class ReservationRepository implements ReservationRepositoryInterface
 
     $customer = $reservation->customer;
 
+    $this->logReservation($reservation,description:'custom description');
+
     NotificationService::sendReservationNotification($request->status, $customer, $reservation);
 
     return true;
+  }
+
+  public function logReservation($reservation,$description=''){
+    activity('reservation')
+    ->on($reservation)
+    ->logOnly(['*'])->logOnlyDirty()
+    // ->performedOn($reservation)
+    // ->causedBy($customer)
+    // ->withProperties(['customProperty' => 'customValue'])
+    ->log($description);
+
   }
 
   public function deleteReservation($reservation)
