@@ -230,6 +230,8 @@ class SchoolRepository implements SchoolRepositoryInterface
 
     $reservation = Reservation::create([
       'parent_name'           => $request->parent_name,
+      'parent_phone'          => $request->parent_phone,
+      'parent_date_of_birth'  => $request->parent_date_of_birth,
       'address'               => $request->address,
       'identification_number' => $request->identification_number,
       'school_id'             => $request->school_id,

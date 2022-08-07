@@ -18,6 +18,8 @@ return new class extends Migration
     Schema::create('reservations', function (Blueprint $table) {
       $table->id();
       $table->string('parent_name');
+      $table->string('parent_phone');
+      $table->string('parent_date_of_birth')->nullable();
       $table->string('address');
       $table->double('total_fees')->nullable();
       $table->text('reason_of_refuse')->nullable();

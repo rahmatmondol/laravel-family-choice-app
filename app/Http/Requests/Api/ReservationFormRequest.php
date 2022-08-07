@@ -24,6 +24,8 @@ class ReservationFormRequest extends BaseRequest
   {
     $this->rules += [
       'parent_name' => 'required|string|max:255',
+      'parent_phone' => 'required|string|max:255',
+      'parent_date_of_birth' => ['nullable', 'date', 'before:' . Carbon::now()->subYear(15)->format('Y-m-d'), 'date_format:Y-m-d'],
       'address' => 'required|string|max:255',
       'identification_number' => 'required|string|max:255',
       'course_id' => ['required', 'bail', 'exists:courses,id', function ($attribute, $value, $fail) {
