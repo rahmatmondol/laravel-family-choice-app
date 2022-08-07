@@ -13,12 +13,13 @@ use App\Interfaces\ReservationRepositoryInterface;
 class ReservationRepository implements ReservationRepositoryInterface
 {
   use UploadFileTrait;
-  use LogsActivity;
+  // use LogsActivity;
 
-  public function getActivitylogOptions(): LogOptions
-  {
-      return LogOptions::defaults();
-  }
+  // public function getActivitylogOptions(): LogOptions
+  // {
+  //     return LogOptions::defaults();
+  // }
+
   public function getFilteredReservations($request)
   {
     $reservations =  Reservation::withoutGlobalScope(new OrderScope)
@@ -60,7 +61,7 @@ class ReservationRepository implements ReservationRepositoryInterface
   public function logReservation($reservation,$description=''){
     activity('reservation')
     ->on($reservation)
-    ->logOnly(['*'])->logOnlyDirty()
+    // ->logOnly(['*'])->logOnlyDirty()
     // ->performedOn($reservation)
     // ->causedBy($customer)
     // ->withProperties(['customProperty' => 'customValue'])

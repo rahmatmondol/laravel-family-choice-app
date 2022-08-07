@@ -14,6 +14,10 @@ class Reservation extends Model
 
   protected $guarded = [];
 
+  protected static $logAttributes = ['status','payment_status','reason_of_refuse'];
+
+  protected static $logOnlyDirty = true;
+
   // public function getActivitylogOptions(): LogOptions
   // {
   //   return LogOptions::defaults()->logOnly(['*'])->logOnlyDirty();
