@@ -23,6 +23,7 @@
     "maatwebsite/excel": "^3.1",
     "mcamara/laravel-localization": "^1.7",
     "psr/simple-cache": "1.0",
+    "rap2hpoutre/laravel-log-viewer": "^2.2",
     "santigarcor/laratrust": "^7.1",
     "spatie/laravel-activitylog": "^4.5"
   },

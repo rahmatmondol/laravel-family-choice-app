@@ -182,7 +182,7 @@ return [
 
     // ...other declared providers
     App\Providers\RepositoryServiceProvider::class,
-
+    Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
   ],
 
