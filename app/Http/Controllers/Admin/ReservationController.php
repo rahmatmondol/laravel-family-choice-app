@@ -16,7 +16,6 @@ use App\Http\Requests\Admin\ReservationFormRequest;
 
 class ReservationController extends BaseController
 {
-
   public function __construct(
     private ReservationRepositoryInterface $reservationRepository,
     private SchoolRepositoryInterface $schoolRepository,

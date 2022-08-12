@@ -206,7 +206,10 @@ return [
   'Created At' => 'Created At',
   'Actions' => 'Actions',
   'Export' => 'Export',
-  '' => '',
+  'User Deleted' => 'User Deleted',
+  'Parent Date Of Birth' => 'Date Of Birth',
+  'Parent Phone' => 'Parent Phone',
+
   '' => '',
   '' => '',
   '' => '',

@@ -41,6 +41,14 @@ $title = __('site.Show Reservation');
               <td>{{ $reservation->parent_name }}</td>
             </tr>
             <tr>
+              <td>@lang('site.Parent Phone')</td>
+              <td>{{ $reservation->parent_phone }}</td>
+            </tr>
+            <tr>
+              <td>@lang('site.Parent Date Of Birth')</td>
+              <td>{{ $reservation->parent_date_of_birth }}</td>
+            </tr>
+            <tr>
               <td>@lang('site.Total Fees')</td>
               <td>{{ $reservation->total_fees }} {{ appCurrency() }} </td>
             </tr>

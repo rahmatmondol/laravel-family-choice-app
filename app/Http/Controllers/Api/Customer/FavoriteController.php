@@ -8,11 +8,10 @@ use Illuminate\Http\Request;
 
 use App\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Admin\BaseController;
 use App\Http\Requests\Api\FavoriteFormRequest;
 use App\Http\Resources\Collection\SchoolCollection;
 
-class FavoirteController  extends BaseController
+class FavoriteController  extends Controller
 {
 
   use ResponseTrait;

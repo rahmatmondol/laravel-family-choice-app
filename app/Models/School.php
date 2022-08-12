@@ -189,6 +189,11 @@ class School extends Authenticatable
     return $this->hasMany(Course::class);
   } // end of user
 
+  // public function activity_log()
+  // {
+  //   return $this->hasMany(ActivityLog::class)->where('causer_type','App\Models\School')->where('causer_id',$this->id);
+  // } // end of user
+
   public function attachments()
   {
     return $this->hasMany(Attachment::class);

@@ -45,6 +45,16 @@
         {{-- @endif --}}
         @endforeach
 
+        <li class="nav-item">
+          <a href="{{ route($mainRoutePrefix.'.reservation-logs') }}" class="nav-link @if( $page == 'logs' )   active  @endif">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+              {{ucfirst(__('site.Logs'))}}
+            </p>
+          </a>
+        </li>
+
+
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

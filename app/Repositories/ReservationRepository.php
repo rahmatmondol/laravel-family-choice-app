@@ -5,20 +5,12 @@ namespace App\Repositories;
 use App\Scopes\OrderScope;
 use App\Models\Reservation;
 use App\Traits\UploadFileTrait;
-use Spatie\Activitylog\LogOptions;
 use App\Services\NotificationService;
-use Spatie\Activitylog\Traits\LogsActivity;
 use App\Interfaces\ReservationRepositoryInterface;
 
 class ReservationRepository implements ReservationRepositoryInterface
 {
   use UploadFileTrait;
-  // use LogsActivity;
-
-  // public function getActivitylogOptions(): LogOptions
-  // {
-  //     return LogOptions::defaults();
-  // }
 
   public function getFilteredReservations($request)
   {
@@ -31,7 +23,7 @@ class ReservationRepository implements ReservationRepositoryInterface
       ->whenStatus($request->status)
       ->whenDateRange($request->date_range)
       ->latest()
-      ->with(['school', 'customer','course'])
+      ->with(['school', 'customer', 'course'])
       ->paginate($request->perPage ?? 50);
 
     return $reservations;
@@ -44,29 +36,41 @@ class ReservationRepository implements ReservationRepositoryInterface
 
   public function updateReservation($request, $reservation)
   {
-    $reservation->update([
+    $reservation->fill([
       'status' => $request->status,
       'reason_of_refuse' => $request->reason_of_refuse,
     ]);
+    $changes = $reservation->getDirty();
+    $reservation->save();
 
-    $customer = $reservation->customer;
+    if (count($changes) != 0) {
 
-    $this->logReservation($reservation,description:'custom description');
+      $customer = $reservation->customer;
 
-    NotificationService::sendReservationNotification($request->status, $customer, $reservation);
+      $this->logReservation($reservation);
+
+      NotificationService::sendReservationNotification($request->status, $customer, $reservation);
+    }
 
     return true;
   }
 
-  public function logReservation($reservation,$description=''){
+  public function logReservation($reservation)
+  {
+    $status  = [
+      "pending" => 'في وضع المراجعة من الادارة',
+      "accepted" => 'تم قبول الطلب',
+      "rejected" => 'تم رفض الطلب بسبب',
+    ];
+    $description = $status[$reservation->status] ?? '';
+    if ($reservation->status == 'rejected') {
+      $description = " [$reservation->reason_of_refuse] " . $description;
+    }
     activity('reservation')
-    ->on($reservation)
-    // ->logOnly(['*'])->logOnlyDirty()
-    // ->performedOn($reservation)
-    // ->causedBy($customer)
-    // ->withProperties(['customProperty' => 'customValue'])
-    ->log($description);
-
+      ->on($reservation)
+      // ->causedBy($customer)
+      ->withProperties(['causer_name' => request()->is('admin/*') ? getAdmin()?->full_name : getAuthSchool()?->title])
+      ->log($description);
   }
 
   public function deleteReservation($reservation)

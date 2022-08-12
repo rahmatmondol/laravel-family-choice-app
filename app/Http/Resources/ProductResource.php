@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Review;
-use App\Favoirte;
+use App\Favorite;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -15,7 +15,7 @@ class ProductResource extends JsonResource
   {
 
     $ProductInCart   = 0;
-    $IsProductFavoirte = 0;
+    $IsProductFavorite = 0;
     $ProductInCartQty = 0;
 
     if ($request->hasHeader('Authorization')) {
@@ -28,7 +28,7 @@ class ProductResource extends JsonResource
           $ProductInCartQty   = $ProductInCart->qty;
         }
 
-        $IsProductFavoirte = (Favoirte::where('product_id', $this->id)->where('customer_id', $auth['id'])->first()) ? 1 : 0;
+        $IsProductFavorite = (Favorite::where('product_id', $this->id)->where('customer_id', $auth['id'])->first()) ? 1 : 0;
       }
     }
 
@@ -77,7 +77,7 @@ class ProductResource extends JsonResource
       'ProductInCartQty' =>   (int)($ProductInCart ? $ProductInCart->qty : 0),
       'ProductInCartColor' =>   $this->product_color_in_cart,
       'ProductInCartTotal' =>   (int)($ProductInCart ? $ProductInCart->qty * $this->total : 0),
-      'IsProductFavoirte' =>  (int)$IsProductFavoirte,
+      'IsProductFavorite' =>  (int)$IsProductFavorite,
       'currency' => __('site.' . config('site_options.currency')),
 
     ];

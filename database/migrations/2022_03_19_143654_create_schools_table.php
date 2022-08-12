@@ -34,6 +34,7 @@ return new class extends Migration
 
       $table->double('lat')->nullable();
       $table->double('lng')->nullable();
+      $table->rememberToken();
       $table->timestamps();
     });
   }

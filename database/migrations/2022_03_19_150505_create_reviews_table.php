@@ -18,6 +18,7 @@ return new class extends Migration
       $table->double('follow_up')->nullable();
       $table->double('quality_of_education')->nullable();
       $table->double('cleanliness')->nullable();
+      $table->double('total')->nullable();
       $table->string('comment')->nullable();
 
       $table->boolean('status')->default(1); // default active
