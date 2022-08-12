@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ appName() }} | @yield('title_page') </title>
+  <title> @yield('title_page')  |  {{ appName() }}</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet"
