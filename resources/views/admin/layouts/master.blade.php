@@ -25,11 +25,13 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('admin/') }}/dist/css/adminlte.min.css">
 
-  @if (app()->getLocale() == 'ar')
+  @if (LaravelLocalization::getCurrentLocaleDirection() == 'rtl')
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('admin/') }}/dist/css/adminlte-rtl.min.css">
     <!-- Bootstrap 4 RTL -->
     <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
     <!-- Custom style for RTL -->
-    <link rel="stylesheet" href="dist/css/custom.css">
+    {{-- <link rel="stylesheet" href="dist/css/custom.css"> --}}
   @else
   @endif
 
@@ -51,8 +53,6 @@
   <!-- fancybox -->
   <link rel="stylesheet" href="{{ asset('admin/') }}/css/admin.css">
 
-
-
   <script>
     let appUrl     = @json(config('myconfig.appUrl'));
     let appLocale  = @json(app()->getLocale());
@@ -62,8 +62,8 @@
 
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed">
-  <div class="wrapper">
+<body class="hold-transition sidebar-mini layout-fixed " >
+  <div class="wrapper @if (LaravelLocalization::getCurrentLocaleDirection() == 'rtl') rtl rtl-inv @endif " >
 
     @include('admin.partials._navbar')
 
@@ -139,7 +139,7 @@
     });
   </script>
 
-  @if (app()->getLocale() == 'ar')
+  @if (LaravelLocalization::getCurrentLocaleDirection() == 'rtl')
   <!-- Bootstrap 4 rtl -->
   <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"></script>
   @endif

@@ -25,7 +25,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('admin/') }}/dist/css/adminlte.min.css">
 
-  @if (app()->getLocale() == 'ar')
+  @if (LaravelLocalization::getCurrentLocaleDirection() == 'rtl')
     <!-- Bootstrap 4 RTL -->
     <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
     <!-- Custom style for RTL -->
@@ -126,7 +126,7 @@
     $('.selectric').selectric();
   </script>
 
-  @if (app()->getLocale() == 'ar')
+  @if (LaravelLocalization::getCurrentLocaleDirection() == 'rtl')
   <!-- Bootstrap 4 rtl -->
   <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"></script>
   @endif

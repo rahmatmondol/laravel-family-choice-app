@@ -43,7 +43,7 @@ return [
   'Number Of Services' => 'عدد الخدمات والانشطة',
   'Latest Members' => 'اخر العملاء',
   'List Customers' => 'قائمة العملاء',
-  'Sales Graph' => 'الرسم البياني للمبيعات',
+  'Sales Graph' => 'الرسم البياني  للحجوزات',
   '8 New Members' => '8 أعضاء جدد',
   'Number Of Customers' => 'عدد العملاء',
   'Roles' => 'الصلاحيات',
