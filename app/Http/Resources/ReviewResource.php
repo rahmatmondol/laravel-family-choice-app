@@ -9,7 +9,6 @@ class ReviewResource extends JsonResource
 
   public function toArray($request)
   {
-    $school = $this->school;
     $customer = $this->customer;
 
     return [
@@ -17,6 +16,7 @@ class ReviewResource extends JsonResource
       'follow_up'             => $this->follow_up,
       'quality_of_education'  => $this->quality_of_education,
       'cleanliness'           => $this->cleanliness,
+      'avg'                   => doubleval(number_format($this->avg,2)),
       'customer'              => [
         'full_name' => $customer->full_name,
         'image' => $customer->image_path,

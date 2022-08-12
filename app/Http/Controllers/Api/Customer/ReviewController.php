@@ -23,12 +23,14 @@ class ReviewController  extends Controller
   public function setReview(SetReviewFormRequest $request)
   {
     $customer = getCustomer();
+    $avg = (request('follow_up') + request('quality_of_education') + request('cleanliness'))/ 3;
     $customer->reviews()->updateOrCreate(
       ['school_id' => request('school_id')],
       [
         'follow_up' => request('follow_up'),
         'quality_of_education' => request('quality_of_education'),
         'cleanliness' => request('cleanliness'),
+        'avg' => $avg,
         'comment' => request('comment')
       ]
     );
@@ -43,7 +45,7 @@ class ReviewController  extends Controller
     $quality_of_education = $school->reviews()->avg('quality_of_education');
     $cleanliness = $school->reviews()->avg('cleanliness');
 
-    $avg = ($follow_up + $quality_of_education + $cleanliness) / 5;
+    $avg = ($follow_up + $quality_of_education + $cleanliness) / 3;
 
     $school->update([
       'review' => $avg,

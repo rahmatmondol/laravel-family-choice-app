@@ -47,7 +47,7 @@ class School extends Authenticatable
   public function getCanReviewedAttribute()
   {
     if ($customer = getCustomer()) {
-      return  (bool) in_array($this->id, $customer->reservations->where('status', 'approved')->pluck('school_id')->toArray());
+      return  (bool) in_array($this->id, $customer->reservations->where('status', 'accepted')->pluck('school_id')->toArray());
     } //end of if
 
     return false;
