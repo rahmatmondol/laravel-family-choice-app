@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 
 use App\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Admin\BaseController;
 use App\Http\Resources\AttachmentResource;
 use App\Http\Resources\ReservationResource;
 use App\Interfaces\SchoolRepositoryInterface;
@@ -15,7 +14,7 @@ use App\Http\Requests\Api\ReservationFormRequest;
 use App\Http\Resources\Collection\ReservationCollection;
 use App\Http\Requests\Api\GetSchoolAttachmentFormRequest;
 
-class ReservationsController  extends BaseController
+class ReservationsController  extends Controller
 {
 
   use ResponseTrait;

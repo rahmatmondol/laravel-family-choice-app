@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\Customer\CustomerController;
+use App\Http\Controllers\Api\Customer\FavoriteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,27 +47,6 @@ Route::group(
       });
     });
 
-
-    #forget password
-    // Route::post('customer/sendVerificationCodeForegetPassword', 'CustomerController@sendVerificationCodeForegetPassword')->name('sendVerificationCodeForegetPassword');
-    // Route::post('customer/verifyCodeForegetPassword', 'CustomerController@verifyCodeForegetPassword')->name('verifyCodeForegetPassword');
-    // Route::post('customer/foregetPassword', 'CustomerController@foregetPassword')->name('foregetPassword');
-
-    // Route::post('/categories', 'PublicController@categories')->name('categories');
-    // Route::post('/subcategories', 'PublicController@subcategories')->name('subcategories');
-    // Route::post('/providers', 'ProviderController@providers')->name('providers');
-    // Route::post('/providerDetails', 'ProviderController@providerDetails')->name('providerDetails');
-    // Route::post('/offers', 'PublicController@offers')->name('offers');
-    // Route::post('/providerGallary', 'ProviderController@providerGallary')->name('providerGallary');
-    // Route::post('/offers', 'PublicController@offers')->name('offers');
-    // Route::post('/reviews', 'PublicController@reviews')->name('reviews');
-    // // Route::post('/searchProduct', 'PublicController@searchProduct')->name('searchProduct');
-    // Route::post('/staticPages', 'PublicController@staticPages')->name('staticPages');
-    // Route::post('/contactUs', 'PublicController@contactUs')->name('contactUs');
-
-    // Route::post('/blogs', 'NewsController@blogs')->name('blogs');
-    // Route::post('/sliders', 'PublicController@sliders')->name('sliders');
-
     Route::group(['namespace' => "Customer", 'prefix' => 'customer/', 'middleware' => ['auth:customer-api', 'ensureCustomerVerified']], function () {
 
       Route::controller(AuthController::class)->group(function () {
@@ -76,10 +57,10 @@ Route::group(
         Route::get('profile', 'profile');
       });
 
-      Route::post('setReview', 'CustomerController@setReview');
+      Route::post('setReview', [CustomerController::class,'setReview']);
 
       #favorites
-      Route::controller(FavoirteController::class)->group(function () {
+      Route::controller(FavoriteController::class)->group(function () {
         Route::post('toggle-favorite', 'toggle_favorite');
         Route::get('favorites', 'favorites');
       });
@@ -101,13 +82,3 @@ Route::group(
     });
   }
 );
-
-Route::group([
-  'namespace' => 'API\Customer',
-  'middleware' => 'api',
-  'prefix' => 'password'
-], function () {
-  // Route::post('create', 'PasswordResetController@create');
-  // Route::get('find/{token}', 'PasswordResetController@find');
-  // Route::post('reset', 'PasswordResetController@reset');
-});

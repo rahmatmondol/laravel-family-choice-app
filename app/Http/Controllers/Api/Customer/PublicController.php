@@ -7,7 +7,6 @@ use App\Models\School;
 use Illuminate\Http\Request;
 use App\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Admin\BaseController;
 use App\Http\Resources\CityResource;
 use App\Http\Resources\TypeResource;
 use App\Http\Resources\GradeResource;
@@ -29,7 +28,7 @@ use App\Http\Resources\Collection\UserManualCollection;
 use App\Http\Resources\SliderResource;
 use App\Interfaces\EducationalSubjectRepositoryInterface;
 
-class PublicController extends BaseController
+class PublicController extends Controller
 {
   use ResponseTrait;
 

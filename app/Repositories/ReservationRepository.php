@@ -2,11 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Models\Reservation;
 use App\Scopes\OrderScope;
+use App\Models\Reservation;
 use App\Traits\UploadFileTrait;
-use App\Interfaces\ReservationRepositoryInterface;
 use App\Services\NotificationService;
+use App\Interfaces\ReservationRepositoryInterface;
 
 class ReservationRepository implements ReservationRepositoryInterface
 {
@@ -23,7 +23,7 @@ class ReservationRepository implements ReservationRepositoryInterface
       ->whenStatus($request->status)
       ->whenDateRange($request->date_range)
       ->latest()
-      ->with(['school', 'customer','course'])
+      ->with(['school', 'customer', 'course'])
       ->paginate($request->perPage ?? 50);
 
     return $reservations;
@@ -36,16 +36,41 @@ class ReservationRepository implements ReservationRepositoryInterface
 
   public function updateReservation($request, $reservation)
   {
-    $reservation->update([
+    $reservation->fill([
       'status' => $request->status,
       'reason_of_refuse' => $request->reason_of_refuse,
     ]);
+    $changes = $reservation->getDirty();
+    $reservation->save();
 
-    $customer = $reservation->customer;
+    if (count($changes) != 0) {
 
-    NotificationService::sendReservationNotification($request->status, $customer, $reservation);
+      $customer = $reservation->customer;
+
+      $this->logReservation($reservation);
+
+      NotificationService::sendReservationNotification($request->status, $customer, $reservation);
+    }
 
     return true;
+  }
+
+  public function logReservation($reservation)
+  {
+    $status  = [
+      "pending" => 'في وضع المراجعة من الادارة',
+      "accepted" => 'تم قبول الطلب',
+      "rejected" => 'تم رفض الطلب بسبب',
+    ];
+    $description = $status[$reservation->status] ?? '';
+    if ($reservation->status == 'rejected') {
+      $description = " [$reservation->reason_of_refuse] " . $description;
+    }
+    activity('reservation')
+      ->on($reservation)
+      // ->causedBy($customer)
+      ->withProperties(['causer_name' => request()->is('admin/*') ? getAdmin()?->full_name : getAuthSchool()?->title])
+      ->log($description);
   }
 
   public function deleteReservation($reservation)

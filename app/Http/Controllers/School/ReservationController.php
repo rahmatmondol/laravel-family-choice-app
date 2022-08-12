@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\School;
 
+use App\Exports\ReservationExport;
 use App\Models\School;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use App\Http\Requests\Admin\ReservationFormRequest;
 use App\Interfaces\CustomerRepositoryInterface;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Customer;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReservationController extends BaseController
 {
@@ -32,6 +34,11 @@ class ReservationController extends BaseController
     $reservations = $this->reservationRepository->getFilteredReservations($request);
 
     return view($this->mainViewPrefix.'.reservations.index', compact('reservations', ));
+  } // end of index
+
+  public function export(Request $request)
+  {
+    return Excel::download(new ReservationExport($this->reservationRepository, 'school'), 'ReservationExport.xlsx');
   } // end of index
 
   public function show($reservation)

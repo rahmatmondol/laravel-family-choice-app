@@ -16,7 +16,6 @@ use App\Http\Requests\Admin\ReservationFormRequest;
 
 class ReservationController extends BaseController
 {
-
   public function __construct(
     private ReservationRepositoryInterface $reservationRepository,
     private SchoolRepositoryInterface $schoolRepository,
@@ -40,12 +39,12 @@ class ReservationController extends BaseController
     // $courses = $this->courseRepository->getCourses($request);
     $reservations = $this->reservationRepository->getFilteredReservations($request);
 
-    return view($this->mainViewPrefix.'.reservations.index', compact('reservations', 'schools'));
+    return view($this->mainViewPrefix . '.reservations.index', compact('reservations', 'schools'));
   } // end of index
 
   public function export(Request $request)
   {
-    return Excel::download(new ReservationExport($this->reservationRepository,'admin'), 'ReservationExport.xlsx');
+    return Excel::download(new ReservationExport($this->reservationRepository, 'admin'), 'ReservationExport.xlsx');
   } // end of index
 
 
@@ -53,14 +52,16 @@ class ReservationController extends BaseController
   {
     $reservation = $this->reservationRepository->getReservationById($reservation);
 
-    return view($this->mainViewPrefix.'.reservations.show', compact('reservation'));
+    return view($this->mainViewPrefix . '.reservations.show', compact('reservation'));
   } //end of create
 
   public function edit($reservation)
   {
+
+
     $reservation = $this->reservationRepository->getReservationById($reservation);
 
-    return view($this->mainViewPrefix.'.reservations.edit', compact('reservation',));
+    return view($this->mainViewPrefix . '.reservations.edit', compact('reservation',));
   } //end of edit
 
   public function update(ReservationFormRequest $request, Reservation $reservation)
@@ -70,7 +71,7 @@ class ReservationController extends BaseController
     session()->flash('success', __('Data updated successfully'));
 
     if ($request->continue) {
-      return redirect()->route($this->mainRoutePrefix.'.reservations.index', ['page' => session('currentPage')]);
+      return redirect()->route($this->mainRoutePrefix . '.reservations.index', ['page' => session('currentPage')]);
     }
     return redirect()->back();
   } //end of update
@@ -83,7 +84,7 @@ class ReservationController extends BaseController
     $this->reservationRepository->deleteReservation($reservation);
 
     session()->flash('success', __('site.Data deleted successfully'));
-    return redirect()->route($this->mainRoutePrefix.'.reservations.index', ['page' => session('currentPage')]);
+    return redirect()->route($this->mainRoutePrefix . '.reservations.index', ['page' => session('currentPage')]);
   } //end of destroy
 
 }//end of controller

@@ -10,14 +10,13 @@ use Illuminate\Http\Request;
 
 use App\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Admin\BaseController;
 use App\Http\Requests\Api\SetReviewFormRequest;
 use App\Http\Requests\Api\DeleteReviewFormRequest;
 use App\Http\Resources\Collection\ReviewCollection;
 use App\Http\Resources\Collection\SchoolCollection;
 use App\Models\Review;
 
-class ReviewController  extends BaseController
+class ReviewController  extends Controller
 {
   use ResponseTrait;
 

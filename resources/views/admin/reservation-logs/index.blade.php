@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'reservations';
-$title = __('site.Reservations');
+$page = 'logs';
+$title = __('site.Logs');
 ?>
 @section('title_page')
 {{ $title }}
@@ -17,7 +17,7 @@ $title = __('site.Reservations');
         <div class="col-sm-6">
           <h6>{{ $title }}
             <small>
-              ( {{ $reservations->total() }} )
+              ( {{ $logs->total() }} )
             </small>
           </h6>
 
@@ -30,7 +30,7 @@ $title = __('site.Reservations');
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route($mainRoutePrefix.'.reservations.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.reservation-logs') }}" method="get">
 
             <div class="row">
 
@@ -43,34 +43,8 @@ $title = __('site.Reservations');
 
               <div class="col-md-4">
                 <div class="form-group">
-                  <select id="inputStatus" name="status" class="form-control custom-select">
-                    <option value='' selected >@lang('site.reservation_status.Status')</option>
-                    @foreach(App\Enums\ReservationStatus::values() as $status)
-                      <option value="{{ $status }}" @selected(request('status')==$status)>@lang('site.reservation_status.'.$status)</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="form-group">
-                  <select  name="payment_status" class="form-control custom-select">
-                    <option value='' selected >@lang('site.payment_status.Status')</option>
-                    @foreach(App\Enums\PaymentStatus::values() as $payment_status)
-                      <option value="{{ $payment_status }}" @selected(request('payment_status')==$payment_status)>@lang('site.payment_status.'.$payment_status)</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="form-group">
                   <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                     @lang('site.Search')</button>
-
-                  <a href="{{ route($mainRoutePrefix.'.reservations.export',request()->all() ) }}" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
-                    @lang('site.Export')</a>
-
                 </div>
               </div>
 
@@ -103,63 +77,42 @@ $title = __('site.Reservations');
                 #
               </th>
               <th style="width: 20%" class="text-center">
-                @lang('site.Parent Name')
+                @lang('site.Reservation Number')
               </th>
               <th style="width: 20%" class="text-center">
-                @lang('site.Status')
+                @lang('site.Description')
               </th>
               <th style="width: 20%" class="text-center">
-                @lang('site.payment_status.Status')
+                @lang("site.User Name")
               </th>
               <th style="width: 20%" class="text-center">
-                @lang('site.Course')
+                @lang("site.User Type")
               </th>
               <th style="width: 20%" class="text-center">
-                @lang('site.Customer')
-              </th>
-              <th style="width: 20%" class="text-center">
+                @lang('site.Created At')
               </th>
             </tr>
           </thead>
           <tbody>
-            @forelse ($reservations as $reservation )
+            @forelse ($logs as $log )
             <tr>
               <td class="text-center">
                 {{ $loop->iteration }}
               </td>
               <td class="text-center">
-                {{ $reservation->parent_name }}
+                {{ $log->subject_id }}
               </td>
               <td class="text-center">
-                @include('admin.partials._render_reservation_status',['status'=>$reservation->status])
+                {{ $log->description }}
               </td>
               <td class="text-center">
-
-                @include('admin.partials._render_payment_status',['status'=>$reservation->payment_status])
+                {{ $log->causer_full_name  }}
               </td>
               <td class="text-center">
-                @if($reservation->course_id)
-                <a href="{{ route($mainRoutePrefix.'.courses.show', ['course'=>$reservation->course_id]) }}"
-                  class="btn btn-primary btn-sm" target="_blank">{{ $reservation->course?->title }}</a>
-                @endif
+                {{ $log->causer_model_type  }}
               </td>
               <td class="text-center">
-                <a href="{{ route($mainRoutePrefix.'.customers.show', ['customer'=>$reservation->customer_id]) }}"
-                  class="btn btn-primary btn-sm" target="_blank">{{ $reservation->customer?->full_name }}</a>
-              </td>
-
-              <td class="text-center">
-
-                @include('admin.partials._view_btn',[
-                'txt'=>__('site.View'),
-                'route'=>route($mainRoutePrefix.'.reservations.show', ['reservation'=>$reservation->id]),
-                ])
-
-                @include('admin.partials._edit_btn',[
-                'txt'=>__('site.Edit'),
-                'route'=>route($mainRoutePrefix.'.reservations.edit', ['reservation'=>$reservation->id]),
-                ])
-
+                {{ $log->created_at }}
               </td>
             </tr>
             @empty
@@ -172,7 +125,7 @@ $title = __('site.Reservations');
 
           </tbody>
         </table>
-        {{ $reservations->appends(request()->query())->links() }}
+        {{ $logs->appends(request()->query())->links() }}
 
       </div>
       <!-- /.card-body -->

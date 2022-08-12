@@ -105,8 +105,8 @@ $title = __('site.Reservations');
                 <div class="form-group">
                   <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                     @lang('site.Search')</button>
-                  <a href="{{ route('admin.reservations.export',request()->all() ) }}" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
-                    @lang('site.Export')</a>
+                    <a href="{{ route($mainRoutePrefix.'.reservations.export',request()->all() ) }}" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
+                      @lang('site.Export')</a>
                 </div>
               </div>
 

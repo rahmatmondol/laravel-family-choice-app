@@ -1,5 +1,23 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AttachmentController;
+use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\CityController;
+use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EducationalSubjectController;
+use App\Http\Controllers\Admin\EducationTypeController;
+use App\Http\Controllers\Admin\ReservationController;
+use App\Http\Controllers\Admin\ReservationLogsController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\School\SchoolController;
+use App\Http\Controllers\Admin\SchoolTypeController;
+use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\TypeController;
+use App\Http\Controllers\Admin\UserManualController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -17,45 +35,48 @@ Route::group(
     # must guest
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => "Auth", 'middleware' => 'guest:admin'], function () {
       #login
-      Route::get('login', 'LoginController@showLoginForm')->name('login');
+      Route::get('login', [LoginController::class,'showLoginForm'])->name('login');
 
-      Route::post('login-post', 'LoginController@login')->name('login-post');
+      Route::post('login-post', [LoginController::class,'login'])->name('login-post');
     });
 
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth:admin'], function () {
 
-      Route::get('/dashboard', 'DashboardController@dashboard')->name('dashboard');
+      Route::get('/dashboard', [DashboardController::class,'dashboard'])->name('dashboard');
 
       //   #start profile
-      Route::get('logout', 'DashboardController@logout')->name('logout');
+      Route::get('logout', [DashboardController::class,'logout'])->name('logout');
 
-      Route::get('reservations/export', 'ReservationController@export')->name('reservations.export');
+      Route::get('reservations/export', [ReservationController::class,'export'])->name('reservations.export');
 
       Route::resources([
-        'admins'              => 'AdminController',
-        'roles'               => 'RoleController',
-        'customers'           => 'CustomerController',
-        'cities'              => 'CityController',
-        'types'               => 'TypeController',
-        'schools'             => 'School\SchoolController',
-        'grades'              => 'GradeController',
-        'services'            => 'ServiceController',
-        'educationalSubjects' => 'EducationalSubjectController',
-        'educationTypes'      => 'EducationTypeController',
-        'schoolTypes'         => 'SchoolTypeController',
-        'schools.grades'      => 'School\GradeController',
-        'courses'             => 'CourseController',
-        'sliders'             => 'SliderController',
-        'user_manuals'        => 'UserManualController',
-        'attachments'         => 'AttachmentController',
-        'reservations'         => 'ReservationController',
+        'admins'              => AdminController::class,
+        'roles'               => RoleController::class,
+        'customers'           => CustomerController::class,
+        'cities'              => CityController::class,
+        'types'               => TypeController::class,
+        'schools'             => SchoolController::class,
+        'grades'              => GradeController::class,
+        'services'            => ServiceController::class,
+        'educationalSubjects' => EducationalSubjectController::class,
+        'educationTypes'      => EducationTypeController::class,
+        'schoolTypes'         => SchoolTypeController::class,
+        'schools.grades'      => School\GradeController::class,
+        'courses'             => CourseController::class,
+        'sliders'             => SliderController::class,
+        'user_manuals'        => UserManualController::class,
+        'attachments'         => AttachmentController::class,
+        'reservations'        => ReservationController::class,
       ]);
+
+      Route::get('reservation-logs', [ReservationLogsController::class,'index'])->name('reservation-logs');
+
 
       // Route::resource('settings', 'SettingController')->only(['edit', 'update']);
       // Route::get('edit-settings', 'SettingController@edit')->name('edit-settings');
       // Route::get('update-settings', 'SettingController@update')->name('update-settings');
 
-      Route::get('schools/deleteImage/{id}', 'School\SchoolController@deleteImage');
+      Route::get('schools/deleteImage/{id}', [SchoolController::class,'deleteImage']);
     });
   }
 );
