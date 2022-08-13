@@ -43,7 +43,7 @@ class Attachment extends Model
     });
   } // end of scopeWhenSearch
 
-  public function scopeWhenSchool($query,$school_id)
+  public function scopeWhenSchool($query,$school_id=null)
   {
     $school_id = getAuthSchool() ? getAuthSchool()->id : $school_id;
     return $query->when($school_id, function ($q) use ($school_id) {
