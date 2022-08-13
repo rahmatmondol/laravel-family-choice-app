@@ -2,32 +2,18 @@
 
 namespace App\Models;
 
-use Spatie\Activitylog\LogOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Activitylog\Traits\LogsActivity;
 
 class Reservation extends Model
 {
   use HasFactory;
-  // use LogsActivity;
 
   protected $guarded = [];
 
   protected static $logAttributes = ['status','payment_status','reason_of_refuse'];
 
   protected static $logOnlyDirty = true;
-
-  // public function getActivitylogOptions(): LogOptions
-  // {
-  //   return LogOptions::defaults()->logOnly(['*'])->logOnlyDirty();
-  // }
-
-  // public function getActivitylogOptions(): LogOptions
-  // {
-  //   $eventNameArray = ['created' => 'created', 'updated' => 'updated', 'deleted' => 'deleted'];
-  //   return LogOptions::defaults()->setDescriptionForEvent(fn (string $eventName) => "Este registro foi {$eventNameArray[$eventName]}")->useLogName('Usuário')->logOnly(['*'])->logOnlyDirty()->logFillable()->dontSubmitEmptyLogs();
-  // }
 
   public function scopeWhenSearch($query, $search)
   {

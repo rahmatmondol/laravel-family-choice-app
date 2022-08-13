@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\ReservationStatus;
 use App\Models\Child;
 use App\Models\School;
 use App\Scopes\OrderScope;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
 use App\Interfaces\SchoolRepositoryInterface;
+use App\Services\NotificationService;
 
 class SchoolRepository implements SchoolRepositoryInterface
 {
@@ -21,7 +23,14 @@ class SchoolRepository implements SchoolRepositoryInterface
 
   public function getAllSchools()
   {
-    return School::isActive(true)->listsTranslations('title')->get();
+    // dd( School::isActive(true)->withTranslation(app()->getLocale(),function($query){
+    //   return $query->get(['title']);
+    // })->limit(1)->get(['id']));
+    return School::isActive(true)->withTranslation(app()->getLocale(),function($query){
+      return $query->select(['title']);
+    })->get();
+
+    // return School::isActive(true)->listsTranslations('title')->get();
   }
 
   public function getFilteredSchools($request)
@@ -226,8 +235,6 @@ class SchoolRepository implements SchoolRepositoryInterface
     $customer = getCustomer();
     $totalFees = 0;
 
-    // dd($request->all());
-
     $reservation = Reservation::create([
       'parent_name'           => $request->parent_name,
       'parent_phone'          => $request->parent_phone,
@@ -277,7 +284,6 @@ class SchoolRepository implements SchoolRepositoryInterface
     $reservation->update([
       'total_fees' => $totalFees,
     ]);
-    // dd('done');
 
     return $reservation;
   }
@@ -285,30 +291,39 @@ class SchoolRepository implements SchoolRepositoryInterface
   #addReservation
   public function updateReservation($request)
   {
-    // dd($request->all());
+    $changes = 0 ;
     $reservation = Reservation::findOrFail($request->reservation_id);
-    $reservation->update([
+    $reservation->fill([
       'parent_name'           => $request->parent_name,
+      'parent_phone'          => $request->parent_phone,
+      'parent_date_of_birth'  => $request->parent_date_of_birth,
       'address'               => $request->address,
       'identification_number' => $request->identification_number,
     ]);
+    $changes += count($reservation->getDirty());
+    $reservation->save();
 
     $child = $reservation->child;
-    if ($request->child) {
-      $child->update([
-        'child_name'            => $child['child_name'],
-        'date_of_birth'         => $child['date_of_birth'],
-        'gender'                => $child['gender'],
-      ]);
-    }
+    // if ($request->child) {
+    //   $child->fill([
+    //     'child_name'            => $child['child_name'],
+    //     'date_of_birth'         => $child['date_of_birth'],
+    //     'gender'                => $child['gender'],
+    //   ]);
+    //   $changes += count($reservation->getDirty());
+    //   $reservation->save();
+    // }
 
     if ($request_child = $request->child) {
 
-      $child->update([
+      $child->fill([
         'child_name'            => $request_child['child_name'],
         'date_of_birth'         => $request_child['date_of_birth'],
         'gender'                => $request_child['gender'],
       ]);
+
+      $changes += count($reservation->getDirty());
+      $reservation->save();
 
       if (isset($request->child['attachments'])) {
         foreach ($request_child['attachments'] as $id => $attachment) {
@@ -321,20 +336,39 @@ class SchoolRepository implements SchoolRepositoryInterface
           $file_name = $this->uploadFile($attachment, 'child_attachments/', $child_attachment->attachment_file);
 
           if ($file_name) {
-            ChildAttachment::where([[
-              'attachment_id', $id
-            ], [
-              'child_id', $child->id
-            ]])->update([
+            $child_attachment = $child_attachment->fill([
               'attachment_file'    => $file_name,
             ]);
+
+            $changes += count($child_attachment->getDirty());
+            $child_attachment->save();
+
           }
         } // end $child['attachments']
       }
     } // end $request->children
 
+    // dd($changes);
+    if ($changes != 0 ) {
+      $reservation->update(['status'=>ReservationStatus::Pending->value]);
+      $customer = $reservation->customer;
+
+      $this->logReservation($reservation);
+      // NotificationService::sendReservationNotification($request->status, $customer, $reservation);
+    }
+
     return $reservation;
   }
+
+  public function logReservation($reservation)
+  {
+    activity('reservation')
+      ->on($reservation)
+      ->withProperties(['causer_name' => getCustomer()->full_name])
+      ->log(" تم تعديل بيانات الحجز  وتحويلة الي  وضع المراجعة من الادارة");
+  }
+
+
 
   #customerReservations
   public function customerReservations()
@@ -345,7 +379,6 @@ class SchoolRepository implements SchoolRepositoryInterface
   #customerReservations
   public function schoolReviews($school)
   {
-    // dd($school->reviews()->latest()->get());
     return $school->reviews()->latest()->paginate(request()->perPage ?? 20);
   }
 }

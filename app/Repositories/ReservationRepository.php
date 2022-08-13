@@ -43,7 +43,7 @@ class ReservationRepository implements ReservationRepositoryInterface
     $changes = $reservation->getDirty();
     $reservation->save();
 
-    if (count($changes) != 0) {
+    if (count($changes) != 0 ) {
 
       $customer = $reservation->customer;
 
@@ -68,7 +68,6 @@ class ReservationRepository implements ReservationRepositoryInterface
     }
     activity('reservation')
       ->on($reservation)
-      // ->causedBy($customer)
       ->withProperties(['causer_name' => request()->is('admin/*') ? getAdmin()?->full_name : getAuthSchool()?->title])
       ->log($description);
   }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Enums\ReservationStatus;
 use Carbon\Carbon;
 use App\Models\School;
 use App\Models\Reservation;
@@ -71,7 +72,11 @@ class ReservationFormRequest extends BaseRequest
     $reservation = Reservation::find(request()->reservation_id);
 
     $this->rules += [
-      'reservation_id' => ['required', 'bail', 'exists:reservations,id'],
+      'reservation_id' => ['required', 'bail', 'exists:reservations,id', function ($attribute, $value, $fail) use($reservation){
+          if ($reservation->status != ReservationStatus::Rejected->value) {
+            $fail(__('site.Reservation not rejected so you can not edit reservation now'));
+          }
+        }],
       'child' => ['required'],
       // 'child.id' => ['required', 'bail', 'exists:children,id', function ($attribute, $value, $fail) {
       //   $child = Child::find($value);

@@ -36,7 +36,7 @@ $title = __('site.Reservations');
 
               <div class="col-md-4">
                 <div class="form-group">
-                  <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
+                  <input type="text" name="search" class="form-control" placeholder="@lang('site.Search')"
                   value="{{ request()->search }}">
                 </div>
               </div>

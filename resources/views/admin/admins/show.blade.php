@@ -44,10 +44,10 @@ $title = __('site.Show Admin');
               <td>@include('admin.partials._render_status',['status'=>$admin->status])</td>
             </tr>
             <tr>
-              <td>@lang('site.Permissions')</td>
+              <td>@lang('site.Roles')</td>
               <td>
-                @foreach ($admin->permissions as $permission)
-                <span class="btn btn-primary btn-customs py-1 px-2">{{ $permission->name }}</span>
+                @foreach ($admin->roles as $roles)
+                <span class="btn btn-primary btn-customs py-1 px-2">{{ $roles->name }}</span>
                 @endforeach
               </td>
             </tr>
