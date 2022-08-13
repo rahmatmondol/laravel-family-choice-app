@@ -24,7 +24,7 @@ class AttachmentRepository implements AttachmentRepositoryInterface
   public function getAttachments($request)
   {
     return  Attachment::whenSearch($request->search)
-      ->whenSchool()
+      ->whenSchool($request->school_id)
       ->isActive(true)
       // ->latest()
       ->paginate(request()->perPage ?? 20);
