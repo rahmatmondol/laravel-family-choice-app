@@ -29,6 +29,7 @@ class ReservationResource extends JsonResource
       'payment_status'        => $this->payment_status,
       'school'                => new LightSchoolResource($this->school),
       'child'                 => new ChildResource($this->child),
+      'course'                => new CourseResource($this->course),
       'created_at'            => (string) $this->created_at,
       'updated_at'            => (string) $this->updated_at,
     ];

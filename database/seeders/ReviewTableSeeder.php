@@ -17,15 +17,29 @@ class ReviewTableSeeder extends Seeder
    */
   public function run()
   {
+    foreach (School::all() as $key => $school) {
+        Review::updateOrCreate(
+          ['school_id' => $school->id, 'customer_id' => 1],
+          [
+            'follow_up' => 3,
+            'quality_of_education' => 3,
+            'cleanliness' =>3,
+            'avg' => 3,
+            'comment' => "good school"
+          ]
+        );
+    }
+
     $customers = Customer::pluck('id');
     foreach (School::all() as $key => $school) {
       for ($i = 0; $i < 10; $i++) {
         Review::updateOrCreate(
           ['school_id' => $school->id, 'customer_id' => $customers->random()],
           [
-            'follow_up' => 2,
-            'quality_of_education' => 2,
-            'cleanliness' => 4,
+            'follow_up' => 3,
+            'quality_of_education' => 3,
+            'cleanliness' =>3,
+            'avg' => 3,
             'comment' => "good school"
           ]
         );

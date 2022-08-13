@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
       SchoolTableSeeder::class,
       SlidersTableSeeder::class,
       CustomerTableSeeder::class,
+      ReviewTableSeeder::class,
     ]);
   }
 }

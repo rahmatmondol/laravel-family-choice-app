@@ -19,7 +19,7 @@ class CustomerTableSeeder extends Seeder
       Customer::create([
         'full_name' => "mahmoud ahmed ",
         'email'    => "m@g.com",
-        'phone' => "0100",
+        'phone' => "01098930338",
         'password' => bcrypt('123456'),
         'gender' => "male",
         'image' => "default.png",

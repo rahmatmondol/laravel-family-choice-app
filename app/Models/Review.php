@@ -22,6 +22,6 @@ class Review extends Model
 
   public function getReviewAttribute()
   {
-    return ($this->follow_up + $this->quality_of_education + $this->cleanliness) / 5;
+    return ($this->follow_up + $this->quality_of_education + $this->cleanliness) / 3;
   } //end of image path attribute
 }
