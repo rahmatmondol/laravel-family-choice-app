@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class PasswordResetRequest extends Notification 
+class PasswordResetRequest extends Notification
 {
   use Queueable;
   /**
@@ -38,6 +38,7 @@ class PasswordResetRequest extends Notification
   public function toMail($notifiable)
   {
     return (new MailMessage)
+      ->greeting(__('site.Hello'))
       ->line(__('site.You are receiving this email because we  received a password reset request for your account.'))
       ->action(__('site.Reset Password'), url($this->url))
       ->line(__('site.If you did not request a password reset, no further action is required.'))

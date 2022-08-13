@@ -13,7 +13,8 @@ class TypeRepository implements TypeRepositoryInterface
 
   public function getFilteredTypes($request)
   {
-    return  Type::withoutGlobalScope(new OrderScope)
+    return  Type::withTranslation(app()->getLocale())
+      ->withoutGlobalScope(new OrderScope)
       ->whenSearch($request->search)
       ->isActive($request->status)
       ->latest()
@@ -22,7 +23,8 @@ class TypeRepository implements TypeRepositoryInterface
 
   public function getAllTypes()
   {
-    return  Type::withoutGlobalScope(new OrderScope)
+    return  Type::withTranslation(app()->getLocale())
+      ->withoutGlobalScope(new OrderScope)
       ->get();
   }
 

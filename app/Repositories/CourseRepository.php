@@ -15,7 +15,7 @@ class CourseRepository implements CourseRepositoryInterface
   public function getFilteredCourses($request)
   {
     return  Course::withoutGlobalScope(new OrderScope)
-      ->withTranslation()
+      ->withTranslation(app()->getLocale())
       ->with(['school'])
       ->whenSearch($request->search)
       ->whenSchool($request->school_id)
@@ -26,9 +26,11 @@ class CourseRepository implements CourseRepositoryInterface
 
   public function getCourses($request)
   {
-    return  Course::whenSearch($request->search)
+    return  Course::withTranslation(app()->getLocale())
+      ->whenSearch($request->search)
       ->whenSchool($request->school_id)
       ->isActive(true)
+      ->withTranslation(app()->getLocale())
       ->paginate(request()->perPage ?? 20);
   }
 

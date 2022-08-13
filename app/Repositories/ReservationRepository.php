@@ -31,7 +31,7 @@ class ReservationRepository implements ReservationRepositoryInterface
 
   public function getReservationById($reservationId)
   {
-    return Reservation::findOrFail($reservationId);
+    return Reservation::with(['child.attachments'])->findOrFail($reservationId);
   }
 
   public function updateReservation($request, $reservation)

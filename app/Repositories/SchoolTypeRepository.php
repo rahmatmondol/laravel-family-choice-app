@@ -13,7 +13,8 @@ class SchoolTypeRepository implements SchoolTypeRepositoryInterface
 
   public function getFilteredSchoolTypes($request)
   {
-    return  SchoolType::withoutGlobalScope(new OrderScope)
+    return  SchoolType::withTranslation(app()->getLocale())
+      ->withoutGlobalScope(new OrderScope)
       ->whenSearch($request->search)
       ->isActive($request->status)
       ->latest()
@@ -22,7 +23,8 @@ class SchoolTypeRepository implements SchoolTypeRepositoryInterface
 
   public function getAllSchoolTypes()
   {
-    return  SchoolType::isActive(true)
+    return  SchoolType::withTranslation(app()->getLocale())
+      ->isActive(true)
       ->get();
   }
 

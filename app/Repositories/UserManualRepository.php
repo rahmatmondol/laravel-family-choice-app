@@ -13,7 +13,8 @@ class UserManualRepository implements UserManualRepositoryInterface
 
   public function getFilteredUserManuals($request)
   {
-    return  UserManual::withoutGlobalScope(new OrderScope)
+    return  UserManual::withTranslation(app()->getLocale())
+      ->withoutGlobalScope(new OrderScope)
       ->whenSearch($request->search)
       ->isActive($request->status)
       ->latest()
@@ -22,7 +23,7 @@ class UserManualRepository implements UserManualRepositoryInterface
 
   public function getUserManuals($request)
   {
-    return  UserManual::isActive(true)
+    return  UserManual::withTranslation(app()->getLocale())->isActive(true)
       // ->latest()
       ->paginate($request->perPage ?? 20);
   }

@@ -23,12 +23,7 @@ class SchoolRepository implements SchoolRepositoryInterface
 
   public function getAllSchools()
   {
-    // dd( School::isActive(true)->withTranslation(app()->getLocale(),function($query){
-    //   return $query->get(['title']);
-    // })->limit(1)->get(['id']));
-    return School::isActive(true)->withTranslation(app()->getLocale(),function($query){
-      return $query->select(['title']);
-    })->get();
+    return School::isActive(true)->withTranslation(app()->getLocale())->get();
 
     // return School::isActive(true)->listsTranslations('title')->get();
   }
@@ -36,6 +31,8 @@ class SchoolRepository implements SchoolRepositoryInterface
   public function getFilteredSchools($request)
   {
     return  School::withoutGlobalScope(new OrderScope)
+      ->withTranslation(app()->getLocale())
+      // ->with(['educationalSubjects','educationTypes','schoolTypes','services','grades','types','schoolImages'])
       ->whenSearch()
       ->isActive($request->status)
       ->latest()
@@ -60,7 +57,7 @@ class SchoolRepository implements SchoolRepositoryInterface
       ->whenEducationTypes()
       ->whenEducationalSubjects()
       ->withTranslation()
-      ->with(['educationalSubjects', 'educationTypes', 'schoolTypes', 'grades'])
+      ->with(['educationalSubjects', 'educationTypes', 'schoolTypes', 'types', 'grades', 'services', 'schoolImages'])
       ->paginate($request->perPage ?? 20);
 
     return $schools;
@@ -68,10 +65,11 @@ class SchoolRepository implements SchoolRepositoryInterface
 
   public function getSchoolById($schoolId)
   {
-    if($schoolId instanceof Model){
-      $school = $schoolId ;
-    }else{
+    if ($schoolId instanceof Model) {
+      $school = $schoolId;
+    } else {
       $school = School::findOrFail($schoolId);
+      // $school = School::with(['educationalSubjects', 'educationTypes', 'schoolTypes', 'grades','services','schoolImages'])->findOrFail($schoolId);
     }
     return $school;
   }
@@ -285,13 +283,13 @@ class SchoolRepository implements SchoolRepositoryInterface
       'total_fees' => $totalFees,
     ]);
 
-    return $reservation;
+    return $reservation->with('');
   }
 
   #addReservation
   public function updateReservation($request)
   {
-    $changes = 0 ;
+    $changes = 0;
     $reservation = Reservation::findOrFail($request->reservation_id);
     $reservation->fill([
       'parent_name'           => $request->parent_name,
@@ -342,15 +340,14 @@ class SchoolRepository implements SchoolRepositoryInterface
 
             $changes += count($child_attachment->getDirty());
             $child_attachment->save();
-
           }
         } // end $child['attachments']
       }
     } // end $request->children
 
     // dd($changes);
-    if ($changes != 0 ) {
-      $reservation->update(['status'=>ReservationStatus::Pending->value]);
+    if ($changes != 0) {
+      $reservation->update(['status' => ReservationStatus::Pending->value]);
       $customer = $reservation->customer;
 
       $this->logReservation($reservation);
@@ -368,17 +365,17 @@ class SchoolRepository implements SchoolRepositoryInterface
       ->log(" تم تعديل بيانات الحجز  وتحويلة الي  وضع المراجعة من الادارة");
   }
 
-
-
   #customerReservations
   public function customerReservations()
   {
-    return getCustomer()->reservations()->with(['child.attachments'])->latest()->paginate(request()->perPage ?? 20);
+    return getCustomer()->reservations()->with([
+      'school', 'course', 'grade', 'child.grade', 'child.attachments.attachment.translation'
+    ])->latest()->paginate(request()->perPage ?? 20);
   }
 
   #customerReservations
   public function schoolReviews($school)
   {
-    return $school->reviews()->latest()->paginate(request()->perPage ?? 20);
+    return $school->reviews()->with(['customer', 'school',])->latest()->paginate(request()->perPage ?? 20);
   }
 }

@@ -13,7 +13,8 @@ class CityRepository implements CityRepositoryInterface
 
   public function getFilteredCities($request)
   {
-    return  City::withoutGlobalScope(new OrderScope)
+    return  City::withTranslation(app()->getLocale())
+      ->withoutGlobalScope(new OrderScope)
       ->whenSearch($request->search)
       ->isActive($request->status)
       ->latest()
@@ -22,7 +23,7 @@ class CityRepository implements CityRepositoryInterface
 
   public function getAllCities()
   {
-    return  City::whenLocation()->get();
+    return  City::withTranslation()->whenLocation()->get();
   }
 
   public function getCityById($sliderId)

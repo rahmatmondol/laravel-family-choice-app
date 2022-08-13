@@ -13,7 +13,8 @@ class EducationTypeRepository implements EducationTypeRepositoryInterface
 
   public function getFilteredEducationTypes($request)
   {
-    return  EducationType::withoutGlobalScope(new OrderScope)
+    return  EducationType::withTranslation(app()->getLocale())
+      ->withoutGlobalScope(new OrderScope)
       ->whenSearch($request->search)
       ->isActive($request->status)
       ->latest()
@@ -22,7 +23,8 @@ class EducationTypeRepository implements EducationTypeRepositoryInterface
 
   public function getAllEducationTypes()
   {
-    return  EducationType::withoutGlobalScope(new OrderScope)
+    return  EducationType::withTranslation(app()->getLocale())
+      ->withoutGlobalScope(new OrderScope)
       ->get();
   }
 

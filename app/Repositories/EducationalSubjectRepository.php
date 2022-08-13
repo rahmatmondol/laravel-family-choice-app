@@ -13,7 +13,8 @@ class EducationalSubjectRepository implements EducationalSubjectRepositoryInterf
 
   public function getFilteredEducationalSubjects($request)
   {
-    return  EducationalSubject::withoutGlobalScope(new OrderScope)
+    return  EducationalSubject::withTranslation(app()->getLocale())
+      ->withoutGlobalScope(new OrderScope)
       ->whenSearch($request->search)
       ->isActive($request->status)
       ->latest()
@@ -22,7 +23,8 @@ class EducationalSubjectRepository implements EducationalSubjectRepositoryInterf
 
   public function getAllEducationalSubjects()
   {
-    return  EducationalSubject::withoutGlobalScope(new OrderScope)
+    return  EducationalSubject::withTranslation(app()->getLocale())
+      ->withoutGlobalScope(new OrderScope)
       ->get();
   }
 

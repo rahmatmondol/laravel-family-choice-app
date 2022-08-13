@@ -13,7 +13,9 @@ class AttachmentRepository implements AttachmentRepositoryInterface
 
   public function getFilteredAttachments($request)
   {
-    return  Attachment::withoutGlobalScope(new OrderScope)
+    return  Attachment::withTranslation(app()->getLocale())
+      ->with(['school.translation'])
+      ->withoutGlobalScope(new OrderScope)
       ->whenSearch($request->search)
       ->whenSchool($request->school_id)
       ->isActive($request->status)
@@ -23,7 +25,7 @@ class AttachmentRepository implements AttachmentRepositoryInterface
 
   public function getAttachments($request)
   {
-    return  Attachment::whenSearch($request->search)
+    return  Attachment::withTranslation(app()->getLocale())->whenSearch($request->search)
       ->whenSchool($request->school_id)
       ->isActive(true)
       // ->latest()

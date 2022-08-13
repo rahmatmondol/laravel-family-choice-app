@@ -96,6 +96,11 @@ class Reservation extends Model
     return  $this->belongsTo(Course::class);
   }
 
+  public function grade()
+  {
+    return  $this->belongsTo(Grade::class);
+  }
+
   public function child()
   {
     return $this->hasOne(Child::class);

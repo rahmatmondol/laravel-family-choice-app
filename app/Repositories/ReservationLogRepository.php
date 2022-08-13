@@ -12,7 +12,7 @@ class ReservationLogRepository implements ReservationLogRepositoryInterface
 
   public function getFilteredReservationLogs($request)
   {
-    $logs = ActivityLog::whenSearch($request->search)
+    $logs = ActivityLog::with(['causer'])->whenSearch($request->search)
       ->whenSchool()
       ->latest()
       ->paginate($request->perPage ?? 50);

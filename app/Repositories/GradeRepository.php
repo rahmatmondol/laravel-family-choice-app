@@ -13,7 +13,8 @@ class GradeRepository implements GradeRepositoryInterface
 
   public function getFilteredGrades($request)
   {
-    return  Grade::withoutGlobalScope(new OrderScope)
+    return  Grade::withTranslation(app()->getLocale())
+      ->withoutGlobalScope(new OrderScope)
       ->whenSearch($request->search)
       ->isActive($request->status)
       ->latest()
@@ -22,12 +23,14 @@ class GradeRepository implements GradeRepositoryInterface
 
   public function getAllGrades()
   {
-    return  Grade::withoutGlobalScope(new OrderScope)
+    return  Grade::withTranslation(app()->getLocale())
+      ->withoutGlobalScope(new OrderScope)
       ->get();
   }
   public function getGradeById($gradeId)
   {
-    $grade = Grade::findOrFail($gradeId);
+    $grade = Grade::withTranslation(app()->getLocale())
+      ->findOrFail($gradeId);
     return $grade;
   }
 

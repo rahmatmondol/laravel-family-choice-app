@@ -65,7 +65,7 @@ class CourseController extends BaseController
 
     $course = $this->courseRepository->getCourseById($course);
     $schools = $this->schoolRepository->getAllSchools();
-
+    // dd($course);
     return view($this->mainViewPrefix.'.courses.edit', compact('course','schools'));
   } //end of edit
 

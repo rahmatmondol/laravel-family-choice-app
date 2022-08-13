@@ -13,7 +13,8 @@ class ServiceRepository implements ServiceRepositoryInterface
 
   public function getFilteredServices($request)
   {
-    return  Service::withoutGlobalScope(new OrderScope)
+    return  Service::withTranslation(app()->getLocale())
+      ->withoutGlobalScope(new OrderScope)
       ->whenSearch($request->search)
       ->isActive($request->status)
       ->latest()
@@ -22,7 +23,8 @@ class ServiceRepository implements ServiceRepositoryInterface
 
   public function getAllServices()
   {
-    return  Service::withoutGlobalScope(new OrderScope)
+    return  Service::withTranslation(app()->getLocale())
+      ->withoutGlobalScope(new OrderScope)
       ->get();
   }
 

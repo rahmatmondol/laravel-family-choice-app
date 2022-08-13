@@ -13,7 +13,8 @@ class SliderRepository implements SliderRepositoryInterface
 
   public function getFilteredSliders($request)
   {
-    return  Slider::withoutGlobalScope(new OrderScope)
+    return  Slider::withTranslation(app()->getLocale())
+      ->withoutGlobalScope(new OrderScope)
       ->whenSearch($request->search)
       ->isActive($request->status)
       ->latest()
@@ -22,7 +23,7 @@ class SliderRepository implements SliderRepositoryInterface
 
   public function getSliders($request)
   {
-    return  Slider::isActive(true)->get();
+    return  Slider::withTranslation(app()->getLocale())->isActive(true)->get();
   }
 
   public function getSliderById($sliderId)
