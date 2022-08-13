@@ -279,11 +279,9 @@ class SchoolRepository implements SchoolRepositoryInterface
 
     } // end $request->children
 
-    $reservation->update([
-      'total_fees' => $totalFees,
+    return $reservation->load([
+      'school', 'course', 'grade', 'child.grade', 'child.attachments.attachment.translation'
     ]);
-
-    return $reservation->with('');
   }
 
   #addReservation
@@ -354,7 +352,9 @@ class SchoolRepository implements SchoolRepositoryInterface
       // NotificationService::sendReservationNotification($request->status, $customer, $reservation);
     }
 
-    return $reservation;
+    return $reservation->load([
+      'school', 'course', 'grade', 'child.grade', 'child.attachments.attachment.translation'
+    ]);
   }
 
   public function logReservation($reservation)

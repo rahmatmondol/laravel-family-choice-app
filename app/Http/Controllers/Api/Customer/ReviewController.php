@@ -60,7 +60,7 @@ class ReviewController  extends Controller
 
   public function reviewsList(Request $request)
   {
-    $reviews = getCustomer()->reviews()->latest()->paginate($request->perPage ?? 20);
+    $reviews = getCustomer()->reviews()->with(['customer','school.translation'])->latest()->paginate($request->perPage ?? 20);
     return $this->sendResponse(new ReviewCollection($reviews), "");
   }
 
