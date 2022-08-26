@@ -12,6 +12,7 @@
     "anlutro/l4-settings": "^1.1",
     "archtechx/enums": "^0.3.0",
     "astrotomic/laravel-translatable": "^11.10",
+    "barryvdh/laravel-dompdf": "^1.0",
     "edujugon/push-notification": "*",
     "guzzlehttp/guzzle": "^7.2",
     "intervention/image": "^2.7",

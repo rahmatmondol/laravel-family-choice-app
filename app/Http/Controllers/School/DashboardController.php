@@ -22,7 +22,7 @@ class DashboardController extends BaseController
   {
     $countAllReservation = Reservation::whenSchool($this->globalSchool->id)->count();
     $countPendingReservations = Reservation::whenSchool($this->globalSchool->id)->whenStatus(ReservationStatus::Pending->value)->count();
-    $latestReservations = Reservation::whenSchool($this->globalSchool->id)->latest()->limit(8)->get();
+    $latestReservations = Reservation::whenSchool($this->globalSchool->id)->with('customer')->latest()->limit(8)->get();
     $countOfCourses = Course::whenSchool($this->globalSchool->id)->count();
     $countOfGrades = $this->globalSchool->grades()->count();
 

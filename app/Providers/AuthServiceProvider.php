@@ -36,7 +36,7 @@ class AuthServiceProvider extends ServiceProvider
       }else{
         $course = Course::findOrFail($course);
       }
-      return $school->id === $course->school_id;
+      return $school->id == $course->school_id;
     });
     #attachments
     Gate::define('show-attachment', function (School $school, $attachment) {
@@ -45,7 +45,7 @@ class AuthServiceProvider extends ServiceProvider
       }else{
         $attachment = Attachment::findOrFail($attachment);
       }
-      return $school->id === $attachment->school_id;
+      return $school->id == $attachment->school_id;
     });
     #reservations
     Gate::define('show-reservation', function (School $school, $reservation) {
@@ -54,7 +54,9 @@ class AuthServiceProvider extends ServiceProvider
       }else{
         $reservation = Reservation::findOrFail($reservation);
       }
-      return $school->id === $reservation->school_id;
+      dd($school->id,$reservation->school_id);
+
+      return $school->id == $reservation->school_id;
     });
   }
 }

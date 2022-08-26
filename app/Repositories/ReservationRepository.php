@@ -23,7 +23,7 @@ class ReservationRepository implements ReservationRepositoryInterface
       ->whenStatus($request->status)
       ->whenDateRange($request->date_range)
       ->latest()
-      ->with(['school', 'customer', 'course'])
+      ->with(['school.translation', 'customer', 'course.translation'])
       ->paginate($request->perPage ?? 50);
 
     return $reservations;
@@ -31,7 +31,7 @@ class ReservationRepository implements ReservationRepositoryInterface
 
   public function getReservationById($reservationId)
   {
-    return Reservation::with(['child.attachments'])->findOrFail($reservationId);
+    return Reservation::with(['child.attachments.attachment.translations'])->findOrFail($reservationId);
   }
 
   public function updateReservation($request, $reservation)
@@ -43,7 +43,7 @@ class ReservationRepository implements ReservationRepositoryInterface
     $changes = $reservation->getDirty();
     $reservation->save();
 
-    if (count($changes) != 0 ) {
+    if (count($changes) != 0) {
 
       $customer = $reservation->customer;
 
