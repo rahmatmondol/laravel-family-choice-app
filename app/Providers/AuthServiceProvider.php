@@ -54,8 +54,6 @@ class AuthServiceProvider extends ServiceProvider
       }else{
         $reservation = Reservation::findOrFail($reservation);
       }
-      dd($school->id,$reservation->school_id);
-
       return $school->id == $reservation->school_id;
     });
   }
