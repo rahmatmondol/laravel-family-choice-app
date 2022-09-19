@@ -31,6 +31,10 @@ Route::group(
         Route::post('foreget-password', 'foregetPassword');
       });
 
+      Route::controller(PaymentController::class)->group(function () {
+        Route::get('get-connection-token', 'getConnectionToken');
+      });
+
       Route::controller(PublicController::class)->group(function () {
         Route::get('user-manuals', 'userManuals');
         Route::get('contact-support', 'contactSupport');
