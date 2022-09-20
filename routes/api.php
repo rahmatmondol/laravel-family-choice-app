@@ -31,8 +31,9 @@ Route::group(
         Route::post('foreget-password', 'foregetPassword');
       });
 
-      Route::controller(PaymentController::class)->group(function () {
-        Route::get('get-connection-token', 'getConnectionToken');
+      Route::controller(StripePaymentController::class)->prefix('stripe')->group(function () {
+        Route::get('get-payment-intent', 'getPaymentIntent');
+        // Route::get('get-connection-token', 'getConnectionToken');
       });
 
       Route::controller(PublicController::class)->group(function () {
