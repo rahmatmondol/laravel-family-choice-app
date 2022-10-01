@@ -4,7 +4,9 @@ namespace App\Services;
 
 use Exception;
 use App\Models\Notification;
+use App\Notifications\Reservation\UpdateReservationStatusNotification;
 use Edujugon\PushNotification\PushNotification;
+use Illuminate\Support\Facades\Notification as FacadesNotification;
 
 class NotificationService
 {
@@ -43,7 +45,11 @@ class NotificationService
           ->getFeedback();
 
         self::storeReservationNotificationList($data, $customer->id, $reservation->id);
+
+        $res  = FacadesNotification::send($reservation->customer, new UpdateReservationStatusNotification($reservation,$data));
+
       } catch (Exception $e) {
+        info($e->getMessage());
       }
       return $push;
     }
@@ -53,15 +59,15 @@ class NotificationService
   {
     $messages = [
       'pending' => [
-        __('site.new reservation'),
+        __('site.New Reservation'),
         __('site.pending_reservation_body', ['reservation_number' => $reservation->id])
       ],
       'accepted' => [
-        __('site.your reservation is accepted'),
+        __('site.Your reservation is accepted'),
         __('site.accepted_reservation_body', ['reservation_number' => $reservation->id])
       ],
       'rejected' => [
-        __('site.your reservation is rejected'),
+        __('site.Your reservation is rejected'),
         $reservation->reason_of_refuse
       ],
     ];

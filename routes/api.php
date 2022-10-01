@@ -33,7 +33,7 @@ Route::group(
 
       Route::controller(StripePaymentController::class)->prefix('stripe')->group(function () {
         Route::get('get-payment-intent', 'getPaymentIntent');
-        // Route::get('get-connection-token', 'getConnectionToken');
+        Route::post('webhooks-payment-success', 'webHooksPaymentSuccess');
       });
 
       Route::controller(PublicController::class)->group(function () {

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use App\Enums\PaymentStatus;
 use Illuminate\Http\Request;
 use App\Enums\ReservationStatus;
@@ -11,12 +10,31 @@ use Illuminate\Validation\Rules\Enum;
 use App\Notifications\SmsCodeNotification;
 use Illuminate\Support\Facades\Notification;
 use App\Http\Controllers\Admin\BaseController;
+use App\Models\Payment;
+use App\Models\Reservation;
+use App\Notifications\Reservation\ReservationPaidNotification;
 use Edujugon\PushNotification\PushNotification;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
   public function test()
   {
+    $reservation = Reservation::first();
+
+    return (new ReservationPaidNotification($reservation))
+    ->toMail('mahmouddief0@gmail.com');
+
+    $payment = Payment::firstOrCreate(
+      ['payment_intent_id' => 'pi_3LnheFDynjRZ45TZ2gncG8rs','event_type' => 'payment_intent.succeeded'],
+      ['event_object' => 'data'],
+    );
+    dd($payment);
+
+    $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+
+    dd($stripe->paymentIntents->retrieve("pi_3LnTtyDynjRZ45TZ0ek42Ocr", [])['metadata']['reservation_id']);
+    // return  $stripe->paymentIntents->retrieve($this->paymentIntentId, []);
 
 
     Auth::guard('admin')->logout();

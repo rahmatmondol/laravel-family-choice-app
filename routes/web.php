@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StripeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/test', "HomeController@test");
+Route::get('/test', [HomeController::class,'test']);
 
 Route::get('/', function () {
 
@@ -25,6 +27,10 @@ Route::get('/', function () {
 $router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer'], function() use ($router) {
   $router->get('app-logs', 'LogViewerController@index');
 });
+
+
+Route::get('stripe', [StripeController::class, 'stripe']);
+Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
 
 require 'admin.php';
 require 'school.php';

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Laravel\Passport\HasApiTokens;
 
 use Illuminate\Notifications\Notifiable;
@@ -9,9 +10,8 @@ use Laratrust\Traits\LaratrustUserTrait;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Customer extends  Authenticatable
+class Customer extends  Authenticatable implements HasLocalePreference
 {
-
   use LaratrustUserTrait;
   use HasApiTokens, Notifiable;
 
@@ -77,5 +77,10 @@ class Customer extends  Authenticatable
   {
     return $this->hasMany(Reservation::class);
   } //end fo category
+
+  public function preferredLocale()
+  {
+      return 'ar';
+  }
 
 }
