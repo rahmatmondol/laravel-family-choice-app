@@ -78,6 +78,11 @@ class Customer extends  Authenticatable implements HasLocalePreference
     return $this->hasMany(Reservation::class);
   } //end fo category
 
+  public function notifications()
+  {
+    return $this->hasMany(Notification::class);
+  } //end fo category
+
   public function preferredLocale()
   {
       return 'ar';

@@ -21,6 +21,10 @@ class NotificationService
     ]);
   }
 
+  public static function notificationList(){
+    return getCustomer()->notifications()->latest()->paginate(request()->perPage ?? 20);
+  }
+
   public static  function  sendReservationNotification($status, $customer, $reservation)
   {
     $changes = $reservation->getChanges();

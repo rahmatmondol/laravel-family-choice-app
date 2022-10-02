@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\Customer\CustomerController;
 use App\Http\Controllers\Api\Customer\FavoriteController;
+use App\Http\Controllers\API\Customer\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -63,6 +64,8 @@ Route::group(
       });
 
       Route::post('setReview', [CustomerController::class,'setReview']);
+
+      Route::get('notification-list', [NotificationController::class,'notificationList']);
 
       #favorites
       Route::controller(FavoriteController::class)->group(function () {
