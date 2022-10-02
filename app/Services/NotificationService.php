@@ -42,7 +42,8 @@ class NotificationService
 
       try {
         $push->setMessage([
-          'data' => $data, 'notification' => $data,
+          'data' => $data
+          // , 'notification' => $data,
         ])->setApiKey(env('NOTIFICATION_API_KEY'))
           ->setDevicesToken($customer->firebaseToken)
           ->send()
@@ -50,7 +51,7 @@ class NotificationService
 
         self::storeReservationNotificationList($data, $customer->id, $reservation->id);
 
-        $res  = FacadesNotification::send($reservation->customer, new UpdateReservationStatusNotification($reservation,$data));
+        FacadesNotification::send($reservation->customer, new UpdateReservationStatusNotification($reservation,$data));
 
       } catch (Exception $e) {
         info($e->getMessage());
@@ -74,6 +75,10 @@ class NotificationService
         __('site.Your reservation is rejected'),
         $reservation->reason_of_refuse
       ],
+      // 'completed' => [
+      //   __('site.Your Reservation Completed Successfully'),
+      //   __('site.completed_reservation_body', ['reservation_number' => $reservation->id])
+      // ],
     ];
 
     return $messages[$status];

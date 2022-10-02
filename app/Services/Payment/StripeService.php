@@ -9,8 +9,6 @@ use Stripe;
 
 class StripeService
 {
-  use ResponseTrait;
-
   public static function getPaymentIntent($request)
   {
     try {
@@ -98,6 +96,7 @@ class StripeService
       }
     }
   }
+  
   public static function retrievePaymentIntent(string $paymentIntentId)
   {
     $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));

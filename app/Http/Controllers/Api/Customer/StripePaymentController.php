@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\GetPaymentIntentRequest;
 use App\Services\Payment\StripeService;
+use App\Services\Reservation\ReservationService;
 
 class StripePaymentController extends Controller
 {
@@ -29,12 +30,15 @@ class StripePaymentController extends Controller
     if (
       isset($eventObject['event_type']) &&
       $eventObject['event_type'] == 'payment_intent.succeeded' &&
-      isset($eventObject['payment_intent_id'])
+      isset($eventObject['payment_intent_id']) &&
+      isset($eventObject['reservation_id'])
     ) {
-      Payment::firstOrCreate(
-        ['payment_intent_id' => $eventObject['payment_intent_id'], 'payment_status' => PaymentStatus::Succeeded->value],
-        ['reservation_id'    => $eventObject['reservation_id'], 'event_object' => json_encode($eventObject['event_object'])],
-      );
+      ReservationService::makeReservationPaid($eventObject['reservation_id'], $eventObject['payment_intent_id']);
+
+      info('reservation updated successfully');
+    } else {
+      info('reservation id not found');
+      http_response_code(400);
     }
 
     http_response_code(200);

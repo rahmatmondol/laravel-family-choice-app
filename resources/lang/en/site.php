@@ -242,7 +242,7 @@ return [
   'New Reservation' => 'New Reservation',
   'Your reservation is accepted' => 'Your reservation is accepted',
   'Your reservation is rejected' => 'Your reservation is rejected',
-  '' => '',
+  'completed_reservation_body' => 'Congratulation Your Reservation Completed Successfully',
   '' => '',
   '' => '',
   '' => '',

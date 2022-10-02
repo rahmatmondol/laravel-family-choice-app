@@ -81,6 +81,7 @@ class Reservation extends Model
     }
   } // end of
 
+  ////////////////// start relationships //////////////////////////////
   public function customer()
   {
     return $this->belongsTo(Customer::class);
@@ -105,4 +106,7 @@ class Reservation extends Model
   {
     return $this->hasOne(Child::class);
   }
+  ////////////////// end relationships //////////////////////////////
+
+
 }
