@@ -21,43 +21,40 @@ class NotificationService
     ]);
   }
 
-  public static function notificationList(){
+  public static function notificationList()
+  {
     return getCustomer()->notifications()->latest()->paginate(request()->perPage ?? 20);
   }
 
-  public static  function  sendReservationNotification($status, $customer, $reservation)
+  public static  function  sendReservationNotification($status, $reservation)
   {
-    $changes = $reservation->getChanges();
-    if (isset($changes['status']) || isset($changes['reason_of_refuse'])) {
-      $notificationDetails = self::getReservationStatusNotificationDetails($status, $reservation);
+    $notificationDetails = self::getReservationStatusNotificationDetails($status, $reservation);
+    $customer = $reservation->customer;
+    $data = [
+      'title'           => $notificationDetails[0],
+      'body'            => $notificationDetails[1],
+      'customer_id'     => $customer->id,
+      'reservation_id'  => $reservation->id,
+    ];
 
-      $data = [
-        'title'           => $notificationDetails[0],
-        'body'            => $notificationDetails[1],
-        'customer_id'     => $customer->id,
-        'reservation_id'  => $reservation->id,
-      ];
+    $push = new PushNotification('fcm');
 
-      $push = new PushNotification('fcm');
+    try {
+      $push->setMessage([
+        'data' => $data
+        // , 'notification' => $data,
+      ])->setApiKey(env('NOTIFICATION_API_KEY'))
+        ->setDevicesToken($customer->firebaseToken)
+        ->send()
+        ->getFeedback();
 
-      try {
-        $push->setMessage([
-          'data' => $data
-          // , 'notification' => $data,
-        ])->setApiKey(env('NOTIFICATION_API_KEY'))
-          ->setDevicesToken($customer->firebaseToken)
-          ->send()
-          ->getFeedback();
+      self::storeReservationNotificationList($data, $customer->id, $reservation->id);
 
-        self::storeReservationNotificationList($data, $customer->id, $reservation->id);
-
-        FacadesNotification::send($reservation->customer, new UpdateReservationStatusNotification($reservation,$data));
-
-      } catch (Exception $e) {
-        info($e->getMessage());
-      }
-      return $push;
+      FacadesNotification::send($reservation->customer, new UpdateReservationStatusNotification($reservation, $data));
+    } catch (Exception $e) {
+      info($e->getMessage());
     }
+    return $push;
   }
 
   public static function getReservationStatusNotificationDetails($status = 'pending', $reservation)
@@ -75,10 +72,10 @@ class NotificationService
         __('site.Your reservation is rejected'),
         $reservation->reason_of_refuse
       ],
-      // 'completed' => [
-      //   __('site.Your Reservation Completed Successfully'),
-      //   __('site.completed_reservation_body', ['reservation_number' => $reservation->id])
-      // ],
+      'payment_status.succeeded' => [
+        __('site.Your Reservation Paid Successfully'),
+        __('site.completed_reservation_body', ['reservation_number' => $reservation->id])
+      ],
     ];
 
     return $messages[$status];

@@ -83,7 +83,7 @@ class StripeService
 
         return [
           'payment_intent_id'   => $event['data']['object']['id'],
-          'reservation_id' => $event->metadata->reservation_id?? null,
+          'reservation_id' => $event['data']['object']['metadata']['reservation_id']?? null,
           'event_type' => $event->type,
           'event_object' => $event,
         ];
@@ -96,7 +96,7 @@ class StripeService
       }
     }
   }
-  
+
   public static function retrievePaymentIntent(string $paymentIntentId)
   {
     $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));

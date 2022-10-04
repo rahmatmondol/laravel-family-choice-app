@@ -48,7 +48,11 @@ class ReservationRepository implements ReservationRepositoryInterface
       $customer = $reservation->customer;
 
       $this->logReservation($reservation);
-      $res = NotificationService::sendReservationNotification($request->status, $customer, $reservation);
+
+      $changes = $reservation->getChanges();
+      if (isset($changes['status']) || isset($changes['reason_of_refuse'])) {
+        NotificationService::sendReservationNotification($request->status, $reservation);
+      }
     }
 
     return true;

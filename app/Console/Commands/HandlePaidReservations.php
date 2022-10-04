@@ -2,13 +2,13 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Payment;
+use App\Enums\PaymentStatus;
+use App\Services\NotificationService;
 use App\Services\Payment\PaymentService;
-use App\Services\Payment\StripeService;
 use App\Services\Reservation\ReservationService;
 use Illuminate\Console\Command;
 
-class UpdatePaymentStatus extends Command
+class HandlePaidReservations extends Command
 {
   /**
    * The name and signature of the console command.
@@ -16,17 +16,15 @@ class UpdatePaymentStatus extends Command
    * @var string
    */
 
-  
-  protected $signature = 'update:paymentStatus';
 
-  protected $payment_intent_id  = null;
+  protected $signature = 'handle:paidReservations';
 
   /**
    * The console command description.
    *
    * @var string
    */
-  protected $description = 'update payment status reservations table';
+  protected $description = '';
 
   /**
    * Execute the console command.
@@ -36,11 +34,13 @@ class UpdatePaymentStatus extends Command
   public function handle()
   {
 
-    foreach (ReservationService::getReservationPaidWillNotified() as $reservation) {
+    foreach (ReservationService::getPaidReservationsWillNotified() as $reservation) {
 
       PaymentService::createPaymentRecord($reservation->payment_intent_id);
 
-      // ReservationService::handleReservationNotification($reservation,$reservation->status);
+      NotificationService::sendReservationNotification('payment_status.'.PaymentStatus::Succeeded->value, $reservation);
+
+      ReservationService::makeReservationNotified($reservation);
     }
   }
 }

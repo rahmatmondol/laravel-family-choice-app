@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\Api\Customer;
 
-use App\Models\Payment;
-use App\Enums\PaymentStatus;
 use Illuminate\Http\Request;
 use App\Traits\ResponseTrait;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\GetPaymentIntentRequest;
 use App\Services\Payment\StripeService;
@@ -35,7 +32,6 @@ class StripePaymentController extends Controller
     ) {
       ReservationService::makeReservationPaid($eventObject['reservation_id'], $eventObject['payment_intent_id']);
 
-      info('reservation updated successfully');
     } else {
       info('reservation id not found');
       http_response_code(400);
