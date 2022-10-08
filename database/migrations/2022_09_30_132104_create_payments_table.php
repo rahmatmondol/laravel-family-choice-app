@@ -17,11 +17,11 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('payment_intent_id');
-            $table->integer('reservation_id')->nullable();
+            $table->foreignId('reservation_id')->constrained()->cascadeOnDelete();
             $table->enum('payment_status', PaymentStatus::values());
-            $table->longText('event_object');
-            $table->string('status')->default('pending'); // [pending  , done]   it's mean confirmed by our system  and update reservation's payment status
-            $table->unique(['payment_intent_id', 'payment_status']);
+            $table->integer('total_fees')->nullable();
+            $table->json('event_object');
+            $table->unique(['payment_intent_id', 'payment_status','reservation_id']);
             $table->timestamps();
         });
     }

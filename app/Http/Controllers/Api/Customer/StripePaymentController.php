@@ -30,6 +30,7 @@ class StripePaymentController extends Controller
       isset($eventObject['payment_intent_id']) &&
       isset($eventObject['reservation_id'])
     ) {
+      
       ReservationService::makeReservationPaid($eventObject['reservation_id'], $eventObject['payment_intent_id']);
 
     } else {

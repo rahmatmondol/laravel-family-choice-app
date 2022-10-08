@@ -14,8 +14,12 @@ class PaymentService
     if ($paymentIntent) {
 
       Payment::firstOrCreate(
-        ['payment_intent_id' => $paymentIntent['id'], 'payment_status' => PaymentStatus::Succeeded->value],
-        ['reservation_id'    => $paymentIntent['metadata']['reservation_id'], 'event_object' => json_encode($paymentIntent)],
+        [
+          'payment_intent_id' => $paymentIntent['id'],
+          'payment_status' => PaymentStatus::Succeeded->value,
+          'reservation_id' => $paymentIntent['metadata']['reservation_id']
+        ],
+        ['total_fees' => $paymentIntent['amount'], 'event_object' => json_encode($paymentIntent)],
       );
     }
   }

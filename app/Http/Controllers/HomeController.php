@@ -20,6 +20,12 @@ class HomeController extends Controller
 {
   public function test()
   {
+
+    $res = Notification::route('mail', "m@gmail.com")
+      ->notify(new SmsCodeNotification(115427));
+    dd($res);
+
+
     $reservation = Reservation::first();
 
     return (new ReservationPaidNotification($reservation))
@@ -41,8 +47,6 @@ class HomeController extends Controller
     Auth::guard('school')->logout();
     dd('done');
 
-    Notification::route('mail', "mahmoud@g.com")
-      ->notify(new SmsCodeNotification(115427));
 
   dd(config('mail'));
 
