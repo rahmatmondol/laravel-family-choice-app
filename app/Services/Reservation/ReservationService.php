@@ -45,7 +45,7 @@ class ReservationService
   {
     $status = [
       'payment_intent.succeeded' =>  PaymentStatus::Succeeded->value,
-      'payment_intent.failed'    =>  PaymentStatus::Failed->value,
+      'payment_intent.payment_failed'    =>  PaymentStatus::Failed->value,
     ];
     return $status[$event] ?? null;
   }

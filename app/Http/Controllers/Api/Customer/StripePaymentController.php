@@ -27,12 +27,11 @@ class StripePaymentController extends Controller
 
     if (
       isset($eventObject['event_type']) &&
-      in_array($eventObject['event_type'],['payment_intent.succeeded','payment_intent.failed']) &&
+      in_array($eventObject['event_type'],['payment_intent.succeeded','payment_intent.payment_failed']) &&
       isset($eventObject['payment_intent_id']) &&
       isset($eventObject['reservation_id'])
     ) {
       info($eventObject['event_type']);
-      info('payment_intent.succeeded');
 
       ReservationService::updateReservationPaymentStatus($eventObject['reservation_id'], $eventObject['payment_intent_id'], $eventObject['event_type']);
       http_response_code(200);
