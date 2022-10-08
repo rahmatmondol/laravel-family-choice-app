@@ -70,6 +70,15 @@
           </a>
         </li>
 
+        <li class="nav-item">
+          <a href="{{ route($mainRoutePrefix.'.payments.index') }}" class="nav-link @if( $page == 'payments' )   active  @endif">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+              {{ucfirst(__('site.Payments'))}}
+            </p>
+          </a>
+        </li>
+
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

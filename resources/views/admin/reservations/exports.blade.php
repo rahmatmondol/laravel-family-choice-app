@@ -36,7 +36,7 @@
     </tr>
   </thead>
   <tbody>
-    @forelse ($reservations as $reservation )
+    @foreach ($reservations as $reservation )
     <tr>
       <td class="text-center">
         {{ $loop->iteration }}

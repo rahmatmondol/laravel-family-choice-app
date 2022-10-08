@@ -10,6 +10,7 @@ use App\Http\Controllers\School\ReservationController;
 use App\Http\Controllers\School\ReservationLogsController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\School\Auth\ForgotPasswordController;
+use App\Http\Controllers\School\PaymentController;
 
 Route::group(
   [
@@ -49,7 +50,6 @@ Route::group(
 
       Route::get('reservations/export', [ReservationController::class,'export'])->name('reservations.export');
 
-
       Route::resources([
         'courses'             => CourseController::class,
         'attachments'         => AttachmentController::class,
@@ -57,10 +57,14 @@ Route::group(
         'grades'              => GradeController::class,
       ]);
 
-      Route::get('reservations/customers/{customer}', [ReservationController::class,'show_customer'])->name('customers.show');
+      #payments
+      Route::get('payments/export', [PaymentController::class, 'export'])->name('payments.export');
+      Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');
 
+      Route::get('reservations/customers/{customer}', [ReservationController::class,'show_customer'])->name('customers.show');
       Route::get('reservation-logs', [ReservationLogsController::class,'index'])->name('reservation-logs');
     });
+
     // reset password
     Route::group(['prefix' => 'school', 'as' => 'school.', 'middleware' => 'guest:school'], function () {
       Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');

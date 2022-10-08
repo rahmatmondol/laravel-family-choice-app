@@ -86,6 +86,8 @@ $title = __('site.Edit Role');
                     <tbody>
 
                       @foreach (getModules() as $index=>$model)
+                      @php info(print_r($model,true));  @endphp
+
                       <tr>
                         <td>{{ $index+1 }}</td>
                         <td class="text-capitalize">{{ $model }}</td>

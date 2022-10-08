@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('payment_intent_id');
             $table->foreignId('reservation_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('school_id')->constrained()->cascadeOnDelete();
             $table->enum('payment_status', PaymentStatus::values());
             $table->integer('total_fees')->nullable();
             $table->json('event_object');

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -69,6 +70,9 @@ Route::group(
         'attachments'         => AttachmentController::class,
         'reservations'        => ReservationController::class,
       ]);
+
+      Route::get('payments/export', [PaymentController::class, 'export'])->name('payments.export');
+      Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');
 
       Route::get('reservation-logs', [ReservationLogsController::class, 'index'])->name('reservation-logs');
 

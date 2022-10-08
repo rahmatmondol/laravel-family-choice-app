@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\School;
 
 use App\Exports\ReservationExport;
-use App\Models\School;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Interfaces\CourseRepositoryInterface;
 use App\Http\Controllers\School\BaseController;
 use App\Interfaces\ReservationRepositoryInterface;

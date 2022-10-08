@@ -14,10 +14,6 @@ class BaseController extends Controller
   public  $mainViewPrefix = "admin";
   public function __construct()
   {
-
-    // $this->middleware(['auth:admin']);
-
-    // dd('in BaseController',$this->mainRoutePrefix,$this->masterLayout);
     View::share('masterLayout', $this->masterLayout);
     View::share('mainRoutePrefix', $this->mainRoutePrefix);
     View::share('mainViewPrefix', $this->mainViewPrefix);
@@ -25,7 +21,6 @@ class BaseController extends Controller
     $this->middleware(function ($request, $next) {
       $this->globalAdmin = Auth::guard('admin')->user();
       View::share('globalAdmin', $this->globalAdmin);
-      // dd('in BaseController',$this->globalAdmin,$this->masterLayout);
       return $next($request);
     });
 
