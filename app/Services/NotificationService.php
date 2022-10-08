@@ -76,6 +76,10 @@ class NotificationService
         __('site.Your Reservation Paid Successfully'),
         __('site.completed_reservation_body', ['reservation_number' => $reservation->id])
       ],
+      'payment_status.failed' => [
+        __('site.Reservation payment failed'),
+        __('site.reservation_payment_failed', ['reservation_number' => $reservation->id])
+      ],
     ];
 
     return $messages[$status];

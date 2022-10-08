@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\Customer\CustomerController;
 use App\Http\Controllers\Api\Customer\FavoriteController;
 use App\Http\Controllers\API\Customer\NotificationController;
+use App\Http\Controllers\Api\Customer\StripePaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +35,7 @@ Route::group(
 
       Route::controller(StripePaymentController::class)->prefix('stripe')->group(function () {
         Route::get('get-payment-intent', 'getPaymentIntent');
-        Route::post('webhook-payment-success', 'webHooksPaymentSuccess');
+        Route::post('webhook', 'paymentWebHook');
       });
 
       Route::controller(PublicController::class)->group(function () {

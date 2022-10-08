@@ -9,20 +9,16 @@ use App\Models\Reservation;
 class PaymentService
 {
 
-
-  public static function createPaymentRecord(string $payment_intent_id)
+  public static function createPaymentRecord(Reservation $reservation, string $payment_intent_id)
   {
     $paymentIntent = StripeService::retrievePaymentIntent($payment_intent_id);
-
     if ($paymentIntent) {
-
-      $reservation = Reservation::findOrFail($paymentIntent['metadata']['reservation_id']);
 
       Payment::firstOrCreate(
         [
           'payment_intent_id' => $paymentIntent['id'],
-          'payment_status' => PaymentStatus::Succeeded->value,
-          'reservation_id' => $paymentIntent['metadata']['reservation_id']
+          'payment_status' => $reservation->payment_status,
+          'reservation_id' => $reservation->id
         ],
         ['total_fees' => $paymentIntent['amount'],'school_id' => $reservation->school->id, 'event_object' => json_encode($paymentIntent)],
       );
@@ -34,6 +30,7 @@ class PaymentService
     return  Payment::whenSearch()
       ->whenStatus($request->payment_status)
       ->WhenSchool(getAuthSchool()?getAuthSchool()->id : $request->school_id)
+      ->with(['school','reservation.customer'])
       ->latest()
       ->paginate(request()->perPage ?? 20);
   }

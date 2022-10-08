@@ -44,6 +44,7 @@ class UpdateReservationStatusNotification extends Notification
    */
   public function toMail($notifiable)
   {
+    $this->reservation->load('child');
     return (new MailMessage)
       ->subject($this->data['title'])
       ->markdown('email.customer.update_reservation_status', [
