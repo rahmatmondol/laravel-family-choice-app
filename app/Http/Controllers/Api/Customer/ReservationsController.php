@@ -13,13 +13,16 @@ use App\Interfaces\AttachmentRepositoryInterface;
 use App\Http\Requests\Api\ReservationFormRequest;
 use App\Http\Resources\Collection\ReservationCollection;
 use App\Http\Requests\Api\GetSchoolAttachmentFormRequest;
+use App\Http\Requests\Api\ReservationDetailsFormRequest;
+use App\Interfaces\Customer\ReservationRepositoryInterface;
+use App\Models\Reservation;
 
 class ReservationsController  extends Controller
 {
 
   use ResponseTrait;
   public function __construct(
-    private SchoolRepositoryInterface $schoolRepository,
+    private ReservationRepositoryInterface $reservationRepository,
     private AttachmentRepositoryInterface $attachmentRepository,
   ) {
   } // end of constructor
@@ -33,22 +36,29 @@ class ReservationsController  extends Controller
 
   public function add_reservation(ReservationFormRequest $request)
   {
-    $reservation = $this->schoolRepository->addReservation($request);
+    $reservation = $this->reservationRepository->addReservation($request);
 
     return $this->sendResponse(new ReservationResource($reservation), "");
   }
 
   public function update_reservation(ReservationFormRequest $request)
   {
-    $reservation = $this->schoolRepository->updateReservation($request);
+    $reservation = $this->reservationRepository->updateReservation($request);
 
     return $this->sendResponse(new ReservationResource($reservation), "");
   }
 
   public function customer_reservations(Request $request)
   {
-    $reservation = $this->schoolRepository->customerReservations();
+    $reservation = $this->reservationRepository->customerReservations();
 
     return $this->sendResponse(new ReservationCollection($reservation), "");
+  }
+
+  public function reservation_details(ReservationDetailsFormRequest $request)
+  {
+    $reservation = $this->reservationRepository->reservationDetails($request->reservation_id);
+
+    return $this->sendResponse(new ReservationResource($reservation), "");
   }
 }

@@ -87,6 +87,7 @@ Route::group(
         Route::post('add-reservation', 'add_reservation');
         Route::put('update-reservation', 'update_reservation');
         Route::get('customer-reservations', 'customer_reservations');
+        Route::get('reservation-details', 'reservation_details');
       });
     });
   }

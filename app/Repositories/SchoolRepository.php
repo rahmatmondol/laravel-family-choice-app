@@ -365,7 +365,6 @@ class SchoolRepository implements SchoolRepositoryInterface
       ->log(" تم تعديل بيانات الحجز  وتحويلة الي  وضع المراجعة من الادارة");
   }
 
-  #customerReservations
   public function customerReservations()
   {
     return getCustomer()->reservations()->with([
@@ -373,7 +372,6 @@ class SchoolRepository implements SchoolRepositoryInterface
     ])->latest()->paginate(request()->perPage ?? 20);
   }
 
-  #customerReservations
   public function schoolReviews($school)
   {
     return $school->reviews()->with(['customer', 'school',])->latest()->paginate(request()->perPage ?? 20);

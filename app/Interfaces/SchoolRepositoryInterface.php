@@ -14,8 +14,5 @@ interface SchoolRepositoryInterface
   public function deleteAttachment($id);
 
   #reserve-school
-  public function addReservation($request);
-  public function updateReservation($request);
-  public function customerReservations();
   public function schoolReviews($school);
 }
