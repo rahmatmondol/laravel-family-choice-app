@@ -22,14 +22,14 @@ class GetPaymentIntentRequest extends BaseRequest
 
         $reservation  = Reservation::find($value);
 
-        // if($reservation->status != ReservationStatus::Accepted->value){
+        if($reservation->status != ReservationStatus::Accepted->value){
 
-        //   $fail(__('site.Reservation Still Not Accepted'));
-        // }
-        // if($reservation->payment_status == PaymentStatus::Succeeded->value){
+          $fail(__('site.Reservation Still Not Accepted'));
+        }
+        if($reservation->payment_status == PaymentStatus::Succeeded->value){
 
-        //   $fail(__('site.Reservation Already Paid Successfully'));
-        // }
+          $fail(__('site.Reservation Already Paid Successfully'));
+        }
       }],
     ];
   }

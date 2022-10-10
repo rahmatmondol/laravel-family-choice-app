@@ -26,27 +26,34 @@ class NotificationService
     return getCustomer()->notifications()->latest()->paginate(request()->perPage ?? 20);
   }
 
+  public static function sendNotification(array $data,string $token)
+  {
+    $push = new PushNotification('fcm');
+
+    $push->setMessage([
+      'data' => $data
+      // , 'notification' => $data,
+    ])->setApiKey(env('NOTIFICATION_API_KEY'))
+      ->setDevicesToken($token)
+      ->send()
+      ->getFeedback();
+  }
+
   public static  function  sendReservationNotification($status, $reservation)
   {
     $notificationDetails = self::getReservationStatusNotificationDetails($status, $reservation);
     $customer = $reservation->customer;
+
     $data = [
       'title'           => $notificationDetails[0],
       'body'            => $notificationDetails[1],
-      'customer_id'     => $customer->id,
+      // 'customer_id'  => $customer->id,
+      'click_action'    => 'ReservationDetails',
       'reservation_id'  => $reservation->id,
     ];
 
-    $push = new PushNotification('fcm');
-
     try {
-      $push->setMessage([
-        'data' => $data
-        // , 'notification' => $data,
-      ])->setApiKey(env('NOTIFICATION_API_KEY'))
-        ->setDevicesToken($customer->firebaseToken)
-        ->send()
-        ->getFeedback();
+      $notification = self::sendNotification($data, $customer->firebaseToken);
 
       self::storeReservationNotificationList($data, $customer->id, $reservation->id);
 
@@ -54,7 +61,7 @@ class NotificationService
     } catch (Exception $e) {
       info($e->getMessage());
     }
-    return $push;
+    return true;
   }
 
   public static function getReservationStatusNotificationDetails($status = 'pending', $reservation)

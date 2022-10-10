@@ -2,7 +2,6 @@
 
 namespace App\Services\Payment;
 
-use App\Enums\PaymentStatus;
 use App\Models\Payment;
 use App\Models\Reservation;
 
@@ -30,7 +29,7 @@ class PaymentService
     return  Payment::whenSearch()
       ->whenStatus($request->payment_status)
       ->WhenSchool(getAuthSchool()?getAuthSchool()->id : $request->school_id)
-      ->with(['school','reservation.customer'])
+      ->with(['school.translations','reservation.customer'])
       ->latest()
       ->paginate(request()->perPage ?? 20);
   }
