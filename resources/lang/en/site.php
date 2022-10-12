@@ -94,7 +94,7 @@ return [
   'School' => 'School',
   'Customer' => 'Customer',
   'Reservations' => 'Reservations',
-  'Order Item' => 'Order Item',
+  'Order Item' => 'Order Item (Appear in search results in this order)',
   'Title' => 'Title',
   'SchoolTypes' => 'School Types',
   'Types' => 'Types',

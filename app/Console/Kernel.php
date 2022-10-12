@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('run:queue')->everyMinute();
+        $schedule->command('handle:paymentReservation')->everyFiveMinutes();
+        $schedule->command('database:backup')->dailyAt('13:00');
         // $schedule->command('inspire')->hourly();
     }
 

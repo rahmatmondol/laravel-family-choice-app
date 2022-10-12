@@ -24,7 +24,7 @@ class TypeRepository implements TypeRepositoryInterface
   public function getAllTypes()
   {
     return  Type::withTranslation(app()->getLocale())
-      ->withoutGlobalScope(new OrderScope)
+      // ->withoutGlobalScope(new OrderScope)
       ->get();
   }
 

@@ -9,6 +9,7 @@ use App\Traits\UploadFileTrait;
 use Illuminate\Support\Facades\Auth;
 use App\Interfaces\CustomerRepositoryInterface;
 use App\Notifications\SmsCodeNotification;
+use App\Services\NotificationService;
 use App\Traits\AuthenticateCustomer;
 use Illuminate\Support\Facades\Notification;
 
@@ -102,7 +103,6 @@ class CustomerRepository implements CustomerRepositoryInterface
     return false;
   }
 
-
   public function sendCodeToCustomer($request)
   {
     $customer = Customer::where('phone', $request->phone)->first();
@@ -116,11 +116,12 @@ class CustomerRepository implements CustomerRepositoryInterface
     $customer->update([
       'verification_code' => $code,
     ]);
-
-    if ($customer->email) {
-      Notification::route('mail', $customer->email)
-        ->notify(new SmsCodeNotification($code));
-    }
+    $message = $code ." كود التفعيل هو :";
+    NotificationService::sendSms($customer->phone, $message) ;
+    // if ($customer->email) {
+    //   Notification::route('mail', $customer->email)
+    //     ->notify(new SmsCodeNotification($code));
+    // }
 
     // return $code;
 

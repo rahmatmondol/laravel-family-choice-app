@@ -26,14 +26,13 @@ class ValidatePhoneNumber implements Rule
    */
   public function passes($attribute, $value)
   {
+    if(substr($value,0,5) != '00971'){
+      return false ;
+    }
 
-    // if(substr($value,0,5) != '00971'){
-    //   return false ;
-    // }
-
-    // if(strlen($value) != 14){
-    //   return false ;
-    // }
+    if(strlen($value) != 13){
+      return false ;
+    }
     return true;
   }
 

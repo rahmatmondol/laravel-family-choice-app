@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\BaseController;
 use App\Models\Payment;
 use App\Models\Reservation;
 use App\Notifications\Reservation\ReservationPaidNotification;
+use App\Services\NotificationService;
 use Edujugon\PushNotification\PushNotification;
 use Illuminate\Support\Facades\Mail;
 
@@ -20,6 +21,8 @@ class HomeController extends Controller
 {
   public function test()
   {
+    $msg = "Your Verification code is 123456" ;
+    NotificationService::sendSms('971522946005',$msg );
 
     $res = Notification::route('mail', "m@gmail.com")
       ->notify(new SmsCodeNotification(115427));

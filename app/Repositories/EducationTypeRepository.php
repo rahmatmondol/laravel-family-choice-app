@@ -24,7 +24,7 @@ class EducationTypeRepository implements EducationTypeRepositoryInterface
   public function getAllEducationTypes()
   {
     return  EducationType::withTranslation(app()->getLocale())
-      ->withoutGlobalScope(new OrderScope)
+      // ->withoutGlobalScope(new OrderScope)
       ->get();
   }
 

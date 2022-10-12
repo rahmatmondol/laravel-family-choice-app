@@ -34,7 +34,8 @@ class CustomerFormRequest extends BaseRequest
 
     $this->rules += [
       'email' => ['required', 'email', 'unique:customers', new CheckEmailExist("customers")],
-      'phone' => ['bail', 'required', 'unique:customers,phone', new ValidatePhoneNumber()],
+      'phone' => ['bail', 'required', 'unique:customers,phone','regex:/(00971)[0-9]{9}/'],
+      // 'phone' => ['bail', 'required', 'unique:customers,phone',new ValidatePhoneNumber()],
       'password' => ['required', 'string', 'min:6'],
       'password_confirmation' => ['required', 'same:password', 'min:6'],
       'image' => validateImage(),

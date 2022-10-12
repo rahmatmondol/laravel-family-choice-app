@@ -24,9 +24,10 @@ class GradeRepository implements GradeRepositoryInterface
   public function getAllGrades()
   {
     return  Grade::withTranslation(app()->getLocale())
-      ->withoutGlobalScope(new OrderScope)
+      // ->withoutGlobalScope(new OrderScope)
       ->get();
   }
+  
   public function getGradeById($gradeId)
   {
     $grade = Grade::withTranslation(app()->getLocale())

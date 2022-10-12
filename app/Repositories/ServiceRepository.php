@@ -24,7 +24,7 @@ class ServiceRepository implements ServiceRepositoryInterface
   public function getAllServices()
   {
     return  Service::withTranslation(app()->getLocale())
-      ->withoutGlobalScope(new OrderScope)
+      // ->withoutGlobalScope(new OrderScope)
       ->get();
   }
 

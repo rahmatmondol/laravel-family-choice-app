@@ -24,7 +24,7 @@ class EducationalSubjectRepository implements EducationalSubjectRepositoryInterf
   public function getAllEducationalSubjects()
   {
     return  EducationalSubject::withTranslation(app()->getLocale())
-      ->withoutGlobalScope(new OrderScope)
+      // ->withoutGlobalScope(new OrderScope)
       ->get();
   }
 
