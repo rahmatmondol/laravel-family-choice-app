@@ -9,11 +9,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 class School extends Authenticatable
 {
-  use \Astrotomic\Translatable\Translatable, LocationTrait,Notifiable;
+  use \Astrotomic\Translatable\Translatable, LocationTrait,Notifiable, SoftDeletes;
   protected $guarded = [];
 
   public $translatedAttributes = ['title', 'address', 'description'];

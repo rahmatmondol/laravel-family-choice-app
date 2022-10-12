@@ -69,9 +69,8 @@ class SchoolRepository implements SchoolRepositoryInterface
       $school = $schoolId;
     } else {
       $school = School::findOrFail($schoolId);
-      // $school = School::with(['educationalSubjects', 'educationTypes', 'schoolTypes', 'grades','services','schoolImages'])->findOrFail($schoolId);
     }
-    return $school;
+    return $school->load(['educationalSubjects', 'educationTypes', 'schoolTypes', 'grades','services','schoolImages']);
   }
 
   public function getSchoolRequestData($request)
@@ -214,7 +213,8 @@ class SchoolRepository implements SchoolRepositoryInterface
   public function deleteSchool($school)
   {
     $this->removeImage($school->image, 'schools');
-    $this->deleteAttachments('school_images', 'school_images', 'school_id', $school->id);
+    $attachments = $school->attachments()->get();
+    $this->deleteAttachments($attachments, 'school_images');
     $school->delete();
     return true;
   }

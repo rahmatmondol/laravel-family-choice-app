@@ -65,22 +65,22 @@ trait UploadFileTrait
   }
 
   // delete main image for model
-  function removeImage($imageName, $path)
+  function removeImage($imageName, $folder)
   {
-    $DeleteFileWithName = public_path('uploads/' . $path . '/' . $imageName);
+    $DeleteFileWithName = public_path('uploads/' . $folder . '/' . $imageName);
 
     if ($imageName != 'default.png' && file_exists($DeleteFileWithName)) {
       File::delete($DeleteFileWithName);
     }
   }
 
-  public function deleteAttachments($table, $folder, $column, $id)
+  public function deleteAttachments($attachments, $folder)
   {
-    $attachments = DB::table($table)->where($column, $id)->get();
     foreach ($attachments as $attachment) {
-      $this->removeImage($attachment->image, $folder);
+      $attachmentName = $attachment->image;
+      $this->removeImage($attachmentName, $folder);
+      $attachment->delete();
     }
-    $attachment->delete();
 
     return true;
   }
