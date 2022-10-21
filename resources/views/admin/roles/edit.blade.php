@@ -84,27 +84,23 @@ $title = __('site.Edit Role');
                     </thead>
 
                     <tbody>
-
-                      @foreach (getModules() as $index=>$model)
-                      @php info(print_r($model,true));  @endphp
-
+                      
+                      @foreach (getModules() as $index => $model)
                       <tr>
-                        <td>{{ $index+1 }}</td>
-                        <td class="text-capitalize">{{ $model }}</td>
+                        <td>{{ $loop->iteration  }}</td>
+                        <td class="text-capitalize">{{ $index }}</td>
                         <td>
                           @php
-                          $permission_maps = ['create', 'read', 'update', 'delete'];
+                            $permission_maps = ['c' => 'create', 'r' => 'read', 'u' => 'update', 'd' => 'delete'];
                           @endphp
-
                           <div class="form-group clearfix">
-                            @foreach ($permission_maps as $permission_map)
+                            @foreach (explode(',',$model) as $key => $permission_map)
                             <div class="icheck-primary d-inline">
-                              <label for="{{ $permission_map . '_' . $model }}">
-                                {{ $permission_map }}
-                                <input type="checkbox" name="permissions[]" value="{{ $permission_map . '_' . $model }}"
-                                  {{ $role->hasPermission($permission_map .
-                                '_' . $model) ? 'checked' : '' }}
-                                id="{{ $permission_map . '_' . $model }}">
+                              <label for="{{ $permission_maps[$permission_map] . '_' . $index }}">
+                                {{ $permission_maps[$permission_map]  }}
+                                <input type="checkbox" name="permissions[]" value="{{ $permission_maps[$permission_map] . '_' . $index }}"
+                                  {{ $role->hasPermission( $permission_maps[$permission_map] . '_' . $index ) ? 'checked' : '' }}
+                                id="{{ $permission_maps[$permission_map] . '_' . $index }}">
                               </label>
                             </div>
                             @endforeach

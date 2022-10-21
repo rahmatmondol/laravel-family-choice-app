@@ -24,7 +24,8 @@ if (!function_exists('checkAdminPermission')) {
 if (!function_exists('getModules')) {
   function getModules()
   {
-    return array_keys(config('application_modules.modules'));
+    return config('application_modules.modules');
+    // return array_keys(config('application_modules.modules'));
   }
 }
 

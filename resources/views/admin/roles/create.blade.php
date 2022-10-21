@@ -88,22 +88,21 @@ $title = __('site.Create Role');
 
                     <tbody>
 
-                      @foreach (getModules() as $index=>$model)
+                      @foreach (getModules() as $index => $model)
                       <tr>
-                        <td>{{ $index+1 }}</td>
-                        <td class="text-capitalize">{{ $model }}</td>
+                        <td>{{ $loop->iteration}}</td>
+                        <td class="text-capitalize">{{ $index }}</td>
                         <td>
                           @php
-                          $permission_maps = ['create', 'read', 'update', 'delete'];
+                            $permission_maps = ['c' => 'create', 'r' => 'read', 'u' => 'update', 'd' => 'delete'];
                           @endphp
-
                           <div class="form-group clearfix">
-                            @foreach ($permission_maps as $permission_map)
+                            @foreach (explode(',',$model) as $key => $permission_map)
                             <div class="icheck-primary d-inline">
-                              <label for="{{ $permission_map . '_' . $model }}">
-                                {{ $permission_map }}
-                                <input type="checkbox" name="permissions[]" value="{{ $permission_map . '_' . $model }}"
-                                  id="{{ $permission_map . '_' . $model }}">
+                              <label for="{{ $permission_maps[$permission_map] . '_' . $index }}">
+                                {{ $permission_maps[$permission_map]  }}
+                                <input type="checkbox" name="permissions[]" value="{{ $permission_maps[$permission_map] . '_' . $index }}"
+                                  id="{{ $permission_maps[$permission_map] . '_' . $index }}">
                               </label>
                             </div>
                             @endforeach

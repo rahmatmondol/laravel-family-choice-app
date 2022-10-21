@@ -32,8 +32,8 @@
           </a>
         </li>
 
-        @foreach( getModules() as $item)
-        {{-- @if (auth()->user()->hasPermission('read_'.$item)) --}}
+        @foreach( array_keys(getModules()) as $item)
+        @if (auth()->user()->hasPermission('read_'.$item))
         <li class="nav-item  active ">
           <a href="{{ route($mainRoutePrefix.'.'.$item.'.index') }}" class="nav-link @if( $page == $item )   active  @endif">
             <i class="nav-icon fas fa-columns"></i>
@@ -42,7 +42,7 @@
             </p>
           </a>
         </li>
-        {{-- @endif --}}
+        @endif
         @endforeach
 
         <li class="nav-item">
