@@ -118,16 +118,13 @@ $title = __('site.Create School');
         <div class="col-md-6">
           <div class="card card-primary">
             <div class="card-body">
-
-
               {{-- types --}}
               <div class="form-group">
                 <label for="inputType">@lang('site.Types')</label>
-                <select name="types[]" class="form-control selectric" multiple data-live-search="true" required>
+                <select name="type_id" class="form-control" required>
                   <option value="">@lang('site.Types') </option>
                   @foreach( $types as $value )
-                  <option value="{{ $value->id}}" @if( in_array($value->id,(array)old('types'))) selected
-                    @endif >
+                  <option value="{{ $value->id }}" @selected( old('type_id') == $value->id )>
                     {{ $value->title }}</option>
                   @endforeach
                 </select>

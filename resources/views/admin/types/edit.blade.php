@@ -49,6 +49,12 @@ $title = __('site.Edit Type');
               <div class="  with-border"></div><br>
               @endforeach
 
+              {{-- Is Nursery --}}
+              <div class="custom-control custom-checkbox">
+                <input name="is_nursery" class="custom-control-input" type="checkbox" id="customCheckbox1" @checked((bool)$type->is_nursery)>
+                <label for="customCheckbox1" class="custom-control-label">@lang('site.Is Nursery')</label>
+              </div>
+
             </div>
             <!-- /.card-body -->
           </div>

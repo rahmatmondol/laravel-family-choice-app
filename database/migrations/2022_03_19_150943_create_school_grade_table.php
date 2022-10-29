@@ -17,10 +17,8 @@ return new class extends Migration
       $table->id();
       $table->boolean('status')->default(1); // default active
       $table->double('fees');
-      $table->double('administrative_expenses')->nullable();
       $table->foreignId('grade_id')->nullable()->constrained()->onDelete('cascade');
       $table->foreignId('school_id')->nullable()->constrained()->onDelete('cascade');
-
       $table->timestamps();
     });
   }

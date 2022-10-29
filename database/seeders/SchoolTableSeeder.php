@@ -11,6 +11,8 @@ use App\Models\SchoolImage;
 use App\Models\EducationType;
 use Illuminate\Database\Seeder;
 use App\Models\EducationalSubject;
+use App\Models\Grade;
+use App\Models\Subscription;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class SchoolTableSeeder extends Seeder
@@ -37,13 +39,15 @@ class SchoolTableSeeder extends Seeder
     The schools have opened all communication channels to facilitate the arrival of the guardian and the speed of providing the service as soon as possible through the website, social media pages, the class dojo program, official e-mails and student affairs.-";
     $address = " Jeddah saudia arabia address-";
     $title = "Rowad Al Khaleej International Schools - ";
+
+    $subscriptions = Subscription::get()->pluck('id')->toArray();
+    $types = Type::get()->pluck('id')->toArray();
     for ($i = 0; $i < 50; $i++) {
 
       $school = School::create([
         'ar' => ['title' => $title . $i, 'address' => $address . $i, 'description' => $description . $i],
         'en' => ['title' => $title . $i, 'address' => $address . $i, 'description' => $description . $i],
         'status' => 1,
-        'fees' => \rand(1000, 5000),
         'phone' => \rand(5, 10) . \rand(5, 10) . '015254' . $i * \rand(5, 10),
         'whatsapp' =>  \rand(5, 10) . \rand(5, 10) . '012254' . $i * \rand(5, 10),
         'email' => 'info' . \rand(5, 100) . \rand(5, 100) . \rand(5, 100) . '@gmail.com',
@@ -52,6 +56,7 @@ class SchoolTableSeeder extends Seeder
         'review' => \rand(1, 5),
         'count_reviews' => \rand(10, 50),
         'password' => bcrypt(123456),
+        'type_id' => $types[array_rand($types)],
         'image' => 'default.png',
         'lat' => '24.71429' . \rand(5, 10) . \rand(5, 10) . \rand(5, 10),
         'lng' => '46.67091' . \rand(5, 10) . \rand(5, 10) . \rand(5, 10),
@@ -70,23 +75,37 @@ class SchoolTableSeeder extends Seeder
           'en' => ['title' => '-دورة تعديل السلوك' . $c, 'short_description' => 'دورة صيفية', 'description' => "من عمر 10 سنين : 15 سنة"],
           'status' => 1,
           'school_id' => $school->id,
+          'subscription_id' => $subscriptions[array_rand($subscriptions)],
           'from_date' => '2022-10-10',
           'to_date' => '2022-10-20',
           'image' => 'default.png',
         ]);
       }
 
-      $school->types()->attach(Type::pluck('id')->toArray());
       $school->educationalSubjects()->attach(EducationalSubject::pluck('id')->toArray());
       $school->schoolTypes()->attach(SchoolType::pluck('id')->toArray());
       $school->educationTypes()->attach(EducationType::pluck('id')->toArray());
 
-      foreach (EducationType::pluck('id')->toArray() as $grade)
-        $school->grades()->attach($grade, [
-          'fees' => 1000,
-          'administrative_expenses' => 200,
-          'status' => 1
-        ]);
+      // if school attach grades
+      if (!$school->is_nursery_type) {
+
+        foreach (Grade::pluck('id')->toArray() as $grade) {
+          $school->grades()->attach($grade, [
+            'fees' => 1000,
+            'status' => 1
+          ]);
+        }
+      }
+
+      // if nursery attach subscriptions
+      if ($school->is_nursery_type) {
+
+        foreach ($subscriptions as $subscription) {
+          $school->subscriptions()->attach($subscription, [
+            'status' => 1
+          ]);
+        }
+      }
 
       Attachment::create([
         'ar' => ['title' => 'صورة الطالب'],

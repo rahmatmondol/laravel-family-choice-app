@@ -255,6 +255,9 @@ return [
   'app' =>[
     'Currency'=>'درهم'
   ],
+  'table' => [
+    'Order Item' => 'الترتيب',
+  ],
   'ar' => [
     'Title' => 'الاسم (ar)',
     'Address' => 'العنوان (ar)',

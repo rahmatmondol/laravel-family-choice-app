@@ -49,8 +49,15 @@ $title = __('site.Create Type');
               <div class="  with-border"></div><br>
               @endforeach
 
+              {{-- Is Nursery --}}
+              <div class="custom-control custom-checkbox">
+                <input name="is_nursery" class="custom-control-input" type="checkbox" id="customCheckbox1">
+                <label for="customCheckbox1" class="custom-control-label">@lang('site.Is Nursery')</label>
+              </div>
+
             </div>
             <!-- /.card-body -->
+
           </div>
           <!-- /.card -->
         </div>
@@ -64,6 +71,7 @@ $title = __('site.Create Type');
                 <input type="text" name="order_column" value="{{ old('order_column') }}" class="form-control"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
               </div>
+
 
               {{-- status --}}
               <div class="form-group">

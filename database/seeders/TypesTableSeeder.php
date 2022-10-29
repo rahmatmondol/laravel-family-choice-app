@@ -24,6 +24,7 @@ class TypesTableSeeder extends Seeder
     Type::create([
       'ar' => ['title' => 'حضانات'],
       'en' => ['title' => 'nurseries'],
+      'is_nursery' => true,
       'status' => 1,
     ]);
   }

@@ -19,7 +19,6 @@ return new class extends Migration
       $table->boolean('status')->default(1); // default active
 
       $table->integer('order_column')->nullable();
-      // $table->enum('type', types())->nullable();
       $table->string('phone')->nullable()->unique();
       $table->string('whatsapp')->nullable()->unique();
       $table->string('email')->unique();
@@ -27,13 +26,15 @@ return new class extends Migration
       $table->integer('total_seats')->nullable();
       $table->double('review')->default(0);
       $table->integer('count_reviews')->default(0);
-      $table->double('fees')->nullable();
       $table->string('password');
       $table->string('image')->default('default.png');
       $table->string('cover')->default('default.png');
 
       $table->double('lat')->nullable();
       $table->double('lng')->nullable();
+
+      $table->foreignId('type_id')->nullable()->constrained()->nullOnDelete();
+      $table->softDeletes();
       $table->rememberToken();
       $table->timestamps();
     });

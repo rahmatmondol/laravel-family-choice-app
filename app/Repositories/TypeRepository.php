@@ -36,7 +36,7 @@ class TypeRepository implements TypeRepositoryInterface
 
   public function getTypeRequestData($request)
   {
-    $request_data = array_merge(['status', 'name', 'order_column'], config('translatable.locales'));
+    $request_data = array_merge(['status', 'name','is_nursery', 'order_column'], config('translatable.locales'));
 
     return  $request->only($request_data);
   }
@@ -44,6 +44,8 @@ class TypeRepository implements TypeRepositoryInterface
   public function createType($request)
   {
     $request_data = $this->getTypeRequestData($request);
+
+    $request_data['is_nursery'] = $request->boolean('is_nursery');
 
     if ($request->image) {
       $request_data['image'] = $this->uploadImages($request->image, 'types/', '', '');
@@ -57,6 +59,8 @@ class TypeRepository implements TypeRepositoryInterface
   public function updateType($request, $type)
   {
     $request_data = $this->getTypeRequestData($request);
+
+    $request_data['is_nursery'] = $request->boolean('is_nursery');
 
     if ($request->image) {
       $request_data['image'] = $this->uploadImages($request->image, 'types/', $type->image);

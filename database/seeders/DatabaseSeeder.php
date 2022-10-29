@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
       EducationTypesTableSeeder::class,
       GradesTableSeeder::class,
       ServiceTableSeeder::class,
+      SubscriptionTableSeeder::class,
       SchoolTableSeeder::class,
       SlidersTableSeeder::class,
       CustomerTableSeeder::class,

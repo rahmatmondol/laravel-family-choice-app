@@ -79,11 +79,11 @@ $title = __('site.SchoolTypes');
               <th style="width: 20%">
                 @lang('site.Title')
               </th>
-              <th style="width: 8%" class="text-center">
+              <th style="width: 8%" class="">
                 @lang('site.Status')
               </th>
-              <th style="width: 8%" class="text-center">
-                @lang('site.Order Item')
+              <th style="width: 8%" class="">
+                @lang('site.table.Order Item')
               </th>
               <th style="width: 20%" class="text-center">
                 @lang('site.Actions')
@@ -102,11 +102,10 @@ $title = __('site.SchoolTypes');
               <td class="project-state">
                 @include('admin.partials._render_status',['status'=>$type->status])
               </td>
-
               <td>
                 {{ $type->order_column }}
               </td>
-              <td class="project-actions text-right">
+              <td class="project-actions text-center">
 
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),

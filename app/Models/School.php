@@ -14,7 +14,7 @@ use Illuminate\Notifications\Notifiable;
 
 class School extends Authenticatable
 {
-  use \Astrotomic\Translatable\Translatable, LocationTrait,Notifiable, SoftDeletes;
+  use \Astrotomic\Translatable\Translatable, LocationTrait, Notifiable, SoftDeletes;
   protected $guarded = [];
 
   public $translatedAttributes = ['title', 'address', 'description'];
@@ -37,11 +37,17 @@ class School extends Authenticatable
     return asset('uploads/schools/' . $this->cover);
   } //end of image path attribute
 
+  public function getIsNurseryTypeAttribute()
+  {
+    // dd($this->type?->is_nursery);
+    return (bool)$this->type?->is_nursery;
+  } //end of image path attribute
+
   public function getIsFavoriedAttribute()
   {
     if ($customer = getCustomer()) {
       return  (bool) in_array($this->id, $customer->favorites->pluck('id')->toArray());
-    } //end of if
+    }
 
     return false;
   } // end of getIsFavoredAttribute
@@ -50,7 +56,7 @@ class School extends Authenticatable
   {
     if ($customer = getCustomer()) {
       return  (bool) in_array($this->id, $customer->reservations->where('status', 'accepted')->pluck('school_id')->toArray());
-    } //end of if
+    }
 
     return false;
   } // end of getIsFavoredAttribute
@@ -101,27 +107,19 @@ class School extends Authenticatable
     if (request()->from_price != null) {
       return $query->where('fees', '>=', request()->from_price);
     }
-  } // end of
+  }
 
   public function scopeWhenToPrice($query)
   {
     if (request()->to_price != null) {
       return $query->where('fees', '<=', request()->to_price);
     }
-  } // end of
+  }
 
   public function scopeWhenTypes($query)
   {
-    $type_id = request()->type_id;
-
-    return $query->when($type_id, function ($q) use ($type_id) {
-
-      return $q->whereHas('types', function ($qu) use ($type_id) {
-
-        return $qu->whereIn('type_id', (array)$type_id);
-      });
-    });
-  } // end of
+    return $query->whereIn('type_id', (array)request()->type_id);
+  }
 
   public function scopeWhenGrades($query)
   {
@@ -134,7 +132,7 @@ class School extends Authenticatable
         return $qu->whereIn('grade_id', (array)$grades);
       });
     });
-  } // end of
+  }
 
   public function scopeWhenEducationalSubjects($query)
   {
@@ -146,7 +144,7 @@ class School extends Authenticatable
         return $qu->whereIn('educational_subject_id', (array)$educationalSubjects);
       });
     });
-  } // end of
+  }
 
   public function scopeWhenEducationTypes($query)
   {
@@ -159,7 +157,7 @@ class School extends Authenticatable
         return $qu->whereIn('education_type_id', (array)$educationTypes);
       });
     });
-  } // end of
+  }
 
   public function scopeWhenSchoolTypes($query)
   {
@@ -172,7 +170,7 @@ class School extends Authenticatable
         return $qu->whereIn('school_type_id', (array)$schoolTypes);
       });
     });
-  } // end of
+  }
   /////////////////// end scopes ///////////////////////////////
 
   /////////////////// start relationships ///////////////////////////////
@@ -191,11 +189,6 @@ class School extends Authenticatable
     return $this->hasMany(Course::class);
   } // end of user
 
-  // public function activity_log()
-  // {
-  //   return $this->hasMany(ActivityLog::class)->where('causer_type','App\Models\School')->where('causer_id',$this->id);
-  // } // end of user
-
   public function attachments()
   {
     return $this->hasMany(Attachment::class);
@@ -204,6 +197,11 @@ class School extends Authenticatable
   public function grades()
   {
     return $this->belongsToMany(Grade::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale())->withPivot(['administrative_expenses', 'fees'])->withoutGlobalScope(new OrderScope);
+  }
+
+  public function subscriptions()
+  {
+    return $this->belongsToMany(Subscription::class, 'school_subscription')->withTranslation(app()->getLocale())->withoutGlobalScope(new OrderScope);
   }
 
   public function educationalSubjects()
@@ -221,9 +219,9 @@ class School extends Authenticatable
     return $this->belongsToMany(SchoolType::class, 'school_school_type', 'school_id', 'school_type_id')->withTranslation(app()->getLocale())->withoutGlobalScope(new OrderScope);
   }
 
-  public function types()
+  public function type()
   {
-    return $this->belongsToMany(Type::class, 'school_type', 'school_id', 'type_id')->withTranslation(app()->getLocale())->withoutGlobalScope(new OrderScope);
+    return $this->belongsTo(Type::class);
   }
 
   public function services()

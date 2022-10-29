@@ -17,14 +17,12 @@ class SchoolFormRequest extends FormRequest
   public function rules()
   {
     $this->rules += [
-      // 'type' => ['required', 'in:' . types('asString')],
       'available_seats' => ['nullable', 'integer'],
       'fees' => ['required', 'integer'],
       'lat' => ['nullable'],
       'lng' => ['nullable'],
 
-      'types' => 'nullable|array',
-      'types.*' => 'nullable|exists:types,id',
+      'type_id' => 'required|exists:types,id',
 
       'educationalSubjects' => 'nullable|array',
       'educationalSubjects.*' => 'nullable|exists:educational_subjects,id',
@@ -49,16 +47,14 @@ class SchoolFormRequest extends FormRequest
       'email' => ['required', 'email', 'unique:schools', new CheckEmailExist("schools")],
       'phone' => [
         'bail', 'required', 'unique:schools,phone'
-        // , new ValidatePhoneNumber()
       ],
       'whatsapp' => [
         'nullable', 'unique:schools,whatsapp'
-        // , new ValidatePhoneNumber()
       ],
       'password' => ['required', 'string', 'min:6'],
       'password_confirmation' => ['required', 'same:password', 'min:6'],
       'image' => validateImage(),
-      'attachments' => ['nullable'],
+      'attachments' => ['nullable'],+
       'attachments.*' => 'required|' . validateImage(),
     ];
 

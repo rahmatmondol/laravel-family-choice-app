@@ -42,6 +42,6 @@ class Type extends Model
   /////////////////// start relationships ///////////////////////////////
   public function schools()
   {
-    return $this->belongsToMany(SchoolType::class, 'school_type', 'school_id', 'type_id')->withTranslation(app()->getLocale());
+    return $this->hasMany(School::class);
   }
 }

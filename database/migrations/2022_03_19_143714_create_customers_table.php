@@ -37,6 +37,7 @@ return new class extends Migration
       $table->double('lat')->nullable();
       $table->double('lng')->nullable();
 
+      $table->string('stripe_customer_id')->nullable();
       $table->foreignId('city_id')->nullable()->constrained()->onDelete('set null');
 
       $table->rememberToken();

@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Enums\ReservationStatus;
-use App\Models\Child;
 use App\Models\School;
 use App\Scopes\OrderScope;
 use App\Models\Reservation;
@@ -11,11 +10,8 @@ use App\Models\SchoolGrade;
 use App\Models\SchoolImage;
 use App\Models\ChildAttachment;
 use App\Traits\UploadFileTrait;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Model;
 use App\Interfaces\SchoolRepositoryInterface;
-use App\Services\NotificationService;
 
 class SchoolRepository implements SchoolRepositoryInterface
 {
@@ -24,15 +20,13 @@ class SchoolRepository implements SchoolRepositoryInterface
   public function getAllSchools()
   {
     return School::isActive(true)->withTranslation(app()->getLocale())->get();
-
-    // return School::isActive(true)->listsTranslations('title')->get();
   }
 
   public function getFilteredSchools($request)
   {
     return  School::withoutGlobalScope(new OrderScope)
       ->withTranslation(app()->getLocale())
-      // ->with(['educationalSubjects','educationTypes','schoolTypes','services','grades','types','schoolImages'])
+      ->with(['educationalSubjects','educationTypes','schoolTypes','services','grades','schoolImages'])
       ->whenSearch()
       ->isActive($request->status)
       ->latest()
@@ -41,8 +35,6 @@ class SchoolRepository implements SchoolRepositoryInterface
 
   public function getSchools($request)
   {
-
-    // DB::enableQueryLog();
     $schools =  School::whenSearch()
       ->isActive(true)
       ->whenFromPrice()
@@ -57,8 +49,9 @@ class SchoolRepository implements SchoolRepositoryInterface
       ->whenEducationTypes()
       ->whenEducationalSubjects()
       ->withTranslation()
-      ->with(['educationalSubjects', 'educationTypes', 'schoolTypes', 'types', 'grades', 'services', 'schoolImages'])
+      ->with(['educationalSubjects', 'educationTypes', 'schoolTypes', 'type','grades', 'services', 'schoolImages'])
       ->paginate($request->perPage ?? 20);
+      // dd($schools);
 
     return $schools;
   }
@@ -76,7 +69,7 @@ class SchoolRepository implements SchoolRepositoryInterface
   public function getSchoolRequestData($request)
   {
     $request_data = array_merge([
-      'status', 'order_column', 'type', 'phone', 'whatsapp', 'email', 'available_seats', 'fees', 'lat', 'lng'
+      'status', 'order_column', 'type', 'phone', 'whatsapp', 'email', 'available_seats', 'type_id','fees', 'lat', 'lng'
     ], config('translatable.locales'));
 
     return  $request->only($request_data);
@@ -124,14 +117,6 @@ class SchoolRepository implements SchoolRepositoryInterface
       $school->schoolTypes()->attach($schoolTypes);
     } // end of if
 
-    if ($request->types) {
-      $types = array_filter((array)$request->types, function ($value) {
-        return !is_null($value);
-      });
-
-      $school->types()->attach($types);
-    } // end of if
-
     if ($request->services) {
       $services = array_filter((array)$request->services, function ($value) {
         return !is_null($value);
@@ -177,10 +162,6 @@ class SchoolRepository implements SchoolRepositoryInterface
       return !is_null($value);
     });
 
-    $types = array_filter((array)$request->types, function ($value) {
-      return !is_null($value);
-    });
-
     $services = array_filter((array)$request->services, function ($value) {
       return !is_null($value);
     });
@@ -188,7 +169,6 @@ class SchoolRepository implements SchoolRepositoryInterface
     $school->educationalSubjects()->sync($educationalSubjects);
     $school->educationTypes()->sync($educationTypes);
     $school->schoolTypes()->sync($schoolTypes);
-    $school->types()->sync($types);
     $school->services()->sync($services);
 
     if ($request->attachments) {
@@ -251,8 +231,6 @@ class SchoolRepository implements SchoolRepositoryInterface
       ], [
         'grade_id',   $child['grade_id']
       ]])->first();
-
-      $totalFees = $schoolGrade->fees + $schoolGrade->administrative_expenses;
 
       $child = $reservation->child()->create([
         'child_name'              => $child['child_name'],

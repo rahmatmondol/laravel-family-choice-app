@@ -13,11 +13,12 @@ return new class extends Migration
    */
   public function up()
   {
+    // Schools or Nurseries
     Schema::create('types', function (Blueprint $table) {
       $table->id();
       $table->integer('order_column')->nullable();
       $table->boolean('status')->default(1); // default active
-
+      $table->boolean('is_nursery')->default(false); /// default (true) is school
       $table->timestamps();
     });
   }

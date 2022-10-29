@@ -250,11 +250,14 @@ return [
   'Reservation payment failed' => 'Reservation payment failed',
   'reservation_payment_failed' => 'Reservation payment failed please try again',
   'Edit Type' => 'Edit Type',
-  '' => '',
+  'Is Nursery' => 'Is Nursery',
   '' => '',
   '' => '',
   'app' =>[
     'Currency'=>'AED'
+  ],
+  'table' => [
+    'Order Item' => 'Order Item',
   ],
   'ar' => [
     'Title' => 'Title (ar)',

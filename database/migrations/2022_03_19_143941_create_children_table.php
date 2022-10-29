@@ -22,7 +22,6 @@ return new class extends Migration
       $table->enum('gender', ['male', 'female'])->nullable();
       $table->foreignId('grade_id')->nullable()->constrained()->onDelete('cascade');
       $table->foreignId('reservation_id')->nullable()->constrained()->onDelete('cascade');
-
       $table->timestamps();
     });
   }

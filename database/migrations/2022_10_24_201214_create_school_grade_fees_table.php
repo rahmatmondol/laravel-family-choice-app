@@ -13,11 +13,11 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('school_type', function (Blueprint $table) {
+    Schema::create('school_grade_fees', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('type_id')->nullable()->constrained()->onDelete('cascade');
+      $table->double('price');
       $table->foreignId('school_id')->nullable()->constrained()->onDelete('cascade');
-
+      $table->foreignId('grade_id')->nullable()->constrained()->onDelete('cascade');
       $table->timestamps();
     });
   }
@@ -29,6 +29,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('school_type');
+    Schema::dropIfExists('school_grade_fees');
   }
 };

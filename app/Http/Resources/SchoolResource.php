@@ -19,12 +19,13 @@ class SchoolResource extends JsonResource
       'whatsapp'            => (string) $this->whatsapp,
       'email'               => (string) $this->email,
       'available_seats'     => (string) $this->available_seats,
-      'total_seats'     => (string) $this->total_seats,
+      'total_seats'         => (string) $this->total_seats,
       'lat'                 => (string) $this->lat,
       'lng'                 => (string) $this->lng,
       'image'               =>  $this->image_path,
       'cover'               =>  $this->cover_path,
-      'can_reviewed'        =>   (bool)$this->can_reviewed,
+      'is_nursery'          =>  (bool)$this->is_nursery_type,
+      'can_reviewed'        =>  (bool)$this->can_reviewed,
       'is_favoried'         =>  (bool)$this->is_favoried,
       'review'              => (string)$this->review,
       'total_number_review' => (string)$this->reviews_count ?? 0,
@@ -33,9 +34,8 @@ class SchoolResource extends JsonResource
       'schoolTypes'         => SchoolTypeResource::collection($this->schoolTypes),
       'services'            => ServiceResource::collection($this->services),
       'grades'              => SchoolGradeResource::collection($this->grades),
-      'types'               => TypeResource::collection($this->types),
+      'type'                => new TypeResource($this->type),
       'gallary'             => SchoolImageResource::collection($this->schoolImages),
-      // 'reviews'          => ReviewResource::collection($this->reiews),
     ];
   }
 }

@@ -83,7 +83,7 @@ $title = __('site.EducationalSubjects');
                 @lang('site.Status')
               </th>
               <th style="width: 8%" class="text-center">
-                @lang('site.Order Item')
+                @lang('site.table.Order Item')
               </th>
               <th style="width: 20%" class="text-center">
                 @lang('site.Actions')
