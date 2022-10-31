@@ -1,6 +1,6 @@
 @extends($masterLayout)
 <?php
-$page = 'grades';
+$page = 'schools';
 $title = __('site.Grades');
 ?>
 @section('title_page')

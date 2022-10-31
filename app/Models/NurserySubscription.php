@@ -7,5 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class NurserySubscription extends Model
 {
-    use HasFactory;
+  use HasFactory;
+  protected $guarded = [];
+  protected $table = 'nursery_subscription';
+
+  public function school()
+  {
+    return $this->belongsTo(School::class);
+  } // end of user
+
+  public function subscription()
+  {
+    return $this->belongsTo(Subscription::class);
+  } // end of user
 }

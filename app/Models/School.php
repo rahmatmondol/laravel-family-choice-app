@@ -223,7 +223,7 @@ class School extends Authenticatable
 
   public function subscriptions()
   {
-    return $this->belongsToMany(Subscription::class, 'school_subscription')->withTranslation(app()->getLocale())->withPivot(['status'])->withoutGlobalScope(new OrderScope);
+    return $this->belongsToMany(Subscription::class, 'nursery_subscription')->withTranslation(app()->getLocale())->withPivot(['status'])->withoutGlobalScope(new OrderScope);
   }
 
   public function activeSubscriptions()

@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'subscriptions';
-$title = __('site.Subscriptions');
+$page = 'grades';
+$title = __('site.Grades');
 ?>
 @section('title_page')
 {{ $title }}
@@ -17,7 +17,7 @@ $title = __('site.Subscriptions');
         <div class="col-sm-6">
           <h6>{{ $title }}
             <small>
-              ( {{ $subscriptions->total() }} )
+              ( {{ $grades->total() }} )
             </small>
           </h6>
 
@@ -30,7 +30,7 @@ $title = __('site.Subscriptions');
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route($mainRoutePrefix.'.subscriptions.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.grades.index') }}" method="get">
 
             <div class="row">
 
@@ -42,8 +42,8 @@ $title = __('site.Subscriptions');
               <div class="col-md-4">
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                   @lang('site.Search')</button>
-                @if (checkAdminPermission('create_subscriptions'))
-                <a href="{{ route($mainRoutePrefix.'.subscriptions.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
+                @if (checkAdminPermission('create_grades'))
+                <a href="{{ route($mainRoutePrefix.'.grades.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
                   @lang('site.Add')</a>
                 @endif
               </div>
@@ -91,36 +91,36 @@ $title = __('site.Subscriptions');
             </tr>
           </thead>
           <tbody>
-            @forelse ($subscriptions as $subscription )
+            @forelse ($grades as $grade )
             <tr>
               <td>
                 {{ $loop->iteration }}
               </td>
               <td>
-                {{ $subscription->title }}
+                {{ $grade->title }}
               </td>
               <td class="project-state">
-                @include('admin.partials._render_status',['status'=>$subscription->status])
+                @include('admin.partials._render_status',['status'=>$grade->status])
               </td>
 
               <td>
-                {{ $subscription->order_column }}
+                {{ $grade->order_column }}
               </td>
               <td class="project-actions text-right">
 
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route($mainRoutePrefix.'.subscriptions.show', ['subscription'=>$subscription->id]),
+                'route'=>route($mainRoutePrefix.'.grades.show', ['grade'=>$grade->id]),
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
-                'route'=>route($mainRoutePrefix.'.subscriptions.edit', ['subscription'=>$subscription->id]),
+                'route'=>route($mainRoutePrefix.'.grades.edit', ['grade'=>$grade->id]),
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route($mainRoutePrefix.'.subscriptions.destroy', $subscription->id),
+                'route'=>route($mainRoutePrefix.'.grades.destroy', $grade->id),
                 ])
 
               </td>
@@ -135,7 +135,7 @@ $title = __('site.Subscriptions');
 
           </tbody>
         </table>
-        {{ $subscriptions->appends(request()->query())->links() }}
+        {{ $grades->appends(request()->query())->links() }}
 
       </div>
       <!-- /.card-body -->

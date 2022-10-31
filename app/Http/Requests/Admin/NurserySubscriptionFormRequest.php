@@ -5,7 +5,7 @@ namespace App\Http\Requests\Admin;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SchoolSubscriptionFormRequest extends FormRequest
+class NurserySubscriptionFormRequest extends FormRequest
 {
   public $rules = [];
 

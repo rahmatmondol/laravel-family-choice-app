@@ -7,9 +7,9 @@ use App\Models\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Admin\BaseController;
-use App\Http\Requests\Admin\SchoolSubscriptionFormRequest;
+use App\Http\Requests\Admin\NurserySubscriptionFormRequest;
 use App\Interfaces\SubscriptionRepositoryInterface;
-use App\Services\School\SchoolSubscriptionService;
+use App\Services\School\NurserySubscriptionService;
 
 class SubscriptionController extends BaseController
 {
@@ -29,7 +29,7 @@ class SubscriptionController extends BaseController
 
   public function index(Request $request, School $school)
   {
-    $subscriptions = SchoolSubscriptionService::getSchoolSubscriptions($school);
+    $subscriptions = NurserySubscriptionService::getNurserySubscriptions($school);
     return view($this->mainViewPrefix . '.schools.subscriptions.index', compact('school', 'subscriptions'));
   } // end of index
 
@@ -41,13 +41,13 @@ class SubscriptionController extends BaseController
 
   public function show(School $school, Subscription $subscription)
   {
-    $schoolSubscription = SchoolSubscriptionService::getSchoolSubscription($school, $subscription);
-    return view($this->mainViewPrefix . '.schools.subscriptions.show', compact('schoolSubscription'));
+    $nurserySubscription = NurserySubscriptionService::getNurserySubscription($school, $subscription);
+    return view($this->mainViewPrefix . '.schools.subscriptions.show', compact('nurserySubscription'));
   } //end of create
 
-  public function store(SchoolSubscriptionFormRequest $request, School $school)
+  public function store(NurserySubscriptionFormRequest $request, School $school)
   {
-    SchoolSubscriptionService::storeSchoolSubscription($request,$request->school_id);
+    NurserySubscriptionService::storeNurserySubscription($request,$request->school_id);
 
     session()->flash('success', __('site.Data added successfully'));
 
@@ -61,14 +61,14 @@ class SubscriptionController extends BaseController
   {
     $subscriptions = $this->subscriptionRepository->getAllSubscriptions();
 
-    $schoolSubscription = SchoolSubscriptionService::getSchoolSubscription($school, $subscription);
+    $nurserySubscription = NurserySubscriptionService::getNurserySubscription($school, $subscription);
 
-    return view($this->mainViewPrefix . '.schools.subscriptions.edit', compact('subscriptions', 'schoolSubscription', 'school'));
+    return view($this->mainViewPrefix . '.schools.subscriptions.edit', compact('subscriptions', 'nurserySubscription', 'school'));
   } //end of edit
 
-  public function update(SchoolSubscriptionFormRequest $request, School $school, Subscription $subscription)
+  public function update(NurserySubscriptionFormRequest $request, School $school, Subscription $subscription)
   {
-    SchoolSubscriptionService::updateSchoolSubscription($request,$school,$subscription);
+    NurserySubscriptionService::updateNurserySubscription($request,$school,$subscription);
 
     session()->flash('success', __('Data updated successfully'));
 
@@ -83,7 +83,7 @@ class SubscriptionController extends BaseController
     if (!$subscription) {
       return redirect()->back();
     }
-    SchoolSubscriptionService::deleteSchoolSubscription($school,$subscription);
+    NurserySubscriptionService::deleteNurserySubscription($school,$subscription);
 
     session()->flash('success', __('site.Data deleted successfully'));
     return redirect()->route($this->mainRoutePrefix . '.schools.subscriptions.index', ['school' => $school->id, 'page' => session('currentPage')]);

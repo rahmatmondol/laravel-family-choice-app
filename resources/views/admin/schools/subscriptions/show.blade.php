@@ -21,7 +21,7 @@ $title = __('site.Show Subscription');
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
             <li class="breadcrumb-item"><a
-              href="{{ route($mainRoutePrefix.'.schools.subscriptions.index',['school' => $schoolSubscription->school_id]) }}">@lang('site.Subscriptions')</a>
+              href="{{ route($mainRoutePrefix.'.schools.subscriptions.index',['school' => $nurserySubscription->school_id]) }}">@lang('site.Subscriptions')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -38,19 +38,19 @@ $title = __('site.Show Subscription');
           <tbody>
             <tr>
               <td>@lang('site.School')</td>
-              <td>{{ $schoolSubscription->school->title }}</td>
+              <td>{{ $nurserySubscription->school->title }}</td>
             </tr>
             <tr>
               <td>@lang('site.Subscription')</td>
-              <td>{{ $schoolSubscription->subscription->title }}</td>
+              <td>{{ $nurserySubscription->subscription->title }}</td>
             </tr>
             <tr>
               <td>@lang('site.Order Item')</td>
-              <td>{{ $schoolSubscription->order_column }}</td>
+              <td>{{ $nurserySubscription->order_column }}</td>
             </tr>
             <tr>
               <td>@lang('site.Status')</td>
-              <td>@include('admin.partials._render_status',['status'=>$schoolSubscription->status])</td>
+              <td>@include('admin.partials._render_status',['status'=>$nurserySubscription->status])</td>
             </tr>
           </tbody>
         </table>

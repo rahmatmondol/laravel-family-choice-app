@@ -33,7 +33,7 @@ $title = __('site.Edit Subscription');
   <!-- Main content -->
   <section class="content">
     <form method="post"
-      action="{{ route($mainRoutePrefix.'.schools.subscriptions.update',['school'=>$schoolSubscription->school_id,'subscription'=>$schoolSubscription->subscription_id]) }}"
+      action="{{ route($mainRoutePrefix.'.schools.subscriptions.update',['school'=>$nurserySubscription->school_id,'subscription'=>$nurserySubscription->subscription_id]) }}"
       enctype="multipart/form-data">
       @csrf
       @method('put')
@@ -51,7 +51,7 @@ $title = __('site.Edit Subscription');
                 <select name="subscription_id" class="form-control" required disabled>
                   <option value="">@lang('site.Subscriptions') </option>
                   @foreach( $subscriptions as $value )
-                  <option value="{{ $value->id}}" @if( old('subscription_id',$schoolSubscription->subscription_id)==$value->id ) selected
+                  <option value="{{ $value->id}}" @if( old('subscription_id',$nurserySubscription->subscription_id)==$value->id ) selected
                     @endif>
                     {{ $value->title }}</option>
                   @endforeach
@@ -73,9 +73,9 @@ $title = __('site.Edit Subscription');
                 <label for="inputStatus">@lang('site.Status')</label>
                 <select id="inputStatus" name="status" required class="form-control custom-select">
                   <option value='' selected disabled>@lang('site.Status')</option>
-                  <option value="1" @if(old('status',$schoolSubscription->status)==1) selected @endif>@lang('site.Active')
+                  <option value="1" @if(old('status',$nurserySubscription->status)==1) selected @endif>@lang('site.Active')
                   </option>
-                  <option value="0" @if(old('status',$schoolSubscription->status)==0) selected @endif>@lang('site.In-Active')
+                  <option value="0" @if(old('status',$nurserySubscription->status)==0) selected @endif>@lang('site.In-Active')
                   </option>
                 </select>
               </div>

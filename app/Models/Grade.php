@@ -13,8 +13,6 @@ class Grade extends Model
   public $translatedAttributes = ['title', 'description'];
   protected $appends = ['image_path'];
 
-  public const ACTIVEGRADE = 1;
-
   protected static function boot()
   {
     parent::boot();

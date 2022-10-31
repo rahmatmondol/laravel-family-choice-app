@@ -16,8 +16,8 @@ return new class extends Migration
     Schema::create('nursery_subscription', function (Blueprint $table) {
       $table->id();
       $table->boolean('status')->default(1); // default active
-      $table->foreignId('grade_id')->nullable()->constrained()->onDelete('cascade');
       $table->foreignId('school_id')->nullable()->constrained()->onDelete('cascade');
+      $table->foreignId('subscription_id')->nullable()->constrained()->onDelete('cascade');
       $table->timestamps();
     });
   }
@@ -29,6 +29,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('nursery_subscriptions');
+    Schema::dropIfExists('nursery_subscription');
   }
 };
