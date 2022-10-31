@@ -12,6 +12,8 @@ use App\Models\ChildAttachment;
 use App\Traits\UploadFileTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Interfaces\SchoolRepositoryInterface;
+use App\Models\Grade;
+use App\Models\Subscription;
 
 class SchoolRepository implements SchoolRepositoryInterface
 {
@@ -26,7 +28,7 @@ class SchoolRepository implements SchoolRepositoryInterface
   {
     return  School::withoutGlobalScope(new OrderScope)
       ->withTranslation(app()->getLocale())
-      ->with(['educationalSubjects','educationTypes','schoolTypes','services','grades','schoolImages'])
+      ->with(['educationalSubjects', 'educationTypes', 'schoolTypes', 'services', 'grades','type.translations', 'schoolImages'])
       ->whenSearch()
       ->isActive($request->status)
       ->latest()
@@ -45,13 +47,17 @@ class SchoolRepository implements SchoolRepositoryInterface
       ->whenLocation()
       ->WhenTypes()
       ->whenGrades()
+      ->whenSubscriptions()
       ->whenSchoolTypes()
       ->whenEducationTypes()
       ->whenEducationalSubjects()
       ->withTranslation()
-      ->with(['educationalSubjects', 'educationTypes', 'schoolTypes', 'type','grades', 'services', 'schoolImages'])
+      ->with([
+        'educationalSubjects', 'educationTypes', 'schoolTypes', 'type.translations', 'services', 'schoolImages',
+        'activeGrades',
+        'activeSubscriptions',
+      ])
       ->paginate($request->perPage ?? 20);
-      // dd($schools);
 
     return $schools;
   }
@@ -63,13 +69,16 @@ class SchoolRepository implements SchoolRepositoryInterface
     } else {
       $school = School::findOrFail($schoolId);
     }
-    return $school->load(['educationalSubjects', 'educationTypes', 'schoolTypes', 'grades','services','schoolImages']);
+    return $school->load([
+      'educationalSubjects', 'educationTypes', 'schoolTypes', 'type.translations', 'activeGrades',
+      'activeSubscriptions', 'services', 'schoolImages'
+    ]);
   }
 
   public function getSchoolRequestData($request)
   {
     $request_data = array_merge([
-      'status', 'order_column', 'type', 'phone', 'whatsapp', 'email', 'available_seats', 'type_id','fees', 'lat', 'lng'
+      'status', 'order_column', 'type', 'phone', 'whatsapp', 'email', 'available_seats', 'type_id', 'fees', 'lat', 'lng'
     ], config('translatable.locales'));
 
     return  $request->only($request_data);
@@ -124,6 +133,17 @@ class SchoolRepository implements SchoolRepositoryInterface
 
       $school->services()->attach($services);
     } // end of if
+
+    // if nursery attach active subscriptions
+    $subscriptions = Subscription::isActive(true)->get()->pluck('id')->toArray();
+    if ($school->is_nursery_type) {
+
+      foreach ($subscriptions as $subscription) {
+        $school->subscriptions()->attach($subscription, [
+          'status' => 1
+        ]);
+      }
+    }
 
     if ($request->attachments) {
       $this->insertImages($request->attachments, $school->id);

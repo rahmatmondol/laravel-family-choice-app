@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\ReservationLogsController;
 use App\Http\Controllers\Admin\EducationalSubjectController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
+use App\Http\Controllers\Admin\SubscriptionController;
 
 Route::group(
   [
@@ -52,23 +53,25 @@ Route::group(
       Route::get('reservations/export', [ReservationController::class, 'export'])->name('reservations.export');
 
       Route::resources([
-        'admins'              => AdminController::class,
-        'roles'               => RoleController::class,
-        'customers'           => CustomerController::class,
-        'cities'              => CityController::class,
-        'types'               => TypeController::class,
-        'schools'             => SchoolController::class,
-        'grades'              => GradeController::class,
-        'services'            => ServiceController::class,
-        'educationalSubjects' => EducationalSubjectController::class,
-        'educationTypes'      => EducationTypeController::class,
-        'schoolTypes'         => SchoolTypeController::class,
-        'schools.grades'      => School\GradeController::class,
-        'courses'             => CourseController::class,
-        'sliders'             => SliderController::class,
-        'user_manuals'        => UserManualController::class,
-        'attachments'         => AttachmentController::class,
-        'reservations'        => ReservationController::class,
+        'admins'               => AdminController::class,
+        'roles'                => RoleController::class,
+        'customers'            => CustomerController::class,
+        'cities'               => CityController::class,
+        'types'                => TypeController::class,
+        'subscriptions'        => SubscriptionController::class,
+        'schools'              => SchoolController::class,
+        'grades'               => GradeController::class,
+        'services'             => ServiceController::class,
+        'educationalSubjects'  => EducationalSubjectController::class,
+        'educationTypes'       => EducationTypeController::class,
+        'schoolTypes'          => SchoolTypeController::class,
+        'schools.subscriptions' => School\SubscriptionController::class,
+        'schools.grades'       => School\GradeController::class,
+        'courses'              => CourseController::class,
+        'sliders'              => SliderController::class,
+        'user_manuals'         => UserManualController::class,
+        'attachments'          => AttachmentController::class,
+        'reservations'         => ReservationController::class,
       ]);
 
       Route::get('payments/export', [PaymentController::class, 'export'])->name('payments.export');

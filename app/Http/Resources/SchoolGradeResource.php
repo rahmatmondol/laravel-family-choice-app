@@ -19,6 +19,7 @@ class SchoolGradeResource extends JsonResource
       'title'                   => $this->title,
       'fees'                    => (string)$this->pivot->fees,
       'administrative_expenses' => (string)$this->pivot->administrative_expenses,
+      'status'                  => (bool)$this->pivot->status,
     ];
   }
 }

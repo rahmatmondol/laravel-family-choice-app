@@ -37,8 +37,10 @@ use App\Repositories\EducationalSubjectRepository;
 use App\Interfaces\EducationTypeRepositoryInterface;
 use App\Interfaces\EducationalSubjectRepositoryInterface;
 use App\Interfaces\ReservationLogRepositoryInterface;
+use App\Interfaces\SubscriptionRepositoryInterface;
 use App\Repositories\Customer\ReservationRepository as CustomerReservationRepository;
 use App\Repositories\ReservationLogRepository;
+use App\Repositories\SubscriptionRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -67,6 +69,7 @@ class RepositoryServiceProvider extends ServiceProvider
     $this->app->bind(ServiceRepositoryInterface::class, ServiceRepository::class);
     $this->app->bind(ReservationLogRepositoryInterface::class, ReservationLogRepository::class);
     $this->app->bind(CustomerReservationRepositoryInterface::class, CustomerReservationRepository::class);
+    $this->app->bind(SubscriptionRepositoryInterface::class, SubscriptionRepository::class);
   }
   /**
    * Bootstrap services.

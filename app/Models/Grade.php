@@ -13,6 +13,8 @@ class Grade extends Model
   public $translatedAttributes = ['title', 'description'];
   protected $appends = ['image_path'];
 
+  public const ACTIVEGRADE = 1;
+
   protected static function boot()
   {
     parent::boot();
@@ -42,7 +44,7 @@ class Grade extends Model
   /////////////////// start relationships ///////////////////////////////
   public function schools()
   {
-    return $this->belongsToMany(School::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale())->withPivot(['administrative_expenses','fees']);
+    return $this->belongsToMany(School::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale())->withPivot(['administrative_expenses','fees','status']);
   }
   /////////////////// end relationships ///////////////////////////////
 }

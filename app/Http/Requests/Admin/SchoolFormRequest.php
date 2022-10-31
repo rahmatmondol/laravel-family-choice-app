@@ -54,7 +54,7 @@ class SchoolFormRequest extends FormRequest
       'password' => ['required', 'string', 'min:6'],
       'password_confirmation' => ['required', 'same:password', 'min:6'],
       'image' => validateImage(),
-      'attachments' => ['nullable'],+
+      'attachments' => ['nullable'],
       'attachments.*' => 'required|' . validateImage(),
     ];
 

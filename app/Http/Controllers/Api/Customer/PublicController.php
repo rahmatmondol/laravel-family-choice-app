@@ -26,7 +26,9 @@ use App\Http\Requests\Api\ContactSupportFormRequest;
 use App\Interfaces\EducationTypeRepositoryInterface;
 use App\Http\Resources\Collection\UserManualCollection;
 use App\Http\Resources\SliderResource;
+use App\Http\Resources\SubscriptionResource;
 use App\Interfaces\EducationalSubjectRepositoryInterface;
+use App\Interfaces\SubscriptionRepositoryInterface;
 
 class PublicController extends Controller
 {
@@ -41,12 +43,14 @@ class PublicController extends Controller
     private SchoolTypeRepositoryInterface $schoolTypeRepository,
     private UserManualRepositoryInterface $userManualRepository,
     private TypeRepositoryInterface $typeRepository,
+    private SubscriptionRepositoryInterface $subscriptionRepository,
   ) {
   } //end of constructor
 
   public function filterData(Request $request)
   {
     $data = [
+      'subscriptions' =>  SubscriptionResource::collection($this->subscriptionRepository->getAllSubscriptions()),
       'grades' =>  GradeResource::collection($this->gradeRepository->getAllGrades()),
       'educationalSubjects' => EducationalSubjectResource::collection($this->educationalSubjectRepository->getAllEducationalSubjects()),
       'educationTypes' => EducationTypeResource::collection($this->educationTypeRepository->getAllEducationTypes()),
@@ -76,7 +80,6 @@ class PublicController extends Controller
     $sliders = $this->sliderRepository->getSliders($request);
 
     return $this->sendResponse(SliderResource::collection($sliders), "");
-    // return $this->sendResponse(new SliderCollection($sliders), "");
   }
 
   public function userManuals(Request $request)

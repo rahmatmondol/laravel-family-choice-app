@@ -8,6 +8,7 @@ return [
     'customers'            => 'c,r,u,d',
     'reservations'         => 'c,r,u,d',
     'types'                => 'c,r,u,d',
+    'subscriptions'        => 'c,r,u,d',
     'schools'              => 'c,r,u,d',
     'educationalSubjects'  => 'c,r,u,d',
     'educationTypes'       => 'c,r,u,d',

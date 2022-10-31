@@ -43,6 +43,7 @@ Route::group(
         Route::get('contact-support', 'contactSupport');
         Route::get('cities', 'cities');
         Route::get('types', 'types');
+        Route::get('types', 'types');
         Route::get('get-filter-data', 'filterData');
         Route::get('sliders', 'sliders');
       });

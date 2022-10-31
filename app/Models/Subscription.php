@@ -14,6 +14,8 @@ class Subscription extends Model
 
   public $translatedAttributes = ['title', 'short_description'];
 
+  public const ACTIVESUBSCRIPTION = 1;
+
   protected static function boot()
   {
     parent::boot();
@@ -38,7 +40,7 @@ class Subscription extends Model
   /////////////////// start relationships ///////////////////////////////
   public function schools()
   {
-    return $this->belongsToMany(School::class, 'school_subscription', 'school_id', 'subscription_id')->withTranslation(app()->getLocale());
+    return $this->belongsToMany(School::class, 'school_subscription', 'school_id', 'subscription_id')->withPivot(['status'])->withTranslation(app()->getLocale());
   }
   /////////////////// end relationships ///////////////////////////////
 

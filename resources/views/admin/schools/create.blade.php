@@ -208,15 +208,6 @@ $title = __('site.Create School');
                   oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
               </div>
 
-
-              {{-- fees --}}
-              <div class="form-group">
-                <label>@lang('site.Fees')</label>
-                <input required="required" type="text" name="fees" class="form-control" value="{{old('fees')}}"
-                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
-              </div>
-
-
               {{-- status --}}
               <div class="form-group">
                 <label for="inputStatus">@lang('site.Status')</label>

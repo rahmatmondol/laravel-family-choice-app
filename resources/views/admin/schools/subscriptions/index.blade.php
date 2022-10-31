@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'schools';
-$title = __('site.Schools');
+$page = 'subscriptions';
+$title = __('site.Subscriptions');
 ?>
 @section('title_page')
 {{ $title }}
@@ -17,7 +17,7 @@ $title = __('site.Schools');
         <div class="col-sm-6">
           <h6>{{ $title }}
             <small>
-              ( {{ $schools->total() }} )
+              {{-- ( {{ $subscriptions->total() }} ) --}}
             </small>
           </h6>
 
@@ -30,31 +30,21 @@ $title = __('site.Schools');
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route($mainRoutePrefix.'.schools.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.schools.subscriptions.index',['school'=>$school->id]) }}" method="get">
 
             <div class="row">
 
-              <div class="col-md-4">
+              {{-- <div class="col-md-4">
                 <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
                   value="{{ request()->search }}">
-              </div>
-
-              {{-- status --}}
-              <div class="col-md-4">
-                <div class="form-group">
-                  <select id="inputStatus" name="status"  class="form-control custom-select">
-                    <option value='' selected>@lang('site.Status') </option>
-                    <option value="1" @if(request('status')==1) selected @endif>@lang('site.Active')</option>
-                    <option value="0" @if(request('status')!==null && request('status')=='0') selected @endif>@lang('site.In-Active')</option>
-                  </select>
-                </div>
-              </div>
+              </div> --}}
 
               <div class="col-md-4">
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
-                  @lang('site.Search')</button>
-                @if (checkAdminPermission('create_schools'))
-                <a href="{{ route($mainRoutePrefix.'.schools.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
+                {{-- <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
+                  @lang('site.Search')</button> --}}
+                @if (checkAdminPermission('create_subscriptions'))
+                <a href="{{ route($mainRoutePrefix.'.schools.subscriptions.create',['school'=>$school->id]) }}"
+                  class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
                   @lang('site.Add')</a>
                 @endif
               </div>
@@ -88,22 +78,13 @@ $title = __('site.Schools');
                 #
               </th>
               <th style="width: 20%">
-                @lang('site.Title')
+                @lang('site.School')
               </th>
               <th style="width: 20%">
-                @lang('site.Type')
+                @lang('site.Subscription')
               </th>
-              <th style="width: 20%">
-                @lang('site.E-mail')
-              </th>
-              <th style="width: 20%">
-                @lang('site.Grades')
-              </th>
-              <th style="width: 8%" class="text-center">
+              <th style="width: 20%" >
                 @lang('site.Status')
-              </th>
-              <th style="width: 8%" class="text-center">
-                @lang('site.table.Order Item')
               </th>
               <th style="width: 20%" class="text-center">
                 @lang('site.Actions')
@@ -111,7 +92,7 @@ $title = __('site.Schools');
             </tr>
           </thead>
           <tbody>
-            @forelse ($schools as $school )
+            @forelse ($subscriptions as $subscription )
             <tr>
               <td>
                 {{ $loop->iteration }}
@@ -120,49 +101,26 @@ $title = __('site.Schools');
                 {{ $school->title }}
               </td>
               <td>
-                {{ $school->type?->title }}
-              </td>
-              <td>
-                {{ $school->email }}
-              </td>
-              <td>
-                @if(!$school->is_nursery_type)
-                @include('admin.partials._view_btn',[
-                'txt'=>__('site.Grades'),
-                'route'=>route($mainRoutePrefix.'.schools.grades.index', ['school'=>$school->id]),
-                ])
-                @endif
-                @if($school->is_nursery_type)
-                @include('admin.partials._view_btn',[
-                'txt'=>__('site.Subscriptions'),
-                'route'=>route($mainRoutePrefix.'.schools.subscriptions.index', ['school'=>$school->id]),
-                ])
-                @endif
+                {{ $subscription->title }}
               </td>
               <td class="project-state">
-                @include('admin.partials._render_status',['status'=>$school->status])
-              </td>
-
-              <td>
-                {{ $school->order_column }}
+                @include('admin.partials._render_status',['status'=>$subscription->pivot->status])
               </td>
               <td class="project-actions text-right">
-
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route($mainRoutePrefix.'.schools.show', ['school'=>$school->id]),
+                'route'=>route($mainRoutePrefix.'.schools.subscriptions.show', ['school'=>$school->id,'subscription'=>$subscription->id]),
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
-                'route'=>route($mainRoutePrefix.'.schools.edit', ['school'=>$school->id]),
+                'route'=>route($mainRoutePrefix.'.schools.subscriptions.edit', ['school'=>$school->id,'subscription'=>$subscription->id]),
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route($mainRoutePrefix.'.schools.destroy', $school->id),
+                'route'=>route($mainRoutePrefix.'.schools.subscriptions.destroy', ['school'=>$school->id,'subscription'=>$subscription->id]),
                 ])
-
               </td>
             </tr>
             @empty
@@ -175,7 +133,7 @@ $title = __('site.Schools');
 
           </tbody>
         </table>
-        {{ $schools->appends(request()->query())->links() }}
+        {{-- {{ $subscriptions->appends(request()->query())->links() }} --}}
 
       </div>
       <!-- /.card-body -->

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Status;
 use App\Models\Attachment;
 use App\Scopes\OrderScope;
 use App\Traits\LocationTrait;
@@ -37,6 +38,7 @@ class School extends Authenticatable
     return asset('uploads/schools/' . $this->cover);
   } //end of image path attribute
 
+  // is_nursery_type
   public function getIsNurseryTypeAttribute()
   {
     // dd($this->type?->is_nursery);
@@ -118,7 +120,9 @@ class School extends Authenticatable
 
   public function scopeWhenTypes($query)
   {
-    return $query->whereIn('type_id', (array)request()->type_id);
+    return $query->when(request()->type_id != null, function ($typeQuery) {
+      $typeQuery->whereIn('type_id', (array)request()->type_id);
+    });
   }
 
   public function scopeWhenGrades($query)
@@ -130,6 +134,19 @@ class School extends Authenticatable
       return $q->whereHas('grades', function ($qu) use ($grades) {
 
         return $qu->whereIn('grade_id', (array)$grades);
+      });
+    });
+  }
+
+  public function scopeWhenSubscriptions($query)
+  {
+    $subscriptions = request()->subscription_id;
+
+    return $query->when($subscriptions, function ($q) use ($subscriptions) {
+
+      return $q->whereHas('subscriptions', function ($qu) use ($subscriptions) {
+
+        return $qu->whereIn('subscription_id', (array)$subscriptions);
       });
     });
   }
@@ -196,12 +213,22 @@ class School extends Authenticatable
 
   public function grades()
   {
-    return $this->belongsToMany(Grade::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale())->withPivot(['administrative_expenses', 'fees'])->withoutGlobalScope(new OrderScope);
+    return $this->belongsToMany(Grade::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale())->withPivot(['administrative_expenses', 'fees', 'status'])->withoutGlobalScope(new OrderScope);
+  }
+
+  public function activeGrades()
+  {
+    if(!$this->is_nursery_type) return $this->grades()->wherePivot('status', Status::Active->value);
   }
 
   public function subscriptions()
   {
-    return $this->belongsToMany(Subscription::class, 'school_subscription')->withTranslation(app()->getLocale())->withoutGlobalScope(new OrderScope);
+    return $this->belongsToMany(Subscription::class, 'school_subscription')->withTranslation(app()->getLocale())->withPivot(['status'])->withoutGlobalScope(new OrderScope);
+  }
+
+  public function activeSubscriptions()
+  {
+    if(!$this->is_nursery_type) return $this->subscriptions()->wherePivot('status', Status::Active->value);
   }
 
   public function educationalSubjects()

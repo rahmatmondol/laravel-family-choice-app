@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Http\Controllers\Admin\BaseController;
 use App\Models\Payment;
 use App\Models\Reservation;
+use App\Models\Subscription;
 use App\Notifications\Reservation\ReservationPaidNotification;
 use App\Services\NotificationService;
 use Edujugon\PushNotification\PushNotification;
@@ -21,6 +22,8 @@ class HomeController extends Controller
 {
   public function test()
   {
+    $subscriptions = Subscription::isActive(true)->get()->pluck('id')->toArray();
+    dd($subscriptions);
     $msg = "Your Verification code is 123456" ;
     NotificationService::sendSms('971522946005',$msg );
 
