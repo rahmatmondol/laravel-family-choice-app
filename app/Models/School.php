@@ -41,8 +41,13 @@ class School extends Authenticatable
   // is_nursery_type
   public function getIsNurseryTypeAttribute()
   {
-    // dd($this->type?->is_nursery);
     return (bool)$this->type?->is_nursery;
+  } //end of image path attribute
+
+  // is_nursery_type
+  public function getIsSchoolTypeAttribute()
+  {
+    return (bool)!$this->type?->is_nursery;
   } //end of image path attribute
 
   public function getIsFavoriedAttribute()
@@ -227,7 +232,7 @@ class School extends Authenticatable
 
   public function activeGrades()
   {
-    if (!$this->is_nursery_type) return $this->grades()->wherePivot('status', Status::Active->value);
+    if ($this->is_school_type) return $this->grades()->wherePivot('status', Status::Active->value);
   }
 
   public function subscriptions()
@@ -237,7 +242,7 @@ class School extends Authenticatable
 
   public function activeSubscriptions()
   {
-    if (!$this->is_nursery_type) return $this->subscriptions()->wherePivot('status', Status::Active->value);
+    if ($this->is_nursery_type) return $this->subscriptions()->wherePivot('status', Status::Active->value);
   }
 
   public function educationalSubjects()

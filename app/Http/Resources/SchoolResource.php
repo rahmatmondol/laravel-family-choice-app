@@ -33,7 +33,7 @@ class SchoolResource extends JsonResource
       'educationTypes'      => EducationTypeResource::collection($this->educationTypes),
       'schoolTypes'         => SchoolTypeResource::collection($this->schoolTypes),
       'services'            => ServiceResource::collection($this->services),
-      'grades'              => $this->when(!$this->is_nursery_type, SchoolGradeResource::collection($this->activeGrades)),
+      'grades'              => $this->when($this->is_school_type, SchoolGradeResource::collection($this->activeGrades)),
       'subscriptions'       => $this->when($this->is_nursery_type, SubscriptionResource::collection($this->activeSubscriptions)),
       'type'                => new TypeResource($this->type),
       'gallary'             => SchoolImageResource::collection($this->schoolImages),

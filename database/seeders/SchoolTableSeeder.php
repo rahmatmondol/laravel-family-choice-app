@@ -88,7 +88,7 @@ class SchoolTableSeeder extends Seeder
       $school->educationTypes()->attach(EducationType::pluck('id')->toArray());
 
       // if school attach grades
-      if (!$school->is_nursery_type) {
+      if (!$school->is_school_type) {
 
         foreach (Grade::pluck('id')->toArray() as $grade) {
           $school->grades()->attach($grade, [

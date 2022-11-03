@@ -138,7 +138,7 @@ $title = __('site.Schools');
                 {{ $school->email }}
               </td>
               <td>
-                @if(!$school->is_nursery_type)
+                @if($school->is_school_type)
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.Grades'),
                 'route'=>route($mainRoutePrefix.'.schools.grades.index', ['school'=>$school->id]),
