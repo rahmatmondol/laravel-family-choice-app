@@ -136,7 +136,7 @@ $title = __('site.Courses');
                   class="btn btn-primary btn-sm" target="_blank">{{ $course->school?->title }}</a>
               </td>
               <td>
-                @lang('site.'.$course->type)
+                @lang('site.'. ucfirst($course->type) )
               </td>
               <td>
                 {{ $course->from_date }}

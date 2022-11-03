@@ -8,11 +8,11 @@ use App\Models\SchoolGrade;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\School\BaseController;
+use App\Services\School\SchoolGradeService;
 use App\Interfaces\GradeRepositoryInterface;
 use App\Http\Requests\Admin\GradeFormRequest;
+use App\Http\Controllers\School\BaseController;
 use App\Http\Requests\Admin\SchoolGradeFormRequest;
-use App\Services\SchoolGradeService;
 
 class GradeController extends BaseController
 {

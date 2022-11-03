@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\School;
 
 use App\Models\SchoolGrade;
 use Illuminate\Support\Facades\DB;

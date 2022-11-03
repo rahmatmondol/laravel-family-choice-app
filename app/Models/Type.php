@@ -31,6 +31,12 @@ class Type extends Model
       return $query->where('status', (bool)$status);
   }
 
+  public function scopeIsNursery($query, $status = null)
+  {
+    if ($status != null)
+      return $query->where('is_nursery', (bool)$status);
+  }
+
   public function scopeWhenSearch($query, $search)
   {
     return $query->when($search, function ($q) use ($search) {

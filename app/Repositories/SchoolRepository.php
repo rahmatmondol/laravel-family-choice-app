@@ -30,12 +30,13 @@ class SchoolRepository implements SchoolRepositoryInterface
       ->withTranslation(app()->getLocale())
       ->with(['educationalSubjects', 'educationTypes', 'schoolTypes', 'services', 'grades','type.translations', 'schoolImages'])
       ->whenSearch()
+      ->WhenTypes()
       ->isActive($request->status)
       ->latest()
       ->paginate(request()->perPage ?? 20);
   }
 
-  public function getSchools($request)
+  public function getSchools($request, $get_nurseries = null)
   {
     $schools =  School::whenSearch()
       ->isActive(true)
@@ -49,6 +50,7 @@ class SchoolRepository implements SchoolRepositoryInterface
       ->whenGrades()
       ->whenSubscriptions()
       ->whenSchoolTypes()
+      ->whereNursery($get_nurseries)
       ->whenEducationTypes()
       ->whenEducationalSubjects()
       ->withTranslation()

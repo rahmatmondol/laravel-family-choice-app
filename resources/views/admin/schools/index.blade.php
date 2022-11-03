@@ -39,6 +39,18 @@ $title = __('site.Schools');
                   value="{{ request()->search }}">
               </div>
 
+              <div class="col-md-4">
+                <div class="form-group">
+                  <select name="type_id" class="form-control" >
+                    <option value="">@lang('site.Types') </option>
+                    @foreach( $types as $value )
+                    <option value="{{ $value->id}}" @selected(request('type_id')==$value->id) >
+                      {{ $value->title }}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+
               {{-- status --}}
               <div class="col-md-4">
                 <div class="form-group">

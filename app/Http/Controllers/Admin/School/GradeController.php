@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\BaseController;
 use App\Interfaces\GradeRepositoryInterface;
 use App\Http\Requests\Admin\GradeFormRequest;
 use App\Http\Requests\Admin\SchoolGradeFormRequest;
-use App\Services\SchoolGradeService;
+use App\Services\School\SchoolGradeService;
 
 class GradeController extends BaseController
 {

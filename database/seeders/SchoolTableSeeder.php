@@ -74,6 +74,7 @@ class SchoolTableSeeder extends Seeder
           'ar' => ['title' => '-دورة تعديل السلوك' . $c, 'short_description' => 'دورة صيفية', 'description' => "من عمر 10 سنين : 15 سنة"],
           'en' => ['title' => '-دورة تعديل السلوك' . $c, 'short_description' => 'دورة صيفية', 'description' => "من عمر 10 سنين : 15 سنة"],
           'status' => 1,
+          'type' => array_rand(['summery', 'wintry']),
           'school_id' => $school->id,
           'subscription_id' => $subscriptions[array_rand($subscriptions)],
           'from_date' => '2022-10-10',

@@ -30,7 +30,7 @@ class CourseController extends BaseController
     session(['currentPage' => request('page', 1)]);
 
     $courses = $this->courseRepository->getFilteredCourses($request);
-    $schools = $this->schoolRepository->getSchools($request);
+    $schools = $this->schoolRepository->getSchools($request,true);
 
     return view($this->mainViewPrefix.'.courses.index', compact('courses','schools'));
   } // end of index

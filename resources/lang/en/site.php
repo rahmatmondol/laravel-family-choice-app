@@ -27,7 +27,6 @@ return [
     PaymentStatus::Failed->value => 'Failed',
     PaymentStatus::Refunded->value => 'Refunded',
     'Status' =>"Payment Status",
-
   ],
   'this course not related to current school' => 'this course not related to current school',
   'this child not related to current reservation' => 'this child not related to current reservation',
@@ -257,8 +256,6 @@ return [
   'Create Subscription' => 'Create Subscription',
   'Edit Subscription' => 'Edit Subscription',
   'Show Subscription' => 'Show Subscription',
-  '' => '',
-  '' => '',
   '' => '',
   '' => '',
   '' => '',

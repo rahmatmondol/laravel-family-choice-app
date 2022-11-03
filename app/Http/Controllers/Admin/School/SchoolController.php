@@ -40,8 +40,9 @@ class SchoolController extends BaseController
     session(['currentPage' => request('page', 1)]);
 
     $schools = $this->schoolRepository->getFilteredSchools($request);
+    $types = $this->typeRepository->getAllTypes();
 
-    return view($this->mainViewPrefix.'.schools.index', compact('schools'));
+    return view($this->mainViewPrefix.'.schools.index', compact('schools','types'));
   } // end of index
 
   public function create(Request $request)

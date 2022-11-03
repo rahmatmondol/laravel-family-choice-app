@@ -188,6 +188,15 @@ class School extends Authenticatable
       });
     });
   }
+
+  public function scopeWhereNursery($query, $get_nurseries = null)
+  {
+    if ($get_nurseries != null) {
+      $query->whereHas('type', function ($nurseryQuery) use ($get_nurseries) {
+        $nurseryQuery->isNursery($get_nurseries);
+      });
+    }
+  }
   /////////////////// end scopes ///////////////////////////////
 
   /////////////////// start relationships ///////////////////////////////
@@ -218,7 +227,7 @@ class School extends Authenticatable
 
   public function activeGrades()
   {
-    if(!$this->is_nursery_type) return $this->grades()->wherePivot('status', Status::Active->value);
+    if (!$this->is_nursery_type) return $this->grades()->wherePivot('status', Status::Active->value);
   }
 
   public function subscriptions()
@@ -228,7 +237,7 @@ class School extends Authenticatable
 
   public function activeSubscriptions()
   {
-    if(!$this->is_nursery_type) return $this->subscriptions()->wherePivot('status', Status::Active->value);
+    if (!$this->is_nursery_type) return $this->subscriptions()->wherePivot('status', Status::Active->value);
   }
 
   public function educationalSubjects()
