@@ -53,16 +53,33 @@ class Course extends Model
       });
     });
   } // end of
+
+  public function scopeWhenSubscription($query, $subscription_id)
+  {
+    $subscription_id = getAuthSchool() ? getAuthSchool()->id : $subscription_id;
+    return $query->when($subscription_id, function ($q) use ($subscription_id) {
+
+      return $q->whereHas('subscription', function ($qu) use ($subscription_id) {
+
+        return $qu->whereIn('subscription_id', (array)$subscription_id);
+      });
+    });
+  } // end of
   ////////////////// start scopes ////////////////////////////////
 
   public function school()
   {
     return $this->belongsTo(School::class);
-  } //end fo category
+  }
+
+  public function subscription()
+  {
+    return $this->belongsTo(Subscription::class);
+  }
 
   public function reservations()
   {
     return $this->hasMany(Reservation::class);
-  } //end fo category
+  }
 
 }

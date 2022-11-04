@@ -40,6 +40,11 @@ class Subscription extends Model
   {
     return $this->belongsToMany(School::class, 'nursery_subscription', 'school_id', 'subscription_id')->withPivot(['status'])->withTranslation(app()->getLocale());
   }
+
+  public function courses()
+  {
+    return $this->hasMany(Course::class);
+  }
   /////////////////// end relationships ///////////////////////////////
 
 }

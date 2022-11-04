@@ -16,7 +16,7 @@ class CourseRepository implements CourseRepositoryInterface
   {
     return  Course::withoutGlobalScope(new OrderScope)
       ->withTranslation(app()->getLocale())
-      ->with(['school'])
+      ->with(['school.translations','subscription.translations'])
       ->whenSearch($request->search)
       ->whenSchool($request->school_id)
       ->isActive($request->status)
@@ -29,7 +29,9 @@ class CourseRepository implements CourseRepositoryInterface
     return  Course::withTranslation(app()->getLocale())
       ->whenSearch($request->search)
       ->whenSchool($request->school_id)
+      ->WhenSubscription($request->subscription_id)
       ->isActive(true)
+      ->with(['subscription.translation'])
       ->withTranslation(app()->getLocale())
       ->paginate(request()->perPage ?? 20);
   }
@@ -42,7 +44,7 @@ class CourseRepository implements CourseRepositoryInterface
 
   public function getCourseRequestData($request)
   {
-    $request_data = array_merge(['status', 'school_id', 'type', 'from_date', 'to_date', 'order_column'], config('translatable.locales'));
+    $request_data = array_merge(['status', 'school_id','subscription_id', 'type', 'from_date', 'to_date', 'order_column'], config('translatable.locales'));
 
     return  $request->only($request_data);
   }

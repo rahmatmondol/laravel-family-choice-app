@@ -9,13 +9,14 @@ use App\Interfaces\CourseRepositoryInterface;
 use App\Interfaces\SchoolRepositoryInterface;
 use App\Http\Controllers\Admin\BaseController;
 use App\Http\Requests\Admin\CourseFormRequest;
+use App\Interfaces\SubscriptionRepositoryInterface;
 
 class CourseController extends BaseController
 {
-
   public function __construct(
     private CourseRepositoryInterface $courseRepository,
-    private SchoolRepositoryInterface $schoolRepository
+    private SchoolRepositoryInterface $schoolRepository,
+    private SubscriptionRepositoryInterface $subscriptionRepository
   ) {
     parent::__construct();
     //create read update delete
@@ -38,7 +39,8 @@ class CourseController extends BaseController
   public function create(Request $request)
   {
     $schools = $this->schoolRepository->getAllSchools();
-    return view($this->mainViewPrefix.'.courses.create', compact('schools'));
+    $subscriptions = $this->subscriptionRepository->getAllSubscriptions();
+    return view($this->mainViewPrefix.'.courses.create', compact('schools','subscriptions'));
   } //end of create
 
   public function show($course)
@@ -65,8 +67,8 @@ class CourseController extends BaseController
 
     $course = $this->courseRepository->getCourseById($course);
     $schools = $this->schoolRepository->getAllSchools();
-    // dd($course);
-    return view($this->mainViewPrefix.'.courses.edit', compact('course','schools'));
+    $subscriptions = $this->subscriptionRepository->getAllSubscriptions();
+    return view($this->mainViewPrefix.'.courses.edit', compact('course','schools','subscriptions'));
   } //end of edit
 
   public function update(CourseFormRequest $request, Course $course)

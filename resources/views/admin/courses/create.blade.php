@@ -91,6 +91,18 @@ $title = __('site.Create Course');
                 </select>
                 <a href="{{ route($mainRoutePrefix.'.schools.create') }}">@lang('site.Create new school')</a>
               </div>
+              
+              {{-- subscriptions --}}
+              <div class="form-group">
+                <label>@lang('site.Subscriptions')</label>
+                <select name="subscription_id" class="form-control" required>
+                  <option value='' selected disabled>@lang('site.Subscriptions')</option>
+                  @foreach ($subscriptions as $subscription)
+                  <option value="{{ $subscription->id }}" @if(old('subscription_id')==$subscription->id) selected @endif>{{
+                    $subscription->title }}</option>
+                  @endforeach
+                </select>
+              </div>
               {{-- type --}}
               <div class="form-group">
                 <label for="inputType">@lang('site.Type')</label>

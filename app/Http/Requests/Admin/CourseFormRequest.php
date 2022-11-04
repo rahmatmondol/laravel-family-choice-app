@@ -18,6 +18,7 @@ class CourseFormRequest extends FormRequest
   {
     $this->rules += [
       'school_id' => ['required', 'exists:schools,id', new ValidateCurrentSchool()],
+      'subscription_id' => ['required', 'exists:subscriptions,id'],
       'type' => ['required', 'in:summery,wintry'],
       'from_date' => ['required', 'date', 'after:yesterday'],
       'to_date' => ['required', 'date', 'after:yesterday'],

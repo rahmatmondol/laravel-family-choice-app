@@ -15,9 +15,9 @@ return new class extends Migration
   {
     Schema::create('subscription_types', function (Blueprint $table) {
       $table->id();
-      $table->integer('number_of_days')->default(1); // default active
-      $table->double('price'); // default active
-      $table->enum('type',['part_time','full_time'])->nullable(); // default active
+      $table->integer('number_of_days')->default(1);
+      $table->double('price');
+      $table->enum('type', ['part_time', 'full_time'])->nullable();
       $table->foreignId('subscription_id')->constrained()->cascadeOnDelete();
       $table->timestamps();
     });

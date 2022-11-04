@@ -86,13 +86,25 @@ $title = __('site.Edit Course');
                 <select name="school_id" class="form-control" required>
                   <option value='' selected disabled>@lang('site.Schools')</option>
                   @foreach ($schools as $school)
-                  <option value="{{ $school->id }}" @if(old('school_id',$course->school_id)==$school->id) selected
-                    @endif>{{
-                    $school->title }}</option>
+                  <option value="{{ $school->id }}" @selected(old('school_id',$course->school_id)==$school->id)>
+                    {{$school->title }}</option>
                   @endforeach
                 </select>
                 <a href="{{ route($mainRoutePrefix.'.schools.create') }}">@lang('site.Create new school')</a>
               </div>
+
+              {{-- subscriptions --}}
+              <div class="form-group">
+                <label>@lang('site.Subscriptions')</label>
+                <select name="subscription_id" class="form-control" required>
+                  <option value='' selected disabled>@lang('site.Subscriptions')</option>
+                  @foreach ($subscriptions as $subscription)
+                  <option value="{{ $subscription->id }}" @selected(old('subscription_id',$course->subscription_id)==$subscription->id)>
+                  {{  $subscription->title }}</option>
+                  @endforeach
+                </select>
+              </div>
+
               {{-- type --}}
               <div class="form-group">
                 <label for="inputType">@lang('site.Type')</label>

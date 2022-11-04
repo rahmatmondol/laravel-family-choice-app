@@ -103,6 +103,9 @@ $title = __('site.Courses');
                 @lang('site.Type')
               </th>
               <th style="width: 20%">
+                @lang('site.Subscription')
+              </th>
+              <th style="width: 20%">
                 @lang('site.From Date')
               </th>
               <th style="width: 20%">
@@ -134,6 +137,9 @@ $title = __('site.Courses');
               <td class="text-center">
                 <a href="{{ route($mainRoutePrefix.'.schools.show', ['school'=>$course->school_id]) }}"
                   class="btn btn-primary btn-sm" target="_blank">{{ $course->school?->title }}</a>
+              </td>
+              <td>
+                {{ $course->subscription?->title }}
               </td>
               <td>
                 @lang('site.'. ucfirst($course->type) )

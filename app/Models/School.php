@@ -232,7 +232,7 @@ class School extends Authenticatable
 
   public function activeGrades()
   {
-    if ($this->is_school_type) return $this->grades()->wherePivot('status', Status::Active->value);
+    return $this->grades()->wherePivot('status', Status::Active->value);
   }
 
   public function subscriptions()
@@ -242,7 +242,7 @@ class School extends Authenticatable
 
   public function activeSubscriptions()
   {
-    if ($this->is_nursery_type) return $this->subscriptions()->wherePivot('status', Status::Active->value);
+    return $this->subscriptions()->wherePivot('status', Status::Active->value);
   }
 
   public function educationalSubjects()
