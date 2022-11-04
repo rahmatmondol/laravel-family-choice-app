@@ -15,10 +15,13 @@ return new class extends Migration
   {
     Schema::create('subscription_types', function (Blueprint $table) {
       $table->id();
+      $table->integer('order_column')->nullable();
+      $table->boolean('status')->default(1); // default active
       $table->integer('number_of_days')->default(1);
       $table->double('price');
       $table->enum('type', ['part_time', 'full_time'])->nullable();
       $table->foreignId('subscription_id')->constrained()->cascadeOnDelete();
+      $table->foreignId('school_id')->constrained()->cascadeOnDelete();
       $table->timestamps();
     });
   }

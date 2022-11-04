@@ -46,8 +46,8 @@ $title = __('site.Edit Reservation');
                 <select id="inputStatus" name="status" required class="form-control custom-select">
                   <option value='' selected disabled>@lang('site.Status')</option>
                   @foreach(\App\Enums\ReservationStatus::cases() as $reservationtStatus)
-                  <option value="{{ $reservationtStatus->value }}" @selected(old('status',$reservation->
-                    status)==$reservationtStatus->value)>
+                  <option value="{{ $reservationtStatus->value }}"
+                  @selected(old('status',$reservation->status)==$reservationtStatus->value)>
                     @lang('site.reservation_status.'.$reservationtStatus->value)
                   </option>
                   @endforeach

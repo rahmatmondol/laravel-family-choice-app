@@ -38,7 +38,7 @@ class CourseController extends BaseController
 
   public function create(Request $request)
   {
-    $schools = $this->schoolRepository->getAllSchools();
+    $schools = $this->schoolRepository->getSchools($request,true);
     $subscriptions = $this->subscriptionRepository->getAllSubscriptions();
     return view($this->mainViewPrefix.'.courses.create', compact('schools','subscriptions'));
   } //end of create
@@ -62,11 +62,11 @@ class CourseController extends BaseController
     return redirect()->back();
   } //end of store
 
-  public function edit($course)
+  public function edit(Request $request,$course)
   {
 
     $course = $this->courseRepository->getCourseById($course);
-    $schools = $this->schoolRepository->getAllSchools();
+    $schools = $this->schoolRepository->getSchools($request,true);
     $subscriptions = $this->subscriptionRepository->getAllSubscriptions();
     return view($this->mainViewPrefix.'.courses.edit', compact('course','schools','subscriptions'));
   } //end of edit

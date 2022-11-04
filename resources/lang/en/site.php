@@ -256,7 +256,10 @@ return [
   'Create Subscription' => 'Create Subscription',
   'Edit Subscription' => 'Edit Subscription',
   'Show Subscription' => 'Show Subscription',
-  '' => '',
+  'SubscriptionType' => [
+    'part_time' => 'Part Time',
+    'full_time' => 'Full Time',
+  ],
   '' => '',
   '' => '',
   '' => '',

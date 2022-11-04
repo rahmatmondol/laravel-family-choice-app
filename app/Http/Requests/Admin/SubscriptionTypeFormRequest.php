@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Enums\SubscriptionTypes;
 use App\Rules\ValidateCurrentSchool;
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CourseFormRequest extends FormRequest
+class SubscriptionTypeFormRequest extends FormRequest
 {
   public $rules = [];
 
@@ -18,9 +18,10 @@ class CourseFormRequest extends FormRequest
   {
     $this->rules += [
       'school_id' => ['required', 'exists:schools,id', new ValidateCurrentSchool()],
-      'type' => ['required', 'in:summery,wintry'],
-      'from_date' => ['required', 'date', 'after:yesterday'],
-      'to_date' => ['required', 'date', 'after:yesterday'],
+      'subscription_id' => ['required', 'exists:subscriptions,id'],
+      'type' => ['required', 'in:'. implode(',',SubscriptionTypes::values()) ],
+      'price' => ['required', 'numeric',],
+      'number_of_days' => ['required', 'integer',],
     ];
 
     if ($this->isMethod('post')) {
@@ -32,12 +33,9 @@ class CourseFormRequest extends FormRequest
 
   public function createRules()
   {
-    $this->rules += [
-      'image' => 'required|' . validateImage(),
-    ];
-
     foreach (config('translatable.locales') as $locale) {
       $this->rules += [$locale . '.title' => ['required']];
+      $this->rules += [$locale . '.appointment' => ['required']];
     } // end of  for each
 
     return $this->rules;
@@ -45,21 +43,12 @@ class CourseFormRequest extends FormRequest
 
   public function updateRules()
   {
-
-    $course = $this->route('course');
-
-    $this->rules += [
-      'image' => validateImage(),
-    ];
-
     foreach (config('translatable.locales') as $locale) {
       $this->rules += [$locale . '.title' => ['required']];
-      // $this->rules += [$locale . '.title' => ['required', Rule::unique('course_translations', 'title')->ignore($course->id, 'course_id')]];
+      $this->rules += [$locale . '.appointment' => ['required']];
     } // end of  for each
 
     $this->rules += [];
-
-
     return $this->rules;
   }
 }

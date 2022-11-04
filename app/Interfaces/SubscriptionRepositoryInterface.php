@@ -6,8 +6,8 @@ interface SubscriptionRepositoryInterface
 {
   public function getAllSubscriptions();
   public function getFilteredSubscriptions($request);
-  public function getSubscriptionById($SubscriptionId);
+  public function getSubscriptionById($subscriptionId);
   public function createSubscription($request);
-  public function updateSubscription($request, $Subscription);
-  public function deleteSubscription($Subscription);
+  public function updateSubscription($request, $subscription);
+  public function deleteSubscription($subscription);
 }

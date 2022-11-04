@@ -6,13 +6,15 @@ use App\Scopes\OrderScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Subscription extends Model
+class SubscriptionType extends Model
 {
   use HasFactory;
   use \Astrotomic\Translatable\Translatable;
   protected $guarded = [];
 
-  public $translatedAttributes = ['title', 'short_description'];
+  public $translatedAttributes = ['title', 'appointment'];
+
+  public $translationForeignKey = 'sub_type_id';
 
   protected static function boot()
   {
@@ -35,21 +37,24 @@ class Subscription extends Model
     });
   } // end of scopeWhenSearch
 
-  /////////////////// start relationships ///////////////////////////////
-  public function schools()
+  public function scopeWhenSubscription($query, $subscription_id)
   {
-    return $this->belongsToMany(School::class, 'nursery_subscription', 'school_id', 'subscription_id')->withPivot(['status'])->withTranslation(app()->getLocale());
+    return $query->when($subscription_id, function ($q) use ($subscription_id) {
+
+      return $q->whereHas('subscription', function ($qu) use ($subscription_id) {
+
+        return $qu->whereIn('subscription_id', (array)$subscription_id);
+      });
+    });
   }
 
-  public function courses()
+  public function school()
   {
-    return $this->hasMany(Course::class);
+    return $this->belongsTo(School::class);
   }
 
-  public function subscriptionTypes()
+  public function subscription()
   {
-    return $this->hasMany(SubscriptionType::class);
+    return $this->belongsTo(Subscription::class);
   }
-  /////////////////// end relationships ///////////////////////////////
-
 }
