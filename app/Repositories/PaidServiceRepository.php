@@ -2,19 +2,19 @@
 
 namespace App\Repositories;
 
-use App\Models\NurseryFees;
+use App\Interfaces\PaidServiceRepositoryInterface;
+use App\Models\PaidService;
 use App\Scopes\OrderScope;
 use App\Traits\UploadFileTrait;
-use App\Interfaces\NurseryFeesRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 
-class NurseryFeesRepository implements NurseryFeesRepositoryInterface
+class PaidServiceRepository implements PaidServiceRepositoryInterface
 {
   use UploadFileTrait;
 
-  public function getFilteredNurseryFees($request)
+  public function getFilteredPaidServices($request)
   {
-    return  NurseryFees::withoutGlobalScope(new OrderScope)
+    return  PaidService::withoutGlobalScope(new OrderScope)
       ->withTranslation(app()->getLocale())
       ->with(['school.translations'])
       ->whenSearch($request->search)
@@ -24,9 +24,9 @@ class NurseryFeesRepository implements NurseryFeesRepositoryInterface
       ->paginate(request()->perPage ?? 20);
   }
 
-  public function getNurseryFees($request)
+  public function getPaidServices($request)
   {
-    return  NurseryFees::withTranslation(app()->getLocale())
+    return  PaidService::withTranslation(app()->getLocale())
       ->whenSearch($request->search)
       ->whenSchool($request->school_id)
       ->WhenSubscription($request->subscription_id)
@@ -36,40 +36,40 @@ class NurseryFeesRepository implements NurseryFeesRepositoryInterface
       ->paginate(request()->perPage ?? 20);
   }
 
-  public function getNurseryFeesById($nurseryFees)
+  public function getPaidServiceById($paidService)
   {
-    $nurseryFees = NurseryFees::findOrFail($nurseryFees);
-    return $nurseryFees;
+    $paidService = PaidService::findOrFail($paidService);
+    return $paidService;
   }
 
-  public function getNurseryFeesRequestData($request)
+  public function getPaidServiceRequestData($request)
   {
     $request_data = array_merge(['status', 'school_id','price', 'order_column'], config('translatable.locales'));
 
     return  $request->only($request_data);
   }
 
-  public function createNurseryFees($request)
+  public function createPaidService($request)
   {
-    $request_data = $this->getNurseryFeesRequestData($request);
+    $request_data = $this->getPaidServiceRequestData($request);
 
-    $nurseryFees = NurseryFees::create($request_data);
+    $paidService = PaidService::create($request_data);
 
-    return   $nurseryFees;
+    return   $paidService;
   }
 
-  public function updateNurseryFees($request, $nurseryFee)
+  public function updatePaidService($request, $nurseryFee)
   {
-    $request_data = $this->getNurseryFeesRequestData($request);
+    $request_data = $this->getPaidServiceRequestData($request);
 
     $nurseryFee->update($request_data);
 
     return true;
   }
 
-  public function deleteNurseryFees($nurseryFees)
+  public function deletePaidService($paidService)
   {
-    $nurseryFees->delete();
+    $paidService->delete();
     return true;
   }
 }

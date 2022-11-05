@@ -6,7 +6,7 @@ use App\Scopes\OrderScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PaidService extends Model
+class GradeFees extends Model
 {
   use HasFactory;
   use \Astrotomic\Translatable\Translatable;
@@ -48,10 +48,25 @@ class PaidService extends Model
       });
     });
   } // end of
-  ////////////////// start scopes ////////////////////////////////
 
+  public function scopeWhenGrade($query, $garde_id)
+  {
+    return $query->when($garde_id, function ($q) use ($garde_id) {
+
+      return $q->whereHas('grade', function ($grade) use ($garde_id) {
+
+        return $grade->whereIn('grade_id', (array)$garde_id);
+      });
+    });
+  } // end of
+  ////////////////// start scopes ////////////////////////////////
   public function school()
   {
     return $this->belongsTo(School::class);
+  }
+
+  public function grade()
+  {
+    return $this->belongsTo(Grade::class);
   }
 }

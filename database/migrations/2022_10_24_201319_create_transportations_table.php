@@ -13,7 +13,7 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('transportation', function (Blueprint $table) {
+    Schema::create('transportations', function (Blueprint $table) {
       $table->id();
       $table->integer('order_column')->nullable();
       $table->boolean('status')->default(1); // default active

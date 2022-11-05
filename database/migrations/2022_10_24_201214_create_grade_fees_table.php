@@ -13,8 +13,10 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('school_grade_fees', function (Blueprint $table) {
+    Schema::create('grade_fees', function (Blueprint $table) {
       $table->id();
+      $table->integer('order_column')->nullable();
+      $table->boolean('status')->default(1); // default active
       $table->double('price');
       $table->foreignId('school_id')->nullable()->constrained()->onDelete('cascade');
       $table->foreignId('grade_id')->nullable()->constrained()->onDelete('cascade');
@@ -29,6 +31,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('school_grade_fees');
+    Schema::dropIfExists('grade_fees');
   }
 };

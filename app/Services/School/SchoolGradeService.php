@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class SchoolGradeService
 {
-
   public static function getSchoolGrades($school)
   {
     return $school->grades;

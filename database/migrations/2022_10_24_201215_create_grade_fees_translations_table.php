@@ -13,12 +13,12 @@ return new class extends Migration
    */
   public function up()
   {
-    Schema::create('school_grade_fees_translations', function (Blueprint $table) {
+    Schema::create('grade_fees_translations', function (Blueprint $table) {
       $table->id();
       $table->string('title');
       $table->string('locale')->index();
-      $table->foreignId('sc_gr_fees_id')->nullable()->constrained('school_grade_fees')->onDelete('cascade');
-      $table->unique(['sc_gr_fees_id', 'locale']);
+      $table->foreignId('grade_fees_id')->nullable()->constrained('grade_fees')->onDelete('cascade');
+      $table->unique(['grade_fees_id', 'locale']);
     });
   }
 
@@ -29,6 +29,6 @@ return new class extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('school_grade_fees_translations');
+    Schema::dropIfExists('grade_fees_translations');
   }
 };

@@ -36,15 +36,21 @@ use App\Interfaces\ReservationRepositoryInterface;
 use App\Repositories\EducationalSubjectRepository;
 use App\Interfaces\EducationTypeRepositoryInterface;
 use App\Interfaces\EducationalSubjectRepositoryInterface;
+use App\Interfaces\GradeFeesRepositoryInterface;
 use App\Interfaces\NurseryFeesRepositoryInterface;
+use App\Interfaces\PaidServiceRepositoryInterface;
 use App\Interfaces\ReservationLogRepositoryInterface;
 use App\Interfaces\SubscriptionRepositoryInterface;
 use App\Interfaces\SubscriptionTypeRepositoryInterface;
+use App\Interfaces\TransportationRepositoryInterface;
 use App\Repositories\Customer\ReservationRepository as CustomerReservationRepository;
+use App\Repositories\GradeFeesRepository;
 use App\Repositories\NurseryFeesRepository;
+use App\Repositories\PaidServiceRepository;
 use App\Repositories\ReservationLogRepository;
 use App\Repositories\SubscriptionRepository;
 use App\Repositories\SubscriptionTypeRepository;
+use App\Repositories\TransportationRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -76,6 +82,10 @@ class RepositoryServiceProvider extends ServiceProvider
     $this->app->bind(SubscriptionRepositoryInterface::class, SubscriptionRepository::class);
     $this->app->bind(SubscriptionTypeRepositoryInterface::class, SubscriptionTypeRepository::class);
     $this->app->bind(NurseryFeesRepositoryInterface::class, NurseryFeesRepository::class);
+    $this->app->bind(GradeFeesRepositoryInterface::class, GradeFeesRepository::class);
+    $this->app->bind(PaidServiceRepositoryInterface::class, PaidServiceRepository::class);
+    $this->app->bind(TransportationRepositoryInterface::class, TransportationRepository::class);
+
   }
   /**
    * Bootstrap services.
