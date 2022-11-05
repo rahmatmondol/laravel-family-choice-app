@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'subscriptionTypes';
-$title = __('site.SubscriptionTypes');
+$page = 'nurseryFees';
+$title = __('site.NurseryFees');
 ?>
 @section('title_page')
 {{ $title }}
@@ -17,7 +17,7 @@ $title = __('site.SubscriptionTypes');
         <div class="col-sm-6">
           <h6>{{ $title }}
             <small>
-              ( {{ $subscriptionTypes->total() }} )
+              ( {{ $nurseryFees->total() }} )
             </small>
           </h6>
 
@@ -30,7 +30,7 @@ $title = __('site.SubscriptionTypes');
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route($mainRoutePrefix.'.subscriptionTypes.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.nurseryFees.index') }}" method="get">
 
             <div class="row">
 
@@ -39,27 +39,15 @@ $title = __('site.SubscriptionTypes');
                   <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
                     value="{{ request()->search }}">
                 </div>
-            </div>
+              </div>
 
               <div class="col-md-4">
                 <div class="form-group">
                   <select name="school_id" class="form-control"  data-live-search="true">
                     <option value="">@lang('site.Schools') </option>
-                    @foreach( $schools as $value )
-                    <option value="{{ $value->id}}" @selected(request('school_id')==$value->id) >
-                      {{ $value->title }}</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="form-group">
-                  <select name="subscription_id" class="form-control"  data-live-search="true">
-                    <option value="">@lang('site.Subscription') </option>
-                    @foreach( $subscriptions as $value )
-                    <option value="{{ $value->id}}" @selected(request('subscription_id')==$value->id) >
-                      {{ $value->title }}</option>
+                    @foreach( $schools as $scool )
+                    <option value="{{ $scool->id}}" @selected(request('school_id')==$scool->id) >
+                      {{ $scool->title }}</option>
                     @endforeach
                   </select>
                 </div>
@@ -69,12 +57,12 @@ $title = __('site.SubscriptionTypes');
                 <div class="form-group">
                   <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                     @lang('site.Search')</button>
-                  @if (checkAdminPermission('create_subscriptionTypes'))
-                  <a href="{{ route($mainRoutePrefix.'.subscriptionTypes.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
+                  @if (checkAdminPermission('create_nurseryFees'))
+                  <a href="{{ route($mainRoutePrefix.'.nurseryFees.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
                     @lang('site.Add')</a>
                   @endif
                 </div>
-              </div>
+            </div>
 
             </div>
           </form><!-- end of form -->
@@ -111,74 +99,56 @@ $title = __('site.SubscriptionTypes');
                 @lang('site.School')
               </th>
               <th style="width: 20%">
-                @lang('site.Subscription')
-              </th>
-              <th style="width: 20%">
-                @lang('site.Type')
-              </th>
-              <th style="width: 20%">
                 @lang('site.Price')
               </th>
-              <th style="width: 20%">
-                @lang('site.Number Of Days')
-              </th>
-              <th style="width: 8%" class="text-center">
+              <th style="width: 8%" >
                 @lang('site.Status')
               </th>
-              <th style="width: 8%" class="text-center">
+              <th style="width: 8%" >
                 @lang('site.table.Order Item')
               </th>
-              <th style="width: 20%" class="text-center">
+              <th style="width: 20%" >
                 @lang('site.Actions')
               </th>
             </tr>
           </thead>
           <tbody>
-            @forelse ($subscriptionTypes as $subscriptionType )
+            @forelse ($nurseryFees as $value )
             <tr>
               <td>
                 {{ $loop->iteration }}
               </td>
               <td>
-                {{ $subscriptionType->title }}
+                {{ $value->title }}
               </td>
               <td class="text-center">
-                <a href="{{ route($mainRoutePrefix.'.schools.show', ['school'=>$subscriptionType->school_id]) }}"
-                  class="btn btn-primary btn-sm" target="_blank">{{ $subscriptionType->school?->title }}</a>
+                <a href="{{ route($mainRoutePrefix.'.schools.show', ['school'=>$value->school_id]) }}"
+                  class="btn btn-primary btn-sm" target="_blank">{{ $value->school?->title }}</a>
               </td>
               <td>
-                {{ $subscriptionType->subscription?->title }}
-              </td>
-              <td>
-                @lang('site.'. $subscriptionType->type)
-              </td>
-              <td>
-                {{ $subscriptionType->price }} @lang('site.app.Currency')
-              </td>
-              <td>
-                {{ $subscriptionType->number_of_days }}
+                {{ $value->price }}
               </td>
               <td class="project-state">
-                @include('admin.partials._render_status',['status'=>$subscriptionType->status])
+                @include('admin.partials._render_status',['status'=>$value->status])
               </td>
               <td>
-                {{ $subscriptionType->order_column }}
+                {{ $value->order_column }}
               </td>
               <td class="project-actions text-right">
 
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route($mainRoutePrefix.'.subscriptionTypes.show', ['subscriptionType'=>$subscriptionType->id]),
+                'route'=>route($mainRoutePrefix.'.nurseryFees.show', ['nurseryFee'=>$value->id]),
                 ])
 
                 @include('admin.partials._edit_btn',[
-                'txt'=>__('site.Edit'),
-                'route'=>route($mainRoutePrefix.'.subscriptionTypes.edit', ['subscriptionType'=>$subscriptionType->id]),
+                'txt'=>__('site.Edit') ,
+                'route'=>route($mainRoutePrefix.'.nurseryFees.edit', ['nurseryFee'=>$value->id]),
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route($mainRoutePrefix.'.subscriptionTypes.destroy', $subscriptionType->id),
+                'route'=>route($mainRoutePrefix.'.nurseryFees.destroy', $value->id),
                 ])
 
               </td>
@@ -193,7 +163,7 @@ $title = __('site.SubscriptionTypes');
 
           </tbody>
         </table>
-        {{ $subscriptionTypes->appends(request()->query())->links() }}
+        {{ $nurseryFees->appends(request()->query())->links() }}
 
       </div>
       <!-- /.card-body -->

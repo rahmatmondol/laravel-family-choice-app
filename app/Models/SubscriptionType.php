@@ -48,6 +48,17 @@ class SubscriptionType extends Model
     });
   }
 
+  public function scopeWhenSchool($query, $school_id)
+  {
+    return $query->when($school_id, function ($q) use ($school_id) {
+
+      return $q->whereHas('school', function ($qu) use ($school_id) {
+
+        return $qu->whereIn('school_id', (array)$school_id);
+      });
+    });
+  }
+
   public function school()
   {
     return $this->belongsTo(School::class);

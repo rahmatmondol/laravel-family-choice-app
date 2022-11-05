@@ -15,6 +15,8 @@ return new class extends Migration
   {
     Schema::create('nursery_fees', function (Blueprint $table) {
       $table->id();
+      $table->integer('order_column')->nullable();
+      $table->boolean('status')->default(1); // default active
       $table->double('price');
       $table->foreignId('school_id')->nullable()->constrained()->onDelete('cascade');
       $table->timestamps();

@@ -64,7 +64,6 @@ class CourseController extends BaseController
 
   public function edit(Request $request,$course)
   {
-
     $course = $this->courseRepository->getCourseById($course);
     $schools = $this->schoolRepository->getSchools($request,true);
     $subscriptions = $this->subscriptionRepository->getAllSubscriptions();

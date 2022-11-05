@@ -17,6 +17,7 @@ class SubscriptionTypeRepository implements SubscriptionTypeRepositoryInterface
       ->withoutGlobalScope(new OrderScope)
       ->whenSearch($request->search)
       ->whenSubscription($request->subscription_id)
+      ->whenSchool($request->school_id)
       ->isActive($request->status)
       ->with(['school.translation','subscription.translation'])
       ->latest()

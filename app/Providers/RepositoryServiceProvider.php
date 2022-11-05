@@ -36,10 +36,12 @@ use App\Interfaces\ReservationRepositoryInterface;
 use App\Repositories\EducationalSubjectRepository;
 use App\Interfaces\EducationTypeRepositoryInterface;
 use App\Interfaces\EducationalSubjectRepositoryInterface;
+use App\Interfaces\NurseryFeesRepositoryInterface;
 use App\Interfaces\ReservationLogRepositoryInterface;
 use App\Interfaces\SubscriptionRepositoryInterface;
 use App\Interfaces\SubscriptionTypeRepositoryInterface;
 use App\Repositories\Customer\ReservationRepository as CustomerReservationRepository;
+use App\Repositories\NurseryFeesRepository;
 use App\Repositories\ReservationLogRepository;
 use App\Repositories\SubscriptionRepository;
 use App\Repositories\SubscriptionTypeRepository;
@@ -73,6 +75,7 @@ class RepositoryServiceProvider extends ServiceProvider
     $this->app->bind(CustomerReservationRepositoryInterface::class, CustomerReservationRepository::class);
     $this->app->bind(SubscriptionRepositoryInterface::class, SubscriptionRepository::class);
     $this->app->bind(SubscriptionTypeRepositoryInterface::class, SubscriptionTypeRepository::class);
+    $this->app->bind(NurseryFeesRepositoryInterface::class, NurseryFeesRepository::class);
   }
   /**
    * Bootstrap services.

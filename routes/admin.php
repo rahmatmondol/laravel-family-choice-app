@@ -22,7 +22,9 @@ use App\Http\Controllers\Admin\ReservationLogsController;
 use App\Http\Controllers\Admin\EducationalSubjectController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
+use App\Http\Controllers\Admin\NurseryFeesController;
 use App\Http\Controllers\Admin\SubscriptionController;
+use App\Http\Controllers\Admin\SubscriptionTypeController;
 
 Route::group(
   [
@@ -69,6 +71,7 @@ Route::group(
         'schools.subscriptions' => School\SubscriptionController::class,
         'schools.grades'        => School\GradeController::class,
         'courses'               => CourseController::class,
+        'nurseryFees'           => NurseryFeesController::class,
         'sliders'               => SliderController::class,
         'user_manuals'          => UserManualController::class,
         'attachments'           => AttachmentController::class,

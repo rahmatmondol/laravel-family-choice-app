@@ -19,9 +19,9 @@ class SchoolRepository implements SchoolRepositoryInterface
 {
   use UploadFileTrait;
 
-  public function getAllSchools()
+  public function getAllSchools($get_nurseries = null)
   {
-    return School::isActive(true)->withTranslation(app()->getLocale())->get();
+    return School::isActive(true)->withTranslation(app()->getLocale()) ->whereNursery($get_nurseries)->get();
   }
 
   public function getFilteredSchools($request)

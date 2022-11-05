@@ -31,9 +31,10 @@ class SubscriptionTypeController extends BaseController
     session(['currentPage' => request('page', 1)]);
 
     $subscriptionTypes = $this->subscriptionTypeRepository->getFilteredSubscriptionTypes($request);
+    $subscriptions = $this->subscriptionRepository->getAllSubscriptions();
     $schools = $this->schoolRepository->getSchools($request,true);
 
-    return view($this->mainViewPrefix.'.subscriptionTypes.index', compact('subscriptionTypes','schools'));
+    return view($this->mainViewPrefix.'.subscriptionTypes.index', compact('subscriptionTypes','schools','subscriptions'));
   } // end of index
 
   public function create(Request $request)
