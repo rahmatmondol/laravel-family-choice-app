@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\NurseryFees;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SchoolResource extends JsonResource
@@ -37,6 +38,9 @@ class SchoolResource extends JsonResource
       'subscriptions'       => $this->when($this->is_nursery_type, SubscriptionResource::collection($this->activeSubscriptions)),
       'type'                => new TypeResource($this->type),
       'gallary'             => SchoolImageResource::collection($this->schoolImages),
+      'nursery_fees'        => $this->when($this->is_nursery_type, NurseryFeesResource::collection($this->activeNurseryFees)),
+      'paid_services'       => PaidServiceResource::collection($this->activePaidServices),
+      'transportations'     => TransportationResource::collection($this->activeTransportations),
     ];
   }
 }

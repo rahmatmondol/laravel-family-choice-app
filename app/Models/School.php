@@ -196,11 +196,11 @@ class School extends Authenticatable
 
   public function scopeWhereNursery($query, $get_nurseries = null)
   {
-    if ($get_nurseries != null) {
-      $query->whereHas('type', function ($nurseryQuery) use ($get_nurseries) {
-        $nurseryQuery->isNursery($get_nurseries);
+    return $query->when($get_nurseries !== null, function ($query1) use ($get_nurseries) {
+      $query1->whereHas('type', function ($query2) use ($get_nurseries) {
+        $query2->isNursery($get_nurseries);
       });
-    }
+    });
   }
   /////////////////// end scopes ///////////////////////////////
 
@@ -220,6 +220,38 @@ class School extends Authenticatable
     return $this->hasMany(Course::class);
   } // end of user
 
+  public function nurseryFees()
+  {
+    return $this->hasMany(NurseryFees::class,'school_id','id')->withTranslation(app()->getLocale());
+  } // end of user
+
+  public function activeNurseryFees()
+  {
+    return $this->nurseryFees()->isActive(true);
+  } // end of user
+
+  public function paidServices()
+  {
+    return $this->hasMany(PaidService::class);
+  } // end of user
+
+  public function activePaidServices()
+  {
+    return $this->paidServices()->isActive(true);
+  } // end of user
+
+  public function transportations()
+  {
+    return $this->hasMany(Transportation::class);
+  } // end of user
+
+
+  public function activeTransportations()
+  {
+    return $this->transportations()->isActive(true);
+  } // end of user
+
+
   public function attachments()
   {
     return $this->hasMany(Attachment::class);
@@ -227,7 +259,7 @@ class School extends Authenticatable
 
   public function grades()
   {
-    return $this->belongsToMany(Grade::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale())->withPivot(['administrative_expenses', 'fees', 'status'])->withoutGlobalScope(new OrderScope);
+    return $this->belongsToMany(Grade::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale())->withPivot([ 'status'])->withoutGlobalScope(new OrderScope);
   }
 
   public function activeGrades()

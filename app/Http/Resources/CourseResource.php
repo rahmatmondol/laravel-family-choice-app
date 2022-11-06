@@ -15,14 +15,15 @@ class CourseResource extends JsonResource
   public function toArray($request)
   {
     return [
-      'id'                =>  $this->id,
-      'title'             => $this->title,
-      'short_description' => $this->short_description,
-      'description'       => $this->description,
-      'image'             => $this->image_path,
-      'subscription'      => new SubscriptionResource($this->subscription) ,
-      'from_date'         => $this->from_date,
-      'to_date'           => $this->to_date,
+      'id'                 =>  $this->id,
+      'title'              => $this->title,
+      'short_description'  => $this->short_description,
+      'description'        => $this->description,
+      'image'              => $this->image_path,
+      'subscription'       => new SubscriptionResource($this->subscription) ,
+      'subscription_types' => new SubscriptionTypeResource($this->subscription_types) ,
+      'from_date'          => $this->from_date,
+      'to_date'            => $this->to_date,
     ];
   }
 }

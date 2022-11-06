@@ -18,6 +18,7 @@ class SubscriptionTypeRepository implements SubscriptionTypeRepositoryInterface
       ->whenSearch($request->search)
       ->whenSubscription($request->subscription_id)
       ->whenSchool($request->school_id)
+      ->whenSchool($request->school_id)
       ->isActive($request->status)
       ->with(['school.translation','subscription.translation'])
       ->latest()
@@ -26,7 +27,9 @@ class SubscriptionTypeRepository implements SubscriptionTypeRepositoryInterface
 
   public function getAllSubscriptionTypes()
   {
-    return  SubscriptionType::isActive(true)->withTranslation(app()->getLocale())
+    $request = request();
+    return  SubscriptionType::whenSubscription($request->subscription_id)
+      ->whenSchool($request->school_id)->isActive(true)->withTranslation(app()->getLocale())
       ->get();
   }
 

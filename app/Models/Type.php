@@ -33,14 +33,14 @@ class Type extends Model
 
   public function scopeIsNursery($query, $status = null)
   {
-    if ($status != null)
-      return $query->where('is_nursery', (bool)$status);
+    return $query->when($status !== null, function ($q) use ($status) {
+      return $q->where('is_nursery', $status);
+    });
   }
 
   public function scopeWhenSearch($query, $search)
   {
     return $query->when($search, function ($q) use ($search) {
-
       return $q->whereTranslationLike('title', '%' . $search . '%');
     });
   } // end of scopeWhenSearch

@@ -11,6 +11,8 @@ use App\Interfaces\SchoolRepositoryInterface;
 use App\Http\Resources\Collection\CourseCollection;
 use App\Http\Resources\Collection\ReviewCollection;
 use App\Http\Resources\Collection\SchoolCollection;
+use App\Http\Resources\SubscriptionTypeResource;
+use App\Interfaces\SubscriptionTypeRepositoryInterface;
 
 class SchoolController extends Controller
 {
@@ -19,6 +21,7 @@ class SchoolController extends Controller
   public function __construct(
     private SchoolRepositoryInterface $schoolRepository,
     private CourseRepositoryInterface $courseRepository,
+    private SubscriptionTypeRepositoryInterface $subscriptionTypeRepository,
   ) {
   } //end of constructor
 
@@ -32,6 +35,12 @@ class SchoolController extends Controller
   {
     $courses = $this->courseRepository->getCourses($request);
     return $this->sendResponse(new CourseCollection($courses), "");
+  }
+
+  public function subscriptionTypes(Request $request)
+  {
+    $subscriptionTypes = $this->subscriptionTypeRepository->getAllSubscriptionTypes();
+    return $this->sendResponse( SubscriptionTypeResource::collection($subscriptionTypes), "");
   }
 
   public function school_reviews(Request $request)

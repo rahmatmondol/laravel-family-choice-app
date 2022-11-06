@@ -56,7 +56,6 @@ class Course extends Model
 
   public function scopeWhenSubscription($query, $subscription_id)
   {
-    $subscription_id = getAuthSchool() ? getAuthSchool()->id : $subscription_id;
     return $query->when($subscription_id, function ($q) use ($subscription_id) {
 
       return $q->whereHas('subscription', function ($qu) use ($subscription_id) {

@@ -16,7 +16,6 @@ return new class extends Migration
     Schema::create('school_grade', function (Blueprint $table) {
       $table->id();
       $table->boolean('status')->default(1); // default active
-      $table->double('fees');
       $table->foreignId('grade_id')->nullable()->constrained()->onDelete('cascade');
       $table->foreignId('school_id')->nullable()->constrained()->onDelete('cascade');
       $table->timestamps();

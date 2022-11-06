@@ -21,7 +21,7 @@ class SchoolRepository implements SchoolRepositoryInterface
 
   public function getAllSchools($get_nurseries = null)
   {
-    return School::isActive(true)->withTranslation(app()->getLocale()) ->whereNursery($get_nurseries)->get();
+    return School::isActive(true)->whereNursery($get_nurseries)->withTranslation(app()->getLocale())->get();
   }
 
   public function getFilteredSchools($request)
@@ -56,8 +56,7 @@ class SchoolRepository implements SchoolRepositoryInterface
       ->withTranslation()
       ->with([
         'educationalSubjects', 'educationTypes', 'schoolTypes', 'type.translations', 'services', 'schoolImages',
-        'activeGrades',
-        'activeSubscriptions',
+        'activeGrades','activeSubscriptions','activeNurseryFees','activePaidServices' , 'activeTransportations'
       ])
       ->paginate($request->perPage ?? 20);
 
@@ -80,7 +79,7 @@ class SchoolRepository implements SchoolRepositoryInterface
   public function getSchoolRequestData($request)
   {
     $request_data = array_merge([
-      'status', 'order_column', 'type', 'phone', 'whatsapp', 'email', 'available_seats', 'type_id', 'fees', 'lat', 'lng'
+      'status', 'order_column', 'type', 'phone', 'whatsapp', 'email', 'available_seats', 'total_seats', 'type_id', 'fees', 'lat', 'lng'
     ], config('translatable.locales'));
 
     return  $request->only($request_data);

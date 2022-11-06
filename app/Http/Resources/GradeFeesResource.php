@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SchoolGradeResource extends JsonResource
+class GradeFeesResource extends JsonResource
 {
   /**
    * Transform the resource into an array.
@@ -17,9 +17,7 @@ class SchoolGradeResource extends JsonResource
     return [
       'id'                      =>  $this->id,
       'title'                   => $this->title,
-      'school_id'               => $this->pivot->school_id,
-      'fees'                    => GradeFeesResource::collection($this->getActiveGradeFees($this->pivot->school_id)),
-      'status'                  => (bool)$this->pivot->status,
+      'price'                   => $this->price,
     ];
   }
 }

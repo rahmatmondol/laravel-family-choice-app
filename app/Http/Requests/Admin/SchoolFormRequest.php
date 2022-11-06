@@ -18,7 +18,6 @@ class SchoolFormRequest extends FormRequest
   {
     $this->rules += [
       'available_seats' => ['nullable', 'integer'],
-      'fees' => ['required', 'integer'],
       'lat' => ['nullable'],
       'lng' => ['nullable'],
 

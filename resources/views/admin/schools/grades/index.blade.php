@@ -33,22 +33,13 @@ $title = __('site.Grades');
           <form action="{{ route($mainRoutePrefix.'.schools.grades.index',['school'=>$school->id]) }}" method="get">
 
             <div class="row">
-
-              {{-- <div class="col-md-4">
-                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
-                  value="{{ request()->search }}">
-              </div> --}}
-
               <div class="col-md-4">
-                {{-- <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
-                  @lang('site.Search')</button> --}}
                 @if (checkAdminPermission('create_grades'))
                 <a href="{{ route($mainRoutePrefix.'.schools.grades.create',['school'=>$school->id]) }}"
                   class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
                   @lang('site.Add')</a>
                 @endif
               </div>
-
             </div>
           </form><!-- end of form -->
         </div>
@@ -77,17 +68,8 @@ $title = __('site.Grades');
               <th style="width: 1%">
                 #
               </th>
-              {{-- <th style="width: 20%">
-                @lang('site.School')
-              </th> --}}
               <th style="width: 20%">
                 @lang('site.Grade')
-              </th>
-              <th style="width: 20%">
-                @lang('site.Fees')
-              </th>
-              <th style="width: 20%">
-                @lang('site.Administrative Expenses')
               </th>
               <th style="width: 8%" class="text-center">
                 @lang('site.Status')
@@ -108,12 +90,6 @@ $title = __('site.Grades');
               </td> --}}
               <td>
                 {{ $grade->title }}
-              </td>
-              <td>
-                {{ $grade->pivot->fees }}
-              </td>
-              <td>
-                {{ $grade->pivot->administrative_expenses }}
               </td>
               <td class="project-state">
                 @include('admin.partials._render_status',['status'=>$grade->pivot->status])

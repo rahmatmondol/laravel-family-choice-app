@@ -33,7 +33,7 @@ class GradeFeesController extends BaseController
     session(['currentPage' => request('page', 1)]);
 
     $gradeFees = $this->gradeFeesRepository->getFilteredGradeFees($request);
-    $schools = $this->schoolRepository->getAllSchools(true);
+    $schools = $this->schoolRepository->getAllSchools(false);
     $grades = $this->gradeRepository->getAllGrades();
 
     return view($this->mainViewPrefix.'.gradeFees.index', compact('gradeFees','schools','grades'));
@@ -41,7 +41,7 @@ class GradeFeesController extends BaseController
 
   public function create(Request $request)
   {
-    $schools = $this->schoolRepository->getSchools($request,true);
+    $schools = $this->schoolRepository->getAllSchools(false);
     $grades = $this->gradeRepository->getAllGrades();
 
     return view($this->mainViewPrefix.'.gradeFees.create', compact('schools','grades'));
@@ -69,7 +69,7 @@ class GradeFeesController extends BaseController
   public function edit(Request $request,$gradeFees)
   {
     $gradeFees = $this->gradeFeesRepository->getGradeFeesById($gradeFees);
-    $schools = $this->schoolRepository->getSchools($request,true);
+    $schools = $this->schoolRepository->getAllSchools(false);
     $grades = $this->gradeRepository->getAllGrades();
 
     return view($this->mainViewPrefix.'.gradeFees.edit', compact('gradeFees','schools','grades'));

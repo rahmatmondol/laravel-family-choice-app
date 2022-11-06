@@ -15,11 +15,6 @@ class SchoolGradeFormRequest extends FormRequest
   }
   public function rules()
   {
-    $this->rules += [
-      'fees' => ['required', 'integer'],
-      'administrative_expenses' => ['required', 'integer'],
-    ];
-
     if ($this->isMethod('post')) {
       return $this->createRules();
     } elseif ($this->isMethod('put')) {

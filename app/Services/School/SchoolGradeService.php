@@ -20,8 +20,6 @@ class SchoolGradeService
   public static function storeSchoolGrade($request,$school_id)
   {
     DB::table('school_grade')->updateOrInsert(['grade_id' => $request->grade_id, 'school_id' => $school_id], [
-      'fees' => $request->fees,
-      'administrative_expenses' => $request->administrative_expenses,
       'status' => $request->status
     ]);
   }
@@ -29,8 +27,6 @@ class SchoolGradeService
   public static function updateSchoolGrade($request, $school, $grade)
   {
     DB::table('school_grade')->updateOrInsert(['grade_id' => $grade->id, 'school_id' => $school->id], [
-      'fees' => $request->fees,
-      'administrative_expenses' => $request->administrative_expenses,
       'status' => $request->status
     ]);
   }

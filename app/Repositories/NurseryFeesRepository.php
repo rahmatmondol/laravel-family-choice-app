@@ -36,6 +36,7 @@ class NurseryFeesRepository implements NurseryFeesRepositoryInterface
       ->paginate(request()->perPage ?? 20);
   }
 
+  
   public function getNurseryFeesById($nurseryFees)
   {
     $nurseryFees = NurseryFees::findOrFail($nurseryFees);

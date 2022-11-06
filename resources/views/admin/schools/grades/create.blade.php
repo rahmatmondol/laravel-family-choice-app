@@ -55,15 +55,6 @@ $title = __('site.Create Grade');
                 </select>
               </div>
 
-              {{-- status --}}
-              <div class="form-group">
-                <label for="inputStatus">@lang('site.Status')</label>
-                <select id="inputStatus" name="status" required class="form-control custom-select">
-                  <option value='' selected disabled>@lang('site.Status')</option>
-                  <option value="1" @if(old('status')==1) selected @endif>@lang('site.Active')</option>
-                  <option value="0" @if(old('status')==0) selected @endif>@lang('site.In-Active')</option>
-                </select>
-              </div>
 
             </div>
             <!-- /.card-body -->
@@ -74,19 +65,14 @@ $title = __('site.Create Grade');
           <div class="card card-primary">
             <div class="card-body">
 
-              {{-- fees --}}
+              {{-- status --}}
               <div class="form-group">
-                <label>@lang('site.Fees')</label>
-                <input required="required" type="text" name="fees" class="form-control" value="{{old('fees')}}"
-                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
-              </div>
-
-              {{-- administrative_expenses --}}
-              <div class="form-group">
-                <label>@lang('site.Administrative Expenses')</label>
-                <input required="required" type="text" name="administrative_expenses" class="form-control"
-                  value="{{old('administrative_expenses')}}"
-                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                <label for="inputStatus">@lang('site.Status')</label>
+                <select id="inputStatus" name="status" required class="form-control custom-select">
+                  <option value='' selected disabled>@lang('site.Status')</option>
+                  <option value="1" @if(old('status')==1) selected @endif>@lang('site.Active')</option>
+                  <option value="0" @if(old('status')==0) selected @endif>@lang('site.In-Active')</option>
+                </select>
               </div>
 
             </div>
