@@ -15,7 +15,7 @@ class SchoolGradeResource extends JsonResource
   public function toArray($request)
   {
     return [
-      'id'                      =>  $this->id,
+      'id'                      => $this->id,
       'title'                   => $this->title,
       'school_id'               => $this->pivot->school_id,
       'fees'                    => GradeFeesResource::collection($this->getActiveGradeFees($this->pivot->school_id)),

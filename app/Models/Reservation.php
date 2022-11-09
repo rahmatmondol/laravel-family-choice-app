@@ -107,6 +107,21 @@ class Reservation extends Model
   {
     return $this->hasOne(Child::class);
   }
+
+  public function paidServices()
+  {
+    return $this->belongsToMany(PaidService::class, 'reservation_paid_service', 'reservation_id', 'paid_service_id')->withTranslation(app()->getLocale())->withPivot(['price']);
+  }
+
+  public function nurseryFees()
+  {
+    return $this->belongsToMany(NurseryFees::class, 'reservation_nursery_fees', 'reservation_id', 'nursery_fees_id')->withTranslation(app()->getLocale())->withPivot(['price']);
+  }
+
+  public function gradeFees()
+  {
+    return $this->belongsToMany(GradeFees::class, 'reservation_grade_fees', 'reservation_id', 'grade_fees_id')->withTranslation(app()->getLocale())->withPivot(['price']);
+  }
   ////////////////// end relationships //////////////////////////////
 
 

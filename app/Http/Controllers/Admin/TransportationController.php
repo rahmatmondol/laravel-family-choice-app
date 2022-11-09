@@ -30,14 +30,15 @@ class TransportationController extends BaseController
     session(['currentPage' => request('page', 1)]);
 
     $transportations = $this->transportationRepository->getFilteredTransportations($request);
-    $schools = $this->schoolRepository->getAllSchools(true);
+    $schools = $this->schoolRepository->getAllSchools();
 
     return view($this->mainViewPrefix.'.transportations.index', compact('transportations','schools'));
   } // end of index
 
   public function create(Request $request)
   {
-    $schools = $this->schoolRepository->getSchools($request,true);
+    $schools = $this->schoolRepository->getAllSchools();
+
     return view($this->mainViewPrefix.'.transportations.create', compact('schools'));
   } //end of create
 
@@ -63,7 +64,8 @@ class TransportationController extends BaseController
   public function edit(Request $request,$transportation)
   {
     $transportation = $this->transportationRepository->getTransportationById($transportation);
-    $schools = $this->schoolRepository->getSchools($request,true);
+    $schools = $this->schoolRepository->getAllSchools();
+
     return view($this->mainViewPrefix.'.transportations.edit', compact('transportation','schools'));
   } //end of edit
 

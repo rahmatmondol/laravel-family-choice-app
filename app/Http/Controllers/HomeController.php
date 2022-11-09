@@ -23,8 +23,9 @@ class HomeController extends Controller
   public function test()
   {
     $subscriptions = Subscription::isActive(true)->get()->pluck('id')->toArray();
-    dd($subscriptions);
     $msg = "Your Verification code is 123456" ;
+    $msg2 = "Your Verification code is 123456" ;
+    dd($subscriptions);
     NotificationService::sendSms('971522946005',$msg );
 
     $res = Notification::route('mail', "m@gmail.com")

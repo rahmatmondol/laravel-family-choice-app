@@ -29,7 +29,7 @@ return new class extends Migration
       $table->string('payment_intent_id')->nullable(); // used for refund reservation
       $table->boolean('notification_is_sent')->default(false); // used for refund reservation
       $table->foreignId('school_id')->nullable()->constrained()->nullOnDelete();
-      $table->foreignId('course_id')->nullable()->constrained()->nullOnDelete();
+      // $table->foreignId('course_id')->nullable()->constrained()->nullOnDelete();
       $table->foreignId('customer_id')->nullable()->constrained()->nullOnDelete();
       $table->softDeletes();
       $table->timestamps();

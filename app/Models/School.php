@@ -245,12 +245,10 @@ class School extends Authenticatable
     return $this->hasMany(Transportation::class);
   } // end of user
 
-
   public function activeTransportations()
   {
     return $this->transportations()->isActive(true);
   } // end of user
-
 
   public function attachments()
   {
@@ -265,6 +263,16 @@ class School extends Authenticatable
   public function activeGrades()
   {
     return $this->grades()->wherePivot('status', Status::Active->value);
+  }
+
+  public function gradeFees()
+  {
+    return $this->hasMany(GradeFees::class, 'school_id', 'id')->withTranslation(app()->getLocale())->withPivot([ 'status'])->withoutGlobalScope(new OrderScope);
+  }
+
+  public function activeGradeFees()
+  {
+    return $this->gradeFees()->isActive(true);
   }
 
   public function subscriptions()

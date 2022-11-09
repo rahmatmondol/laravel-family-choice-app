@@ -21,7 +21,7 @@ class CourseResource extends JsonResource
       'description'        => $this->description,
       'image'              => $this->image_path,
       'subscription'       => new SubscriptionResource($this->subscription) ,
-      'subscription_types' => new SubscriptionTypeResource($this->subscription_types) ,
+      // 'subscription_types' => new SubscriptionTypeResource($this->subscription_types) ,
       'from_date'          => $this->from_date,
       'to_date'            => $this->to_date,
     ];

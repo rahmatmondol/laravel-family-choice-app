@@ -31,14 +31,15 @@ class PaidServiceController extends BaseController
     session(['currentPage' => request('page', 1)]);
 
     $paidServices = $this->paidServiceRepository->getFilteredPaidServices($request);
-    $schools = $this->schoolRepository->getAllSchools(true);
+    $schools = $this->schoolRepository->getAllSchools();
 
     return view($this->mainViewPrefix.'.paidServices.index', compact('paidServices','schools'));
   } // end of index
 
   public function create(Request $request)
   {
-    $schools = $this->schoolRepository->getSchools($request,true);
+    $schools = $this->schoolRepository->getAllSchools();
+
     return view($this->mainViewPrefix.'.paidServices.create', compact('schools'));
   } //end of create
 
@@ -49,7 +50,7 @@ class PaidServiceController extends BaseController
     return view($this->mainViewPrefix.'.paidServices.show', compact('paidService'));
   } //end of create
 
-  public function store(App\Http\Controllers\Admin\PaidServiceFormRequest $request)
+  public function store(PaidServiceFormRequest $request)
   {
     $this->paidServiceRepository->createPaidService($request);
 
@@ -64,7 +65,8 @@ class PaidServiceController extends BaseController
   public function edit(Request $request,$paidService)
   {
     $paidService = $this->paidServiceRepository->getPaidServiceById($paidService);
-    $schools = $this->schoolRepository->getSchools($request,true);
+    $schools = $this->schoolRepository->getAllSchools();
+
     return view($this->mainViewPrefix.'.paidServices.edit', compact('paidService','schools'));
   } //end of edit
 

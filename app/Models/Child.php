@@ -15,9 +15,24 @@ class Child extends Model
     return $this->belongsTo(Reservation::class);
   }
 
+  public function transportation()
+  {
+    return $this->belongsTo(Transportation::class);
+  }
+
   public function grade()
   {
     return $this->belongsTo(Grade::class);
+  }
+
+  public function course()
+  {
+    return $this->belongsTo(Course::class);
+  }
+
+  public function subscription_type()
+  {
+    return $this->belongsTo(SubscriptionType::class);
   }
 
   public function attachments()

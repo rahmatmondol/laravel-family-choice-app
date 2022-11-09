@@ -67,10 +67,10 @@ class Grade extends Model
     return $this->belongsToMany(School::class, 'school_grade', 'school_id', 'grade_id')->withTranslation(app()->getLocale())->withPivot(['status']);
   }
 
-  // public function gradeFees()
-  // {
-  //   return $this->hasMany(GradeFees::class,'grade_id','id')->withTranslation(app()->getLocale());
-  // } // end of user
+  public function gradeFees()
+  {
+    return $this->hasMany(GradeFees::class,'grade_id','id')->withTranslation(app()->getLocale());
+  } // end of user
 
   public function getActiveGradeFees($school_id)
   {

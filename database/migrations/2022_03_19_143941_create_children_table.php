@@ -15,13 +15,17 @@ return new class extends Migration
   {
     Schema::create('children', function (Blueprint $table) {
       $table->id();
+      $table->double('total_fees')->nullable();
       $table->string('child_name');
       $table->string('date_of_birth');
-      $table->double('fees');
-      $table->double('administrative_expenses')->nullable();
+      $table->double('subscription_type_price')->nullable();
+      $table->double('transportation_price')->nullable();
       $table->enum('gender', ['male', 'female'])->nullable();
       $table->foreignId('grade_id')->nullable()->constrained()->onDelete('cascade');
+      $table->foreignId('course_id')->nullable()->constrained()->onDelete('cascade');
+      $table->foreignId('subscription_type_id')->nullable('subscription_types')->constrained()->onDelete('cascade');
       $table->foreignId('reservation_id')->nullable()->constrained()->onDelete('cascade');
+      $table->foreignId('transportation_id')->nullable()->constrained()->nullOnDelete();
       $table->timestamps();
     });
   }
