@@ -16,17 +16,38 @@ use App\Models\Subscription;
 use App\Notifications\Reservation\ReservationPaidNotification;
 use App\Services\NotificationService;
 use Edujugon\PushNotification\PushNotification;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Schema;
 
 class HomeController extends Controller
 {
+  public function truncate()
+  {
+    // Schema::disableForeignKeyConstraints();
+
+    // $tableNames = Schema::getConnection()->getDoctrineSchemaManager()->listTableNames();
+    // foreach ($tableNames as $name) {
+    //   //if you don't want to truncate migrations
+    //   if ($name == 'migrations') {
+    //     continue;
+    //   }
+    //   DB::table($name)->truncate();
+    // }
+
+    // Schema::enableForeignKeyConstraints();
+
+    return 'done';
+  }
   public function test()
   {
+
+
     $subscriptions = Subscription::isActive(true)->get()->pluck('id')->toArray();
-    $msg = "Your Verification code is 123456" ;
-    $msg2 = "Your Verification code is 123456" ;
+    $msg = "Your Verification code is 123456";
+    $msg2 = "Your Verification code is 123456";
     dd($subscriptions);
-    NotificationService::sendSms('971522946005',$msg );
+    NotificationService::sendSms('971522946005', $msg);
 
     $res = Notification::route('mail', "m@gmail.com")
       ->notify(new SmsCodeNotification(115427));
@@ -36,10 +57,10 @@ class HomeController extends Controller
     $reservation = Reservation::first();
 
     return (new ReservationPaidNotification($reservation))
-    ->toMail('mahmouddief0@gmail.com');
+      ->toMail('mahmouddief0@gmail.com');
 
     $payment = Payment::firstOrCreate(
-      ['payment_intent_id' => 'pi_3LnheFDynjRZ45TZ2gncG8rs','event_type' => 'payment_intent.succeeded'],
+      ['payment_intent_id' => 'pi_3LnheFDynjRZ45TZ2gncG8rs', 'event_type' => 'payment_intent.succeeded'],
       ['event_object' => 'data'],
     );
     dd($payment);
@@ -55,10 +76,10 @@ class HomeController extends Controller
     dd('done');
 
 
-  dd(config('mail'));
+    dd(config('mail'));
 
-    dd(PaymentStatus::values() );
-    dd(ReservationStatus::values() );
+    dd(PaymentStatus::values());
+    dd(ReservationStatus::values());
     $dataIos = [
       'title' => 'test title ',
       'body' => 'tset body',

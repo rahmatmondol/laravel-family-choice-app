@@ -25,7 +25,7 @@ return new class extends Migration
       $table->foreignId('course_id')->nullable()->constrained()->onDelete('cascade');
       $table->foreignId('subscription_type_id')->nullable('subscription_types')->constrained()->onDelete('cascade');
       $table->foreignId('reservation_id')->nullable()->constrained()->onDelete('cascade');
-      $table->foreignId('transportation_id')->nullable()->constrained()->nullOnDelete();
+      $table->foreignId('transportation_id')->nullable()->constrained('transportations')->nullOnDelete();
       $table->timestamps();
     });
   }

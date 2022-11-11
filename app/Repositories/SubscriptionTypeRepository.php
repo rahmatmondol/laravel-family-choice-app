@@ -25,7 +25,7 @@ class SubscriptionTypeRepository implements SubscriptionTypeRepositoryInterface
       ->paginate(request()->perPage ?? 20);
   }
 
-  public function getAllSubscriptionTypes()
+  public function getSubscriptionTypes()
   {
     $request = request();
     return  SubscriptionType::whenSubscription($request->subscription_id)

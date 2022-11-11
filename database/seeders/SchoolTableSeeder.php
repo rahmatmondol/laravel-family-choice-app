@@ -12,8 +12,15 @@ use App\Models\EducationType;
 use Illuminate\Database\Seeder;
 use App\Models\EducationalSubject;
 use App\Models\Grade;
+use App\Models\GradeFees;
+use App\Models\NurseryFees;
+use App\Models\PaidService;
+use App\Models\Service;
 use App\Models\Subscription;
+use App\Models\SubscriptionType;
+use App\Models\Transportation;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Arr;
 
 class SchoolTableSeeder extends Seeder
 {
@@ -41,8 +48,12 @@ class SchoolTableSeeder extends Seeder
     $title = "Rowad Al Khaleej International Schools - ";
 
     $subscriptions = Subscription::get()->pluck('id')->toArray();
+    $grades = Grade::get()->pluck('id')->toArray();
     $types = Type::get()->pluck('id')->toArray();
-    for ($i = 0; $i < 50; $i++) {
+    $prices = [1200, 1500, 1400];
+    $courses_types = ['summery', 'wintry'];
+    $subscription_time_types = ['part_time', 'full_time'];
+    for ($i = 1; $i < 6; $i++) {
 
       $school = School::create([
         'ar' => ['title' => $title . $i, 'address' => $address . $i, 'description' => $description . $i],
@@ -69,42 +80,144 @@ class SchoolTableSeeder extends Seeder
         ]);
       }
 
-      for ($c = 0; $c < 20; $c++) {
-        $school->courses()->create([
-          'ar' => ['title' => '-دورة تعديل السلوك' . $c, 'short_description' => 'دورة صيفية', 'description' => "من عمر 10 سنين : 15 سنة"],
-          'en' => ['title' => '-دورة تعديل السلوك' . $c, 'short_description' => 'دورة صيفية', 'description' => "من عمر 10 سنين : 15 سنة"],
-          'status' => 1,
-          'type' => array_rand(['summery', 'wintry']),
-          'school_id' => $school->id,
-          'subscription_id' => $subscriptions[array_rand($subscriptions)],
-          'from_date' => '2022-10-10',
-          'to_date' => '2022-10-20',
-          'image' => 'default.png',
-        ]);
-      }
-
       $school->educationalSubjects()->attach(EducationalSubject::pluck('id')->toArray());
       $school->schoolTypes()->attach(SchoolType::pluck('id')->toArray());
       $school->educationTypes()->attach(EducationType::pluck('id')->toArray());
+      $school->services()->attach(Service::pluck('id')->toArray());
+
+      // transportations
+      Transportation::create([
+        'ar' => ['title' => 'بدون مواصلات'],
+        'en' => ['title' => 'No Transportation'],
+        'status' => 1,
+        'price' => 0,
+        'school_id' => $school->id,
+      ]);
+
+      Transportation::create([
+        'ar' => ['title' => 'اشتراك ذهاب فقط'],
+        'en' => ['title' => 'Only Going'],
+        'status' => 1,
+        'price' =>1000,
+        'school_id' => $school->id,
+      ]);
+
+      Transportation::create([
+        'ar' => ['title' => 'اشتراك عوده فقط'],
+        'en' => ['title' => 'Only Returns'],
+        'status' => 1,
+        'price' =>1000,
+        'school_id' => $school->id,
+      ]);
+
+      Transportation::create([
+        'ar' => ['title' => 'اشتراك ذهاب وعودة '],
+        'en' => ['title' => 'Both Going and return'],
+        'status' => 1,
+        'price' => 1500,
+        'school_id' => $school->id,
+      ]);
+
+      // add paid services
+      $data = [
+        [
+          'ar' => ['title' => "اشتراك حمام سباحة"],
+          'en' => ['title' => 'pool subscription'],
+          'price' => $prices[array_rand($prices)],
+          'school_id' => $school->id,
+        ],
+        [
+          'ar' => ['title' => "رسوم الملابس والادوات المدرسية"],
+          'en' => ['title' => 'School uniforms and supplies'],
+          'price' => $prices[array_rand($prices)],
+          'school_id' => $school->id,
+        ],
+        [
+          'ar' => ['title' => "رعاية الاطفال اقل من عامين"],
+          'en' => ['title' => 'Caring for children under two years old'],
+          'price' => $prices[array_rand($prices)],
+          'school_id' => $school->id,
+        ],
+      ];
+      foreach ($data as $item) {
+        PaidService::create($item);
+      }
+
 
       // if school attach grades
-      if (!$school->is_school_type) {
-
-        foreach (Grade::pluck('id')->toArray() as $grade) {
-          $school->grades()->attach($grade, [
-            'fees' => 1000,
-            'status' => 1
+      if ($school->is_school_type && isset($grades)) {
+        $school->grades()->syncWithPivotValues($grades, ['status' => 1]);
+        foreach ($grades as $key => $grade) {
+          GradeFees::create([
+            'ar' => ['title' => " ${key} مصاريف ادارية"],
+            'en' => ['title' => " ${key} administrative expenses"],
+            'price' => $prices[array_rand($prices)],
+            'grade_id' => $grade,
+            'school_id' => $school->id,
           ]);
         }
       }
 
       // if nursery attach subscriptions
       if ($school->is_nursery_type) {
+        for ($j = 0; $j < 5; $j++) {
+          NurseryFees::create([
+            'ar' => ['title' => " ${j} مصاريف ادارية"],
+            'en' => ['title' => " ${j} administrative expenses"],
+            'price' => $prices[array_rand($prices)],
+            'school_id' => $school->id,
+          ]);
+        }
+        for ($c = 0; $c < 20; $c++) {
+          $school->courses()->create([
+            'ar' => ['title' => '-دورة تعديل السلوك' . $c, 'short_description' => 'دورة صيفية', 'description' => "من عمر 10 سنين : 15 سنة"],
+            'en' => ['title' => '-دورة تعديل السلوك' . $c, 'short_description' => 'دورة صيفية', 'description' => "من عمر 10 سنين : 15 سنة"],
+            'status' => 1,
+            'type' => $courses_types[array_rand($courses_types)],
+            'school_id' => $school->id,
+            'subscription_id' => $subscriptions[array_rand($subscriptions)],
+            'from_date' => '2022-10-10',
+            'to_date' => '2022-10-20',
+            'image' => 'default.png',
+          ]);
+        }
+
+        if ($subscriptions)
+          $school->subscriptions()->syncWithPivotValues($subscriptions, ['status' => 1]);
 
         foreach ($subscriptions as $subscription) {
-          $school->subscriptions()->attach($subscription, [
-            'status' => 1
-          ]);
+          $data = [
+            [
+              'ar' => ['title' => 'حضانة صباحية', 'appointment' => 'من 8 ص الي 11 م'],
+              'en' => ['title' => "morning nursery", 'appointment' => 'from 8 am to 11 am'],
+              'number_of_days' => rand(3, 5),
+              'price' => $prices[array_rand($prices)],
+              'type' => $subscription_time_types[array_rand($subscription_time_types)],
+              'school_id' => $school->id,
+              'subscription_id' => $subscription,
+            ],
+            [
+              'ar' => ['title' => 'حضانة صباحية', 'appointment' => 'من 7 ص الي 10 م'],
+              'en' => ['title' => "morning nursery", 'appointment' => 'from 10 am to 7 am'],
+              'number_of_days' => rand(3, 5),
+              'price' => $prices[array_rand($prices)],
+              'type' => $subscription_time_types[array_rand($subscription_time_types)],
+              'school_id' => $school->id,
+              'subscription_id' => $subscription,
+            ],
+            [
+              'ar' => ['title' => 'حضانة مسائية', 'appointment' => 'من 12 م الي 4 م'],
+              'en' => ['title' => "evening nursery", 'appointment' => 'from 12 pm to 4 pm'],
+              'number_of_days' => rand(3, 5),
+              'price' => $prices[array_rand($prices)],
+              'type' => $subscription_time_types[array_rand($subscription_time_types)],
+              'school_id' => $school->id,
+              'subscription_id' => $subscription,
+            ],
+          ];
+          foreach ($data as $item) {
+            SubscriptionType::create($item);
+          }
         }
       }
 

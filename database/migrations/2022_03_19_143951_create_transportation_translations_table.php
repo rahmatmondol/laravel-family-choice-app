@@ -17,7 +17,7 @@ return new class extends Migration
       $table->id();
       $table->string('title');
       $table->string('locale')->index();
-      $table->foreignId('transportation_id')->nullable()->constrained('transportation')->onDelete('cascade');
+      $table->foreignId('transportation_id')->constrained('transportations')->onDelete('cascade');
       $table->unique(['transportation_id', 'locale']);
     });
   }

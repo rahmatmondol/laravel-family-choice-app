@@ -16,6 +16,7 @@ use App\Http\Controllers\StripeController;
 */
 
 Route::get('/test', [HomeController::class,'test']);
+Route::get('/truncate-all-tables', [HomeController::class,'truncate']);
 
 Route::get('/', function () {
 

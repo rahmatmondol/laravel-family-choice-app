@@ -8,6 +8,7 @@ use App\Models\Reservation;
 use App\Models\SchoolGrade;
 use App\Models\ChildAttachment;
 use App\Models\Grade;
+use App\Models\PaidService;
 use App\Models\School;
 use App\Models\SubscriptionType;
 use App\Models\Transportation;
@@ -63,7 +64,6 @@ class ReservationRepository implements ReservationRepositoryInterface
           ]);
         }
       } // end $child['attachments']
-
     } // end $request->children
     $this->attachPaidServices($reservation);
     if ($school->is_nursery_type)
@@ -80,35 +80,36 @@ class ReservationRepository implements ReservationRepositoryInterface
   {
     $changes = 0;
     $reservation = Reservation::findOrFail($request->reservation_id);
+    $school = $reservation->school;
+    $isSchool = $school->is_school_type;
+    $grade = Grade::find($request->input('child.grade_id'));
+    $fees = $this->calculateFees($school, $grade);
     $reservation->fill([
       'parent_name'           => $request->parent_name,
       'parent_phone'          => $request->parent_phone,
       'parent_date_of_birth'  => $request->parent_date_of_birth,
       'address'               => $request->address,
       'identification_number' => $request->identification_number,
+      'total_fees'            => $fees['totalFees'],
     ]);
     $changes += count($reservation->getDirty());
     $reservation->save();
 
     $child = $reservation->child;
-    // if ($request->child) {
-    //   $child->fill([
-    //     'child_name'            => $child['child_name'],
-    //     'date_of_birth'         => $child['date_of_birth'],
-    //     'gender'                => $child['gender'],
-    //   ]);
-    //   $changes += count($reservation->getDirty());
-    //   $reservation->save();
-    // }
-
     if ($request_child = $request->child) {
-
       $child->fill([
-        'child_name'            => $request_child['child_name'],
-        'date_of_birth'         => $request_child['date_of_birth'],
-        'gender'                => $request_child['gender'],
+        'child_name'              => $request_child['child_name'],
+        'date_of_birth'           => $request_child['date_of_birth'],
+        'gender'                  => $request_child['gender'],
+        'grade_id'                => $isSchool ? $child['grade_id'] : null,
+        'course_id'               => !$isSchool ? $child['course_id'] : null,
+        'subscription_type_id'    => !$isSchool ? $child['subscription_type_id'] : null,
+        'transportation_id'       => $request->input('child.transportation_id'),
+        'total_fees'              => $fees['totalFees'],
+        'subscription_type_price' => $fees['subscriptionTypeFees'] ?? null,
+        'transportation_price'    => $fees['transportationPrice'] ?? null,
       ]);
-
+      $child->save();
       $changes += count($reservation->getDirty());
       $reservation->save();
 
@@ -133,26 +134,26 @@ class ReservationRepository implements ReservationRepositoryInterface
         } // end $child['attachments']
       }
     } // end $request->children
-
-    // dd($changes);
+    $this->attachPaidServices($reservation);
+    if ($school->is_nursery_type)
+      $this->attachNurseryFees($reservation);
+    if ($school->is_school_type && isset($grade))
+      $this->attachGradeFees($reservation, $grade);
     if ($changes != 0) {
       $reservation->update(['status' => ReservationStatus::Pending->value]);
-      $customer = $reservation->customer;
-
       $this->logReservation($reservation);
-      // NotificationService::sendReservationNotification($request->status, $customer, $reservation);
     }
-
     return $reservation->load([
-      'school', 'course', 'grade', 'child.grade', 'child.attachments.attachment.translation'
+      'school.translations', 'child.grade.translations', 'child.course.translations', 'nurseryFees', 'gradeFees', 'paidServices', 'child.attachments.attachment.translation'
     ]);
   }
 
   public function calculateFees($school, $grade = null)
   {
     $request = request();
-    $totalGradeFees = $totalNurseryFees = $subscriptionTypeFees = 0;
-    $totalPaidServicesFees = $school->paidServices()->sum('price');
+    $totalGradeFees = $totalNurseryFees = $subscriptionTypeFees = $totalPaidServicesFees = 0;
+    if($paidServices = request()->input('child.paid_services'))
+      $totalPaidServicesFees = PaidService::find($paidServices)->sum('price');
     $transportationFees = $request->input('child.transportation_id') != null ? Transportation::find($request->input('child.transportation_id'))->price : 0;
     if ($school->is_school_type && isset($grade)) {
       $totalGradeFees = $grade->getActiveGradeFees($school->id)->sum('price');
@@ -174,12 +175,14 @@ class ReservationRepository implements ReservationRepositoryInterface
   public function attachPaidServices($reservation)
   {
     $data  = [];
-    $activePaidServices = $reservation->school?->activePaidServices()->get();
-    foreach ($activePaidServices  as $service) {
+    $paidServices = PaidService::find(request()->input('child.paid_services'));
+    foreach ($paidServices  as $service) {
       $data[$service->id] = ['price' => $service->price];
     }
     if ($data)
       $reservation->paidServices()->sync($data);
+    else
+      $reservation->paidServices()->sync([]);
   }
 
   public function attachNurseryFees($reservation)
@@ -191,6 +194,8 @@ class ReservationRepository implements ReservationRepositoryInterface
     }
     if ($data)
       $reservation->nurseryFees()->sync($data);
+    else
+      $reservation->nurseryFees()->sync([]);
   }
 
   public function attachGradeFees($reservation, $grade)
@@ -202,6 +207,8 @@ class ReservationRepository implements ReservationRepositoryInterface
     }
     if ($data)
       $reservation->gradeFees()->sync($data);
+    else
+      $reservation->gradeFees()->sync([]);
   }
 
   public function logReservation($reservation)

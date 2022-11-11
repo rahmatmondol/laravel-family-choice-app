@@ -19,7 +19,6 @@ class SchoolGradeResource extends JsonResource
       'title'                   => $this->title,
       'school_id'               => $this->pivot->school_id,
       'fees'                    => GradeFeesResource::collection($this->getActiveGradeFees($this->pivot->school_id)),
-      'status'                  => (bool)$this->pivot->status,
     ];
   }
 }

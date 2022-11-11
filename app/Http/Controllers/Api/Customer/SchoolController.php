@@ -39,7 +39,7 @@ class SchoolController extends Controller
 
   public function subscriptionTypes(Request $request)
   {
-    $subscriptionTypes = $this->subscriptionTypeRepository->getAllSubscriptionTypes();
+    $subscriptionTypes = $this->subscriptionTypeRepository->getSubscriptionTypes();
     return $this->sendResponse( SubscriptionTypeResource::collection($subscriptionTypes), "");
   }
 

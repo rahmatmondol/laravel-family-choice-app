@@ -217,6 +217,11 @@ class School extends Authenticatable
 
   public function courses()
   {
+    return $this->hasMany(Course::class)->withTranslation(app()->getLocale());
+  } // end of user
+
+  public function activeCourses()
+  {
     return $this->hasMany(Course::class);
   } // end of user
 
@@ -232,7 +237,7 @@ class School extends Authenticatable
 
   public function paidServices()
   {
-    return $this->hasMany(PaidService::class);
+    return $this->hasMany(PaidService::class)->withTranslation(app()->getLocale());
   } // end of user
 
   public function activePaidServices()
@@ -242,7 +247,7 @@ class School extends Authenticatable
 
   public function transportations()
   {
-    return $this->hasMany(Transportation::class);
+    return $this->hasMany(Transportation::class)->withTranslation(app()->getLocale());
   } // end of user
 
   public function activeTransportations()

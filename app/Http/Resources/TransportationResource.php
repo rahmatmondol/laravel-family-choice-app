@@ -18,6 +18,7 @@ class TransportationResource extends JsonResource
       'id'                 =>  $this->id,
       'title'              => $this->title,
       'price'              => $this->price,
+      'school_id'          => $this->school_id,
     ];
   }
 }

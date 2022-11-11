@@ -28,7 +28,7 @@ class SchoolRepository implements SchoolRepositoryInterface
   {
     return  School::withoutGlobalScope(new OrderScope)
       ->withTranslation(app()->getLocale())
-      ->with(['educationalSubjects', 'educationTypes', 'schoolTypes', 'services', 'grades','type.translations', 'schoolImages'])
+      ->with(['educationalSubjects', 'educationTypes', 'schoolTypes', 'services', 'grades', 'type.translations', 'schoolImages'])
       ->whenSearch()
       ->WhenTypes()
       ->isActive($request->status)
@@ -56,7 +56,7 @@ class SchoolRepository implements SchoolRepositoryInterface
       ->withTranslation()
       ->with([
         'educationalSubjects', 'educationTypes', 'schoolTypes', 'type.translations', 'services', 'schoolImages',
-        'activeGrades','activeSubscriptions','activeNurseryFees','activePaidServices' , 'activeTransportations'
+        'activeGrades', 'activeSubscriptions', 'activeCourses.translations','activeCourses.subscription',  'activeNurseryFees', 'activePaidServices', 'activeTransportations'
       ])
       ->paginate($request->perPage ?? 20);
 
