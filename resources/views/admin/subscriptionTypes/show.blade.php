@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'courses';
-$title = __('site.Show Course');
+$page = 'subscriptionTypes';
+$title = __('site.Show Subscription Type');
 ?>
 @section('title_page')
 {{ $title }}
@@ -20,7 +20,7 @@ $title = __('site.Show Course');
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.courses.index') }}">@lang('site.Courses')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.subscriptionTypes.index') }}">@lang('site.SubscriptionTypes')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -37,40 +37,39 @@ $title = __('site.Show Course');
           <tbody>
             <tr>
               <td>@lang('site.Title')</td>
-              <td>{{ $course->title }}</td>
+              <td>{{ $subscriptionType->title }}</td>
+            </tr>
+            <tr>
+              <td>@lang('site.Appointment')</td>
+              <td>{{ $subscriptionType->appointment }}</td>
             </tr>
             <tr>
               <td>@lang('site.School')</td>
-              <td>{{ $course->school->title }}</td>
+              <td>{{ $subscriptionType->school->title }}</td>
+            </tr>
+            <tr>
+              <td>@lang('site.Subscription')</td>
+              <td>{{ $subscriptionType->subscription->title }}</td>
             </tr>
             <tr>
               <td>@lang('site.Type')</td>
-              <td>@lang('site.'.$course->type)</td>
+              <td>@lang('site.SubscriptionType.'.$subscriptionType->type)</td>
             </tr>
             <tr>
-              <td>@lang('site.From Date')</td>
-              <td>{{ $course->from_date }}</td>
+              <td>@lang('site.Number Of Days')</td>
+              <td>{{ $subscriptionType->number_of_days }}</td>
             </tr>
             <tr>
-              <td>@lang('site.To Date')</td>
-              <td>{{ $course->to_date }}</td>
-            </tr>
-            <tr>
-              <td>@lang('site.Description')</td>
-              <td>{{ $course->description }}</td>
+              <td>@lang('site.Price')</td>
+              <td>{{ $subscriptionType->price }}</td>
             </tr>
             <tr>
               <td>@lang('site.Order Item')</td>
-              <td>{{ $course->order_column }}</td>
+              <td>{{ $subscriptionType->order_column }}</td>
             </tr>
             <tr>
               <td>@lang('site.Status')</td>
-              <td>@include('admin.partials._render_status',['status'=>$course->status])</td>
-            </tr>
-            <tr>
-              <td>@lang('site.Image')</td>
-              <td><img src="{{ $course->image_path }}" style="width: 100px" class="img-thumbnail image-preview1" alt="">
-              </td>
+              <td>@include('admin.partials._render_status',['status'=>$subscriptionType->status])</td>
             </tr>
           </tbody>
         </table>

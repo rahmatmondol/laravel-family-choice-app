@@ -53,18 +53,6 @@ $title = __('site.Reservations');
                 </div>
               </div>
 
-              {{-- <div class="col-md-4">
-                <div class="form-group">
-                  <select name="course_id" class="form-control"  data-live-search="true">
-                    <option value="">@lang('site.Courses') </option>
-                    @foreach( $courses as $value )
-                    <option value="{{ $value->id}}" @selected(request('course_id')==$value->id) >
-                      {{ $value->title }}</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div> --}}
-
               <div class="col-md-4">
                 <div class="form-group">
                   <select id="inputStatus" name="status" class="form-control custom-select">
@@ -151,10 +139,11 @@ $title = __('site.Reservations');
                 @lang('site.School')
               </th>
               <th style="width: 20%" class="text-center">
-                @lang('site.Course')
+                @lang('site.Customer')
               </th>
               <th style="width: 20%" class="text-center">
-                @lang('site.Customer')
+                @lang('site.Total Fees')
+              </th>
               </th>
               <th style="width: 20%" class="text-center">
                 @lang('site.Created At')
@@ -184,33 +173,24 @@ $title = __('site.Reservations');
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->school?->title }}</a>
               </td>
               <td class="text-center">
-                @if($reservation->course_id)
-                <a href="{{ route($mainRoutePrefix.'.courses.show', ['course'=>$reservation->course_id]) }}"
-                  class="btn btn-primary btn-sm" target="_blank">{{ $reservation->course?->title }}</a>
-                @endif
-              </td>
-
-              <td class="text-center">
                 <a href="{{ route($mainRoutePrefix.'.customers.show', ['customer'=>$reservation->customer_id]) }}"
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->customer?->full_name }}</a>
               </td>
-
+              <td class="text-center">
+                {{ $reservation->total_fees }}
+              </td>
               <td class="text-center">
                 {{ $reservation->created_at }}
               </td>
-
               <td class="text-center">
-
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.reservations.show', ['reservation'=>$reservation->id]),
                 ])
-
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.reservations.edit', ['reservation'=>$reservation->id]),
                 ])
-
               </td>
             </tr>
             @empty

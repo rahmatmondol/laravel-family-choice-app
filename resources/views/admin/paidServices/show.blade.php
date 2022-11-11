@@ -45,7 +45,7 @@ $title = __('site.Show Paid Service');
             </tr>
             <tr>
               <td>@lang('site.Price')</td>
-              <td>{{ $paidService->price }} @lang('site.app.Currency')</td>
+              <td>{{ $paidService->price }} {{ appCurrency() }}</td>
             </tr>
             <tr>
               <td>@lang('site.Order Item')</td>

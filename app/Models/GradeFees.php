@@ -13,7 +13,6 @@ class GradeFees extends Model
   protected $guarded = [];
 
   public $translatedAttributes = ['title'];
-  protected $appends = ['image_path'];
 
   protected static function boot()
   {

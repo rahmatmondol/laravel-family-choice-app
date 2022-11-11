@@ -145,7 +145,7 @@ $title = __('site.Payments');
                 @include('admin.partials._render_payment_status',['status'=>$payment->payment_status])
               </td>
               <td class="text-center">
-                {{ $payment->total_fees }} @lang('site.app.Currency')
+                {{ $payment->total_fees }} {{ appCurrency() }}
               </td>
 
               <td class="text-center">

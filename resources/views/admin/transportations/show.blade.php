@@ -45,7 +45,7 @@ $title = __('site.Show Transportation');
             </tr>
             <tr>
               <td>@lang('site.Price')</td>
-              <td>{{ $transportation->price }} @lang('site.app.Currency')</td>
+              <td>{{ $transportation->price }} {{ appCurrency() }}</td>
             </tr>
             <tr>
               <td>@lang('site.Order Item')</td>

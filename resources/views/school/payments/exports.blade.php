@@ -46,7 +46,7 @@
         {{ $payment->payment_status }}
       </td>
       <td class="text-center">
-        {{ $payment->total_fees }} @lang('site.app.Currency')
+        {{ $payment->total_fees }} {{ appCurrency() }}
       </td>
 
       <td class="text-center">

@@ -188,7 +188,7 @@ $dir = app()->getLocale() == 'en' ? 'ltr' : 'rtl';
                                                                                                       <p>@lang('site.Fees')</p>
                                                                                                     </td>
                                                                                                     <td style="padding: 5px 0" width="20%" align="left">
-                                                                                                        <p>{{  $child->administrative_expenses }}  @lang('site.app.Currency')</p>
+                                                                                                        <p>{{  $child->administrative_expenses }}  {{ appCurrency() }}</p>
                                                                                                     </td>
                                                                                                 </tr>
                                                                                                 <tr>
@@ -196,7 +196,7 @@ $dir = app()->getLocale() == 'en' ? 'ltr' : 'rtl';
                                                                                                         <p>@lang('site.Administrative Expenses')</p>
                                                                                                     </td>
                                                                                                     <td style="padding: 5px 0" width="20%" align="left">
-                                                                                                        <p>{{  $child->fees }}  @lang('site.app.Currency')</p>
+                                                                                                        <p>{{  $child->fees }}  {{ appCurrency() }}</p>
                                                                                                     </td>
                                                                                                 </tr>
 
@@ -229,7 +229,7 @@ $dir = app()->getLocale() == 'en' ? 'ltr' : 'rtl';
                                                                                                         <h4>@lang('site.Total')</h4>
                                                                                                     </td>
                                                                                                     <td width="20%">
-                                                                                                        <h4>{{ $reservation->total_fees }} @lang('site.app.Currency')</h4>
+                                                                                                        <h4>{{ $reservation->total_fees }} {{ appCurrency() }}</h4>
                                                                                                     </td>
                                                                                                 </tr>
                                                                                             </tbody>

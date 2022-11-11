@@ -150,10 +150,10 @@ $title = __('site.SubscriptionTypes');
                 {{ $subscriptionType->subscription?->title }}
               </td>
               <td>
-                @lang('site.'. $subscriptionType->type)
+                @lang('site.SubscriptionType.'. $subscriptionType->type)
               </td>
               <td>
-                {{ $subscriptionType->price }} @lang('site.app.Currency')
+                {{ $subscriptionType->price }} {{ appCurrency() }}
               </td>
               <td>
                 {{ $subscriptionType->number_of_days }}
@@ -190,7 +190,6 @@ $title = __('site.SubscriptionTypes');
               </td>
             </tr>
             @endforelse
-
           </tbody>
         </table>
         {{ $subscriptionTypes->appends(request()->query())->links() }}
