@@ -18,10 +18,9 @@ class ReservationDetailsFormRequest extends BaseRequest
   public function rules()
   {
     return [
-      'reservation_id' =>['required','exists:reservations,id'],
+      'reservation_id' => ['required', 'exists:reservations,id'],
     ];
 
     return $this->rules;
   }
-
 }

@@ -29,6 +29,8 @@ use App\Http\Resources\SliderResource;
 use App\Http\Resources\SubscriptionResource;
 use App\Interfaces\EducationalSubjectRepositoryInterface;
 use App\Interfaces\SubscriptionRepositoryInterface;
+use App\Models\GradeFees;
+use App\Models\NurseryFees;
 
 class PublicController extends Controller
 {
@@ -55,8 +57,8 @@ class PublicController extends Controller
       'educationalSubjects' => EducationalSubjectResource::collection($this->educationalSubjectRepository->getAllEducationalSubjects()),
       'educationTypes' => EducationTypeResource::collection($this->educationTypeRepository->getAllEducationTypes()),
       'schoolTypes' => SchoolTypeResource::collection($this->schoolTypeRepository->getAllSchoolTypes()),
-      'max_fees' => School::max('fees'),
-      'min_fees' => School::min('fees'),
+      'max_fees' => GradeFees::max('price'),
+      'min_fees' => NurseryFees::min('price'),
     ];
     return $this->sendResponse($data, "");
   }
