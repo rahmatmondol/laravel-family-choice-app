@@ -46,6 +46,11 @@ $title = __('site.Create Subscription');
                 <input required="required" type="text" name="{{ $locale }}[title]" class="form-control"
                   value="{{ old($locale . '.title') }}">
               </div>
+              <div class="form-group">
+                <label>@lang('site.' . $locale . '.Short Description')</label>
+                <input required="required" type="text" name="{{ $locale }}[short_description]" class="form-control"
+                  value="{{ old($locale . '.short_description') }}">
+              </div>
               <div class="  with-border"></div><br>
               @endforeach
 

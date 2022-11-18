@@ -284,6 +284,8 @@ return [
   'Create Transportation' => 'انشاء مواصلات',
   'Edit Transportation' => 'تعديل المواصلات',
   'Show Transportation' => 'عرض المواصلات',
+  'Short Description' => 'وصف قصير',
+
   '' => '',
   '' => '',
   '' => '',

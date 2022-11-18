@@ -79,6 +79,10 @@ $title = __('site.Subscriptions');
               <th style="width: 20%">
                 @lang('site.Title')
               </th>
+              </th>
+              <th style="width: 20%">
+                @lang('site.Short Description')
+              </th>
               <th style="width: 8%" class="text-center">
                 @lang('site.Status')
               </th>
@@ -98,6 +102,10 @@ $title = __('site.Subscriptions');
               </td>
               <td>
                 {{ $subscription->title }}
+              </td>
+              </td>
+              <td>
+                {{ $subscription->short_description }}
               </td>
               <td class="project-state">
                 @include('admin.partials._render_status',['status'=>$subscription->status])

@@ -40,6 +40,10 @@ $title = __('site.Show Subscription');
               <td>{{ $subscription->title }}</td>
             </tr>
             <tr>
+              <td>@lang('site.Short Description')</td>
+              <td>{{ $subscription->short_description }}</td>
+            </tr>
+            <tr>
               <td>@lang('site.Order Item')</td>
               <td>{{ $subscription->order_column }}</td>
             </tr>
