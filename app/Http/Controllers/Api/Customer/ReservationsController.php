@@ -6,14 +6,15 @@ use Illuminate\Http\Request;
 
 use App\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\AddReservationFormRequest;
 use App\Http\Resources\AttachmentResource;
 use App\Http\Resources\ReservationResource;
 use App\Interfaces\SchoolRepositoryInterface;
 use App\Interfaces\AttachmentRepositoryInterface;
-use App\Http\Requests\Api\ReservationFormRequest;
 use App\Http\Resources\Collection\ReservationCollection;
 use App\Http\Requests\Api\GetSchoolAttachmentFormRequest;
 use App\Http\Requests\Api\ReservationDetailsFormRequest;
+use App\Http\Requests\Api\UpdateReservationFormRequest;
 use App\Interfaces\Customer\ReservationRepositoryInterface;
 use App\Models\Reservation;
 
@@ -34,14 +35,14 @@ class ReservationsController  extends Controller
     return $this->sendResponse(AttachmentResource::collection($attachments), "");
   }
 
-  public function add_reservation(ReservationFormRequest $request)
+  public function add_reservation(AddReservationFormRequest $request)
   {
     $reservation = $this->reservationRepository->addReservation($request);
 
     return $this->sendResponse(new ReservationResource($reservation), "");
   }
 
-  public function update_reservation(ReservationFormRequest $request)
+  public function update_reservation(UpdateReservationFormRequest $request)
   {
     $reservation = $this->reservationRepository->updateReservation($request);
 

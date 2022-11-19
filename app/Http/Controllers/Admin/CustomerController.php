@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CustomerFormRequest;
 use App\Http\Controllers\Admin\BaseController;
+use App\Http\Requests\AddCustomerFormRequest;
+use App\Http\Requests\UpdateCustomerFormRequest;
 use App\Interfaces\CustomerRepositoryInterface;
 
 class CustomerController extends BaseController
@@ -48,7 +49,7 @@ class CustomerController extends BaseController
     return view($this->mainViewPrefix.'.customers.show', compact('customer'));
   } //end of create
 
-  public function store(CustomerFormRequest $request)
+  public function store(AddCustomerFormRequest $request)
   {
     $this->customerRepository->createCustomer($request);
 
@@ -70,7 +71,7 @@ class CustomerController extends BaseController
     return view($this->mainViewPrefix.'.customers.edit', compact('customer',));
   } //end of edit
 
-  public function update(CustomerFormRequest $request, Customer $customer)
+  public function update(UpdateCustomerFormRequest $request, Customer $customer)
   {
     $this->customerRepository->updateCustomer($request, $customer);
 

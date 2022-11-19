@@ -60,14 +60,12 @@ Route::group(
     Route::group(['namespace' => "Customer", 'prefix' => 'customer/', 'middleware' => ['auth:customer-api', 'ensureCustomerVerified']], function () {
 
       Route::controller(AuthController::class)->group(function () {
-        Route::put('edit-customer-profile', 'editCustomerProfile');
+        Route::post('edit-customer-profile', 'editCustomerProfile');
         Route::get('logout', 'logout');
         Route::post('change-password', 'changePassword');
         Route::post('update-firebase-token', 'updateFirebaseToken');
         Route::get('profile', 'profile');
       });
-
-      Route::post('setReview', [CustomerController::class,'setReview']);
 
       Route::get('notification-list', [NotificationController::class,'notificationList']);
 
@@ -88,7 +86,7 @@ Route::group(
       Route::controller(ReservationsController::class)->group(function () {
         Route::get('school-attachments', 'school_attachments');
         Route::post('add-reservation', 'add_reservation');
-        Route::put('update-reservation', 'update_reservation');
+        Route::post('update-reservation', 'update_reservation');
         Route::get('customer-reservations', 'customer_reservations');
         Route::get('reservation-details', 'reservation_details');
       });

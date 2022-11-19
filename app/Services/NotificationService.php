@@ -100,15 +100,13 @@ class NotificationService
 
     try {
       $msg = self::convertToUnicode($message);
-
-
       $client = new \GuzzleHttp\Client(['verify' => false]);
       $request = $client->get('https://doo.ae/api/msgSend.php?mobile=971526972999&password=12345678&numbers=971522946005&sender=APPOTP&msg='.$msg.'&applicationType=3');
       $res = $request->getBody()->getContents();
 
       // $res = Http::get('https://doo.ae/api/msgSend.php?mobile=971526972999&password=12345678&numbers='.'971522946005'.'&sender=APPOTP&msg='.$msg.'&applicationType=3');
       // $res = Http::get('https://doo.ae/api/msgSend.php?mobile=971526972999&password=12345678&numbers='.$phone.'&sender=APPOTP&msg='.$message.'&applicationType=3');
-      dd($res);
+      // dd($res);
     } catch (Exception $e) {
       info($e->getMessage());
     }

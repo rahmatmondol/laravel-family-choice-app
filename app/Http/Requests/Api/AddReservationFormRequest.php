@@ -13,7 +13,7 @@ use App\Models\Transportation;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
-class ReservationFormRequest extends BaseRequest
+class AddReservationFormRequest extends BaseRequest
 {
   public $rules = [];
 
@@ -27,10 +27,15 @@ class ReservationFormRequest extends BaseRequest
   }
   public function rules()
   {
+    $this->school = School::findOrFail(request()->school_id);
     $course = Course::find(request('child.course_id'));
 
     $this->rules += [
-
+      'school_id' => ['required', 'bail', 'exists:schools,id'],
+      'child' => ['required'],
+      'child.child_name' => ['required', 'string', 'max:255'],
+      'child.date_of_birth' => ['required', 'date', 'before:' . Carbon::now()->subYear(1)->format('Y-m-d'), 'date_format:Y-m-d'],
+      'child.gender' => ['required', 'in:male,female'],
       'parent_name' => 'required|string|max:255',
       'parent_phone' => 'required|string|max:255',
       'parent_date_of_birth' => ['nullable', 'date', 'before:' . Carbon::now()->subYear(15)->format('Y-m-d'), 'date_format:Y-m-d'],
@@ -69,56 +74,11 @@ class ReservationFormRequest extends BaseRequest
         }
       }],
     ];
-    if ($this->isMethod('post')) {
-      $this->school = School::findOrFail(request()->school_id);
-      return $this->createRules();
-    } elseif ($this->isMethod('put')) {
-      $this->school = Reservation::findOrFail(request('reservation_id'))?->school;
-      return $this->updateRules();
-    }
-  }
-
-  public function createRules()
-  {
-    $this->rules += [
-      'school_id' => ['required', 'bail', 'exists:schools,id'],
-      'child' => ['required'],
-      'child.child_name' => ['required', 'string', 'max:255'],
-      'child.date_of_birth' => ['required', 'date', 'before:' . Carbon::now()->subYear(1)->format('Y-m-d'), 'date_format:Y-m-d'],
-      'child.gender' => ['required', 'in:male,female'],
-    ];
-
     if ($this->school) {
       foreach (optional($this->school)->attachments->pluck('id')->toArray() as $attachment_id) {
         $this->rules += ['child.attachments.' . $attachment_id => ['required', 'file']];
       } // end of  for each
     }
-
-    return $this->rules;
-  }
-
-  public function updateRules()
-  {
-    $reservation = Reservation::find(request()->reservation_id);
-
-    $this->rules += [
-      'reservation_id' => ['required', 'bail', 'exists:reservations,id', function ($attribute, $value, $fail) use ($reservation) {
-        if ($reservation->status != ReservationStatus::Rejected->value) {
-          $fail(__('site.Reservation not rejected so you can not edit reservation now'));
-        }
-      }],
-      'child' => ['required'],
-      'child.child_name' => ['required', 'string', 'max:255'],
-      'child.date_of_birth' => ['required', 'date', 'before:' . Carbon::now()->subYear(2)->format('Y-m-d'), 'date_format:Y-m-d'],
-      'child.gender' => ['required', 'in:male,female'],
-    ];
-
-    if ($reservation) {
-      foreach ($reservation->school->attachments->pluck('id')->toArray() as $attachment_id) {
-        $this->rules += ['child.attachments.' . $attachment_id => ['nullable', 'file']];
-      } // end of  for each
-    }
-
     return $this->rules;
   }
 }

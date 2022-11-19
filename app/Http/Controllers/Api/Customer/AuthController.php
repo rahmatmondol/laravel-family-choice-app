@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 
 use App\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddCustomerFormRequest;
 use App\Traits\AuthenticateCustomer;
 use App\Http\Resources\CustomerResource;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Requests\CustomerFormRequest;
 use App\Http\Requests\Api\LoginFormRequest;
 use App\Http\Requests\Api\SendCodeFormRequest;
 use App\Interfaces\CustomerRepositoryInterface;
@@ -19,6 +19,7 @@ use App\Http\Requests\Api\VerifyPhoneFormRequest;
 use App\Http\Requests\Api\ForgetPasswordFormRequest;
 use App\Http\Requests\Api\UpdateFirebaseTokenFormRequest;
 use App\Http\Requests\Api\CustomerChangePasswordFormRequest;
+use App\Http\Requests\UpdateCustomerFormRequest;
 
 class AuthController extends Controller
 {
@@ -29,8 +30,7 @@ class AuthController extends Controller
   ) {
   } //end of constructor
 
-
-  public function signupCustomer(CustomerFormRequest $request)
+  public function signupCustomer(AddCustomerFormRequest $request)
   {
     $customer = $this->customerRepository->createCustomer($request);
 
@@ -38,7 +38,7 @@ class AuthController extends Controller
     return $this->sendResponse($customer, "");
   }
 
-  public function editCustomerProfile(CustomerFormRequest $request)
+  public function editCustomerProfile(UpdateCustomerFormRequest $request)
   {
     $this->customerRepository->updateCustomer($request, getCustomer());
 
