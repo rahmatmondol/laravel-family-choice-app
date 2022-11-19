@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'courses';
-$title = __('site.Courses');
+$page = 'subscriptionTypes';
+$title = __('site.SubscriptionTypes');
 ?>
 @section('title_page')
 {{ $title }}
@@ -17,7 +17,7 @@ $title = __('site.Courses');
         <div class="col-sm-6">
           <h6>{{ $title }}
             <small>
-              ( {{ $courses->total() }} )
+              ( {{ $subscriptionTypes->total() }} )
             </small>
           </h6>
 
@@ -30,7 +30,7 @@ $title = __('site.Courses');
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route($mainRoutePrefix.'.courses.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.subscriptionTypes.index') }}" method="get">
 
             <div class="row">
 
@@ -39,18 +39,31 @@ $title = __('site.Courses');
                   <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
                     value="{{ request()->search }}">
                 </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
-                  @lang('site.Search')</button>
-                @if (checkAdminPermission('create_courses'))
-                <a href="{{ route($mainRoutePrefix.'.courses.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
-                  @lang('site.Add')</a>
-                @endif
               </div>
-            </div>
+
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <select name="subscription_id" class="form-control"  data-live-search="true">
+                    <option value="">@lang('site.Subscription') </option>
+                    @foreach( $subscriptions as $value )
+                    <option value="{{ $value->id}}" @selected(request('subscription_id')==$value->id) >
+                      {{ $value->title }}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
+                    @lang('site.Search')</button>
+                  @if (checkAdminPermission('create_subscriptionTypes'))
+                  <a href="{{ route($mainRoutePrefix.'.subscriptionTypes.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
+                    @lang('site.Add')</a>
+                  @endif
+                </div>
+              </div>
 
             </div>
           </form><!-- end of form -->
@@ -84,19 +97,19 @@ $title = __('site.Courses');
                 @lang('site.Title')
               </th>
               <th style="width: 20%">
-                @lang('site.Type')
+                @lang('site.School')
               </th>
               <th style="width: 20%">
                 @lang('site.Subscription')
               </th>
               <th style="width: 20%">
-                @lang('site.From Date')
+                @lang('site.Type')
               </th>
               <th style="width: 20%">
-                @lang('site.To Date')
+                @lang('site.Price')
               </th>
               <th style="width: 20%">
-                @lang('site.Image')
+                @lang('site.Number Of Days')
               </th>
               <th style="width: 8%" class="text-center">
                 @lang('site.Status')
@@ -110,52 +123,53 @@ $title = __('site.Courses');
             </tr>
           </thead>
           <tbody>
-            @forelse ($courses as $course )
+            @forelse ($subscriptionTypes as $subscriptionType )
             <tr>
               <td>
                 {{ $loop->iteration }}
               </td>
               <td>
-                {{ $course->title }}
+                {{ $subscriptionType->title }}
+              </td>
+              <td class="text-center">
+                {{ $subscriptionType->school?->title }}
               </td>
               <td>
-                @lang('site.'.ucfirst($course->type))
+                {{ $subscriptionType->subscription?->title }}
               </td>
               <td>
-                {{ $course->subscription?->title }}
+                @lang('site.SubscriptionType.'. $subscriptionType->type)
               </td>
               <td>
-                {{ $course->from_date }}
+                {{ $subscriptionType->price }} {{ appCurrency() }}
               </td>
               <td>
-                {{ $course->to_date }}
-              </td>
-              <td>
-                <a href="{{ $course->image_path }}" data-fancybox data-caption="Caption for single image">
-                  <img src="{{ $course->image_path }}" style="width: 100px;" class="img-thumbnail" alt="">
-                </a>
+                {{ $subscriptionType->number_of_days }}
               </td>
               <td class="project-state">
-                @include('school.partials._render_status',['status'=>$course->status])
+                @include('school.partials._render_status',['status'=>$subscriptionType->status])
               </td>
               <td>
-                {{ $course->order_column }}
+                {{ $subscriptionType->order_column }}
               </td>
               <td class="project-actions text-right">
 
                 @include('school.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route($mainRoutePrefix.'.courses.show', ['course'=>$course->id]),
+                'route'=>route($mainRoutePrefix.'.subscriptionTypes.show', ['subscriptionType'=>$subscriptionType->id]),
+                'permission' =>'read_subscriptionTypes',
                 ])
 
                 @include('school.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
-                'route'=>route($mainRoutePrefix.'.courses.edit', ['course'=>$course->id]),
+                'route'=>route($mainRoutePrefix.'.subscriptionTypes.edit', ['subscriptionType'=>$subscriptionType->id]),
+                'permission' =>'update_subscriptionTypes',
                 ])
 
                 @include('school.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route($mainRoutePrefix.'.courses.destroy', $course->id),
+                'route'=>route($mainRoutePrefix.'.subscriptionTypes.destroy', $subscriptionType->id),
+                'permission' =>'delete_subscriptionTypes',
                 ])
 
               </td>
@@ -167,10 +181,9 @@ $title = __('site.Courses');
               </td>
             </tr>
             @endforelse
-
           </tbody>
         </table>
-        {{ $courses->appends(request()->query())->links() }}
+        {{ $subscriptionTypes->appends(request()->query())->links() }}
 
       </div>
       <!-- /.card-body -->

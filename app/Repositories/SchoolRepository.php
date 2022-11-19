@@ -71,8 +71,8 @@ class SchoolRepository implements SchoolRepositoryInterface
       $school = School::findOrFail($schoolId);
     }
     return $school->load([
-      'educationalSubjects', 'educationTypes', 'schoolTypes', 'type.translations', 'activeGrades',
-      'activeSubscriptions', 'services', 'schoolImages'
+      'educationalSubjects', 'educationTypes', 'schoolTypes', 'type.translations', 'services', 'schoolImages',
+      'activeGrades', 'activeSubscriptions', 'activeCourses.translations','activeCourses.subscription',  'activeNurseryFees', 'activePaidServices', 'activeTransportations'
     ]);
   }
 

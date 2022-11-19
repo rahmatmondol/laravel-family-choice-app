@@ -33,7 +33,7 @@ class CourseController extends BaseController
   public function create(Request $request)
   {
     $subscriptions = $this->subscriptionRepository->getAllSubscriptions();
-    return view($this->mainViewPrefix . '.courses.create','subscriptions');
+    return view($this->mainViewPrefix . '.courses.create', compact('subscriptions'));
   } //end of create
 
   public function show($course)
@@ -63,18 +63,16 @@ class CourseController extends BaseController
     if (!Gate::allows('show-course', $course)) {
       abort(403);
     }
-
     $course = $this->courseRepository->getCourseById($course);
-
-    return view($this->mainViewPrefix . '.courses.edit', compact('course'));
+    $subscriptions = $this->subscriptionRepository->getAllSubscriptions();
+    return view($this->mainViewPrefix . '.courses.edit', compact('course','subscriptions'));
   } //end of edit
 
   public function update(CourseFormRequest $request, Course $course)
   {
     $this->courseRepository->updateCourse($request, $course);
-    $subscriptions = $this->subscriptionRepository->getAllSubscriptions();
 
-    session()->flash('success', __('Data updated successfully'),'subscriptions');
+    session()->flash('success', __('Data updated successfully'));
 
     if ($request->continue) {
       return redirect()->route('school.courses.index', ['page' => session('currentPage')]);
