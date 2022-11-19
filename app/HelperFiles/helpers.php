@@ -46,7 +46,7 @@ if (!function_exists('getAuthSchool')) {
 if (!function_exists('getCustomer')) {
   function getCustomer()
   {
-    return request()->is('api/*') && auth()->guard('customer')->user() ? auth()->guard('customer')->user() :  null;
+    return request()->is('api/*') && auth()->user() ? auth()->user() :  null;
   }
 }
 #validate helper function

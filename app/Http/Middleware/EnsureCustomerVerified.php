@@ -18,8 +18,7 @@ class EnsureCustomerVerified
   use ResponseTrait;
   public function handle($request, Closure $next)
   {
-    $customer = getCustomer();
-
+    $customer = auth()->guard('customer-api')->user();
     if (!$customer || $customer->verified != "1") {
       return $this->sendError(__('site.User not verified', []));
     }

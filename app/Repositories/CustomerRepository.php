@@ -91,8 +91,6 @@ class CustomerRepository implements CustomerRepositoryInterface
   {
     $credentials  = [
       'password' => $request->password,
-      // 'status' => 1,
-      // 'verified' => 1
     ];
 
     $credentials = $this->credentials($credentials);

@@ -234,9 +234,6 @@ class ReservationRepository implements ReservationRepositoryInterface
       'child.course.translations',
       'child.course.school',
       'child.course.subscription',
-      // 'nurseryFees',
-      // 'gradeFees',
-      // 'paidServices',
       'child.attachments.attachment.translation'
     ])->latest()->paginate(request()->perPage ?? 20);
   }
