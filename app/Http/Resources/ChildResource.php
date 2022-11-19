@@ -31,8 +31,6 @@ class ChildResource extends JsonResource
       'grade_fees'              => $this->when($isSchool,ReservationGradeFeesResource::collection($this->reservation?->gradeFees)),
       'nursery_fees'            => $this->when($isNursery,ReservationNurseryFeesResource::collection($this->reservation?->nurseryFees)),
       'paid_services'           => $this->when($this->reservation?->paidServices,ReservationPaidServiceResource::collection($this->reservation?->paidServices)),
-      // 'fees'                    => (string)$this->fees,
-      // 'administrative_expenses' => (string)$this->administrative_expenses,
       'gender'                  => $this->gender,
       'attachments'             => ChildAttachmentResource::collection($this->attachments),
       'created_at'              => (string) $this->created_at,

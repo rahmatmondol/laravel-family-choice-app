@@ -152,7 +152,7 @@ class ReservationRepository implements ReservationRepositoryInterface
   {
     $request = request();
     $totalGradeFees = $totalNurseryFees = $subscriptionTypeFees = $totalPaidServicesFees = 0;
-    if($paidServices = request()->input('child.paid_services'))
+    if ($paidServices = request()->input('child.paid_services'))
       $totalPaidServicesFees = PaidService::find($paidServices)->sum('price');
     $transportationFees = $request->input('child.transportation_id') != null ? Transportation::find($request->input('child.transportation_id'))->price : 0;
     if ($school->is_school_type && isset($grade)) {
@@ -222,14 +222,28 @@ class ReservationRepository implements ReservationRepositoryInterface
   public function customerReservations()
   {
     return getCustomer()->reservations()->with([
-      'school', 'course', 'grade', 'child.grade', 'child.attachments.attachment.translation'
+      'school.translations',
+      'child.grade.translations',
+      'child.reservation.school',
+      'child.reservation.gradeFees',
+      'child.reservation.nurseryFees',
+      'child.reservation.paidServices',
+      'child.transportation.translations',
+      'child.subscription_type.translations',
+      'child.course.translations',
+      // 'nurseryFees',
+      // 'gradeFees',
+      // 'paidServices',
+      'child.attachments.attachment.translation'
     ])->latest()->paginate(request()->perPage ?? 20);
   }
 
   public function reservationDetails($reservationId)
   {
-    return getCustomer()->reservations()->where('id', $reservationId)->with([
-      'school', 'course', 'grade', 'child.grade', 'child.attachments.attachment.translation'
+    return getCustomer()->reservations()->where(
+      'id',$reservationId
+    )->with([
+      'school.translations', 'child.grade.translations', 'child.course.translations', 'nurseryFees', 'gradeFees', 'paidServices', 'child.attachments.attachment.translation'
     ])->first();
   }
 }

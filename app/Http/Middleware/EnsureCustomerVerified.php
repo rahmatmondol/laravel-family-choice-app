@@ -21,7 +21,6 @@ class EnsureCustomerVerified
     $customer = getCustomer();
 
     if (!$customer || $customer->verified != "1") {
-
       return $this->sendError(__('site.User not verified', []));
     }
 
