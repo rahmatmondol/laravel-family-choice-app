@@ -29,7 +29,7 @@ class FavoriteController  extends Controller
 
   public function favorites(Request $request)
   {
-    $schools = getCustomer()->favorites()->latest()->paginate($request->perPage ?? 20);
+    $schools = getCustomer()->favorites()->withTranslation()->with(['type'])->latest()->paginate($request->perPage ?? 20);
     return $this->sendResponse(new SchoolCollection($schools), "");
   }
 }
