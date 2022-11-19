@@ -127,12 +127,10 @@ $title = __('site.Edit Profile');
               {{-- types --}}
               <div class="form-group">
                 <label for="inputType">@lang('site.Types')</label>
-                <select name="types[]" class="form-control selectric" multiple data-live-search="true" required>
+                <select name="type_id" class="form-control"  required>
                   <option value="">@lang('site.Types') </option>
                   @foreach( $types as $value )
-                  <option value="{{ $value->id }}" @if( in_array($value->
-                    id,$school->types->pluck('id')->toArray())
-                    || in_array($value->id,(array)old('types'))) selected @endif >
+                  <option value="{{ $value->id }}" @selected((old('type_id') == $value->id) || ($school->type_id == $value->id)) >
                     {{ $value->title }}</option>
                   @endforeach
                 </select>
@@ -211,15 +209,6 @@ $title = __('site.Edit Profile');
                   value="{{old('total_seats',$school->total_seats)}}"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
               </div>
-
-              {{-- fees --}}
-              <div class="form-group">
-                <label>@lang('site.Fees')</label>
-                <input required="required" type="text" name="fees" class="form-control"
-                  value="{{old('fees',$school->fees)}}"
-                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
-              </div>
-
 
               {{-- status --}}
               <div class="form-group">

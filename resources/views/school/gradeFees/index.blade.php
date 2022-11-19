@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'grades';
-$title = __('site.Grades');
+$page = 'gradeFees';
+$title = __('site.GradeFees');
 ?>
 @section('title_page')
 {{ $title }}
@@ -17,7 +17,7 @@ $title = __('site.Grades');
         <div class="col-sm-6">
           <h6>{{ $title }}
             <small>
-              ( {{ $grades->total() }} )
+              ( {{ $gradeFees->total() }} )
             </small>
           </h6>
 
@@ -30,23 +30,39 @@ $title = __('site.Grades');
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route($mainRoutePrefix.'.grades.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.gradeFees.index') }}" method="get">
 
             <div class="row">
 
               <div class="col-md-4">
-                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
-                  value="{{ request()->search }}">
+                <div class="form-group">
+                  <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
+                    value="{{ request()->search }}">
+                </div>
               </div>
 
               <div class="col-md-4">
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
-                  @lang('site.Search')</button>
-                @if (checkAdminPermission('create_grades'))
-                <a href="{{ route($mainRoutePrefix.'.grades.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
-                  @lang('site.Add')</a>
-                @endif
+                <div class="form-group">
+                  <select name="grade_id" class="form-control"  data-live-search="true">
+                    <option value="">@lang('site.Grades') </option>
+                    @foreach( $grades as $scool )
+                    <option value="{{ $scool->id}}" @selected(request('grade_id')==$scool->id) >
+                      {{ $scool->title }}</option>
+                    @endforeach
+                  </select>
+                </div>
               </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
+                    @lang('site.Search')</button>
+                  @if (checkAdminPermission('create_gradeFees'))
+                  <a href="{{ route($mainRoutePrefix.'.gradeFees.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
+                    @lang('site.Add')</a>
+                  @endif
+                </div>
+            </div>
 
             </div>
           </form><!-- end of form -->
@@ -79,51 +95,59 @@ $title = __('site.Grades');
               <th style="width: 20%">
                 @lang('site.Title')
               </th>
-              <th style="width: 8%" class="text-center">
+              <th style="width: 20%">
+                @lang('site.Grade')
+              </th>
+              <th style="width: 20%">
+                @lang('site.Price')
+              </th>
+              <th style="width: 8%" >
                 @lang('site.Status')
               </th>
-              <th style="width: 8%" class="text-center">
+              <th style="width: 8%" >
                 @lang('site.table.Order Item')
               </th>
-              <th style="width: 20%" class="text-center">
+              <th style="width: 20%" >
                 @lang('site.Actions')
               </th>
             </tr>
           </thead>
           <tbody>
-            @forelse ($grades as $grade )
+            @forelse ($gradeFees as $value )
             <tr>
               <td>
                 {{ $loop->iteration }}
               </td>
               <td>
-                {{ $grade->title }}
+                {{ $value->title }}
+              </td>
+              <td>
+                {{ $value->grade?->title }}
+              </td>
+              <td>
+                {{ $value->price }}
               </td>
               <td class="project-state">
-                @include('admin.partials._render_status',['status'=>$grade->status])
+                @include('school.partials._render_status',['status'=>$value->status])
               </td>
-
               <td>
-                {{ $grade->order_column }}
+                {{ $value->order_column }}
               </td>
               <td class="project-actions text-right">
 
-                @include('admin.partials._view_btn',[
+                @include('school.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route($mainRoutePrefix.'.grades.show', ['grade'=>$grade->id]),
-                'permission' =>'read_grades',
+                'route'=>route($mainRoutePrefix.'.gradeFees.show', ['gradeFee'=>$value->id]),
                 ])
 
-                @include('admin.partials._edit_btn',[
-                'txt'=>__('site.Edit'),
-                'route'=>route($mainRoutePrefix.'.grades.edit', ['grade'=>$grade->id]),
-                'permission' =>'update_grades',
+                @include('school.partials._edit_btn',[
+                'txt'=>__('site.Edit') ,
+                'route'=>route($mainRoutePrefix.'.gradeFees.edit', ['gradeFee'=>$value->id]),
                 ])
 
-                @include('admin.partials._destroy_btn',[
+                @include('school.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route($mainRoutePrefix.'.grades.destroy', $grade->id),
-                'permission' =>'delete_grades',
+                'route'=>route($mainRoutePrefix.'.gradeFees.destroy', $value->id),
                 ])
 
               </td>
@@ -131,14 +155,14 @@ $title = __('site.Grades');
             @empty
             <tr>
               <td>
-                @include('admin.partials.no_data_found')
+                @include('school.partials.no_data_found')
               </td>
             </tr>
             @endforelse
 
           </tbody>
         </table>
-        {{ $grades->appends(request()->query())->links() }}
+        {{ $gradeFees->appends(request()->query())->links() }}
 
       </div>
       <!-- /.card-body -->

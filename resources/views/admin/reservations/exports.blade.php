@@ -14,7 +14,7 @@
         @lang('site.Address')
       </th>
       <th class="text-center">
-        @lang('site.Identification Number	')
+        @lang('site.Identification Number')
       </th>
       <th class="text-center">
         @lang('site.Status')
@@ -57,7 +57,7 @@
         @lang('site.reservation_status.'.$reservation->status)
       </td>
       <td class="text-center">
-        @lang('site.reservation_status.'.$reservation->payment_status)
+        @lang('site.payment_status.'.$reservation->payment_status)
       </td>
       <td class="text-center">
         {{ $reservation->school?->title }}

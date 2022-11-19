@@ -166,16 +166,19 @@ $title = __('site.Courses');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.courses.show', ['course'=>$course->id]),
+                'permission' =>'read_courses',
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.courses.edit', ['course'=>$course->id]),
+                'permission' =>'update_courses',
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.courses.destroy', $course->id),
+                'permission' =>'delete_courses',
                 ])
 
               </td>

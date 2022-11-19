@@ -104,16 +104,19 @@ $title = __('site.Roles');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.roles.show', ['role'=>$role->id]),
+                'permission' =>"read_roles",
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.roles.edit', ['role'=>$role->id]),
+                'permission' =>"update_roles",
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.roles.destroy', $role->id),
+                'permission' =>"delete_roles",
                 ])
 
               </td>

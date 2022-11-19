@@ -110,16 +110,19 @@ $title = __('site.Subscriptions');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.schools.subscriptions.show', ['school'=>$school->id,'subscription'=>$subscription->id]),
+                'permission' =>'read_subscriptions',
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.schools.subscriptions.edit', ['school'=>$school->id,'subscription'=>$subscription->id]),
+                'permission' =>'update_subscriptions',
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.schools.subscriptions.destroy', ['school'=>$school->id,'subscription'=>$subscription->id]),
+                'permission' =>'delete_subscriptions',
                 ])
               </td>
             </tr>

@@ -111,16 +111,19 @@ $title = __('site.Services');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.services.show', ['service'=>$service->id]),
+                'permission' =>'read_services',
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.services.edit', ['service'=>$service->id]),
+                'permission' =>'update_services',
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.services.destroy', $service->id),
+                'permission' =>'delete_services',
                 ])
 
               </td>

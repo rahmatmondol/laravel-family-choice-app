@@ -169,16 +169,19 @@ $title = __('site.SubscriptionTypes');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.subscriptionTypes.show', ['subscriptionType'=>$subscriptionType->id]),
+                'permission' =>'read_subscriptionTypes',
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.subscriptionTypes.edit', ['subscriptionType'=>$subscriptionType->id]),
+                'permission' =>'update_subscriptionTypes',
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.subscriptionTypes.destroy', $subscriptionType->id),
+                'permission' =>'delete_subscriptionTypes',
                 ])
 
               </td>

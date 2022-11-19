@@ -139,16 +139,19 @@ $title = __('site.PaidServices');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.paidServices.show', ['paidService'=>$value->id]),
+                'permission' =>'read_paidServices',
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit') ,
                 'route'=>route($mainRoutePrefix.'.paidServices.edit', ['paidService'=>$value->id]),
+                'permission' =>'update_paidServices',
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.paidServices.destroy', $value->id),
+                'permission' =>'delete_paidServices',
                 ])
 
               </td>

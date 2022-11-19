@@ -157,16 +157,19 @@ $title = __('site.GradeFees');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.gradeFees.show', ['gradeFee'=>$value->id]),
+                'permission' =>'read_gradeFees',
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit') ,
                 'route'=>route($mainRoutePrefix.'.gradeFees.edit', ['gradeFee'=>$value->id]),
+                'permission' =>'update_gradeFees',
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.gradeFees.destroy', $value->id),
+                'permission' =>'delete_gradeFees',
                 ])
 
               </td>

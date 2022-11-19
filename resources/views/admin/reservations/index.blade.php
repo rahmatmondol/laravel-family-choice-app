@@ -36,7 +36,7 @@ $title = __('site.Reservations');
 
               <div class="col-md-4">
                 <div class="form-group">
-                  <input type="text" name="search" class="form-control" placeholder="@lang('site.Search')"
+                  <input type="text" name="search" class="form-control" placeholder="@lang('site.search by reservation number or parent name')"
                   value="{{ request()->search }}">
                 </div>
               </div>
@@ -80,10 +80,24 @@ $title = __('site.Reservations');
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text">
-                        <i class="far fa-calendar-alt"></i>
+                        @lang('site.From')
                       </span>
                     </div>
-                    <input type="text" name="date_range" class="form-control float-right" id="reservation_date_range" value="{{ request('date_range') }}">
+                    <input type="date" name="from_date" class="form-control float-right"  value="{{ request('from_date') }}">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        @lang('site.To')
+                      </span>
+                    </div>
+                    <input type="date" name="to_date" class="form-control float-right"  value="{{ request('to_date') }}">
                   </div>
                   <!-- /.input group -->
                 </div>
@@ -177,7 +191,7 @@ $title = __('site.Reservations');
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->customer?->full_name }}</a>
               </td>
               <td class="text-center">
-                {{ $reservation->total_fees }}
+                {{ $reservation->total_fees }}  @lang('site.app.Currency')
               </td>
               <td class="text-center">
                 {{ $reservation->created_at }}
@@ -186,10 +200,12 @@ $title = __('site.Reservations');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.reservations.show', ['reservation'=>$reservation->id]),
+                'permission' =>'read_reservations',
                 ])
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.reservations.edit', ['reservation'=>$reservation->id]),
+                'permission' =>'update_reservations',
                 ])
               </td>
             </tr>

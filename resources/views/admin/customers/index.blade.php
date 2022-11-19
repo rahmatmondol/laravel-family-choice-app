@@ -144,6 +144,7 @@ $title = __('site.Customers');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.Reservations'),
                 'route'=>route($mainRoutePrefix.'.reservations.index', ['customer_id'=>$customer->id]),
+                'permission' =>'read_reservations',
                 ])
               </td>
               <td>
@@ -162,16 +163,19 @@ $title = __('site.Customers');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.customers.show', ['customer'=>$customer->id]),
+                'permission' =>'read_reservations',
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.customers.edit', ['customer'=>$customer->id]),
+                'permission' =>'update_reservations',
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.customers.destroy', $customer->id),
+                'permission' =>'delete_reservations',
                 ])
 
               </td>

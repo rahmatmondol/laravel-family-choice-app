@@ -36,7 +36,7 @@ $title = __('site.Reservations');
 
               <div class="col-md-4">
                 <div class="form-group">
-                  <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
+                  <input type="text" name="search" class="form-control" placeholder="@lang('site.search by reservation number or parent name')"
                   value="{{ request()->search }}">
                 </div>
               </div>
@@ -65,12 +65,38 @@ $title = __('site.Reservations');
 
               <div class="col-md-4">
                 <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        @lang('site.From')
+                      </span>
+                    </div>
+                    <input type="date" name="from_date" class="form-control float-right"  value="{{ request('from_date') }}">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        @lang('site.To')
+                      </span>
+                    </div>
+                    <input type="date" name="to_date" class="form-control float-right"  value="{{ request('to_date') }}">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
                   <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                     @lang('site.Search')</button>
-
-                  <a href="{{ route($mainRoutePrefix.'.reservations.export',request()->all() ) }}" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
-                    @lang('site.Export')</a>
-
+                    <a href="{{ route($mainRoutePrefix.'.reservations.export',request()->all() ) }}" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
+                      @lang('site.Export')</a>
                 </div>
               </div>
 
@@ -112,12 +138,17 @@ $title = __('site.Reservations');
                 @lang('site.payment_status.Status')
               </th>
               <th style="width: 20%" class="text-center">
-                @lang('site.Course')
-              </th>
-              <th style="width: 20%" class="text-center">
                 @lang('site.Customer')
               </th>
               <th style="width: 20%" class="text-center">
+                @lang('site.Total Fees')
+              </th>
+              </th>
+              <th style="width: 20%" class="text-center">
+                @lang('site.Created At')
+              </th>
+              <th style="width: 20%" class="text-center">
+                
               </th>
             </tr>
           </thead>
@@ -134,38 +165,33 @@ $title = __('site.Reservations');
                 @include('admin.partials._render_reservation_status',['status'=>$reservation->status])
               </td>
               <td class="text-center">
-
                 @include('admin.partials._render_payment_status',['status'=>$reservation->payment_status])
-              </td>
-              <td class="text-center">
-                @if($reservation->course_id)
-                <a href="{{ route($mainRoutePrefix.'.courses.show', ['course'=>$reservation->course_id]) }}"
-                  class="btn btn-primary btn-sm" target="_blank">{{ $reservation->course?->title }}</a>
-                @endif
               </td>
               <td class="text-center">
                 <a href="{{ route($mainRoutePrefix.'.customers.show', ['customer'=>$reservation->customer_id]) }}"
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->customer?->full_name }}</a>
               </td>
-
               <td class="text-center">
-
-                @include('admin.partials._view_btn',[
+                {{ $reservation->total_fees }}  @lang('site.app.Currency')
+              </td>
+              <td class="text-center">
+                {{ $reservation->created_at }}
+              </td>
+              <td class="text-center">
+                @include('school.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.reservations.show', ['reservation'=>$reservation->id]),
                 ])
-
-                @include('admin.partials._edit_btn',[
+                @include('school.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.reservations.edit', ['reservation'=>$reservation->id]),
                 ])
-
               </td>
             </tr>
             @empty
             <tr>
               <td class="text-center">
-                @include('admin.partials.no_data_found')
+                @include('school.partials.no_data_found')
               </td>
             </tr>
             @endforelse

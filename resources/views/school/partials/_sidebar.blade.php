@@ -41,6 +41,55 @@
           </a>
         </li>
 
+        @if($globalSchool->is_nursery_type)
+        <li class="nav-item">
+          <a href="{{ route($mainRoutePrefix.'.courses.index') }}" class="nav-link @if( $page == 'courses' )   active  @endif">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+              {{ucfirst(__('site.Courses'))}}
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route($mainRoutePrefix.'.subscription_types.index') }}" class="nav-link @if( $page == 'subscription_types' )   active  @endif">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+              {{ucfirst(__('site.Subscription Types'))}}
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route($mainRoutePrefix.'.nurseryFees.index') }}" class="nav-link @if( $page == 'nurseryFees' )   active  @endif">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+              {{ucfirst(__('site.NurseryFees'))}}
+            </p>
+          </a>
+        </li>
+        @endif
+
+
+
+        @if($globalSchool->is_school_type)
+        <li class="nav-item">
+          <a href="{{ route($mainRoutePrefix.'.grades.index') }}" class="nav-link @if( $page == 'grades' )   active  @endif">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+              {{ucfirst(__('site.Grades'))}}
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route($mainRoutePrefix.'.gradeFees.index') }}" class="nav-link @if( $page == 'gradeFees' )   active  @endif">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+              {{ucfirst(__('site.GradeFees'))}}
+            </p>
+          </a>
+        </li>
+        @endif
+
+
         @foreach( $sideBarItems as $item)
         <li class="nav-item  active ">
           <a href="{{ route('school.'.$item.'.index') }}" class="nav-link @if( $page == $item )   active  @endif">

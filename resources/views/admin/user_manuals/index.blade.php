@@ -120,16 +120,19 @@ $title = __('site.User Manuals');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.user_manuals.show', ['user_manual'=>$user_manual->id]),
+                'permission' =>'read_user_manuals',
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.user_manuals.edit', ['user_manual'=>$user_manual->id]),
+                'permission' =>'update_user_manuals',
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.user_manuals.destroy', $user_manual->id),
+                'permission' =>'delete_user_manuals',
                 ])
 
               </td>

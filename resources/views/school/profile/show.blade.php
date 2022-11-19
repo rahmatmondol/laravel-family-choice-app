@@ -56,9 +56,7 @@ $title = __('site.Show school');
             <tr>
               <td>@lang('site.Types')</td>
               <td>
-                @foreach ($school->types as $type)
-                <span class="btn btn-primary btn-customs py-1 px-2">{{ $type->title }}</span>
-                @endforeach
+                <span class="btn btn-primary btn-customs py-1 px-2">{{ $school->type?->title }}</span>
               </td>
             </tr>
             <tr>
@@ -112,10 +110,6 @@ $title = __('site.Show school');
             <tr>
               <td>@lang('site.Total seats')</td>
               <td>{{ $school->total_seats }}</td>
-            </tr>
-            <tr>
-              <td>@lang('site.Fees')</td>
-              <td>{{ $school->fees }}</td>
             </tr>
             <tr>
               <td>@lang('site.Status')</td>

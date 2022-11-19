@@ -35,6 +35,7 @@ $title = __('site.Show school');
       @include('admin.partials._edit_btn',[
         'txt'=>__('site.Edit School'),
         'route'=>route($mainRoutePrefix.'.schools.edit',['school'=>$school->id]),
+        'permission' => 'update_schools',
         ])
     </div>
     <div class="card-body">
@@ -110,10 +111,6 @@ $title = __('site.Show school');
             <tr>
               <td>@lang('site.Total seats')</td>
               <td>{{ $school->total_seats }}</td>
-            </tr>
-            <tr>
-              <td>@lang('site.Fees')</td>
-              <td>{{ $school->fees }}</td>
             </tr>
             <tr>
               <td>@lang('site.Order Item')</td>

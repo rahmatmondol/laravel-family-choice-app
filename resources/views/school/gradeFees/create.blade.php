@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'schools';
-$title = __('site.Create Grade');
+$page = 'gradeFees';
+$title = __('site.Create GradeFees');
 ?>
 @section('title_page')
 {{ $title }}
@@ -20,8 +20,7 @@ $title = __('site.Create Grade');
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a
-                href="{{ route($mainRoutePrefix.'.grades.index') }}">@lang('site.Grades')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.gradeFees.index') }}">@lang('site.GradeFees')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -32,29 +31,24 @@ $title = __('site.Create Grade');
 
   <!-- Main content -->
   <section class="content">
-    <form method="post" action="{{ route($mainRoutePrefix.'.grades.store')}}"
-      enctype="multipart/form-data">
+    <form method="post" action="{{ route($mainRoutePrefix.'.gradeFees.store')}}" enctype="multipart/form-data">
       @csrf
       @method('post')
       @include('school.partials._errors')
+      <input type="hidden" name="school_id" value="{{ $globalSchool->id }}">
       <div class="row">
         <div class="col-md-6">
           <div class="card card-primary">
             <div class="card-body">
-              <input type="hidden" name="school_id" value="{{ $school->id }}">
 
-              {{-- grades --}}
+              @foreach (config('translatable.locales') as $key => $locale)
               <div class="form-group">
-                <label for="inputType">@lang('site.Grades')</label>
-                <select name="grade_id" class="form-control" required>
-                  <option value="">@lang('site.Grades') </option>
-                  @foreach( $grades as $value )
-                  <option value="{{ $value->id}}" @if( old('grade_id')==$value->id ) selected @endif>
-                    {{ $value->title }}</option>
-                  @endforeach
-                </select>
+                <label>@lang('site.' . $locale . '.Title')</label>
+                <input required="required" type="text" name="{{ $locale }}[title]" class="form-control"
+                  value="{{ old($locale . '.title') }}">
               </div>
-
+              <div class="  with-border"></div><br>
+              @endforeach
 
             </div>
             <!-- /.card-body -->
@@ -65,6 +59,32 @@ $title = __('site.Create Grade');
           <div class="card card-primary">
             <div class="card-body">
 
+              {{-- grades --}}
+              <div class="form-group">
+                <label>@lang('site.Grades')</label>
+                <select name="grade_id" class="form-control" required>
+                  <option value='' selected disabled>@lang('site.Grades')</option>
+                  @foreach ($grades as $grade)
+                  <option value="{{ $grade->id }}" @if(old('grade_id')==$grade->id) selected @endif>{{
+                    $grade->title }}</option>
+                  @endforeach
+                </select>
+              </div>
+
+              {{-- price --}}
+              <div class="form-group">
+                <label>@lang('site.Price')</label>
+                <input type="text" name="price" value="{{ old('price') }}" class="form-control" required
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+              </div>
+
+              {{-- order_column --}}
+              <div class="form-group">
+                <label>@lang('site.Order Item')</label>
+                <input type="text" name="order_column" value="{{ old('order_column') }}" class="form-control"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+              </div>
+
               {{-- status --}}
               <div class="form-group">
                 <label for="inputStatus">@lang('site.Status')</label>
@@ -74,7 +94,6 @@ $title = __('site.Create Grade');
                   <option value="0" @if(old('status')==0) selected @endif>@lang('site.In-Active')</option>
                 </select>
               </div>
-
             </div>
             <!-- /.card-body -->
           </div>

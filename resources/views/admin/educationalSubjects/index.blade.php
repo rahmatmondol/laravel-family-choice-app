@@ -111,16 +111,19 @@ $title = __('site.EducationalSubjects');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.educationalSubjects.show', ['educationalSubject'=>$educationalSubject->id]),
+                'permission' =>'read_educationalSubjects',
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.educationalSubjects.edit', ['educationalSubject'=>$educationalSubject->id]),
+                'permission' =>'update_educationalSubjects',
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.educationalSubjects.destroy', $educationalSubject->id),
+                'permission' =>'delete_educationalSubjects',
                 ])
 
               </td>

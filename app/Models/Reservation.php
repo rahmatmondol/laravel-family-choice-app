@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Reservation extends Model
 {
-  use HasFactory,SoftDeletes;
+  use HasFactory, SoftDeletes;
 
   protected $guarded = [];
 
-  protected static $logAttributes = ['status','payment_status','reason_of_refuse'];
+  protected static $logAttributes = ['status', 'payment_status', 'reason_of_refuse'];
 
   protected static $logOnlyDirty = true;
 
@@ -72,14 +72,18 @@ class Reservation extends Model
     });
   } // end of
 
-  public function scopeWhenDateRange($query, $date_range)
+  public function scopeWhenFromDate($query, $from_date)
   {
-    if ($date_range !== null && $date_range != (date('m/d/Y') . ' - ' . date('m/d/Y'))) {
-      $arr = explode('-', $date_range);
-      $from_date = date('Y-m-d', strtotime(trim($arr[0])));
-      $to_date = date('Y-m-d', strtotime(trim($arr[1])));
-      return $query->whereDate('created_at', '>=', $from_date)->whereDate('created_at', '<=', $to_date);
-    }
+    return $query->when($from_date, function ($q) use ($from_date) {
+      return $q->whereDate('created_at', '>=', $from_date);
+    });
+  } // end of
+
+  public function scopeWhenToDate($query, $to_date)
+  {
+    return $query->when($to_date, function ($q) use ($to_date) {
+      return $q->whereDate('created_at', '<=', $to_date);
+    });
   } // end of
 
   ////////////////// start relationships //////////////////////////////

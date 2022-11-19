@@ -99,16 +99,19 @@ $title = __('site.Grades');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.schools.grades.show', ['school'=>$school->id,'grade'=>$grade->id]),
+                'permission' =>'read_grades',
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.schools.grades.edit', ['school'=>$school->id,'grade'=>$grade->id]),
+                'permission' =>'update_grades',
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.schools.grades.destroy', ['school'=>$school->id,'grade'=>$grade->id]),
+                'permission' =>'delete_grades',
                 ])
               </td>
             </tr>

@@ -139,16 +139,19 @@ $title = __('site.Transportations');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.transportations.show', ['transportation'=>$value->id]),
+                'permission' =>'read_transportations',
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit') ,
                 'route'=>route($mainRoutePrefix.'.transportations.edit', ['transportation'=>$value->id]),
+                'permission' =>'update_transportations',
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.transportations.destroy', $value->id),
+                'permission' =>'delete_transportations',
                 ])
 
               </td>

@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'schools';
-$title = __('site.Show Grade');
+$page = 'gradeFees';
+$title = __('site.Show GradeFees');
 ?>
 @section('title_page')
 {{ $title }}
@@ -20,8 +20,7 @@ $title = __('site.Show Grade');
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a
-              href="{{ route($mainRoutePrefix.'.grades.index') }}">@lang('site.Grades')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.gradeFees.index') }}">@lang('site.GradeFees')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -37,20 +36,28 @@ $title = __('site.Show Grade');
         <table class="table table-striped table-bordered">
           <tbody>
             <tr>
+              <td>@lang('site.Title')</td>
+              <td>{{ $gradeFees->title }}</td>
+            </tr>
+            <tr>
               <td>@lang('site.School')</td>
-              <td>{{ $schoolGrade->school->title }}</td>
+              <td>{{ $gradeFees->school?->title }}</td>
             </tr>
             <tr>
               <td>@lang('site.Grade')</td>
-              <td>{{ $schoolGrade->grade->title }}</td>
+              <td>{{ $gradeFees->grade?->title }}</td>
+            </tr>
+            <tr>
+              <td>@lang('site.Price')</td>
+              <td>{{ $gradeFees->price }}</td>
             </tr>
             <tr>
               <td>@lang('site.Order Item')</td>
-              <td>{{ $schoolGrade->order_column }}</td>
+              <td>{{ $gradeFees->order_column }}</td>
             </tr>
             <tr>
               <td>@lang('site.Status')</td>
-              <td>@include('school.partials._render_status',['status'=>$schoolGrade->status])</td>
+              <td>@include('school.partials._render_status',['status'=>$gradeFees->status])</td>
             </tr>
           </tbody>
         </table>

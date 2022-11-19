@@ -61,6 +61,12 @@ $title = __('site.Show Reservation');
               <td>{{ $reservation->identification_number }}</td>
             </tr>
             <tr>
+              <td>@lang('site.School')</td>
+              <td>
+                  {{ $reservation->school?->title }}
+              </td>
+            </tr>
+            <tr>
               <td>@lang('site.Customer')</td>
               <td>
                 <a href="{{ route($mainRoutePrefix.'.customers.show', ['customer'=>$reservation->customer_id]) }}"
@@ -69,9 +75,14 @@ $title = __('site.Show Reservation');
             </tr>
             <tr>
               <td>@lang('site.Status')</td>
-              {{-- <td>@lang("site.reservation_status.{$reservation->status}")</td> --}}
               <td>@include('admin.partials._render_reservation_status',['status'=>$reservation->status])</td>
             </tr>
+            @if($reservation->status == App\Enums\ReservationStatus::Rejected->value)
+            <tr>
+              <td>@lang('site.Reason of refuse')</td>
+              <td>{{ $reservation->reason_of_refuse }}</td>
+            </tr>
+            @endif
           </tbody>
         </table>
       </div>
@@ -95,22 +106,68 @@ $title = __('site.Show Reservation');
               <td>@lang('site.Gender')</td>
               <td>@lang('site.'.ucfirst($child->gender))</td>
             </tr>
+
+            @if($reservation->school?->is_school_type)
             <tr>
               <td>@lang('site.Grade')</td>
-              <td>{{ $child->grade?->title }}</td>
+              <td>{{ $child->grade?->title }} </td>
             </tr>
             <tr>
               <td>@lang('site.Fees')</td>
-              <td>{{ $child->fees }} {{ appCurrency() }}</td>
+              <td></td>
+            </tr>
+            @foreach ($reservation->gradeFees as $gradeFees)
+            <tr>
+              <td>{{ $gradeFees->title }}</td>
+              <td>{{ $gradeFees->pivot->price }}  {{ appCurrency() }}</td>
+            </tr>
+            @endforeach
+            @endif
+
+            @if($reservation->school?->is_nursery_type)
+            <tr>
+              <td>@lang('site.Subscription Type')</td>
+              <td>{{ $child->subscription_type?->title }} - ({{ $child->subscription_type_price }}) </td>
             </tr>
             <tr>
-              <td>@lang('site.Administrative Expenses')</td>
-              <td> {{ $child->administrative_expenses}} {{ appCurrency() }}</td>
+              <td>@lang('site.Course')</td>
+              <td>{{ $child->course?->title }} </td>
+            </tr>
+            <tr>
+              <td>@lang('site.Fees')</td>
+              <td></td>
+            </tr>
+            @foreach ($reservation->nurseryFees as $nurseryFees)
+            <tr>
+              <td>{{ $nurseryFees->title }}</td>
+              <td>{{ $nurseryFees->pivot->price }}  {{ appCurrency() }}</td>
+            </tr>
+            @endforeach
+            @endif
+            @if(isset($reservation->paidServices))
+            <tr>
+              <td>@lang('site.Paid Services')</td>
+              <td></td>
+            </tr>
+            @foreach ($reservation->paidServices as $paidService)
+            <tr>
+              <td>{{ $paidService->title }}</td>
+              <td>{{ $paidService->pivot->price }}  {{ appCurrency() }}</td>
+            </tr>
+            @endforeach
+            @endif
+            <tr>
+              <td>@lang('site.Transportation')</td>
+              <td>{{ $child->transportation?->title }} - ({{ $child->transportation_price }}) {{ appCurrency() }}</td>
             </tr>
             <tr>
               <td>@lang('site.Status')</td>
               <td>@lang("site.reservation_status.".$reservation->status)</td>
-              {{-- <td>@include('admin.partials._render_status',['status'=>$reservation->status])</td> --}}
+            </tr>
+            @if(isset($child->attachments))
+            <tr>
+              <td>@lang('site.Attachments')</td>
+              <td></td>
             </tr>
             @foreach ($child->attachments as $attachment)
             <tr>
@@ -119,6 +176,7 @@ $title = __('site.Show Reservation');
                   target="_blank">@lang('site.Download')</a></td>
             </tr>
             @endforeach
+            @endif
           </tbody>
         </table>
       </div>

@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\View;
 class BaseController extends Controller
 {
   public  $globalSchool;
-  public  $masterLayout="school.layouts.master";
+  public  $masterLayout= "school.layouts.master";
   public  $mainRoutePrefix="school";
   public  $mainViewPrefix = "school";
-  public  $sideBarItems = ['courses','attachments','reservations','grades'];
+  public  $sideBarItems = ['transportations','paidServices','attachments','reservations'];
   public function __construct()
   {
     $this->middleware(['auth:school']);
@@ -27,7 +27,6 @@ class BaseController extends Controller
       View::share('mainRoutePrefix', $this->mainRoutePrefix);
       return $next($request);
     });
-
   }
 
 }

@@ -142,12 +142,14 @@ $title = __('site.Schools');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.Grades'),
                 'route'=>route($mainRoutePrefix.'.schools.grades.index', ['school'=>$school->id]),
+                'permission' =>'read_grades',
                 ])
                 @endif
                 @if($school->is_nursery_type)
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.Subscriptions'),
                 'route'=>route($mainRoutePrefix.'.schools.subscriptions.index', ['school'=>$school->id]),
+                'permission' =>'read_subscriptions',
                 ])
                 @endif
               </td>
@@ -163,16 +165,19 @@ $title = __('site.Schools');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.schools.show', ['school'=>$school->id]),
+                'permission' =>'read_schools',
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.schools.edit', ['school'=>$school->id]),
+                'permission' =>'update_schools',
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.schools.destroy', $school->id),
+                'permission' =>'delete_schools',
                 ])
 
               </td>

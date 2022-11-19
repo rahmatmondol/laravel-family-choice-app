@@ -26,10 +26,12 @@
   <link rel="stylesheet" href="{{ asset('admin/') }}/dist/css/adminlte.min.css">
 
   @if (LaravelLocalization::getCurrentLocaleDirection() == 'rtl')
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('admin/') }}/dist/css/adminlte-rtl.min.css">
     <!-- Bootstrap 4 RTL -->
     <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.2.1/css/bootstrap.min.css">
     <!-- Custom style for RTL -->
-    <link rel="stylesheet" href="dist/css/custom.css">
+    {{-- <link rel="stylesheet" href="dist/css/custom.css"> --}}
   @else
   @endif
 
@@ -61,7 +63,7 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
-  <div class="wrapper">
+  <div class="wrapper  @if (LaravelLocalization::getCurrentLocaleDirection() == 'rtl') rtl rtl-inv @endif ">
 
     @include('school.partials._navbar')
 
@@ -124,57 +126,15 @@
   <script src="{{ asset('admin/') }}/js/admin.js"></script>
   <script>
     $('.selectric').selectric();
+    window.confirmOperation = "{{ __('site.Confirm operation') }}";
+    window.Yes = "{{ __('site.yes') }}";
+    window.No = "{{ __('site.no') }}";
   </script>
-
   @if (LaravelLocalization::getCurrentLocaleDirection() == 'rtl')
-  <!-- Bootstrap 4 rtl -->
   <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"></script>
   @endif
-  <script>
-    $(document).ready(function () {
-      //delete modal
-      $('.confirm-delete').click(function (e) {
-          var that = $(this)
-          e.preventDefault();
-          var n = new Noty({
-              text: "@lang('site.Confirm operation')",
-              type: "warning",
-              killer: true,
-
-              buttons: [
-                  Noty.button("  &nbsp;&nbsp;&nbsp;  @lang('site.yes')",
-                      'btn btn-danger mr-2 fa fa-trash ui-button',
-                      function () {
-
-                          that.closest('form').submit();
-
-                      }),
-                  Noty.button(" &nbsp;&nbsp;&nbsp;  @lang('site.no')   ",
-                      'btn btn-primary mr-2 fa fa-close',
-                      function () {
-                          n.close();
-                      })
-              ]
-          });
-          n.show();
-      }); //end of delete
-      // image preview
-      for (let index = 0; index < 4; index++) {
-        $(`.image${index}`).change(function () {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $(`.image-preview${index}`).attr('src', e.target.result);
-                }
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
-      }
-    })
-  </script>
-
+  <script src="{{ asset('admin/') }}/js/shared.js"></script>
   @stack('footer_js')
-
 </body>
 
 </html>

@@ -133,16 +133,19 @@ $title = __('site.Attachments');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.attachments.show', ['attachment'=>$attachment->id]),
+                'permission' =>'read_attachments',
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.attachments.edit', ['attachment'=>$attachment->id]),
+                'permission' =>'update_attachments',
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.attachments.destroy', $attachment->id),
+                'permission' =>'delete_attachments',
                 ])
 
               </td>

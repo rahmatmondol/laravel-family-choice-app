@@ -126,65 +126,14 @@
   <script src="{{ asset('admin/') }}/js/admin.js"></script>
   <script>
     $('.selectric').selectric();
-
-    //Date range picker
-    $('#reservation_date_range').daterangepicker({
-        locale: 'ar',
-        locale: { cancelLabel: 'Clear', }
-    })
-
-    $('#reservation_date_range').on('cancel.daterangepicker', function(ev, picker) {
-      //do something, like clearing an input
-      $('#reservation_date_range').val('');
-    });
+    window.confirmOperation = "{{ __('site.Confirm operation') }}";
+    window.Yes = "{{ __('site.yes') }}";
+    window.No = "{{ __('site.no') }}";
   </script>
-
   @if (LaravelLocalization::getCurrentLocaleDirection() == 'rtl')
-  <!-- Bootstrap 4 rtl -->
   <script src="https://cdn.rtlcss.com/bootstrap/v4.2.1/js/bootstrap.min.js"></script>
   @endif
-  <script>
-    $(document).ready(function () {
-      //delete modal
-      $('.confirm-delete').click(function (e) {
-          var that = $(this)
-          e.preventDefault();
-          var n = new Noty({
-              text: "@lang('site.Confirm operation')",
-              type: "warning",
-              killer: true,
-
-              buttons: [
-                  Noty.button("  &nbsp;&nbsp;&nbsp;  @lang('site.yes')",
-                      'btn btn-danger mr-2 fa fa-trash ui-button',
-                      function () {
-
-                          that.closest('form').submit();
-
-                      }),
-                  Noty.button(" &nbsp;&nbsp;&nbsp;  @lang('site.no')   ",
-                      'btn btn-primary mr-2 fa fa-close',
-                      function () {
-                          n.close();
-                      })
-              ]
-          });
-          n.show();
-      }); //end of delete
-      // image preview
-      for (let index = 0; index < 4; index++) {
-        $(`.image${index}`).change(function () {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $(`.image-preview${index}`).attr('src', e.target.result);
-                }
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
-      }
-    })
-  </script>
+  <script src="{{ asset('admin/') }}/js/shared.js"></script>
 
   @stack('footer_js')
 

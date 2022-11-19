@@ -32,33 +32,31 @@ if (!function_exists('getModules')) {
 if (!function_exists('getAdmin')) {
   function getAdmin()
   {
-    return auth()->guard('admin')->user() ?? null;
+    return request()->is(app()->getLocale().'/admin/*') && auth()->guard('admin')->user() ? auth()->guard('admin')->user() : null;
   }
 }
 
 if (!function_exists('getAuthSchool')) {
   function getAuthSchool()
   {
-    return auth()->guard('school')->user() ?? null;
+    return request()->is(app()->getLocale().'/school/*') && auth()->guard('school')->user()  ? auth()->guard('school')->user() :  null;
   }
 }
 
 if (!function_exists('getCustomer')) {
   function getCustomer()
   {
-    return auth()->guard('customer')->user() ?? auth()->guard('customer-api')->user();
+    return request()->is('api/*') && auth()->guard('customer')->user() ? auth()->guard('customer-api')->user() :  null;
   }
 }
 #validate helper function
 if (!function_exists('validateImage')) {
   function validateImage($ext = null)
   {
-
     if ($ext == null) {
       return 'image|mimes:jpg,jpeg,png,bmp,JPG,JPEG,PNG';
-    } else {
-      return 'image|mimes:' . $ext;
     }
+    return 'image|mimes:' . $ext;
 
     // $return = [
     //   'image',

@@ -1,4 +1,4 @@
-@if (checkAdminPermission('read_roles'))
+@if (checkAdminPermission($permission))
 <a class="btn btn-info btn-sm" href="{{ $route }}">
   <i class="fas fa-pencil-alt">
   </i>

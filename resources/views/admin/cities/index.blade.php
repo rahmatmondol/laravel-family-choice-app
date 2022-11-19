@@ -111,16 +111,19 @@ $title = __('site.Cities');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.cities.show', ['city'=>$city->id]),
+                'permission' =>'read_cities',
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.cities.edit', ['city'=>$city->id]),
+                'permission' =>'update_cities',
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.cities.destroy', $city->id),
+                'permission' =>'delete_cities',
                 ])
 
               </td>

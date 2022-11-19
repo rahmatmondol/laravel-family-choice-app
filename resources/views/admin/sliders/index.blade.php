@@ -119,16 +119,19 @@ $title = __('site.Sliders');
                 @include('admin.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.sliders.show', ['slider'=>$slider->id]),
+                'permission' =>'read_sliders',
                 ])
 
                 @include('admin.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.sliders.edit', ['slider'=>$slider->id]),
+                'permission' =>'update_sliders',
                 ])
 
                 @include('admin.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.sliders.destroy', $slider->id),
+                'permission' =>'delete_sliders',
                 ])
 
               </td>

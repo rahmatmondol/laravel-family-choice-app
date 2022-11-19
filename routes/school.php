@@ -52,9 +52,14 @@ Route::group(
 
       Route::resources([
         'courses'             => CourseController::class,
+        'subscriptionTypes'   => SubscriptionTypeController::class,
+        'nurseryFees'         => NurseryFeesController::class,
         'attachments'         => AttachmentController::class,
         'reservations'        => ReservationController::class,
         'grades'              => GradeController::class,
+        'gradeFees'           => GradeFeesController::class,
+        'transportations'     => TransportationController::class,
+        'paidServices'        => PaidServiceController::class,
       ]);
 
       #payments
