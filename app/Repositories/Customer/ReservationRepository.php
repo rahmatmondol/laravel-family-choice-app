@@ -222,15 +222,18 @@ class ReservationRepository implements ReservationRepositoryInterface
   public function customerReservations()
   {
     return getCustomer()->reservations()->with([
+      'school.type.translations',
       'school.translations',
       'child.grade.translations',
-      'child.reservation.school',
+      'child.reservation.school.type',
       'child.reservation.gradeFees',
       'child.reservation.nurseryFees',
       'child.reservation.paidServices',
       'child.transportation.translations',
       'child.subscription_type.translations',
       'child.course.translations',
+      'child.course.school',
+      'child.course.subscription',
       // 'nurseryFees',
       // 'gradeFees',
       // 'paidServices',
