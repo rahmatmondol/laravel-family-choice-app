@@ -243,11 +243,6 @@ class ReservationRepository implements ReservationRepositoryInterface
 
   public function reservationDetails($reservationId)
   {
-    dd(getCustomer()->reservations()->where(
-      'id',$reservationId
-    )->with([
-      'school.translations', 'child.grade.translations', 'child.course.translations', 'nurseryFees', 'gradeFees', 'paidServices', 'child.attachments.attachment.translation'
-    ])->first());
     return getCustomer()->reservations()->where(
       'id',$reservationId
     )->with([
