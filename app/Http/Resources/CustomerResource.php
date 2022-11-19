@@ -29,6 +29,7 @@ class CustomerResource extends JsonResource
       'image' => $this->image_path,
       'firebaseToken' => $this->firebaseToken,
       'gender' => (string) $this->gender,
+      'date_of_birth' => $this->date_of_birth,
       'lat' => (string) $this->lat,
       'lng' => (string) $this->lng,
 
