@@ -50,7 +50,6 @@ class AuthController extends Controller
     if (!$this->customerRepository->loginCustomer($request)) {
       return $this->sendError(__('site.Password not correct'), '');
     }
-
     $customer = getCustomer();
     if ($customer->status == 0) {
       return $this->sendError(__('site.User blocked from admin'), '');

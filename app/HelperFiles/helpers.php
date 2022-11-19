@@ -46,8 +46,7 @@ if (!function_exists('getAuthSchool')) {
 if (!function_exists('getCustomer')) {
   function getCustomer()
   {
-    // dd(request()->is('api/*'),auth()->guard('customer-api')->user());
-    return request()->is('api/*') && auth()->guard('customer-api')->user() ? auth()->guard('customer-api')->user() :  null;
+    return request()->is('api/*') && auth()->guard('customer')->user() ? auth()->guard('customer')->user() :  null;
   }
 }
 #validate helper function
