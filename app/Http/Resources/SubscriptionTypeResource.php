@@ -21,6 +21,7 @@ class SubscriptionTypeResource extends JsonResource
       'number_of_days'  => $this->number_of_days,
       'price'           => $this->price,
       'type'            => $this->type,
+      'subscription_id' => $this->subscription_id,
       // 'subscription'    => new SubscriptionResource($this->subscription) ,
     ];
   }
