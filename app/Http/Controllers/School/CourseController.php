@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\Gate;
 use App\Interfaces\CourseRepositoryInterface;
 use App\Http\Requests\Admin\CourseFormRequest;
 use App\Http\Controllers\School\BaseController;
+use App\Interfaces\SubscriptionRepositoryInterface;
 
 class CourseController extends BaseController
 {
 
   public function __construct(
     private CourseRepositoryInterface $courseRepository,
+    private SubscriptionRepositoryInterface $subscriptionRepository
   ) {
     parent::__construct();
   } //end of constructor
@@ -30,7 +32,8 @@ class CourseController extends BaseController
 
   public function create(Request $request)
   {
-    return view($this->mainViewPrefix . '.courses.create');
+    $subscriptions = $this->subscriptionRepository->getAllSubscriptions();
+    return view($this->mainViewPrefix . '.courses.create','subscriptions');
   } //end of create
 
   public function show($course)
@@ -69,8 +72,9 @@ class CourseController extends BaseController
   public function update(CourseFormRequest $request, Course $course)
   {
     $this->courseRepository->updateCourse($request, $course);
+    $subscriptions = $this->subscriptionRepository->getAllSubscriptions();
 
-    session()->flash('success', __('Data updated successfully'));
+    session()->flash('success', __('Data updated successfully'),'subscriptions');
 
     if ($request->continue) {
       return redirect()->route('school.courses.index', ['page' => session('currentPage')]);

@@ -44,6 +44,10 @@ $title = __('site.Show Course');
               <td>{{ $course->school->title }}</td>
             </tr>
             <tr>
+              <td>@lang('site.Subscription')</td>
+              <td>{{ $course->subscription?->title }}</td>
+            </tr>
+            <tr>
               <td>@lang('site.Type')</td>
               <td>@lang('site.'.$course->type)</td>
             </tr>

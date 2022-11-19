@@ -14,7 +14,6 @@ class SchoolResource extends JsonResource
       'title'               => $this->title,
       'address'             => $this->address,
       'description'         => $this->description,
-      // 'fees'                => (string) $this->fees,
       'phone'               => (string)  $this->phone,
       'whatsapp'            => (string) $this->whatsapp,
       'email'               => (string) $this->email,

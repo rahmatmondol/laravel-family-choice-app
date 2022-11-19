@@ -11,6 +11,7 @@ use App\Interfaces\SchoolRepositoryInterface;
 use App\Http\Resources\Collection\CourseCollection;
 use App\Http\Resources\Collection\ReviewCollection;
 use App\Http\Resources\Collection\SchoolCollection;
+use App\Http\Resources\SchoolResource;
 use App\Http\Resources\SubscriptionTypeResource;
 use App\Interfaces\SubscriptionTypeRepositoryInterface;
 
@@ -29,6 +30,12 @@ class SchoolController extends Controller
   {
     $schools = $this->schoolRepository->getSchools($request);
     return $this->sendResponse(new SchoolCollection($schools), "");
+  }
+
+  public function schoolDetails(Request $request)
+  {
+    $school = $this->schoolRepository->getSchoolById($request->school_id);
+    return $this->sendResponse(new SchoolResource($school), "");
   }
 
   public function courses(Request $request)

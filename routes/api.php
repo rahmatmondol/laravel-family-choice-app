@@ -50,6 +50,7 @@ Route::group(
 
       Route::controller(SchoolController::class)->group(function () {
         Route::get('schools', 'schools');
+        Route::get('school-details', 'schoolDetails');
         Route::get('courses', 'courses');
         Route::get('subscription-types', 'subscriptionTypes');
         Route::get('school-reviews', 'school_reviews');

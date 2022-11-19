@@ -81,6 +81,18 @@ $title = __('site.Edit Course');
           <div class="card card-primary">
             <div class="card-body">
 
+              {{-- subscriptions --}}
+              <div class="form-group">
+                <label>@lang('site.Subscriptions')</label>
+                <select name="subscription_id" class="form-control" required>
+                  <option value='' selected disabled>@lang('site.Subscriptions')</option>
+                  @foreach ($subscriptions as $subscription)
+                  <option value="{{ $subscription->id }}" @selected(old('subscription_id',$course->subscription_id)==$subscription->id)>
+                  {{  $subscription->title }}</option>
+                  @endforeach
+                </select>
+              </div>
+              
               {{-- type --}}
               <div class="form-group">
                 <label for="inputType">@lang('site.Type')</label>

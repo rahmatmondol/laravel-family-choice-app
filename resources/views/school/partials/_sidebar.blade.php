@@ -51,10 +51,10 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ route($mainRoutePrefix.'.subscription_types.index') }}" class="nav-link @if( $page == 'subscription_types' )   active  @endif">
+          <a href="{{ route($mainRoutePrefix.'.subscriptionTypes.index') }}" class="nav-link @if( $page == 'subscriptionTypes' )   active  @endif">
             <i class="nav-icon fas fa-columns"></i>
             <p>
-              {{ucfirst(__('site.Subscription Types'))}}
+              {{ucfirst(__('site.SubscriptionTypes'))}}
             </p>
           </a>
         </li>

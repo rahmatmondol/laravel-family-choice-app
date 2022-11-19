@@ -87,6 +87,9 @@ $title = __('site.Courses');
                 @lang('site.Type')
               </th>
               <th style="width: 20%">
+                @lang('site.Subscription')
+              </th>
+              <th style="width: 20%">
                 @lang('site.From Date')
               </th>
               <th style="width: 20%">
@@ -119,6 +122,9 @@ $title = __('site.Courses');
                 @lang('site.'.$course->type)
               </td>
               <td>
+                {{ $course->subscription?->title }}
+              </td>
+              <td>
                 {{ $course->from_date }}
               </td>
               <td>
@@ -130,24 +136,24 @@ $title = __('site.Courses');
                 </a>
               </td>
               <td class="project-state">
-                @include('admin.partials._render_status',['status'=>$course->status])
+                @include('school.partials._render_status',['status'=>$course->status])
               </td>
               <td>
                 {{ $course->order_column }}
               </td>
               <td class="project-actions text-right">
 
-                @include('admin.partials._view_btn',[
+                @include('school.partials._view_btn',[
                 'txt'=>__('site.View'),
                 'route'=>route($mainRoutePrefix.'.courses.show', ['course'=>$course->id]),
                 ])
 
-                @include('admin.partials._edit_btn',[
+                @include('school.partials._edit_btn',[
                 'txt'=>__('site.Edit'),
                 'route'=>route($mainRoutePrefix.'.courses.edit', ['course'=>$course->id]),
                 ])
 
-                @include('admin.partials._destroy_btn',[
+                @include('school.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
                 'route'=>route($mainRoutePrefix.'.courses.destroy', $course->id),
                 ])
@@ -157,7 +163,7 @@ $title = __('site.Courses');
             @empty
             <tr>
               <td>
-                @include('admin.partials.no_data_found')
+                @include('school.partials.no_data_found')
               </td>
             </tr>
             @endforelse
