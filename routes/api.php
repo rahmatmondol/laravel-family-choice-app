@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Controllers\API\Customer\CustomerController;
 use App\Http\Controllers\Api\Customer\FavoriteController;
-use App\Http\Controllers\API\Customer\NotificationController;
+use App\Http\Controllers\Api\Customer\NotificationController;
 use App\Http\Controllers\Api\Customer\StripePaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
