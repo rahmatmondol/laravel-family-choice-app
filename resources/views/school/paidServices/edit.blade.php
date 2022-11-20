@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'attachments';
-$title = __('site.Edit Attachment');
+$page = 'paidServices';
+$title = __('site.Edit Paid Service');
 ?>
 @section('title_page')
 {{ $title }}
@@ -20,7 +20,7 @@ $title = __('site.Edit Attachment');
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.attachments.index') }}">@lang('site.Attachments')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.paidServices.index') }}">@lang('site.PaidServices')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -31,7 +31,7 @@ $title = __('site.Edit Attachment');
 
   <!-- Main content -->
   <section class="content">
-    <form method="post" action="{{ route($mainRoutePrefix.'.attachments.update',$attachment->id)}}" enctype="multipart/form-data">
+    <form method="post" action="{{ route($mainRoutePrefix.'.paidServices.update',$paidService->id)}}" enctype="multipart/form-data">
       @csrf
       @method('put')
       @include('school.partials._errors')
@@ -45,11 +45,10 @@ $title = __('site.Edit Attachment');
               <div class="form-group">
                 <label>@lang('site.' . $locale . '.Title')</label>
                 <input required="required" type="text" name="{{ $locale }}[title]" class="form-control"
-                  value="{{ old($locale . '.title',$attachment->translate($locale)->title) }}">
+                  value="{{ old($locale . '.title',$paidService->translate($locale)->title) }}">
               </div>
               <div class="  with-border"></div><br>
               @endforeach
-
             </div>
             <!-- /.card-body -->
           </div>
@@ -59,18 +58,18 @@ $title = __('site.Edit Attachment');
           <div class="card card-primary">
             <div class="card-body">
 
+              {{-- price --}}
               <div class="form-group">
-                <label>@lang('site.Template File')</label>
-                <input type="file" id='template_file' name="template_file" class="form-control">
-                @if($attachment->template_file_path)
-                <a href="{{ $attachment->template_file_path }}" target="_blank">@lang('site.Download')</a>
-                @endif
+                <label>@lang('site.Price')</label>
+                <input type="text" name="price" value="{{ old('price',$paidService->price) }}"
+                  class="form-control"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
               </div>
 
               {{-- order_column --}}
               <div class="form-group">
                 <label>@lang('site.Order Item')</label>
-                <input type="text" name="order_column" value="{{ old('order_column',$attachment->order_column) }}"
+                <input type="text" name="order_column" value="{{ old('order_column',$paidService->order_column) }}"
                   class="form-control"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
               </div>
@@ -80,9 +79,8 @@ $title = __('site.Edit Attachment');
                 <label for="inputStatus">@lang('site.Status')</label>
                 <select id="inputStatus" name="status" required class="form-control custom-select">
                   <option value='' selected disabled>@lang('site.Status')</option>
-                  <option value="1" @if(old('status',$attachment->status)==1) selected @endif>@lang('site.Active')
-                  </option>
-                  <option value="0" @if(old('status',$attachment->status)==0) selected @endif>@lang('site.In-Active')
+                  <option value="1" @if(old('status',$paidService->status)==1) selected @endif>@lang('site.Active')</option>
+                  <option value="0" @if(old('status',$paidService->status)==0) selected @endif>@lang('site.In-Active')
                   </option>
                 </select>
               </div>

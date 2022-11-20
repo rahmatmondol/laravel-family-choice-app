@@ -34,7 +34,7 @@ $title = __('site.Create Attachment');
     <form method="post" action="{{ route($mainRoutePrefix.'.attachments.store')}}" enctype="multipart/form-data">
       @csrf
       @method('post')
-      @include('admin.partials._errors')
+      @include('school.partials._errors')
       <input type="hidden" name="school_id" value="{{ $globalSchool->id }}">
       <div class="row">
         <div class="col-md-6">

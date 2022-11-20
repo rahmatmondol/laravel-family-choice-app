@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'attachments';
-$title = __('site.Show Attachment');
+$page = 'transportations';
+$title = __('site.Show Transportation');
 ?>
 @section('title_page')
 {{ $title }}
@@ -20,7 +20,7 @@ $title = __('site.Show Attachment');
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.attachments.index') }}">@lang('site.Attachments')</a>
+            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.transportations.index') }}">@lang('site.Transportations')</a>
             </li>
             <li class="breadcrumb-item active">{{ $title }}</li>
           </ol>
@@ -37,15 +37,23 @@ $title = __('site.Show Attachment');
           <tbody>
             <tr>
               <td>@lang('site.Title')</td>
-              <td>{{ $attachment->title }}</td>
+              <td>{{ $transportation->title }}</td>
+            </tr>
+            <tr>
+              <td>@lang('site.School')</td>
+              <td>{{ $transportation->school->title }}</td>
+            </tr>
+            <tr>
+              <td>@lang('site.Price')</td>
+              <td>{{ $transportation->price }} {{ appCurrency() }}</td>
             </tr>
             <tr>
               <td>@lang('site.Order Item')</td>
-              <td>{{ $attachment->order_column }}</td>
+              <td>{{ $transportation->order_column }}</td>
             </tr>
             <tr>
               <td>@lang('site.Status')</td>
-              <td>@include('school.partials._render_status',['status'=>$attachment->status])</td>
+              <td>@include('school.partials._render_status',['status'=>$transportation->status])</td>
             </tr>
           </tbody>
         </table>

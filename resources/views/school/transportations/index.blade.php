@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'attachments';
-$title = __('site.Attachments');
+$page = 'transportations';
+$title = __('site.Transportations');
 ?>
 @section('title_page')
 {{ $title }}
@@ -17,7 +17,7 @@ $title = __('site.Attachments');
         <div class="col-sm-6">
           <h6>{{ $title }}
             <small>
-              ( {{ $attachments->total() }} )
+              ( {{ $transportations->total() }} )
             </small>
           </h6>
 
@@ -30,24 +30,39 @@ $title = __('site.Attachments');
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route($mainRoutePrefix.'.attachments.index') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.transportations.index') }}" method="get">
 
             <div class="row">
 
               <div class="col-md-4">
-                <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
-                  value="{{ request()->search }}">
+                <div class="form-group">
+                  <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
+                    value="{{ request()->search }}">
+                </div>
               </div>
 
               <div class="col-md-4">
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
-                  @lang('site.Search')</button>
-                @if (checkAdminPermission('create_attachments'))
-                <a href="{{ route($mainRoutePrefix.'.attachments.create') }}" class="btn btn-sm btn-primary"><i
-                    class="fa fa-plus"></i>
-                  @lang('site.Add')</a>
-                @endif
+                <div class="form-group">
+                  <select name="school_id" class="form-control"  data-live-search="true">
+                    <option value="">@lang('site.Schools') </option>
+                    @foreach( $schools as $scool )
+                    <option value="{{ $scool->id}}" @selected(request('school_id')==$scool->id) >
+                      {{ $scool->title }}</option>
+                    @endforeach
+                  </select>
+                </div>
               </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
+                    @lang('site.Search')</button>
+                  @if (checkAdminPermission('create_transportations'))
+                  <a href="{{ route($mainRoutePrefix.'.transportations.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
+                    @lang('site.Add')</a>
+                  @endif
+                </div>
+            </div>
 
             </div>
           </form><!-- end of form -->
@@ -80,47 +95,62 @@ $title = __('site.Attachments');
               <th style="width: 20%">
                 @lang('site.Title')
               </th>
-              <th style="width: 8%" class="text-center">
+              <th style="width: 20%">
+                @lang('site.School')
+              </th>
+              <th style="width: 20%">
+                @lang('site.Price')
+              </th>
+              <th style="width: 8%" >
                 @lang('site.Status')
               </th>
-              <th style="width: 8%" class="text-center">
+              <th style="width: 8%" >
                 @lang('site.table.Order Item')
               </th>
-              <th style="width: 20%" class="text-center">
+              <th style="width: 20%" >
                 @lang('site.Actions')
               </th>
             </tr>
           </thead>
           <tbody>
-            @forelse ($attachments as $attachment )
+            @forelse ($transportations as $value )
             <tr>
               <td>
                 {{ $loop->iteration }}
               </td>
               <td>
-                {{ $attachment->title }}
+                {{ $value->title }}
               </td>
-              <td class="project-state">
-                @include('school.partials._render_status',['status'=>$attachment->status])
+              <td class="text-center">
+                {{ $value->school?->title }}
               </td>
               <td>
-                {{ $attachment->order_column }}
+                {{ $value->price }}
+              </td>
+              <td class="project-state">
+                @include('school.partials._render_status',['status'=>$value->status])
+              </td>
+              <td>
+                {{ $value->order_column }}
               </td>
               <td class="project-actions text-right">
 
                 @include('school.partials._view_btn',[
                 'txt'=>__('site.View'),
-                'route'=>route($mainRoutePrefix.'.attachments.show', ['attachment'=>$attachment->id]),
+                'route'=>route($mainRoutePrefix.'.transportations.show', ['transportation'=>$value->id]),
+                'permission' =>'read_transportations',
                 ])
 
                 @include('school.partials._edit_btn',[
-                'txt'=>__('site.Edit'),
-                'route'=>route($mainRoutePrefix.'.attachments.edit', ['attachment'=>$attachment->id]),
+                'txt'=>__('site.Edit') ,
+                'route'=>route($mainRoutePrefix.'.transportations.edit', ['transportation'=>$value->id]),
+                'permission' =>'update_transportations',
                 ])
 
                 @include('school.partials._destroy_btn',[
                 'txt'=>__('site.Delete'),
-                'route'=>route($mainRoutePrefix.'.attachments.destroy', $attachment->id),
+                'route'=>route($mainRoutePrefix.'.transportations.destroy', $value->id),
+                'permission' =>'delete_transportations',
                 ])
 
               </td>
@@ -135,7 +165,7 @@ $title = __('site.Attachments');
 
           </tbody>
         </table>
-        {{ $attachments->appends(request()->query())->links() }}
+        {{ $transportations->appends(request()->query())->links() }}
 
       </div>
       <!-- /.card-body -->

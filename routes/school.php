@@ -60,6 +60,7 @@ Route::group(
         'gradeFees'           => GradeFeesController::class,
         'transportations'     => TransportationController::class,
         'paidServices'        => PaidServiceController::class,
+        'services'            => ServiceController::class,
       ]);
 
       #payments
