@@ -16,7 +16,7 @@ use App\Http\Controllers\StripeController;
 */
 
 Route::get('/test', [HomeController::class,'test']);
-Route::get('/truncate-all-tables', [HomeController::class,'truncate']);
+// Route::get('/truncate-all-tables', [HomeController::class,'truncate']);
 
 Route::get('/', function () {
 
@@ -28,10 +28,6 @@ Route::get('/', function () {
 $router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer'], function() use ($router) {
   $router->get('app-logs', 'LogViewerController@index');
 });
-
-
-Route::get('stripe', [StripeController::class, 'stripe']);
-Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
 
 require 'admin.php';
 require 'school.php';

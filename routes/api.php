@@ -10,8 +10,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
 });
 
-// composer require laravel/passport  "7.5.1"
-
 Route::group(
   [
     'namespace' => "Api", 'middleware' => 'localization',

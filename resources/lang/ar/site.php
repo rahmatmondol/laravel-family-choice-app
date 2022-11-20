@@ -285,7 +285,12 @@ return [
   'Edit Transportation' => 'تعديل المواصلات',
   'Show Transportation' => 'عرض المواصلات',
   'Short Description' => 'وصف قصير',
-
+  'search by reservation number or parent name' => 'ابحث  برقم الحجز او  اسم ولي الامر',
+  'Transportation' => 'المواصلات',
+  'Paid Services' => 'الخدمات الدفوعة',
+  'Subscription Type' => 'Subscription Type',
+  'From' => 'من',
+  'To' => 'الي',
   '' => '',
   '' => '',
   '' => '',

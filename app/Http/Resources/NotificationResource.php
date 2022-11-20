@@ -19,6 +19,8 @@ class NotificationResource extends JsonResource
       'title'           => $this->title,
       'body'            => $this->body,
       'reservation_id'  => $this->reservation_id,
+      'created_at'            => (string) $this->created_at,
+      'updated_at'            => (string) $this->updated_at,
     ];
   }
 }
