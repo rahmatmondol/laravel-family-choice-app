@@ -66,12 +66,15 @@ class AddReservationFormRequest extends BaseRequest
       }],
       'child.subscription_type_id' => ['sometimes', Rule::requiredIf(fn () => $this->school->is_nursery_type), 'exists:subscription_types,id', function ($attribute, $value, $fail) use ($course) {
         $subscription_type = SubscriptionType::find($value);
-        if (isset($subscription_type) && $subscription_type->school_id != $this->school->id && $this->school->is_nursery_type) {
-          $fail(__('site.this subscription type not related to current school'));
+        if(isset($subscription_type) ){
+          if ($subscription_type->school_id != $this->school->id && $this->school->is_nursery_type) {
+            $fail(__('site.this subscription type not related to current school'));
+          }
+          if (isset($course) &&  $course->subscription?->id != $subscription_type->subscription?->id && $this->school->is_nursery_type) {
+            $fail(__('site.this subscription type not related to current course'));
+          }
         }
-        if (isset($course) &&  $course->subscription?->id != $subscription_type->subscription?->id && $this->school->is_nursery_type) {
-          $fail(__('site.this subscription type not related to current course'));
-        }
+
       }],
     ];
     if ($this->school) {
