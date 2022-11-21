@@ -95,7 +95,6 @@ class NotificationService
 
   public static function sendSms(string $phone, string $message)
   {
-
     try {
       // 971522946005 is active number for hussein
       $msg = self::convertToUnicode($message);
