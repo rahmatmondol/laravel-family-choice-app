@@ -43,7 +43,7 @@ class AddReservationFormRequest extends BaseRequest
       'identification_number' => 'required|string|max:255',
       'child.transportation_id' => ['required', 'bail', 'exists:transportations,id', function ($attribute, $value, $fail) {
         $transportation = Transportation::find($value);
-        if ($transportation->school_id != $this->school->id) {
+        if (isset($transportation) && $transportation->school_id != $this->school->id) {
           $fail(__('site.this transportation not related to current school'));
         }
       }],
@@ -66,7 +66,7 @@ class AddReservationFormRequest extends BaseRequest
       }],
       'child.subscription_type_id' => ['sometimes', Rule::requiredIf(fn () => $this->school->is_nursery_type), 'exists:subscription_types,id', function ($attribute, $value, $fail) use ($course) {
         $subscription_type = SubscriptionType::find($value);
-        if ($subscription_type->school_id != $this->school->id && $this->school->is_nursery_type) {
+        if (isset($subscription_type) && $subscription_type->school_id != $this->school->id && $this->school->is_nursery_type) {
           $fail(__('site.this subscription type not related to current school'));
         }
         if (isset($course) &&  $course->subscription?->id != $subscription_type->subscription?->id && $this->school->is_nursery_type) {
