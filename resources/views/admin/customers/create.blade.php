@@ -51,8 +51,8 @@ $title = __('site.Create Customer');
               </div>
               {{-- phone --}}
               <div class="form-group">
-                <label>@lang('site.Phone')</label>
-                <input required="required" type="text" name="phone" class="form-control" value="{{old('phone')}}"
+                <label>@lang('site.Phone') (@lang('site.9 digits'))</label>
+                <input required="required" type="text" name="phone"  maxlength="9" class="form-control" value="{{old('phone')}}"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
               </div>
               {{-- passwrod --}}

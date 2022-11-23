@@ -292,6 +292,9 @@ return [
   'Subscription Type' => 'Subscription Type',
   'From' => 'From',
   'To' => 'To',
+  '9 digits' => '9 digits',
+  '' => '',
+  '' => '',
   '' => '',
   'app' =>[
     'Currency'=>'AED'

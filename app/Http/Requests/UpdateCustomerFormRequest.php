@@ -24,7 +24,7 @@ class UpdateCustomerFormRequest extends BaseRequest
       'gender' => 'nullable|in:male,female',
       'date_of_birth' => ['nullable', 'date', 'before:yesterday', 'date_format:Y-m-d'],
       'email' => ['required', 'email', 'unique:customers,email,' . $customer->id, new CheckEmailExist("customers")],
-      'phone' => ['bail', 'required', 'unique:customers,phone,' . $customer->id],
+      'phone' => ['bail', 'required', 'regex:/[0-9]{9}/','max:9', 'unique:customers,phone,' . $customer->id],
       'password' => 'nullable|confirmed',
       'image' => validateImage(),
     ];

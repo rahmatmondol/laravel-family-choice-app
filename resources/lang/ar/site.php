@@ -291,6 +291,7 @@ return [
   'Subscription Type' => 'Subscription Type',
   'From' => 'من',
   'To' => 'الي',
+  '9 digits' => '9 خانات',
   '' => '',
   '' => '',
   '' => '',
