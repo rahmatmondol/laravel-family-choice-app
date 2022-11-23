@@ -99,7 +99,7 @@ class NotificationService
       // 971522946005 is active number for hussein
       $msg = self::convertToUnicode($message);
       $client = new \GuzzleHttp\Client(['verify' => false]);
-      $request = $client->get('https://doo.ae/api/msgSend.php?mobile=971526972999&password=12345678&numbers='.$phone.'&sender=FamilyChoic&msg='.$msg.'&applicationType=3');
+      $request = $client->get('https://doo.ae/api/msgSend.php?mobile=971526972999&password=12345678&numbers=971'.$phone.'&sender=APPOTP&msg='.$msg.'&applicationType=3');
       $res = $request->getBody()->getContents();
       info('result sms : ' .$res );
     } catch (Exception $e) {

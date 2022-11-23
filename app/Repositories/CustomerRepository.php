@@ -114,7 +114,7 @@ class CustomerRepository implements CustomerRepositoryInterface
     $customer->update([
       'verification_code' => $code,
     ]);
-    $message = $code ." كود التفعيل هو :";
+    $message = "Your verification code : ".$code ;
     NotificationService::sendSms($customer->phone, $message) ;
     // if ($customer->email) {
     //   Notification::route('mail', $customer->email)
