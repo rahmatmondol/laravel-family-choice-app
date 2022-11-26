@@ -1,0 +1,139 @@
+[15-Jul-2022 23:26:22 Africa/Cairo] PHP Fatal error:  Trait "ArchTech\Enums\Values" not found in /home/famiuhwg/public_html/app/Enums/ReservationStatus.php on line 7
+[08-Oct-2022 22:52:04 Africa/Cairo] PHP Fatal error:  Uncaught Error: Class "App\Exceptions\Log" not found in /home/famiuhwg/public_html/app/Exceptions/Handler.php:47
+Stack trace:
+#0 [internal function]: App\Exceptions\Handler->App\Exceptions\{closure}()
+#1 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(45): call_user_func()
+#2 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(253): Illuminate\Foundation\Exceptions\ReportableHandler->__invoke()
+#3 /home/famiuhwg/public_html/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate\Foundation\Exceptions\Handler->report()
+#4 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(189): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->report()
+#5 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#6 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#7 {main}
+  thrown in /home/famiuhwg/public_html/app/Exceptions/Handler.php on line 47
+[08-Oct-2022 22:52:04 Africa/Cairo] PHP Fatal error:  Uncaught Error: Class "App\Exceptions\Log" not found in /home/famiuhwg/public_html/app/Exceptions/Handler.php:47
+Stack trace:
+#0 [internal function]: App\Exceptions\Handler->App\Exceptions\{closure}()
+#1 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(45): call_user_func()
+#2 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(253): Illuminate\Foundation\Exceptions\ReportableHandler->__invoke()
+#3 /home/famiuhwg/public_html/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate\Foundation\Exceptions\Handler->report()
+#4 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(189): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->report()
+#5 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(231): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#6 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#7 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#8 {main}
+  thrown in /home/famiuhwg/public_html/app/Exceptions/Handler.php on line 47
+[08-Oct-2022 23:12:47 Africa/Cairo] PHP Fatal error:  Uncaught Error: Class "App\Exceptions\Log" not found in /home/famiuhwg/public_html/app/Exceptions/Handler.php:47
+Stack trace:
+#0 [internal function]: App\Exceptions\Handler->App\Exceptions\{closure}()
+#1 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(45): call_user_func()
+#2 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(253): Illuminate\Foundation\Exceptions\ReportableHandler->__invoke()
+#3 /home/famiuhwg/public_html/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate\Foundation\Exceptions\Handler->report()
+#4 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(189): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->report()
+#5 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#6 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#7 {main}
+  thrown in /home/famiuhwg/public_html/app/Exceptions/Handler.php on line 47
+[08-Oct-2022 23:12:47 Africa/Cairo] PHP Fatal error:  Uncaught Error: Class "App\Exceptions\Log" not found in /home/famiuhwg/public_html/app/Exceptions/Handler.php:47
+Stack trace:
+#0 [internal function]: App\Exceptions\Handler->App\Exceptions\{closure}()
+#1 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(45): call_user_func()
+#2 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(253): Illuminate\Foundation\Exceptions\ReportableHandler->__invoke()
+#3 /home/famiuhwg/public_html/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate\Foundation\Exceptions\Handler->report()
+#4 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(189): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->report()
+#5 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(231): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#6 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#7 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#8 {main}
+  thrown in /home/famiuhwg/public_html/app/Exceptions/Handler.php on line 47
+[08-Oct-2022 23:17:17 Africa/Cairo] PHP Fatal error:  Uncaught Error: Class "App\Exceptions\Log" not found in /home/famiuhwg/public_html/app/Exceptions/Handler.php:47
+Stack trace:
+#0 [internal function]: App\Exceptions\Handler->App\Exceptions\{closure}()
+#1 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(45): call_user_func()
+#2 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(253): Illuminate\Foundation\Exceptions\ReportableHandler->__invoke()
+#3 /home/famiuhwg/public_html/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate\Foundation\Exceptions\Handler->report()
+#4 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(189): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->report()
+#5 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#6 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#7 {main}
+  thrown in /home/famiuhwg/public_html/app/Exceptions/Handler.php on line 47
+[08-Oct-2022 23:17:17 Africa/Cairo] PHP Fatal error:  Uncaught Error: Class "App\Exceptions\Log" not found in /home/famiuhwg/public_html/app/Exceptions/Handler.php:47
+Stack trace:
+#0 [internal function]: App\Exceptions\Handler->App\Exceptions\{closure}()
+#1 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(45): call_user_func()
+#2 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(253): Illuminate\Foundation\Exceptions\ReportableHandler->__invoke()
+#3 /home/famiuhwg/public_html/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate\Foundation\Exceptions\Handler->report()
+#4 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(189): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->report()
+#5 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(231): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#6 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#7 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#8 {main}
+  thrown in /home/famiuhwg/public_html/app/Exceptions/Handler.php on line 47
+[08-Oct-2022 23:21:41 Africa/Cairo] PHP Fatal error:  Uncaught Error: Class "App\Exceptions\Log" not found in /home/famiuhwg/public_html/app/Exceptions/Handler.php:47
+Stack trace:
+#0 [internal function]: App\Exceptions\Handler->App\Exceptions\{closure}()
+#1 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(45): call_user_func()
+#2 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(253): Illuminate\Foundation\Exceptions\ReportableHandler->__invoke()
+#3 /home/famiuhwg/public_html/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate\Foundation\Exceptions\Handler->report()
+#4 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(189): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->report()
+#5 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#6 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#7 {main}
+  thrown in /home/famiuhwg/public_html/app/Exceptions/Handler.php on line 47
+[08-Oct-2022 23:21:41 Africa/Cairo] PHP Fatal error:  Uncaught Error: Class "App\Exceptions\Log" not found in /home/famiuhwg/public_html/app/Exceptions/Handler.php:47
+Stack trace:
+#0 [internal function]: App\Exceptions\Handler->App\Exceptions\{closure}()
+#1 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(45): call_user_func()
+#2 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(253): Illuminate\Foundation\Exceptions\ReportableHandler->__invoke()
+#3 /home/famiuhwg/public_html/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate\Foundation\Exceptions\Handler->report()
+#4 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(189): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->report()
+#5 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(231): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#6 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#7 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#8 {main}
+  thrown in /home/famiuhwg/public_html/app/Exceptions/Handler.php on line 47
+[08-Oct-2022 23:24:35 Africa/Cairo] PHP Fatal error:  Uncaught Error: Class "App\Exceptions\Log" not found in /home/famiuhwg/public_html/app/Exceptions/Handler.php:47
+Stack trace:
+#0 [internal function]: App\Exceptions\Handler->App\Exceptions\{closure}()
+#1 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(45): call_user_func()
+#2 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(253): Illuminate\Foundation\Exceptions\ReportableHandler->__invoke()
+#3 /home/famiuhwg/public_html/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate\Foundation\Exceptions\Handler->report()
+#4 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(189): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->report()
+#5 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#6 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#7 {main}
+  thrown in /home/famiuhwg/public_html/app/Exceptions/Handler.php on line 47
+[08-Oct-2022 23:24:35 Africa/Cairo] PHP Fatal error:  Uncaught Error: Class "App\Exceptions\Log" not found in /home/famiuhwg/public_html/app/Exceptions/Handler.php:47
+Stack trace:
+#0 [internal function]: App\Exceptions\Handler->App\Exceptions\{closure}()
+#1 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(45): call_user_func()
+#2 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(253): Illuminate\Foundation\Exceptions\ReportableHandler->__invoke()
+#3 /home/famiuhwg/public_html/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate\Foundation\Exceptions\Handler->report()
+#4 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(189): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->report()
+#5 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(231): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#6 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#7 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#8 {main}
+  thrown in /home/famiuhwg/public_html/app/Exceptions/Handler.php on line 47
+[08-Oct-2022 23:24:44 Africa/Cairo] PHP Fatal error:  Uncaught Error: Class "App\Exceptions\Log" not found in /home/famiuhwg/public_html/app/Exceptions/Handler.php:47
+Stack trace:
+#0 [internal function]: App\Exceptions\Handler->App\Exceptions\{closure}()
+#1 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(45): call_user_func()
+#2 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(253): Illuminate\Foundation\Exceptions\ReportableHandler->__invoke()
+#3 /home/famiuhwg/public_html/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate\Foundation\Exceptions\Handler->report()
+#4 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(189): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->report()
+#5 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#6 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#7 {main}
+  thrown in /home/famiuhwg/public_html/app/Exceptions/Handler.php on line 47
+[08-Oct-2022 23:24:44 Africa/Cairo] PHP Fatal error:  Uncaught Error: Class "App\Exceptions\Log" not found in /home/famiuhwg/public_html/app/Exceptions/Handler.php:47
+Stack trace:
+#0 [internal function]: App\Exceptions\Handler->App\Exceptions\{closure}()
+#1 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/ReportableHandler.php(45): call_user_func()
+#2 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(253): Illuminate\Foundation\Exceptions\ReportableHandler->__invoke()
+#3 /home/famiuhwg/public_html/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate\Foundation\Exceptions\Handler->report()
+#4 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(189): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->report()
+#5 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(231): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#6 /home/famiuhwg/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#7 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#8 {main}
+  thrown in /home/famiuhwg/public_html/app/Exceptions/Handler.php on line 47

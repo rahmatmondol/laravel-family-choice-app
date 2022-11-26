@@ -33,11 +33,13 @@ class NotificationService
 
     $push->setMessage([
       'data' => $data
-      // , 'notification' => $data,
+       , 'notification' => $data,
     ])->setApiKey(env('NOTIFICATION_API_KEY'))
       ->setDevicesToken($token)
       ->send()
       ->getFeedback();
+      info(print_r($push->service->feedback,true)); 
+    //   dd($push->service->feedback); 
   }
 
   public static  function  sendReservationNotification($status, $reservation)
@@ -50,8 +52,9 @@ class NotificationService
       'body'            => $notificationDetails[1],
       // 'customer_id'  => $customer->id,
       'click_action'    => 'ReservationDetails',
-      'reservation_id'  => $reservation->id,
+      'reservation_id'  => (int)$reservation->id,
     ];
+    // dd($data); 
 
     try {
       $notification = self::sendNotification($data, $customer->firebaseToken);
@@ -93,7 +96,7 @@ class NotificationService
     return $messages[$status];
   }
 
-  public static function sendSms(string $phone, string $message)
+  public static function sendSms(string $phone, string $message)  
   {
     try {
       // 971522946005 is active number for hussein
