@@ -54,7 +54,8 @@ class NotificationService
     ];
 
     try {
-      $notification = self::sendNotification($data, $customer->firebaseToken);
+      if(!empty($customer->firebaseToken))
+        self::sendNotification($data, $customer->firebaseToken);
 
       self::storeReservationNotificationList($data, $customer->id, $reservation->id);
 
