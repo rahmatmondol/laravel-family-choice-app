@@ -3,6 +3,9 @@
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StripeController;
+use App\Models\Reservation;
+use App\Notifications\Reservation\UpdateReservationStatusNotification;
+use Illuminate\Support\Facades\Notification;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,22 @@ use App\Http\Controllers\StripeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/test-mail', function () {
+  $reservation = Reservation::first();
+  $data = [
+    'title'           => "تم الغاء طلبك",
+    'body'            => "تم  الغاء طلبك لعد اكتمال البيانات",
+    // 'customer_id'  => $customer->id,
+    'click_action'    => 'ReservationDetails',
+    'reservation_id'  => (int)$reservation->id,
+  ];
+  return view('email.customer.update_reservation_status',compact('reservation','data'));
+  return Notification::send($reservation->customer, new UpdateReservationStatusNotification($reservation, $data));
+
+  // return new UpdateReservationStatusNotification($reservation,$data);
+});
+
 
 Route::get('/test', [HomeController::class,'test']);
 // Route::get('/truncate-all-tables', [HomeController::class,'truncate']);
