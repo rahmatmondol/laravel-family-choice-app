@@ -15,33 +15,22 @@ class SettingController extends BaseController
   {
     parent::__construct();
     //create read update delete
-    $this->middleware(['permission:read_settings'])->only('index');
-    $this->middleware(['permission:create_settings'])->only('create');
-    $this->middleware(['permission:update_settings'])->only('edit');
-    $this->middleware(['permission:delete_settings'])->only('destroy');
+    // $this->middleware(['permission:read_settings'])->only('index');
+    // $this->middleware(['permission:create_settings'])->only('create');
+    // $this->middleware(['permission:update_settings'])->only('edit');
+    // $this->middleware(['permission:delete_settings'])->only('destroy');
   } // end of constructor
 
 
-  public function edit()
+  public function settings()
   {
-    return view('dashboard.settings.edit');
+    return view('admin.settings.index');
   }
 
   public function update(Request $request)
   {
 
-    $request->validate([
-      'logo' => validateImage(),
-      'icon' => validateImage(),
-    ]);
-
-    $request_data = $request->except(['logo', 'icon']);
-
-    foreach (['logo', 'icon'] as $img) {
-      if ($request->$img) {
-        $request_data[$img] = $this->uploadImages($request->$img, 'settings/', setting($img));
-      } //end of external if
-    }
+    $request_data = $request->only(['terms_conditions']);
 
     setting($request_data)->save();
 

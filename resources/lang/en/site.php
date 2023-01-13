@@ -293,8 +293,8 @@ return [
   'From' => 'From',
   'To' => 'To',
   '9 digits' => '9 digits',
-  '' => '',
-  '' => '',
+  'Edit Settings' => 'Edit Settings',
+  'terms and conditions' => 'terms and conditions',
   '' => '',
   'app' =>[
     'Currency'=>'AED'

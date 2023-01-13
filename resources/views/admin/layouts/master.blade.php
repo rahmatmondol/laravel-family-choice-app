@@ -122,6 +122,8 @@
   <script src="{{ asset('admin/') }}/plugins/selectric/jquery.selectric.min.js"></script>
   {{-- fancybox --}}
   <script src="{{ asset('admin/') }}/plugins/fancybox/jquery.fancybox.min.js"></script>
+  {{--ckeditor standard--}}
+  <script src="{{ asset('admin/plugins/ckeditor/ckeditor.js') }}"></script>
   {{-- admin --}}
   <script src="{{ asset('admin/') }}/js/admin.js"></script>
   <script>

@@ -43,6 +43,9 @@ Route::get('/', function () {
   return view('welcome');
 })->name('home');
 
+// https://github.com/xmartlabs/projecthub-landing/blob/master/terms-and-conditions.html
+Route::get('terms-conditions', [HomeController::class,'terms_conditions']);
+Route::view('terms-conditions', 'terms_conditions');
 
 $router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer'], function() use ($router) {
   $router->get('app-logs', 'LogViewerController@index');

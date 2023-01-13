@@ -292,6 +292,8 @@ return [
   'From' => 'من',
   'To' => 'الي',
   '9 digits' => '9 خانات',
+  'Edit Settings' => 'الاعدادات',
+  'terms and conditions' => 'الشروط والاحكام',
   '' => '',
   '' => '',
   '' => '',

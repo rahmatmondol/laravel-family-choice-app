@@ -54,6 +54,15 @@
           </a>
         </li>
 
+        <li class="nav-item">
+          <a href="{{ route($mainRoutePrefix.'.settings') }}" class="nav-link @if( $page == 'settings' )   active  @endif">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+              {{ucfirst(__('site.Settings'))}}
+            </p>
+          </a>
+        </li>
+
 
       </ul>
     </nav>

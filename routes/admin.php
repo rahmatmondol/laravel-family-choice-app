@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\Auth\ForgotPasswordController;
 use App\Http\Controllers\Admin\GradeFeesController;
 use App\Http\Controllers\Admin\NurseryFeesController;
 use App\Http\Controllers\Admin\PaidServiceController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\SubscriptionTypeController;
 use App\Http\Controllers\Admin\TransportationController;
@@ -83,6 +84,9 @@ Route::group(
         'attachments'           => AttachmentController::class,
         'reservations'          => ReservationController::class,
       ]);
+
+      Route::get('settings', [SettingController::class, 'settings'])->name('settings');
+      Route::put('settings.update', [SettingController::class, 'update'])->name('settings-update');
 
       Route::get('payments/export', [PaymentController::class, 'export'])->name('payments.export');
       Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');

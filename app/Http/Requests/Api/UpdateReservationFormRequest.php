@@ -58,18 +58,18 @@ class UpdateReservationFormRequest extends BaseRequest
           $fail('this services not related to reserved school');
         }
       }],
-      'child.grade_id'  => ['sometimes', Rule::requiredIf(fn () => $this->school->is_school_type), 'exists:grades,id', function ($attribute, $value, $fail) {
+      'child.grade_id'  => ['nullable', Rule::requiredIf(fn () => $this->school->is_school_type), 'exists:grades,id', function ($attribute, $value, $fail) {
         $school_grades_ids = $this->school->activeGrades->pluck('id')->toArray();
         if (!in_array($value, $school_grades_ids) && $this->school->is_school_type) {
           $fail('this grades not related to reserved school');
         }
       }],
-      'child.course_id' => ['sometimes', Rule::requiredIf(fn () => $this->school->is_nursery_type), 'exists:courses,id', function ($attribute, $value, $fail) use ($course) {
+      'child.course_id' => ['nullable', Rule::requiredIf(fn () => $this->school->is_nursery_type), 'exists:courses,id', function ($attribute, $value, $fail) use ($course) {
         if (isset($course) && $course->school_id != $this->school->id && $this->school->is_nursery_type) {
           $fail(__('site.this course not related to current school'));
         }
       }],
-      'child.subscription_type_id' => ['sometimes', Rule::requiredIf(fn () => $this->school->is_nursery_type), 'exists:subscription_types,id', function ($attribute, $value, $fail) use ($course) {
+      'child.subscription_type_id' => ['nullable', Rule::requiredIf(fn () => $this->school->is_nursery_type), 'exists:subscription_types,id', function ($attribute, $value, $fail) use ($course) {
         $subscription_type = SubscriptionType::find($value);
         if ($subscription_type->school_id != $this->school->id && $this->school->is_nursery_type) {
           $fail(__('site.this subscription type not related to current school'));

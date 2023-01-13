@@ -21,11 +21,11 @@ return new class extends Migration
       $table->double('subscription_type_price')->nullable();
       $table->double('transportation_price')->nullable();
       $table->enum('gender', ['male', 'female'])->nullable();
-      $table->foreignId('grade_id')->nullable()->constrained()->onDelete('cascade');
-      $table->foreignId('course_id')->nullable()->constrained()->onDelete('cascade');
-      $table->foreignId('subscription_type_id')->nullable('subscription_types')->constrained()->onDelete('cascade');
-      $table->foreignId('reservation_id')->nullable()->constrained()->onDelete('cascade');
+      $table->foreignId('grade_id')->nullable()->constrained()->nullOnDelete();
+      $table->foreignId('course_id')->nullable()->constrained()->nullOnDelete();
+      $table->foreignId('subscription_type_id')->nullable('subscription_types')->constrained()->nullOnDelete();
       $table->foreignId('transportation_id')->nullable()->constrained('transportations')->nullOnDelete();
+      $table->foreignId('reservation_id')->nullable()->constrained()->onDelete('cascade');
       $table->timestamps();
     });
   }
