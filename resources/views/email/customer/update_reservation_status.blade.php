@@ -25,6 +25,18 @@ $dir = app()->getLocale() == 'en' ? 'ltr' : 'rtl';
     </o:OfficeDocumentSettings>
 </xml>
 <![endif]-->
+
+<style>
+    [dir="rtl"] body table, [dir="rtl"] body table td,
+    [dir="rtl"] body {
+        text-align: right;
+        direction: rtl;
+    }
+    body table.es-content_2 .esd-structure table tr, body table.es-content_2 .esd-structure table tr td {
+        text-align: center;
+    }
+</style>
+
 </head>
 
 <body dir="{{ $dir }}">
@@ -81,7 +93,7 @@ $dir = app()->getLocale() == 'en' ? 'ltr' : 'rtl';
                                 </tr>
                             </tbody>
                         </table>
-                        <table class="es-content" cellspacing="0" cellpadding="0" align="center">
+                        <table class="es-content es-content_2" cellspacing="0" cellpadding="0" align="center">
                             <tbody>
                                 <tr>
                                     <td class="esd-stripe" align="center">
@@ -96,7 +108,7 @@ $dir = app()->getLocale() == 'en' ? 'ltr' : 'rtl';
                                                                         <table width="100%" cellspacing="0" cellpadding="0">
                                                                             <tbody>
                                                                                 <tr>
-                                                                                    <td class="esd-block-image es-p25t es-p25b es-p35r es-p35l" align="center" style="font-size:0"><a target="_blank" href="https://viewstripo.email/"><img src="https://tlr.stripocdn.email/content/guids/CABINET_75694a6fc3c4633b3ee8e3c750851c02/images/67611522142640957.png" alt style="display: block;" width="120"></a></td>
+                                                                                    <td class="esd-block-image es-p25t es-p25b es-p35r es-p35l" align="center" style="font-size:0"><a target="_blank" href="https://viewstripo.email/"><img src="https://tlr.stripocdn.email/content/guids/CABINET_75694a6fc3c4633b3ee8e3c750851c02/images/67611522142640957.png" alt style="display: block; margin: auto;" width="120"></a></td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="esd-block-text" text-align="center">
@@ -140,7 +152,7 @@ $dir = app()->getLocale() == 'en' ? 'ltr' : 'rtl';
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td class="esd-block-text es-p10t es-p10b es-p10r es-p10l" bgcolor="#eeeeee" align="left">
-                                                                                        <table style="width: 500px;" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left">
+                                                                                        <table style="width: 100%;" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left">
                                                                                             <tbody>
                                                                                                 <tr>
                                                                                                     <td width="80%">
@@ -172,7 +184,7 @@ $dir = app()->getLocale() == 'en' ? 'ltr' : 'rtl';
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td class="esd-block-text es-p10t es-p10b es-p10r es-p10l" align="left">
-                                                                                        <table  style="width: 500px;" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left">
+                                                                                        <table  style="width: 100%;" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left">
                                                                                             @php $child = $reservation->child  @endphp
                                                                                             <tbody>
                                                                                                 <tr>
@@ -222,7 +234,7 @@ $dir = app()->getLocale() == 'en' ? 'ltr' : 'rtl';
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td class="esd-block-text es-p15t es-p15b es-p10r es-p10l" align="left">
-                                                                                        <table style="width: 500px;" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left">
+                                                                                        <table style="width: 100%;" class="cke_show_border" cellspacing="1" cellpadding="1" border="0" align="left">
                                                                                             <tbody>
                                                                                                 <tr>
                                                                                                     <td width="80%">

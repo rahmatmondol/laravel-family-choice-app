@@ -22,9 +22,10 @@
 }
 
 
+.sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .main-footer, .sidebar-mini.sidebar-collapse .main-header,
 .wrapper.rtl .content-wrapper {
     margin-left: auto;
-    margin-right: 230px;
+    margin-right: 250px;
 }
 
 .wrapper.rtl .main-header .logo {
@@ -113,11 +114,14 @@
 
 .wrapper.rtl .main-footer {
     margin-left: auto;
-    margin-right: 230px;
+    margin-right: 250px;
     direction:rtl;
 
 }
 
+.card-body table, .card-body table td, .card-body table th {
+    text-align: right !important;
+}
 .sidebar-collapse .wrapper.rtl .sidebar-menu>li.treeview {
     text-align: right;
     /* float: right; */
@@ -378,5 +382,12 @@
 }
 
 }
+
+
+.sidebar-mini.sidebar-collapse .wrapper.rtl .content-wrapper, .sidebar-mini.sidebar-collapse .wrapper.rtl .right-side, .sidebar-mini.sidebar-collapse .wrapper.rtl .main-footer {
+    margin-right: 80px !important;
+    margin-left: auto !important;
+}
+
 
 /* END SKIN BLUE CHANGES */
