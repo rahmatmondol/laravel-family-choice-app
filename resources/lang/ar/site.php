@@ -294,6 +294,8 @@ return [
   '9 digits' => '9 خانات',
   'Edit Settings' => 'الاعدادات',
   'terms and conditions' => 'الشروط والاحكام',
+  'policy and privacy' => 'السياسة والخصوصية',
+  'Settings' => 'الاعدادات',
   '' => '',
   '' => '',
   '' => '',

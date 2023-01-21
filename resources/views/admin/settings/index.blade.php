@@ -1,7 +1,7 @@
 @extends($masterLayout)
 <?php
-$page = 'settings';
-$title = __('site.Edit Settings');
+  $page = 'settings';
+  $title = __('site.Edit Settings');
 ?>
 @section('title_page')
 {{ $title }}
@@ -43,6 +43,19 @@ $title = __('site.Edit Settings');
               <div class="form-group">
                 <label>@lang('site.terms and conditions')</label>
                 <textarea class="form-control ckeditor" required name="terms_conditions">{{ setting('terms_conditions') }}</textarea>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-body">
+              <div class="form-group">
+                <label>@lang('site.policy and privacy')</label>
+                <textarea class="form-control ckeditor" required name="privacy_policy">{{ setting('privacy_policy') }}</textarea>
               </div>
             </div>
             <!-- /.card-body -->

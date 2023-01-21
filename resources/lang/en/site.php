@@ -295,6 +295,8 @@ return [
   '9 digits' => '9 digits',
   'Edit Settings' => 'Edit Settings',
   'terms and conditions' => 'terms and conditions',
+  'policy and privacy' => 'policy and privacy',
+  'Settings' => 'Settings',
   '' => '',
   'app' =>[
     'Currency'=>'AED'

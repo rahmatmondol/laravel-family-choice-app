@@ -30,7 +30,7 @@ class SettingController extends BaseController
   public function update(Request $request)
   {
 
-    $request_data = $request->only(['terms_conditions']);
+    $request_data = $request->only(['terms_conditions','privacy_policy']);
 
     setting($request_data)->save();
 
