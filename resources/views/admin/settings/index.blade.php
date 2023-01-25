@@ -72,7 +72,7 @@
         {{-- phone --}}
         <div class="form-group">
           <label>@lang('site.Phone')</label>
-          <input required="required" type="text" name="phone"  class="form-control" value="{{ setting('email') }}"
+          <input required="required" type="text" name="phone"  class="form-control" value="{{ setting('phone') }}"
             oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
         </div>
       </div>
