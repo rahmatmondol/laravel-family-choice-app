@@ -63,6 +63,19 @@
           <!-- /.card -->
         </div>
       </div>
+      <div class="col-md-6">
+        {{-- email --}}
+        <div class="form-group">
+          <label for="inputName"> @lang('site.E-mail')</label>
+          <input type="email" name="email" value="{{ setting('email') }}" required class="form-control">
+        </div>
+        {{-- phone --}}
+        <div class="form-group">
+          <label>@lang('site.Phone')</label>
+          <input required="required" type="text" name="phone"  class="form-control" value="{{ setting('email') }}"
+            oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+        </div>
+      </div>
       <div class="row">
         <div class="col-12">
           <button class="btn btn-success" type="submit"><i class="fas fa-save"></i> @lang('site.Save')</button>

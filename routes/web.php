@@ -41,7 +41,7 @@ Route::get('/test', [HomeController::class,'test']);
 
 Route::get('/', function () {
 
-  return redirect()->route('admin.login');
+  // return redirect()->route('admin.login');
   return view('welcome');
 })->name('home');
 
