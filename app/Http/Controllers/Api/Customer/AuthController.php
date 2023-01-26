@@ -128,4 +128,10 @@ class AuthController extends Controller
   {
     $customer->update(['verification_code' => null]);
   }
+
+  public function removeAccount()
+  {
+    $this->customerRepository->deleteCustomer(getCustomer());
+    return $this->sendResponse("", "Account Removed Successfully");
+  }
 }

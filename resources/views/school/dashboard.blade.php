@@ -129,11 +129,13 @@ $title = __('site.Dashboard');
             <div class="box-body no-padding">
               <ul class="users-list clearfix">
                 @foreach ( $latestReservations as $reservation )
+                @if($reservation->customer)
                 <li>
                   <img src="{{ $reservation->customer->image_path }}" alt="User Image">
                   <a class="users-list-name" href="{{ route('school.reservations.show', ['reservation'=>$reservation->id]) }}">{{ $reservation->parent_name }}</a>
                   <span class="users-list-date">{{ $reservation->created_at }}</span>
                 </li>
+                @endif
                 @endforeach
               </ul>
               <!-- /.users-list -->

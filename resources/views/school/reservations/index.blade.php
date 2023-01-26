@@ -148,7 +148,7 @@ $title = __('site.Reservations');
                 @lang('site.Created At')
               </th>
               <th style="width: 20%" class="text-center">
-                
+
               </th>
             </tr>
           </thead>
@@ -168,8 +168,11 @@ $title = __('site.Reservations');
                 @include('admin.partials._render_payment_status',['status'=>$reservation->payment_status])
               </td>
               <td class="text-center">
+
+                @if($reservation->customer_id)
                 <a href="{{ route($mainRoutePrefix.'.customers.show', ['customer'=>$reservation->customer_id]) }}"
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->customer?->full_name }}</a>
+                @endif
               </td>
               <td class="text-center">
                 {{ $reservation->total_fees }}  @lang('site.app.Currency')

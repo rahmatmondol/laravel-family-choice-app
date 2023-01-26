@@ -62,6 +62,7 @@ Route::group(
         Route::post('change-password', 'changePassword');
         Route::post('update-firebase-token', 'updateFirebaseToken');
         Route::get('profile', 'profile');
+        Route::post('remove-account', 'removeAccount');
       });
 
       Route::get('notification-list', [NotificationController::class,'notificationList']);

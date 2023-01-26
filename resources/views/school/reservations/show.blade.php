@@ -69,8 +69,11 @@ $title = __('site.Show Reservation');
             <tr>
               <td>@lang('site.Customer')</td>
               <td>
+
+                @if($reservation->customer_id)
                 <a href="{{ route($mainRoutePrefix.'.customers.show', ['customer'=>$reservation->customer_id]) }}"
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->customer?->full_name }}</a>
+                  @endif
               </td>
             </tr>
             <tr>

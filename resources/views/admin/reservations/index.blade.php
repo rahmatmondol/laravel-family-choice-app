@@ -187,8 +187,10 @@ $title = __('site.Reservations');
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->school?->title }}</a>
               </td>
               <td class="text-center">
+                @if($reservation->customer_id)
                 <a href="{{ route($mainRoutePrefix.'.customers.show', ['customer'=>$reservation->customer_id]) }}"
                   class="btn btn-primary btn-sm" target="_blank">{{ $reservation->customer?->full_name }}</a>
+                  @endif
               </td>
               <td class="text-center">
                 {{ $reservation->total_fees }}  @lang('site.app.Currency')
