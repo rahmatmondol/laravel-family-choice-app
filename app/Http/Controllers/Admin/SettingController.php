@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Traits\UploadFileTrait;
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\BaseController;
+use App\Http\Requests\Admin\SettingFormRequest;
 
 class SettingController extends BaseController
 {
@@ -21,16 +21,14 @@ class SettingController extends BaseController
     // $this->middleware(['permission:delete_settings'])->only('destroy');
   } // end of constructor
 
-
-  public function settings()
+  public function settings(Request $request)
   {
     return view('admin.settings.index');
   }
 
-  public function update(Request $request)
+  public function update(SettingFormRequest $request)
   {
-
-    $request_data = $request->only(['terms_conditions','privacy_policy','phone','email']);
+    $request_data = $request->only(['terms_conditions','privacy_policy','phone','email','partial_payment_percent']);
 
     setting($request_data)->save();
 

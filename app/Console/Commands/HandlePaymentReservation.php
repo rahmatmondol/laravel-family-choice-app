@@ -17,7 +17,6 @@ class HandlePaymentReservation extends Command
    * @var string
    */
 
-
   protected $signature = 'handle:paymentReservation';
 
   /**
@@ -35,7 +34,7 @@ class HandlePaymentReservation extends Command
   public function handle()
   {
     foreach (ReservationService::getReservationsWillNotified() as $reservation) {
-      
+
       PaymentService::createPaymentRecord($reservation,$reservation->payment_intent_id);
 
       NotificationService::sendReservationNotification('payment_status.' . $reservation->payment_status, $reservation);

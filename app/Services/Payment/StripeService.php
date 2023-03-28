@@ -3,7 +3,6 @@
 namespace App\Services\Payment;
 
 use App\Models\Reservation;
-use App\Traits\ResponseTrait;
 use Exception;
 use Stripe;
 
@@ -16,7 +15,7 @@ class StripeService
       // Set your secret key. Remember to switch to your live secret key in production.
       Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
-      $stripe_customer_id= static::getStripeCustomerId($reservation);
+      $stripe_customer_id = static::getStripeCustomerId($reservation);
 
       $ephemeralKey = \Stripe\EphemeralKey::create(
         [
@@ -25,9 +24,10 @@ class StripeService
         [
           'stripe_version' => '2020-08-27',
         ]
-        );
+      );
+      $payment_step  = $reservation->required_payment_step_is_partial ? 'partial_payment' : 'remaining_payment';
       $paymentIntent = \Stripe\PaymentIntent::create([
-        'amount' => $reservation->total_fees,
+        'amount' => $reservation->required_amount_to_pay_with_card,
         'currency' => 'AED',
         'customer' => $stripe_customer_id,
         'automatic_payment_methods' => [
@@ -35,20 +35,86 @@ class StripeService
         ],
         'metadata' => [
           'reservation_id' => $reservation->id,
+          'payment_method' => $request->payment_method,
+          'payment_step'   => $payment_step,
         ],
       ]);
+
+      if ($request->payment_method) {
+        self::handlePaymentStep($reservation, $request->payment_method, $payment_step);
+      }
+
       return [
-        'paymentIntent' => $paymentIntent->client_secret,
-        'ephemeralKey' => $ephemeralKey->secret,
-        'customer' => $stripe_customer_id,
-        'publishableKey' => env('STRIPE_KEY')
+        'paymentIntent'   => $paymentIntent->client_secret,
+        'ephemeralKey'    => $ephemeralKey->secret,
+        'customer'        => $stripe_customer_id,
+        'publishableKey'  => env('STRIPE_KEY')
       ];
     } catch (Exception $e) {
       return $e->getMessage();
     }
   }
 
-  public static function getStripeCustomerId($reservation){
+  public static function handlePaymentStep($reservation, $paymentMethod, $payment_step)
+  {
+    $info = '';
+    $available_amount_in_wallet = $reservation->customer->wallet;
+
+    if ($payment_step == 'partial_payment') {
+      if ($paymentMethod == 'card') {
+        $info = [
+          'status'  => 'pending',
+          'type'    => 'card',
+          'amount'  => $reservation->required_partial_payment_amount,
+        ];
+      }
+      if ($paymentMethod == 'card_and_wallet') {
+        $info = [
+          'status'  => 'pending',
+          'type'    => 'card_and_wallet',
+          'card'   => [
+            'status'  => 'pending',
+            'amount'  => $reservation->required_partial_payment_amount  - $available_amount_in_wallet,
+          ],
+          'wallet'   => [
+            'status'  => 'pending',
+            'amount'  => $available_amount_in_wallet,
+          ]
+        ];
+      }
+      $reservation->update([
+        'partial_payment_info' => $info,
+      ]);
+    } elseif ($payment_step == 'remaining_payment') {
+      if ($paymentMethod == 'card') {
+        $info = [
+          'status'  => 'pending',
+          'type'    => 'card',
+          'amount'  => $reservation->required_remaining_payment_amount,
+        ];
+      }
+      if ($paymentMethod == 'card_and_wallet') {
+        $info = [
+          'status'  => 'pending',
+          'type'    => 'card_and_wallet',
+          'card'   => [
+            'status'  => 'pending',
+            'amount'  => $reservation->required_remaining_payment_amount  - $available_amount_in_wallet,
+          ],
+          'wallet'   => [
+            'status'  => 'pending',
+            'amount'  => $available_amount_in_wallet,
+          ]
+        ];
+      }
+      $reservation->update([
+        'remaining_payment_info' => $info,
+      ]);
+    }
+  }
+
+  public static function getStripeCustomerId($reservation)
+  {
     // Use an existing Customer ID if this is a returning customer.
     if ($reservation->customer->stripe_customer_id != null) {
       $stripe_customer_id  = $reservation->customer->stripe_customer_id;
@@ -65,10 +131,11 @@ class StripeService
   public static function getEventObject()
   {
     Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-    // $endpoint_secret = 'whsec_RWeD4gOAbAq0L0r0FExoQUvpqXXGlANS';
-    $endpoint_secret = env('ENDPOINT_SECRET');
+    // $endpoint_secret = env('ENDPOINT_SECRET');
+    $endpoint_secret = "whsec_1335dc14d639b9906b06f77858152a58d5d30e442e958ad488b5ae8c05a57f5f";
     $payload = @file_get_contents('php://input');
     $event = null;
+    // info($payload);
 
     if ($endpoint_secret) {
       // Only verify the event if there is an endpoint secret defined
@@ -80,16 +147,21 @@ class StripeService
           $sig_header,
           $endpoint_secret
         );
+        info($event);
 
         return [
           'payment_intent_id'   => $event['data']['object']['id'],
-          'reservation_id' => $event['data']['object']['metadata']['reservation_id']?? null,
+          'reservation_id' => $event['data']['object']['metadata']['reservation_id'] ?? null,
+          'payment_method' => $event['data']['object']['metadata']['payment_method'] ?? null,
+          'payment_step' => $event['data']['object']['metadata']['payment_step'] ?? null,
           'event_type' => $event->type,
-          'event_object' => $event,
+          // 'event_object' => $event,
         ];
       } catch (\Stripe\Exception\SignatureVerificationException $e) {
         // Invalid signature
-        info('Webhook error while validating signature.');
+        info($e);
+        info($e->getMessage());
+        // info('Webhook error while validating signature.');
 
         http_response_code(400);
         exit();

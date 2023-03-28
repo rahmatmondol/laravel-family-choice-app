@@ -4,7 +4,9 @@
 public/uploads
 public/uploads-
 /storage/*.key
+settings.json
 /storage/settings.json
+/storage/*.json
 storage/debugbar/
 /vendor
 .env

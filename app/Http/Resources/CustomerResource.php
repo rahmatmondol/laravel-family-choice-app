@@ -26,6 +26,7 @@ class CustomerResource extends JsonResource
       'full_name' => $this->full_name,
       'email' => $this->email,
       'phone' => $this->phone,
+      'wallet' => $this->wallet,
       'image' => $this->image_path,
       'firebaseToken' => $this->firebaseToken,
       'gender' => (string) $this->gender,

@@ -46,7 +46,7 @@ class ServiceRepository implements ServiceRepositoryInterface
     $request_data = $this->getServiceRequestData($request);
 
     if ($request->image) {
-      $request_data['image'] = $this->uploadImages($request->image, 'ervices/', '', '');
+      $request_data['image'] = $this->uploadImages($request->image, 'services/', '', '');
     } //end of if
 
     $service = Service::create($request_data);

@@ -33,6 +33,7 @@ Route::group(
       Route::controller(StripePaymentController::class)->prefix('stripe')->group(function () {
         Route::get('get-payment-intent', 'getPaymentIntent');
         Route::post('webhook', 'paymentWebHook');
+        Route::post('refund-partial-payment', 'refundPartialPayment');
       });
 
       Route::controller(PublicController::class)->group(function () {
@@ -88,6 +89,12 @@ Route::group(
         Route::get('customer-reservations', 'customer_reservations');
         Route::get('reservation-details', 'reservation_details');
       });
+
+      // pay with wallet
+      Route::controller(WalletController::class)->group(function () {
+        Route::post('payment-with-wallet', 'paymentWithWallet');
+      });
+
     });
   }
 );

@@ -42,6 +42,15 @@ class HomeController extends Controller
   public function test()
   {
 
+    $stripe = new \Stripe\StripeClient(
+      env('STRIPE_SECRET')
+    );
+    $res  = $stripe->refunds->create([
+      'charge' => 'ch_3MpA0MDynjRZ45TZ2pcWhzld',
+    ]);
+    dd($res);
+
+
 
     $msg = "Your Verification code is 123456";
     $msg2 = "Your Verification code is 123456";

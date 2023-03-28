@@ -2,16 +2,13 @@
 
 namespace App\Http\Requests\Api;
 
-use App\Enums\ReservationStatus;
 use Carbon\Carbon;
 use App\Models\School;
-use App\Models\Reservation;
 use App\Http\Requests\BaseRequest;
 use App\Models\Course;
 use App\Models\SubscriptionType;
 use App\Models\Transportation;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 
 class AddReservationFormRequest extends BaseRequest
 {

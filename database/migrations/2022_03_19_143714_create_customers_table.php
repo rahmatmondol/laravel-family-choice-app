@@ -20,6 +20,7 @@ return new class extends Migration
       $table->string('email')->unique();
       $table->string('phone')->unique();
       $table->string('social_id')->nullable();
+      $table->double('wallet')->default(0);
       $table->text('firebaseToken')->nullable();
       $table->boolean('status')->default(1); // default active
 

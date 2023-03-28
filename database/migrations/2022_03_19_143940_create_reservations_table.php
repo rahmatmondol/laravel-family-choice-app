@@ -23,6 +23,9 @@ return new class extends Migration
       $table->string('address');
       $table->double('total_fees')->nullable();
       $table->text('reason_of_refuse')->nullable();
+      $table->text('partial_payment_info')->nullable();
+      $table->text('remaining_payment_info')->nullable();
+      $table->text('refund_partial_payment_info')->nullable();
       $table->enum('status', ReservationStatus::values())->default(ReservationStatus::Pending->value); // default active
       $table->enum('payment_status', PaymentStatus::values())->default(PaymentStatus::Pending->value)->nullable();
       $table->string('identification_number'); // text

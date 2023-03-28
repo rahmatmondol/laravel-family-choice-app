@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\ReservationStatus;
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,8 +15,106 @@ class Reservation extends Model
   protected $guarded = [];
 
   protected static $logAttributes = ['status', 'payment_status', 'reason_of_refuse'];
+  protected $casts = [
+    'partial_payment_info' => 'array',
+    'remaining_payment_info' => 'array',
+  ];
 
   protected static $logOnlyDirty = true;
+
+  ##########################  start partial payment info  ###########################
+  public function getPartialPaymentOptionsAttribute()
+  {
+    $options = [];
+    if ($this->status == ReservationStatus::Pending->value && $this->required_payment_step_is_partial) {
+      $required_partial_payment_amount = $this->required_partial_payment_amount;
+      $available_amount_in_wallet = getCustomer()->wallet;
+      $options['card'] = $required_partial_payment_amount;
+      if ($available_amount_in_wallet > 0) {
+        if ($required_partial_payment_amount <= $available_amount_in_wallet) {
+          $options['wallet'] =  $required_partial_payment_amount;
+        } else {
+          $options['card_and_wallet'] = [
+            'wallet' => [
+              'amount' =>  $available_amount_in_wallet,
+            ],
+            'card' => [
+              'amount' =>  $required_partial_payment_amount  - $available_amount_in_wallet,
+            ],
+          ];
+        }
+      }
+    }
+    return $options;
+  }
+  // amount
+  public function getRequiredPartialPaymentAmountAttribute()
+  {
+    return (setting('partial_payment_percent') / 100) * $this->total_fees;
+  }
+  // amount
+  public function getRequiredAmountToPayWithCardAttribute()
+  {
+    if ($this->required_payment_step_is_partial) {
+      return $this->required_partial_payment_amount;
+    } else if($this->required_payment_step_is_remaining) {
+      return $this->required_remaining_payment_amount;
+    }else{
+      throw new Exception("Partial and remaining payment steps are done");
+    }
+  }
+  // condition
+  public function getRequiredPaymentStepIsPartialAttribute()
+  {
+    return empty($this->partial_payment_info)  ||
+      (isset($this->partial_payment_info) && $this->partial_payment_info['status'] == 'pending')
+      ? true : false;
+  }
+  ##########################  end partial payment info  ###########################
+
+
+
+  ########################## start  remaining payment info  ###########################
+  public function getRemainingPaymentOptionsAttribute()
+  {
+    $options = [];
+    if ( $this->status == ReservationStatus::Accepted->value && $this->required_payment_step_is_remaining ) {
+      $required_remaining_payment_amount = $this->required_remaining_payment_amount;
+      $available_amount_in_wallet = getCustomer()->wallet;
+      $options['card'] = $required_remaining_payment_amount;
+      if ($available_amount_in_wallet > 0) {
+        if ($required_remaining_payment_amount <= $available_amount_in_wallet) {
+          $options['wallet'] = $required_remaining_payment_amount;
+        } else {
+          $options['card_and_wallet'] = [
+            'wallet' => [
+              'amount' =>  $available_amount_in_wallet,
+            ],
+            'card' => [
+              'amount' =>  $required_remaining_payment_amount  - $available_amount_in_wallet,
+            ],
+          ];
+        }
+      }
+    }
+    return $options;
+  }
+  // amount
+  public function getRequiredRemainingPaymentAmountAttribute()
+  {
+    return $this->total_fees - $this->required_partial_payment_amount;
+  }
+  // condition
+  public function getRequiredPaymentStepIsRemainingAttribute()
+  {
+    return  isset($this->partial_payment_info) && $this->partial_payment_info['status'] == 'done' &&
+      ( empty($this->remaining_payment_info)  || (isset($this->remaining_payment_info) && $this->remaining_payment_info['status'] == 'pending') )
+      ? true : false;
+  }
+  ########################## end  remaining payment info  ###########################
+
+
+
 
   public function scopeWhenSearch($query, $search)
   {

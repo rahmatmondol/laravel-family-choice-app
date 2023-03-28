@@ -57,6 +57,14 @@ $title = __('site.Edit Customer');
                   value="{{old('phone',$customer->phone)}}"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
               </div>
+
+              {{-- wallet --}}
+              <div class="form-group">
+                <label>@lang('site.Wallet') </label>
+                <input required="required" type="wallet" name="wallet" class="form-control" maxlength="9"
+                  value="{{old('wallet',$customer->wallet)}}"
+                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+              </div>
               {{-- passwrod --}}
               {{-- <div class="form-group">
                 <label>@lang('site.Password')</label>

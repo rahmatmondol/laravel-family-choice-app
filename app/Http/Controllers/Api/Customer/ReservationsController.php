@@ -39,7 +39,7 @@ class ReservationsController  extends Controller
   {
     $reservation = $this->reservationRepository->addReservation($request);
 
-    return $this->sendResponse(new ReservationResource($reservation), "");
+    return $this->sendResponse(new ReservationResource($reservation->refresh()), "");
   }
 
   public function update_reservation(UpdateReservationFormRequest $request)

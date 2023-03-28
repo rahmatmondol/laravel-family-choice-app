@@ -37,7 +37,7 @@ class CustomerRepository implements CustomerRepositoryInterface
 
   public function getCustomerRequestData($request)
   {
-    $request_data = $request->only(['full_name', 'phone', 'email', 'verified', 'status', 'date_of_birth', 'gender', 'city_id']);
+    $request_data = $request->only(['full_name', 'phone', 'email', 'verified', 'status', 'date_of_birth', 'gender', 'city_id','wallet']);
     return $request_data;
   }
 

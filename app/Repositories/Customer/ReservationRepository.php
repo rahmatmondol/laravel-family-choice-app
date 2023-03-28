@@ -162,7 +162,6 @@ class ReservationRepository implements ReservationRepositoryInterface
       $totalNurseryFees = $school->activeNurseryFees()->sum('price');
       $subscriptionTypeFees = $request->input('child.subscription_type_id') != null ? SubscriptionType::find($request->input('child.subscription_type_id'))->price : 0;
     }
-    // dd($totalGradeFees ,$totalPaidServicesFees, $totalNurseryFees , $subscriptionTypeFees , $transportationFees);
 
     $totalFees = $totalPaidServicesFees + $transportationFees + $totalGradeFees + $totalNurseryFees + $subscriptionTypeFees;
     return [
