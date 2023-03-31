@@ -26,6 +26,7 @@ class StripeService
         ]
       );
       $payment_step  = $reservation->required_payment_step_is_partial ? 'partial_payment' : 'remaining_payment';
+
       $paymentIntent = \Stripe\PaymentIntent::create([
         'amount' => $reservation->required_amount_to_pay_with_card,
         'currency' => 'AED',
@@ -39,10 +40,13 @@ class StripeService
           'payment_step'   => $payment_step,
         ],
       ]);
+      info($paymentIntent);
+
 
       if ($request->payment_method) {
         self::handlePaymentStep($reservation, $request->payment_method, $payment_step);
       }
+
 
       return [
         'paymentIntent'   => $paymentIntent->client_secret,
@@ -147,7 +151,8 @@ class StripeService
           $sig_header,
           $endpoint_secret
         );
-        info($event);
+        // info($event);
+        // info($event['data']['object']['charges']['data']['id']??null);
 
         return [
           'payment_intent_id'   => $event['data']['object']['id'],
@@ -155,6 +160,7 @@ class StripeService
           'payment_method' => $event['data']['object']['metadata']['payment_method'] ?? null,
           'payment_step' => $event['data']['object']['metadata']['payment_step'] ?? null,
           'event_type' => $event->type,
+          'charge_id' => $event['data']['object']['charges']['data'][0]['id'] ?? null,
           // 'event_object' => $event,
         ];
       } catch (\Stripe\Exception\SignatureVerificationException $e) {
