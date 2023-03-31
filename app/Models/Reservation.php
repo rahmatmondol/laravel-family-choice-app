@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentType;
 use App\Enums\ReservationStatus;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -29,16 +30,16 @@ class Reservation extends Model
     if ($this->status == ReservationStatus::Pending->value && $this->required_payment_step_is_partial) {
       $required_partial_payment_amount = $this->required_partial_payment_amount;
       $available_amount_in_wallet = getCustomer()->wallet;
-      $options['card'] = $required_partial_payment_amount;
+      $options[PaymentType::Card->value] = $required_partial_payment_amount;
       if ($available_amount_in_wallet > 0) {
         if ($required_partial_payment_amount <= $available_amount_in_wallet) {
-          $options['wallet'] =  $required_partial_payment_amount;
+          $options[PaymentType::Wallet->value] =  $required_partial_payment_amount;
         } else {
-          $options['card_and_wallet'] = [
-            'wallet' => [
+          $options[PaymentType::CardAndWallet->value] = [
+            PaymentType::Wallet->value => [
               'amount' =>  $available_amount_in_wallet,
             ],
-            'card' => [
+            PaymentType::Card->value => [
               'amount' =>  $required_partial_payment_amount  - $available_amount_in_wallet,
             ],
           ];
@@ -81,16 +82,16 @@ class Reservation extends Model
     if ( $this->status == ReservationStatus::Accepted->value && $this->required_payment_step_is_remaining ) {
       $required_remaining_payment_amount = $this->required_remaining_payment_amount;
       $available_amount_in_wallet = getCustomer()->wallet;
-      $options['card'] = $required_remaining_payment_amount;
+      $options[PaymentType::Card->value] = $required_remaining_payment_amount;
       if ($available_amount_in_wallet > 0) {
         if ($required_remaining_payment_amount <= $available_amount_in_wallet) {
-          $options['wallet'] = $required_remaining_payment_amount;
+          $options[PaymentType::Wallet->value] = $required_remaining_payment_amount;
         } else {
-          $options['card_and_wallet'] = [
-            'wallet' => [
+          $options[PaymentType::CardAndWallet->value] = [
+            PaymentType::Wallet->value => [
               'amount' =>  $available_amount_in_wallet,
             ],
-            'card' => [
+            PaymentType::Card->value => [
               'amount' =>  $required_remaining_payment_amount  - $available_amount_in_wallet,
             ],
           ];

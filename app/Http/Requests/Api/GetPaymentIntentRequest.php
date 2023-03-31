@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api;
 
 use App\Enums\PaymentStatus;
+use App\Enums\PaymentType;
 use App\Enums\ReservationStatus;
 use App\Http\Requests\BaseRequest;
 use App\Models\Reservation;
@@ -33,7 +34,7 @@ class GetPaymentIntentRequest extends BaseRequest
       }],
       'payment_method' => ['bail', 'required', 'in:card,card_and_wallet', function ($attribute, $value, $fail) use ($reservation) {
         $customer = $reservation->customer;
-        if ($value == 'card_and_wallet' && $customer->wallet == 0) {
+        if ($value == PaymentType::CardAndWallet->value && $customer->wallet == 0) {
           $fail('not allowed to pay with wallet');
         }
       }]

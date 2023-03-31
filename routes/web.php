@@ -1,5 +1,8 @@
 <?php
 
+use App\Enums\PaymentStatus;
+use App\Enums\PaymentStep;
+use App\Enums\PaymentType;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StripeController;
@@ -19,6 +22,7 @@ use Illuminate\Support\Facades\Notification;
 */
 
 Route::get('/test-mail', function () {
+
 
   app()->setLocale('ar');
   $reservation = Reservation::first();
@@ -43,7 +47,6 @@ Route::get('/test', [HomeController::class,'test']);
 // Route::get('/truncate-all-tables', [HomeController::class,'truncate']);
 
 Route::get('/', function () {
-
   // return redirect()->route('admin.login');
   return view('welcome');
 })->name('home');

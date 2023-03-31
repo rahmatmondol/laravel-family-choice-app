@@ -3,6 +3,7 @@
 namespace App\Repositories\Customer;
 
 use App\Enums\PaymentStatus;
+use App\Enums\PaymentType;
 use App\Interfaces\Customer\WalletRepositoryInterface;
 use App\Models\Reservation;
 use App\Traits\Customer\WalletTrait;
@@ -28,7 +29,7 @@ class WalletRepository implements WalletRepositoryInterface
   {
     $partial_payment_info = [
       'status' => 'done',
-      'type' => 'wallet',
+      'type' => PaymentType::Wallet->value,
       'amount' => $reservation->required_partial_payment_amount,
     ];
 
@@ -51,7 +52,7 @@ class WalletRepository implements WalletRepositoryInterface
   {
     $remaining_payment_info = [
       'status' => 'done',
-      'type' => 'wallet',
+      'type' => PaymentType::Wallet->value,
       'amount' => $reservation->required_remaining_payment_amount,
     ];
     $description = " خصم قيمة الدفع  المتبقي للحجز رقم  " . $reservation->id;

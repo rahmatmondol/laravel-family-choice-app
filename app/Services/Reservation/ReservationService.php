@@ -3,6 +3,8 @@
 namespace App\Services\Reservation;
 
 use App\Enums\PaymentStatus;
+use App\Enums\PaymentStep;
+use App\Enums\PaymentType;
 use App\Models\Reservation;
 use App\Traits\Customer\WalletTrait;
 
@@ -18,7 +20,7 @@ class ReservationService
 
     if ($status != $reservation->payment_status) {
       self::makeReservationNotNotified($reservation); // to handle new reservation status
-      if($eventObject['payment_step']=='remaining_payment') {
+      if($eventObject['payment_step']==PaymentStep::RemainingPayment->value) {
         $reservation->update(['payment_status' => $status, 'payment_intent_id' => $payment_intent_id]);
       }
     }
@@ -26,20 +28,20 @@ class ReservationService
 
   public static function handleWebHookPaymentMethod($reservation, $eventObject)
   {
-    if ($eventObject['payment_step'] == 'partial_payment') {
+    if ($eventObject['payment_step'] == PaymentStep::PartialPayment->value) {
       self::handlePartialPaymentWebHook($reservation, $eventObject);
-    } elseif ($eventObject['payment_step'] == 'remaining_payment') {
+    } elseif ($eventObject['payment_step'] == PaymentStep::RemainingPayment->value) {
       self::handleRemainingPaymentWebHook($reservation, $eventObject);
     }
   }
 
   public static function handlePartialPaymentWebHook($reservation,$eventObject){
-    if( $eventObject['payment_method'] == 'card'){
+    if( $eventObject['payment_method'] == PaymentType::Card->value){
       $reservation->update([
         'partial_payment_info->status' => 'done',
         'partial_payment_info->charge_id' => $eventObject['charge_id'],
       ]);
-    } elseif($eventObject['payment_method'] == 'card_and_wallet'){
+    } elseif($eventObject['payment_method'] == PaymentType::CardAndWallet->value){
 
       $reservation->update([
         'partial_payment_info->card->status'    => 'done',
@@ -47,7 +49,7 @@ class ReservationService
 
       ]);
       $description = " خصم قيمة الدفع  المقدم للحجز رقم  " . $reservation->id;
-      $amount = $reservation->partial_payment_info['wallet']['amount'];
+      $amount = $reservation->partial_payment_info[PaymentType::Wallet->value]['amount'];
       if ($reservation->customer->wallet >= $amount) {
         $data = [
           'type'           => 'debit',
@@ -67,20 +69,20 @@ class ReservationService
 
   public static function handleRemainingPaymentWebHook($reservation,$eventObject){
 
-    if( $eventObject['payment_method'] == 'card'){
+    if( $eventObject['payment_method'] == PaymentType::Card->value){
       $reservation->update([
         'remaining_payment_info->status' => 'done',
         'partial_payment_info->charge_id' => $eventObject['charge_id'],
 
       ]);
-    } elseif($eventObject['payment_method'] == 'card_and_wallet'){
+    } elseif($eventObject['payment_method'] == PaymentType::CardAndWallet->value){
 
       $reservation->update([
         'remaining_payment_info->card->status'   => 'done',
         'remaining_payment_info->card->charge_id' => $eventObject['charge_id'],
       ]);
       $description = " خصم قيمة الدفع  المتبقي للحجز رقم  " . $reservation->id;
-      $amount = $reservation->remaining_payment_info['wallet']['amount'];
+      $amount = $reservation->remaining_payment_info[PaymentType::Wallet->value]['amount'];
       if ($reservation->customer->wallet >= $amount) {
         $data = [
           'type'           => 'debit',

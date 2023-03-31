@@ -20,7 +20,6 @@ class StripePaymentController extends Controller
     return $this->sendResponse(StripeService::getPaymentIntent($request), "");
   }
 
-
   // stripe trigger payment_intent.succeeded --add payment_intent:metadata.payment_method=card --add payment_intent:metadata.reservation_id=1 --add payment_intent:metadata.payment_step=partial_payment
 
   // to test this api  run this in terminal

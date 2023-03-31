@@ -2,6 +2,8 @@
 
 namespace App\Services\Payment;
 
+use App\Enums\PaymentStep;
+use App\Enums\PaymentType;
 use App\Models\Reservation;
 use Exception;
 use Stripe;
@@ -25,7 +27,7 @@ class StripeService
           'stripe_version' => '2020-08-27',
         ]
       );
-      $payment_step  = $reservation->required_payment_step_is_partial ? 'partial_payment' : 'remaining_payment';
+      $payment_step  = $reservation->required_payment_step_is_partial ? PaymentStep::PartialPayment->value : PaymentStep::RemainingPayment->value;
 
       $paymentIntent = \Stripe\PaymentIntent::create([
         'amount' => $reservation->required_amount_to_pay_with_card,
@@ -64,23 +66,23 @@ class StripeService
     $info = '';
     $available_amount_in_wallet = $reservation->customer->wallet;
 
-    if ($payment_step == 'partial_payment') {
-      if ($paymentMethod == 'card') {
+    if ($payment_step == PaymentStep::PartialPayment->value) {
+      if ($paymentMethod == PaymentType::Card->value) {
         $info = [
           'status'  => 'pending',
-          'type'    => 'card',
+          'type'    => PaymentType::Card->value,
           'amount'  => $reservation->required_partial_payment_amount,
         ];
       }
-      if ($paymentMethod == 'card_and_wallet') {
+      if ($paymentMethod == PaymentType::CardAndWallet->value) {
         $info = [
           'status'  => 'pending',
-          'type'    => 'card_and_wallet',
-          'card'   => [
+          'type'    => PaymentType::CardAndWallet->value,
+          PaymentType::Card->value   => [
             'status'  => 'pending',
             'amount'  => $reservation->required_partial_payment_amount  - $available_amount_in_wallet,
           ],
-          'wallet'   => [
+          PaymentType::Wallet->value   => [
             'status'  => 'pending',
             'amount'  => $available_amount_in_wallet,
           ]
@@ -89,23 +91,23 @@ class StripeService
       $reservation->update([
         'partial_payment_info' => $info,
       ]);
-    } elseif ($payment_step == 'remaining_payment') {
-      if ($paymentMethod == 'card') {
+    } elseif ($payment_step == PaymentStep::RemainingPayment->value) {
+      if ($paymentMethod == PaymentType::Card->value) {
         $info = [
           'status'  => 'pending',
-          'type'    => 'card',
+          'type'    => PaymentType::Card->value,
           'amount'  => $reservation->required_remaining_payment_amount,
         ];
       }
-      if ($paymentMethod == 'card_and_wallet') {
+      if ($paymentMethod == PaymentType::CardAndWallet->value) {
         $info = [
           'status'  => 'pending',
-          'type'    => 'card_and_wallet',
-          'card'   => [
+          'type'    => PaymentType::CardAndWallet->value,
+          PaymentType::Card->value   => [
             'status'  => 'pending',
             'amount'  => $reservation->required_remaining_payment_amount  - $available_amount_in_wallet,
           ],
-          'wallet'   => [
+          PaymentType::Wallet->value   => [
             'status'  => 'pending',
             'amount'  => $available_amount_in_wallet,
           ]
