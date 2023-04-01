@@ -300,7 +300,7 @@ return [
   'Not enough wallet to make a partial payment' => 'Not enough wallet to make a partial payment',
   'reservation must be pending' => 'reservation must be pending',
   'You already make a partial payment' => 'You already make a partial payment',
-  '' => '',
+  'Partial payment step not done' => 'Partial payment step not done',
   '' => '',
   '' => '',
   '' => '',

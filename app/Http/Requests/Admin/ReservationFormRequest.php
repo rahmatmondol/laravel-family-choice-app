@@ -34,7 +34,11 @@ class ReservationFormRequest extends FormRequest
   public function updateRules()
   {
     $this->rules += [
-      'status'      => ['required', new Enum(ReservationStatus::class)],
+      'status'      => ['required', new Enum(ReservationStatus::class), function ($attribute, $value, $fail) {
+        if (ReservationStatus::Accepted->value == $value && $this->reservation->required_payment_step_is_partial) {
+          $fail(__('site.Partial payment step not done'));
+        }
+      }],
     ];
     return $this->rules;
   }
