@@ -34,6 +34,13 @@ class GetPaymentIntentRequest extends BaseRequest
       }],
       'payment_method' => ['bail', 'required', 'in:card,card_and_wallet', function ($attribute, $value, $fail) use ($reservation) {
         $customer = $reservation->customer;
+
+        if($reservation->required_payment_step_is_partial &&  !in_array($value,array_keys($reservation->partial_payment_options))){
+          $fail(__('site.Payment method is not allowed'));
+        }
+        if($reservation->required_payment_step_is_remaining &&  !in_array($value,array_keys($reservation->remaining_payment_options))){
+          $fail(__('site.Payment method is not allowed'));
+        }
         if ($value == PaymentType::CardAndWallet->value && $customer->wallet == 0) {
           $fail('not allowed to pay with wallet');
         }

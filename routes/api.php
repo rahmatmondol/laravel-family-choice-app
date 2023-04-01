@@ -31,7 +31,6 @@ Route::group(
       });
 
       Route::controller(StripePaymentController::class)->prefix('stripe')->group(function () {
-        Route::get('get-payment-intent', 'getPaymentIntent');
         Route::post('webhook', 'paymentWebHook');
       });
 
@@ -87,6 +86,10 @@ Route::group(
         Route::post('update-reservation', 'update_reservation');
         Route::get('customer-reservations', 'customer_reservations');
         Route::get('reservation-details', 'reservation_details');
+      });
+
+      Route::controller(StripePaymentController::class)->group(function () {
+        Route::get('get-payment-intent', 'getPaymentIntent');
       });
 
       // pay with wallet

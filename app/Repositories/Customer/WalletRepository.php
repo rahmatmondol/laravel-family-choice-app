@@ -19,7 +19,7 @@ class WalletRepository implements WalletRepositoryInterface
     $reservation = Reservation::find($request->reservation_id);
     if ($reservation->required_payment_step_is_partial) {
       self::handlePayPartialPayment($reservation);
-    }else{
+    } else {
       self::handlePayRemainingPayment($reservation);
     }
     //TODO MAM: send mail confirmation
@@ -45,6 +45,7 @@ class WalletRepository implements WalletRepositoryInterface
 
     $reservation->update([
       'partial_payment_info' => $partial_payment_info,
+      'partial_payment_info->customer_notified' => false,
     ]);
     // return $reservation;
   }
@@ -67,9 +68,9 @@ class WalletRepository implements WalletRepositoryInterface
 
     $reservation->update([
       'remaining_payment_info' => $remaining_payment_info,
+      'remaining_payment_info->customer_notified' => false,
       'payment_status' => PaymentStatus::Succeeded->value,
 
     ]);
-    // return $reservation;
   }
 }
