@@ -19,7 +19,6 @@ class WalletController extends Controller
 
   public function  paymentWithWallet(PaymentWithWalletFormRequest $request)
   {
-    // dd("done");
     $reservation = $this->walletRepository->paymentWithWallet($request);
     return $this->sendResponse(new ReservationResource($reservation), "");
   }

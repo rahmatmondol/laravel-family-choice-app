@@ -86,6 +86,15 @@
           </div>
         </div>
 
+        <div class="col-md-6">
+          {{-- refund_fees_percent --}}
+          <div class="form-group">
+            <label>@lang('site.refund_fees_percent')</label>
+            <input required="required" type="number" name="refund_fees_percent" min="1" max="90"  class="form-control" value="{{ setting('refund_fees_percent') }}"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+          </div>
+        </div>
+
       </div>
 
       <div class="col-12">

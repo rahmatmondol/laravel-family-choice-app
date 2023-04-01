@@ -46,7 +46,6 @@ class ReservationService
       $reservation->update([
         'partial_payment_info->card->status'    => 'done',
         'partial_payment_info->card->charge_id' => $eventObject['charge_id'],
-
       ]);
       $description = " خصم قيمة الدفع  المقدم للحجز رقم  " . $reservation->id;
       $amount = $reservation->partial_payment_info[PaymentType::Wallet->value]['amount'];
@@ -109,7 +108,7 @@ class ReservationService
    * make notification_is_sent with false
    *
    * make reservation not notified to send  new status  for reservation
-   * ex: if current payment status is succeeded then refunded we need to notify customer with thant reservation is refunded
+   * ex: if current payment status is succeeded then refunded we need to notify customer with that reservation is refunded
    * @param Reservation $reservation
    * @return void
    **/

@@ -46,9 +46,9 @@ class HomeController extends Controller
       env('STRIPE_SECRET')
     );
     $res  = $stripe->refunds->create([
-      'charge' => 'pi_3Mr5CGDynjRZ45TZ2PKn75bR',
+      'charge' => 'ch_3Mrp42DynjRZ45TZ1TaOD8Ib',
     ]);
-    dd($res);
+    dd($res['status']);
 
 
 

@@ -18,9 +18,11 @@ trait WalletTrait
       if ($data['type'] == 'credit') {
         $customer->increment('wallet', $data['amount']);
       }
+      $customer->refresh();
       WalletHistory::create([
         'type'            => $data['type'],
         'amount'          => $data['amount'],
+        'current_wallet'  => $customer->wallet,
         'description'     => $data['description'],
         'customer_id'     => $data['customer_id'],
         'reservation_id'  => $data['reservation_id'],

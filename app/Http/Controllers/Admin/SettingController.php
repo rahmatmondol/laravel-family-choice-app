@@ -28,7 +28,7 @@ class SettingController extends BaseController
 
   public function update(SettingFormRequest $request)
   {
-    $request_data = $request->only(['terms_conditions','privacy_policy','phone','email','partial_payment_percent']);
+    $request_data = $request->only(['terms_conditions','privacy_policy','phone','email','partial_payment_percent','refund_fees_percent']);
 
     setting($request_data)->save();
 

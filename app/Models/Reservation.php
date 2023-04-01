@@ -19,6 +19,7 @@ class Reservation extends Model
   protected $casts = [
     'partial_payment_info' => 'array',
     'remaining_payment_info' => 'array',
+    'refund_partial_payment_info' => 'array',
   ];
 
   protected static $logOnlyDirty = true;
@@ -58,9 +59,9 @@ class Reservation extends Model
   {
     if ($this->required_payment_step_is_partial) {
       return $this->required_partial_payment_amount;
-    } else if($this->required_payment_step_is_remaining) {
+    } else if ($this->required_payment_step_is_remaining) {
       return $this->required_remaining_payment_amount;
-    }else{
+    } else {
       throw new Exception("Partial and remaining payment steps are done");
     }
   }
@@ -73,13 +74,60 @@ class Reservation extends Model
   }
   ##########################  end partial payment info  ###########################
 
+  ##########################  start refund partial payment info  ###########################
+  public function getCanRefundPartialPaymentAttribute()
+  {
+    return  $this->required_payment_step_is_remaining  && empty($this->refund_partial_payment_info) ? true : false;
+  }
+  public function getAmountRefundedToCardInPartialPaymentAttribute()
+  {
+    $amount = 0;
+    if ($this->can_refund_partial_payment) {
+      if ($this->partial_payment_info) {
+        if ($this->partial_payment_info['type'] == PaymentType::Card->value) {
+          $amount = $this->partial_payment_info['amount'] - ($this->partial_payment_info['amount'] * (setting('refund_fees_percent') / 100));
+        }
+        if ($this->partial_payment_info['type'] == PaymentType::CardAndWallet->value) {
+          $amount =  $this->partial_payment_info[PaymentType::Card->value]['amount'] - ($this->partial_payment_info[PaymentType::Card->value]['amount'] * (setting('refund_fees_percent') / 100));
+        }
+      }
+    }
+    return $amount;
+  }
+  public function getRefundPartialPaymentOptionsAttribute()
+  {
+    $options = [];
+    if ($this->can_refund_partial_payment) {
+      if ($this->partial_payment_info) {
+        $options['status'] = "pending";
+        if ($this->partial_payment_info['type'] == PaymentType::Card->value) {
+          $options['type']   = PaymentType::Card->value;
+          $options['amount'] = $this->amount_refunded_to_card_in_partial_payment;
+        }
+        if ($this->partial_payment_info['type'] == PaymentType::Wallet->value) {
+          $options['type']   = PaymentType::Wallet->value;
+          $options['amount'] = $this->partial_payment_info['amount'];
+        }
+        if ($this->partial_payment_info['type'] == PaymentType::CardAndWallet->value) {
+          $options['type']   = PaymentType::CardAndWallet->value;
+          $options[PaymentType::CardAndWallet->value][PaymentType::Wallet->value]['amount'] = $this->partial_payment_info[PaymentType::Wallet->value]['amount'];
+          $options[PaymentType::CardAndWallet->value][PaymentType::Wallet->value]['status'] = 'pending';
+          $options[PaymentType::CardAndWallet->value][PaymentType::Card->value]['amount'] =  $this->amount_refunded_to_card_in_partial_payment;
+          $options[PaymentType::CardAndWallet->value][PaymentType::Card->value]['status'] = 'pending';
+        }
+      }
+    }
+    return $options;
+  }
+  ##########################  end refund partial payment info  ###########################
+
 
 
   ########################## start  remaining payment info  ###########################
   public function getRemainingPaymentOptionsAttribute()
   {
     $options = [];
-    if ( $this->status == ReservationStatus::Accepted->value && $this->required_payment_step_is_remaining ) {
+    if ($this->status == ReservationStatus::Accepted->value && $this->required_payment_step_is_remaining) {
       $required_remaining_payment_amount = $this->required_remaining_payment_amount;
       $available_amount_in_wallet = getCustomer()->wallet;
       $options[PaymentType::Card->value] = $required_remaining_payment_amount;
@@ -109,11 +157,10 @@ class Reservation extends Model
   public function getRequiredPaymentStepIsRemainingAttribute()
   {
     return  isset($this->partial_payment_info) && $this->partial_payment_info['status'] == 'done' &&
-      ( empty($this->remaining_payment_info)  || (isset($this->remaining_payment_info) && $this->remaining_payment_info['status'] == 'pending') )
+      (empty($this->remaining_payment_info)  || (isset($this->remaining_payment_info) && $this->remaining_payment_info['status'] == 'pending'))
       ? true : false;
   }
   ########################## end  remaining payment info  ###########################
-
 
 
 

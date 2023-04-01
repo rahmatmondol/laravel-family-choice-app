@@ -37,7 +37,6 @@ class StripePaymentController extends Controller
       isset($eventObject['reservation_id'])
     ) {
       info($eventObject);
-
       // info('done');
       $reservation = Reservation::find($eventObject['reservation_id']);
       // info($eventObject['event_type']);

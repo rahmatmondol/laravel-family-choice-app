@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->enum('type',['debit','credit']);
             $table->double('amount');
+            $table->double('current_wallet');
             $table->text('description')->nullable();
             $table->integer('reservation_id')->nullable();
             $table->foreignId('customer_id')->constrained()->cascadeOnDelete();

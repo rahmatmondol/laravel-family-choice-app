@@ -33,7 +33,6 @@ Route::group(
       Route::controller(StripePaymentController::class)->prefix('stripe')->group(function () {
         Route::get('get-payment-intent', 'getPaymentIntent');
         Route::post('webhook', 'paymentWebHook');
-        Route::post('refund-partial-payment', 'refundPartialPayment');
       });
 
       Route::controller(PublicController::class)->group(function () {
@@ -93,6 +92,10 @@ Route::group(
       // pay with wallet
       Route::controller(WalletController::class)->group(function () {
         Route::post('payment-with-wallet', 'paymentWithWallet');
+      });
+
+      Route::controller(RefundController::class)->group(function () {
+        Route::post('refund-partial-payment', 'refundPartialPayment');
       });
 
     });
