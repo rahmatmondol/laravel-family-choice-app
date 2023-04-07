@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\SubscriptionTypeController;
 use App\Http\Controllers\Admin\TransportationController;
+use App\Http\Controllers\Admin\WalletController;
 
 Route::group(
   [
@@ -57,6 +58,8 @@ Route::group(
       Route::get('logout', [DashboardController::class, 'logout'])->name('logout');
 
       Route::get('reservations/export', [ReservationController::class, 'export'])->name('reservations.export');
+
+      Route::get('wallets/index', [WalletController::class, 'index'])->name('wallets.index');
 
       Route::resources([
         'admins'                => AdminController::class,

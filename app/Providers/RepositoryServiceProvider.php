@@ -44,6 +44,7 @@ use App\Interfaces\ReservationLogRepositoryInterface;
 use App\Interfaces\SubscriptionRepositoryInterface;
 use App\Interfaces\SubscriptionTypeRepositoryInterface;
 use App\Interfaces\TransportationRepositoryInterface;
+use App\Interfaces\WalletRepositoryInterface as InterfacesWalletRepositoryInterface;
 use App\Repositories\Customer\ReservationRepository as CustomerReservationRepository;
 use App\Repositories\Customer\WalletRepository;
 use App\Repositories\GradeFeesRepository;
@@ -53,6 +54,7 @@ use App\Repositories\ReservationLogRepository;
 use App\Repositories\SubscriptionRepository;
 use App\Repositories\SubscriptionTypeRepository;
 use App\Repositories\TransportationRepository;
+use App\Repositories\WalletRepository as RepositoriesWalletRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -88,6 +90,7 @@ class RepositoryServiceProvider extends ServiceProvider
     $this->app->bind(PaidServiceRepositoryInterface::class, PaidServiceRepository::class);
     $this->app->bind(TransportationRepositoryInterface::class, TransportationRepository::class);
     $this->app->bind(WalletRepositoryInterface::class, WalletRepository::class);
+    $this->app->bind(InterfacesWalletRepositoryInterface::class, RepositoriesWalletRepository::class);
 
   }
   /**

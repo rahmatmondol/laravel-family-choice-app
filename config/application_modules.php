@@ -24,6 +24,7 @@ return [
     'cities'               => 'c,r,u,d',
     'sliders'              => 'c,r,u,d',
     'transportations'      => 'c,r,u,d',
+    'wallets'              => 'r',
     'user_manuals'         => 'c,r,u,d',
     'attachments'          => 'c,r,u,d',
     'payments'             => 'r',

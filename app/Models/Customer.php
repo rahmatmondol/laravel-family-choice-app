@@ -60,6 +60,11 @@ class Customer extends  Authenticatable implements HasLocalePreference
     return $this->hasMany(Review::class);
   } //end fo category
 
+  public function walletHistory()
+  {
+    return $this->hasMany(WalletHistory::class,'customer_id','id');
+  } //end fo category
+
   public function city()
   {
     return $this->belongsTo(City::class);

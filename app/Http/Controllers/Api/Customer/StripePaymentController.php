@@ -54,10 +54,10 @@ class StripePaymentController extends Controller
   }
 
   // to test this api  run this in terminal
-  // stripe listen --forward-to  http://127.0.0.1:8000/api/stripe/refund-partial-paymen
+  // stripe listen --forward-to  http://127.0.0.1:8000/api/stripe/refund-partial-payment
   //  stripe trigger charge.refunded  >> in another terminal
-  public function refundPartialPayment(Request $request){
-    $eventObject  = StripeService::getEventObject();
-    info($eventObject);
-  }
+  // public function refundPartialPayment(Request $request){
+  //   $eventObject  = StripeService::getEventObject();
+  //   info($eventObject);
+  // }
 }
