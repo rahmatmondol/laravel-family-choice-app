@@ -296,6 +296,7 @@ return [
   'terms and conditions' => 'الشروط والاحكام',
   'policy and privacy' => 'السياسة والخصوصية',
   'Settings' => 'الاعدادات',
+  
   '' => '',
   '' => '',
   '' => '',

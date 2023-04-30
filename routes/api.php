@@ -32,6 +32,7 @@ Route::group(
 
       Route::controller(StripePaymentController::class)->prefix('stripe')->group(function () {
         Route::post('webhook', 'paymentWebHook');
+        // Route::post('refund-partial-payment-webhook', 'refundPartialPaymentWebhook');
       });
 
       Route::controller(PublicController::class)->group(function () {
@@ -82,7 +83,7 @@ Route::group(
       });
 
       #reserve school
-      Route::controller(ReservationsController::class)->group(function () {
+    Route::controller(ReservationsController::class)->group(function () {
         Route::get('school-attachments', 'school_attachments');
         Route::post('add-reservation', 'add_reservation');
         Route::post('update-reservation', 'update_reservation');

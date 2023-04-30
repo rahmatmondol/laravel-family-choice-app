@@ -29,9 +29,9 @@ class StripePaymentController extends Controller
   {
     $eventObject  = StripeService::getEventObject();
     // info($eventObject);
-    if (
+    if ( // succeeded payment
       isset($eventObject['event_type']) &&
-      in_array($eventObject['event_type'],['payment_intent.succeeded','payment_intent.payment_failed']) &&
+      $eventObject['event_type'] == 'payment_intent.succeeded' &&
       isset($eventObject['payment_intent_id']) &&
       isset($eventObject['payment_method']) &&
       isset($eventObject['reservation_id'])
@@ -43,21 +43,40 @@ class StripePaymentController extends Controller
       $status  = ReservationService::getPaymentStatus($eventObject['event_type']);
 
       info($status);
-      if($status == PaymentStatus::Succeeded->value  ){
-        ReservationService::handleWebHookPaymentMethod($reservation,$eventObject);
+      if ($status == PaymentStatus::Succeeded->value) {
+        ReservationService::handleWebHookPaymentMethod($reservation, $eventObject);
       }
 
-      ReservationService::updateReservationPaymentStatus($reservation,$eventObject);
+      ReservationService::updateReservationPaymentStatus($reservation, $eventObject);
       http_response_code(200);
-    }
+    } elseif ( // payment_failed
+      isset($eventObject['event_type']) &&
+      $eventObject['event_type'] == 'payment_intent.payment_failed' &&
+      isset($eventObject['payment_intent_id']) &&
+      isset($eventObject['payment_method']) &&
+      isset($eventObject['reservation_id'])
+    ) {
+      // failed_payment_notification
+      $reservation = Reservation::findOrFail($eventObject['reservation_id']);
+      $reservation->update([
+        'failed_payment_notification' => [
+          'type' => $eventObject['payment_step'],
+          'customer_notified' => false,
+          'payment_intent_id' => $eventObject['payment_intent_id'],
+        ]
+      ]);
 
+      info('mam payment failed');
+    }
   }
 
   // to test this api  run this in terminal
-  // stripe listen --forward-to  http://127.0.0.1:8000/api/stripe/refund-partial-payment
-  //  stripe trigger charge.refunded  >> in another terminal
-  // public function refundPartialPayment(Request $request){
+  // stripe listen --forward-to  http://127.0.0.1:8000/api/stripe/refund-partial-payment-webhook
+  //  stripe trigger charge.refunded  --add payment_intent:metadata.payment_method=card --add payment_intent:metadata.reservation_id=2 --add payment_intent:metadata.payment_step=partial_payment
+  // public function refundPartialPaymentWebhook(Request $request){
+  //   // info($request->all());
   //   $eventObject  = StripeService::getEventObject();
   //   info($eventObject);
+  //   http_response_code(200);
   // }
 }

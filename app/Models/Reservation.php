@@ -20,6 +20,7 @@ class Reservation extends Model
     'partial_payment_info' => 'array',
     'remaining_payment_info' => 'array',
     'refund_partial_payment_info' => 'array',
+    'failed_payment_notification' => 'array',
   ];
 
   protected static $logOnlyDirty = true;
@@ -72,6 +73,19 @@ class Reservation extends Model
       (isset($this->partial_payment_info) && $this->partial_payment_info['status'] == 'pending')
       ? true : false;
   }
+  public function getPartialPaymentIntentIdAttribute()
+  {
+    $payment_intent_id = '';
+    if ($this->partial_payment_info) {
+      if ($this->partial_payment_info['type'] == PaymentType::CardAndWallet->value) {
+        $payment_intent_id = $this->partial_payment_info['card']['payment_intent_id'];
+      } elseif ($this->partial_payment_info['type'] == PaymentType::Card->value) {
+        $payment_intent_id = $this->partial_payment_info['payment_intent_id'];
+      }
+    }
+    return $payment_intent_id;
+  }
+
   ##########################  end partial payment info  ###########################
 
   ##########################  start refund partial payment info  ###########################
@@ -79,6 +93,7 @@ class Reservation extends Model
   {
     return  $this->required_payment_step_is_remaining  && empty($this->refund_partial_payment_info) ? true : false;
   }
+
   public function getAmountRefundedToCardInPartialPaymentAttribute()
   {
     $amount = 0;
@@ -94,6 +109,7 @@ class Reservation extends Model
     }
     return $amount;
   }
+
   public function getRefundPartialPaymentOptionsAttribute()
   {
     $options = [];
@@ -120,7 +136,6 @@ class Reservation extends Model
     return count($options) ? $options : null;
   }
   ##########################  end refund partial payment info  ###########################
-
 
 
   ########################## start  remaining payment info  ###########################
@@ -160,6 +175,21 @@ class Reservation extends Model
       (empty($this->remaining_payment_info)  || (isset($this->remaining_payment_info) && $this->remaining_payment_info['status'] == 'pending'))
       ? true : false;
   }
+  public function getRemainingPaymentIntentIdAttribute()
+  {
+    $payment_intent_id = '';
+    if ($this->remaining_payment_info) {
+      if ($this->remaining_payment_info['type'] == PaymentType::CardAndWallet->value) {
+        $payment_intent_id = $this->remaining_payment_info['card']['payment_intent_id'];
+      } elseif ($this->remaining_payment_info['type'] == PaymentType::Card->value) {
+        $payment_intent_id = $this->remaining_payment_info['payment_intent_id'];
+      }
+    }
+    return $payment_intent_id;
+  }
+
+
+
   ########################## end  remaining payment info  ###########################
 
 

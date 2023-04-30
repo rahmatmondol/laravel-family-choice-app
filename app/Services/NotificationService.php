@@ -27,19 +27,18 @@ class NotificationService
     return getCustomer()->notifications()->latest()->paginate(request()->perPage ?? 20);
   }
 
-  public static function sendNotification(array $data,string $token)
+  public static function sendNotification(array $data, string $token)
   {
     $push = new PushNotification('fcm');
 
     $push->setMessage([
-      'data' => $data
-       , 'notification' => $data,
+      'data' => $data, 'notification' => $data,
     ])->setApiKey(env('NOTIFICATION_API_KEY'))
       ->setDevicesToken($token)
       ->send()
       ->getFeedback();
-      info(print_r($push->service->feedback,true)); 
-    //   dd($push->service->feedback); 
+    info(print_r($push->service->feedback, true));
+    //   dd($push->service->feedback);
   }
 
   public static  function  sendReservationNotification($status, $reservation)
@@ -54,10 +53,10 @@ class NotificationService
       'click_action'    => 'ReservationDetails',
       'reservation_id'  => (int)$reservation->id,
     ];
-    // dd($data); 
+    // dd($data);
 
     try {
-      if(!empty($customer->firebaseToken))
+      if (!empty($customer->firebaseToken))
         self::sendNotification($data, $customer->firebaseToken);
 
       self::storeReservationNotificationList($data, $customer->id, $reservation->id);
@@ -92,20 +91,36 @@ class NotificationService
         __('site.Reservation payment failed'),
         __('site.reservation_payment_failed', ['reservation_number' => $reservation->id])
       ],
+      'partial_payment.succeeded' => [
+        __('site.Partial payment succeeded'),
+        __('site.Partial payment for reservation number succeeded', ['reservation_number' => $reservation->id])
+      ],
+      'partial_payment.failed' => [
+        __('site.Partial payment failed'),
+        __('site.Partial payment for reservation number failed', ['reservation_number' => $reservation->id])
+      ],
+      'remaining_payment.succeeded' => [
+        __('site.Remaining payment succeeded'),
+        __('site.Remaining payment for reservation number succeeded', ['reservation_number' => $reservation->id])
+      ],
+      'remaining_payment.failed' => [
+        __('site.Remaining payment failed'),
+        __('site.Remaining payment for reservation number failed', ['reservation_number' => $reservation->id])
+      ],
     ];
 
     return $messages[$status];
   }
 
-  public static function sendSms(string $phone, string $message)  
+  public static function sendSms(string $phone, string $message)
   {
     try {
       // 971522946005 is active number for hussein
       $msg = self::convertToUnicode($message);
       $client = new \GuzzleHttp\Client(['verify' => false]);
-      $request = $client->get('https://doo.ae/api/msgSend.php?mobile=971526972999&password=12345678&numbers=971'.$phone.'&sender=APPOTP&msg='.$msg.'&applicationType=3');
+      $request = $client->get('https://doo.ae/api/msgSend.php?mobile=971526972999&password=12345678&numbers=971' . $phone . '&sender=APPOTP&msg=' . $msg . '&applicationType=3');
       $res = $request->getBody()->getContents();
-      info('result sms : ' .$res );
+      info('result sms : ' . $res);
     } catch (Exception $e) {
       info($e->getMessage());
     }
@@ -422,5 +437,4 @@ class NotificationService
     }
     return $strResult;
   }
-
 }

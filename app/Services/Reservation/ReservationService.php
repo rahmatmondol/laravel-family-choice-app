@@ -20,7 +20,7 @@ class ReservationService
 
     if ($status != $reservation->payment_status) {
       self::makeReservationNotNotified($reservation); // to handle new reservation status
-      if($eventObject['payment_step']==PaymentStep::RemainingPayment->value) {
+      if ($eventObject['payment_step'] == PaymentStep::RemainingPayment->value) {
         $reservation->update(['payment_status' => $status, 'payment_intent_id' => $payment_intent_id]);
       }
     }
@@ -35,19 +35,22 @@ class ReservationService
     }
   }
 
-  public static function handlePartialPaymentWebHook($reservation,$eventObject){
-    if( $eventObject['payment_method'] == PaymentType::Card->value){
+  public static function handlePartialPaymentWebHook($reservation, $eventObject)
+  {
+    if ($eventObject['payment_method'] == PaymentType::Card->value) {
       $reservation->update([
         'partial_payment_info->customer_notified' => false,
         'partial_payment_info->status' => 'done',
         'partial_payment_info->charge_id' => $eventObject['charge_id'],
+        'partial_payment_info->payment_intent_id' => $eventObject['payment_intent_id'],
       ]);
-    } elseif($eventObject['payment_method'] == PaymentType::CardAndWallet->value){
+    } elseif ($eventObject['payment_method'] == PaymentType::CardAndWallet->value) {
 
       $reservation->update([
         'partial_payment_info->customer_notified' => false,
         'partial_payment_info->card->status'    => 'done',
         'partial_payment_info->card->charge_id' => $eventObject['charge_id'],
+        'partial_payment_info->card->payment_intent_id' => $eventObject['payment_intent_id'],
       ]);
       $description = " خصم قيمة الدفع  المقدم للحجز رقم  " . $reservation->id;
       $amount = $reservation->partial_payment_info[PaymentType::Wallet->value]['amount'];
@@ -68,21 +71,24 @@ class ReservationService
     }
   }
 
-  public static function handleRemainingPaymentWebHook($reservation,$eventObject){
+  public static function handleRemainingPaymentWebHook($reservation, $eventObject)
+  {
 
-    if( $eventObject['payment_method'] == PaymentType::Card->value){
+    if ($eventObject['payment_method'] == PaymentType::Card->value) {
       $reservation->update([
         'remaining_payment_info->customer_notified' => false,
         'remaining_payment_info->status' => 'done',
         'remaining_payment_info->charge_id' => $eventObject['charge_id'],
+        'remaining_payment_info->payment_intent_id' => $eventObject['payment_intent_id'],
 
       ]);
-    } elseif($eventObject['payment_method'] == PaymentType::CardAndWallet->value){
+    } elseif ($eventObject['payment_method'] == PaymentType::CardAndWallet->value) {
 
       $reservation->update([
         'remaining_payment_info->customer_notified' => false,
         'remaining_payment_info->card->status'   => 'done',
         'remaining_payment_info->card->charge_id' => $eventObject['charge_id'],
+        'remaining_payment_info->card->payment_intent_id' => $eventObject['payment_intent_id'],
       ]);
       $description = " خصم قيمة الدفع  المتبقي للحجز رقم  " . $reservation->id;
       $amount = $reservation->remaining_payment_info[PaymentType::Wallet->value]['amount'];
@@ -133,5 +139,25 @@ class ReservationService
       'payment_intent.payment_failed'    =>  PaymentStatus::Failed->value,
     ];
     return $status[$event] ?? null;
+  }
+
+  public static function getSucceededPartialPaymentReservations()
+  {
+    return Reservation::with(['school', 'customer', 'child'])->where('partial_payment_info->status', 'done')->where('partial_payment_info->customer_notified', false)->get();
+  }
+
+  public static function getFailedPartialPaymentReservations()
+  {
+    return Reservation::with(['school', 'customer', 'child'])->where('failed_payment_notification->type', PaymentStep::PartialPayment->value)->where('failed_payment_notification->customer_notified', false)->get();
+  }
+
+  public static function getSucceededRemainingPaymentReservations()
+  {
+    return Reservation::with(['school', 'customer', 'child'])->where('remaining_payment_info->status', 'done')->where('remaining_payment_info->customer_notified', false)->get();
+  }
+
+  public static function getFailedRemainingPaymentReservations()
+  {
+    return Reservation::with(['school', 'customer', 'child'])->where('failed_payment_notification->type', PaymentStep::RemainingPayment->value)->where('failed_payment_notification->customer_notified', false)->get();
   }
 }

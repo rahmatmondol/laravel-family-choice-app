@@ -52,6 +52,11 @@ class RefundPartialPaymentService
       );
       $result  = $stripe->refunds->create([
         'charge' => $info['charge_id'],
+        "metadata" => [
+          "reservation_id" => $reservation->id,
+          "payment_step" => 'partial_payment',
+          "payment_method" => 'card',
+        ]
       ]);
       if (isset($result['status']) && $result['status'] == 'succeeded') {
         $reservation->update([

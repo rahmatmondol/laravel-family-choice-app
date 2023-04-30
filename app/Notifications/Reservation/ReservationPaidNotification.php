@@ -40,7 +40,6 @@ class ReservationPaidNotification extends Notification
    */
   public function toMail($notifiable)
   {
-
     return (new MailMessage)
       ->subject(__('site.Reservation Completed Successfully'))
       ->markdown('email.customer.reservation_paid', ['reservation' => $this->reservation]);
