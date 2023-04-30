@@ -115,4 +115,13 @@ class PublicController extends Controller
     ]);
     return $this->sendResponse("", "");
   }
+
+  public function configData(Request $request)
+  {
+    $config = [
+      'partial_payment_percent'=>setting('partial_payment_percent'),
+      'refund_fees_percent'=>setting('refund_fees_percent'),
+    ];
+    return $this->sendResponse($config, "");
+  }
 }

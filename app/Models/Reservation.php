@@ -47,7 +47,7 @@ class Reservation extends Model
         }
       }
     }
-    return $options;
+    return count($options) ? $options : null;
   }
   // amount
   public function getRequiredPartialPaymentAmountAttribute()
@@ -117,7 +117,7 @@ class Reservation extends Model
         }
       }
     }
-    return $options;
+    return count($options) ? $options : null;
   }
   ##########################  end refund partial payment info  ###########################
 
@@ -146,7 +146,7 @@ class Reservation extends Model
         }
       }
     }
-    return $options;
+    return count($options) ? $options : null;
   }
   // amount
   public function getRequiredRemainingPaymentAmountAttribute()

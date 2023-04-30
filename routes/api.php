@@ -42,6 +42,7 @@ Route::group(
         Route::get('types', 'types');
         Route::get('get-filter-data', 'filterData');
         Route::get('sliders', 'sliders');
+        Route::get('config-data', 'configData');
       });
 
       Route::controller(SchoolController::class)->group(function () {
@@ -61,6 +62,7 @@ Route::group(
         Route::post('change-password', 'changePassword');
         Route::post('update-firebase-token', 'updateFirebaseToken');
         Route::get('profile', 'profile');
+        Route::get('current-wallet', 'currentWallet');
         Route::post('remove-account', 'removeAccount');
       });
 

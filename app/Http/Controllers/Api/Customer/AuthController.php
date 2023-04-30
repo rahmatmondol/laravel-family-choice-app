@@ -109,6 +109,11 @@ class AuthController extends Controller
     return $this->sendResponse(new CustomerResource(getCustomer()), "");
   }
 
+  public function currentWallet(Request $request)
+  {
+    return $this->sendResponse(getCustomer()->wallet , "");
+  }
+
   public function foregetPassword(ForgetPasswordFormRequest $request)
   {
     $customer = $this->customerRepository->forgetCustomerPassword($request);
