@@ -99,6 +99,10 @@ class NotificationService
         __('site.Partial payment failed'),
         __('site.Partial payment for reservation number failed', ['reservation_number' => $reservation->id])
       ],
+      'partial_payment.refunded' => [
+        __('site.Partial payment refunded'),
+        __('site.Partial payment for reservation number refunded', ['reservation_number' => $reservation->id])
+      ],
       'remaining_payment.succeeded' => [
         __('site.Remaining payment succeeded'),
         __('site.Remaining payment for reservation number succeeded', ['reservation_number' => $reservation->id])
@@ -107,6 +111,7 @@ class NotificationService
         __('site.Remaining payment failed'),
         __('site.Remaining payment for reservation number failed', ['reservation_number' => $reservation->id])
       ],
+
     ];
 
     return $messages[$status];

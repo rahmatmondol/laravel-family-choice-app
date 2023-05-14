@@ -10,6 +10,7 @@ use App\Models\Reservation;
 
 class GetPaymentIntentRequest extends BaseRequest
 {
+  protected $stopOnFirstFailure = true;
 
   public function authorize()
   {

@@ -20,7 +20,7 @@ class Reservation extends Model
     'partial_payment_info' => 'array',
     'remaining_payment_info' => 'array',
     'refund_partial_payment_info' => 'array',
-    'failed_payment_notification' => 'array',
+    'payment_notification' => 'array',
   ];
 
   protected static $logOnlyDirty = true;

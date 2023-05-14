@@ -56,10 +56,9 @@ class StripePaymentController extends Controller
       isset($eventObject['payment_method']) &&
       isset($eventObject['reservation_id'])
     ) {
-      // failed_payment_notification
       $reservation = Reservation::findOrFail($eventObject['reservation_id']);
       $reservation->update([
-        'failed_payment_notification' => [
+        'payment_notification' => [
           'type' => $eventObject['payment_step'],
           'customer_notified' => false,
           'payment_intent_id' => $eventObject['payment_intent_id'],
@@ -72,11 +71,23 @@ class StripePaymentController extends Controller
 
   // to test this api  run this in terminal
   // stripe listen --forward-to  http://127.0.0.1:8000/api/stripe/refund-partial-payment-webhook
-  //  stripe trigger charge.refunded  --add payment_intent:metadata.payment_method=card --add payment_intent:metadata.reservation_id=2 --add payment_intent:metadata.payment_step=partial_payment
-  // public function refundPartialPaymentWebhook(Request $request){
-  //   // info($request->all());
-  //   $eventObject  = StripeService::getEventObject();
-  //   info($eventObject);
-  //   http_response_code(200);
-  // }
+  public function refundPartialPaymentWebhook(Request $request)
+  {
+    // info($request->all());
+    $eventObject  = StripeService::getEventObject();
+    // info($eventObject);
+
+    if ($eventObject['reservation_id'] && $eventObject['event_type'] == 'charge.refunded') {
+      $reservation = Reservation::find($eventObject['reservation_id']);
+      $reservation->update([
+        'payment_notification' => [
+          'type' => $eventObject['event_type'],
+          'customer_notified' => false,
+          'payment_intent_id' => $eventObject['payment_intent_id'] ?? null,
+        ]
+      ]);
+    }
+
+    http_response_code(200);
+  }
 }

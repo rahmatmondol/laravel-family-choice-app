@@ -32,7 +32,7 @@ Route::group(
 
       Route::controller(StripePaymentController::class)->prefix('stripe')->group(function () {
         Route::post('webhook', 'paymentWebHook');
-        // Route::post('refund-partial-payment-webhook', 'refundPartialPaymentWebhook');
+        Route::post('refund-partial-payment-webhook', 'refundPartialPaymentWebhook');
       });
 
       Route::controller(PublicController::class)->group(function () {

@@ -326,6 +326,12 @@ return [
   'Partial payment failed' => 'Partial payment failed',
   'Partial payment for reservation number failed' => 'Your partial payment for reservation number :reservation_number failed',
   'partial_payment_failed_mail_body' => 'Partial payment of reservation successfully pending Approval from the school administration to pay the rest of the reservation fees',
+
+  'Partial payment refunded' => 'Partial payment refunded',
+  'Partial payment for reservation number refunded' => 'Your partial payment for reservation number :reservation_number refunded',
+  'partial_payment_failed_mail_body' => 'Partial payment of reservation successfully pending Approval from the school administration to pay the rest of the reservation fees',
+
+
   'Remaining payment failed' => 'Remaining payment failed',
   'Remaining payment for reservation number failed' => 'Your remaining payment for reservation number :reservation_number failed',
   'remaining_payment_failed_mail_body' => 'The rest of the reservation fees have been successfully paid. The school administration will contact you as soon as possible',

@@ -148,7 +148,7 @@ class ReservationService
 
   public static function getFailedPartialPaymentReservations()
   {
-    return Reservation::with(['school', 'customer', 'child'])->where('failed_payment_notification->type', PaymentStep::PartialPayment->value)->where('failed_payment_notification->customer_notified', false)->get();
+    return Reservation::with(['school', 'customer', 'child'])->where('payment_notification->type', PaymentStep::PartialPayment->value)->where('payment_notification->customer_notified', false)->get();
   }
 
   public static function getSucceededRemainingPaymentReservations()
@@ -158,6 +158,11 @@ class ReservationService
 
   public static function getFailedRemainingPaymentReservations()
   {
-    return Reservation::with(['school', 'customer', 'child'])->where('failed_payment_notification->type', PaymentStep::RemainingPayment->value)->where('failed_payment_notification->customer_notified', false)->get();
+    return Reservation::with(['school', 'customer', 'child'])->where('payment_notification->type', PaymentStep::RemainingPayment->value)->where('payment_notification->customer_notified', false)->get();
+  }
+
+  public static function getRefundedPartialPaymentReservations()
+  {
+    return Reservation::with(['school', 'customer', 'child'])->where('payment_notification->type', 'charge.refunded')->where('payment_notification->customer_notified', false)->get();
   }
 }

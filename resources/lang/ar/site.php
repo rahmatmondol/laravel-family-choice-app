@@ -19,14 +19,14 @@ return [
     ReservationStatus::Pending->value => 'معلق',
     ReservationStatus::Accepted->value => 'تم القبول',
     ReservationStatus::Rejected->value => 'تم الرفض',
-    'Status' =>"حالة الحجز",
+    'Status' => "حالة الحجز",
   ],
   'payment_status' => [
     PaymentStatus::Pending->value => 'معلق',
     PaymentStatus::Succeeded->value => 'تم الدفع',
     PaymentStatus::Failed->value => 'فشل الدفع',
     PaymentStatus::Refunded->value => 'تم ارجاع الاموال',
-    'Status' =>"حالة الدفع",
+    'Status' => "حالة الدفع",
 
   ],
   'this course not related to current school' => 'هذه الدورة لا تتعلق بالمدرسة الحالية',
@@ -296,12 +296,78 @@ return [
   'terms and conditions' => 'الشروط والاحكام',
   'policy and privacy' => 'السياسة والخصوصية',
   'Settings' => 'الاعدادات',
-  
+  'Not enough wallet to make a partial payment' => 'لا توجد محفظة كافية لسداد دفعة جزئية',
+  'reservation must be pending' => 'يجب أن يكون الحجز معلقًا',
+  'You already make a partial payment' => 'لقد قمت بالفعل بسداد دفعة جزئية',
+  'Partial payment step not done' => 'خطوة السداد الجزئي لم تتم',
+  'done' => 'تم',
+  'pending' => 'في الانتظار',
+  'wallet' => 'المحفظة',
+  'card' => 'الكارت',
+  'card_and_wallet' => 'الكارت والمحفظة معا',
+  'Wallet amount' => 'مبلغ المحفظة',
+  'Card amount' => 'مبلغ البطاقة',
+  'Partial Payment' => 'Partial Payment',
+  'Remaining Payment' => 'السداد الجزئي ',
+  'Refund Partial Payment' => 'رد دفعة جزئية',
+  'Reservation' => 'الحجز',
+  'Current Wallet' => 'المحفظة الحالية',
+  'Partial payment succeeded' => 'نجح الدفع الجزئي',
+  'Partial payment for reservation number succeeded' => '
+  تهانينا! الدفع الجزئي للحجز رقم
+  :reservation_number
+  تم بنجاح
+',
+  'Remaining payment succeeded' => 'نجح الدفع المتبقي',
+  'partial_payment_succeeded_mail_body' => 'السداد الجزئي للحجز تم بنجاح  في انتظار موافقة ادارة المدرسة لدفع مصاريف الحجز المتبقية',
+  'Remaining payment for reservation number succeeded' => '
+  تهانينا ! المصاريف المتبقية للحج رقم
+  :reservation_number
+  تمت بنجاح
+  ',
+  'remaining_payment_succeeded_mail_body' => 'تم دفع باقي رسوم الحجز بنجاح. ستتصل بك إدارة المدرسة في أقرب وقت ممكن',
+  'Reservation number accepted by school' => '
+  !تهانينا ّ
+  الحجز رقم
+  :reservation_number
+  تم قبولة من ادارة المدرسة
+  ',
+
+  'reservation_accepted_by_school_mail_body' => '
+  تهانينا! الحجز رقم
+  :reservation_number
+  تم قبولة من ادارة المدرسة
+  ',
+  'Reservation accepted by school' => 'قبلت المدرسة الحجز',
+
+  'Partial payment failed' => 'فشل الدفع الجزئي',
+  'Partial payment for reservation number failed' => '
+  الدفع الجزئي للحج رقم
+  :reservation_number
+  فشل
+  ',
+  'partial_payment_failed_mail_body' => 'الدفع الجزئي للحجز  تم بنجاح بانتظار الموافقة من إدارة المدرسة على دفع باقي رسوم الحجز',
+
+  'Partial payment refunded' => 'تم رد الدفعة الجزئية',
+  'Partial payment for reservation number refunded' => '
+  تم رد قيمة السداد الجزئي للحجز رقم
+  :reservation_number
+  ',
+
+  'Remaining payment failed' => 'فشل الدفع المتبقي',
+  'Remaining payment for reservation number failed' => '
+  الدفع المتبقي للحجز رقم
+  :reservation_number
+  فشل
+  ',
+  'remaining_payment_failed_mail_body' => 'تم دفع باقي رسوم الحجز بنجاح. ستتصل بك إدارة المدرسة في أقرب وقت ممكن',
+  'Wallets' => 'المحفظة',
+
   '' => '',
   '' => '',
   '' => '',
-  'app' =>[
-    'Currency'=>'درهم'
+  'app' => [
+    'Currency' => 'درهم'
   ],
   'table' => [
     'Order Item' => 'الترتيب',

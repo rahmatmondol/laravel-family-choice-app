@@ -2,8 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Enums\PaymentStatus;
-use App\Enums\PaymentType;
 use App\Services\NotificationService;
 use App\Services\Payment\PaymentService;
 use App\Services\Reservation\ReservationService;
@@ -37,16 +35,7 @@ class HandlePaymentReservation extends Command
 
     app()->setLocale('ar');
 
-    // foreach (ReservationService::getReservationsWillNotified() as $reservation) {
 
-    //   PaymentService::createPaymentRecord($reservation,$reservation->payment_intent_id);
-
-    //   NotificationService::sendReservationNotification('payment_status.' . $reservation->payment_status, $reservation);
-
-    //   ReservationService::makeReservationNotified($reservation);
-    // }
-
-    // dd(ReservationService::getSucceededPartialPaymentReservations());
     foreach (ReservationService::getSucceededPartialPaymentReservations() as $reservation) {
 
       $payment_intent_id = $reservation->partial_payment_intent_id;
@@ -62,10 +51,9 @@ class HandlePaymentReservation extends Command
 
     }
 
-
     foreach (ReservationService::getFailedPartialPaymentReservations() as $reservation) {
 
-      $payment_intent_id = $reservation->failed_payment_notification['payment_intent_id'] ?? null;
+      $payment_intent_id = $reservation->payment_notification['payment_intent_id'] ?? null;
       if ($payment_intent_id) {
         PaymentService::createPaymentRecord($reservation, 'partial_payment', $payment_intent_id, 'failed');
       }
@@ -73,7 +61,7 @@ class HandlePaymentReservation extends Command
       NotificationService::sendReservationNotification('partial_payment.failed', $reservation);
 
       $reservation->update([
-        'failed_payment_notification' =>null,
+        'payment_notification' =>null,
       ]);
     }
 
@@ -95,7 +83,7 @@ class HandlePaymentReservation extends Command
 
     foreach (ReservationService::getFailedRemainingPaymentReservations() as $reservation) {
 
-      $payment_intent_id = $reservation->failed_payment_notification['payment_intent_id'] ?? null;
+      $payment_intent_id = $reservation->payment_notification['payment_intent_id'] ?? null;
       if ($payment_intent_id) {
         PaymentService::createPaymentRecord($reservation, 'remaining_payment', $payment_intent_id, 'failed');
       }
@@ -103,7 +91,22 @@ class HandlePaymentReservation extends Command
       NotificationService::sendReservationNotification('remaining_payment.failed', $reservation);
 
       $reservation->update([
-        'failed_payment_notification' =>null,
+        'payment_notification' =>null,
+      ]);
+    }
+
+
+    foreach (ReservationService::getRefundedPartialPaymentReservations() as $reservation) {
+
+      $payment_intent_id = $reservation->payment_notification['payment_intent_id'] ?? null;
+      if ($payment_intent_id) {
+        PaymentService::createPaymentRecord($reservation, 'partial_payment', $payment_intent_id, 'refunded');
+      }
+
+      NotificationService::sendReservationNotification('partial_payment.refunded', $reservation);
+
+      $reservation->update([
+        'payment_notification' =>null,
       ]);
     }
   }

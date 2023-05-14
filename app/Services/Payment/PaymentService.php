@@ -4,24 +4,29 @@ namespace App\Services\Payment;
 
 use App\Models\Payment;
 use App\Models\Reservation;
+use Exception;
 
 class PaymentService
 {
 
   public static function createPaymentRecord(Reservation $reservation, string $payment_step, string $payment_intent_id, string $payment_status)
   {
-    $paymentIntent = StripeService::retrievePaymentIntent($payment_intent_id);
-    if ($paymentIntent) {
+    try {
+      $paymentIntent = StripeService::retrievePaymentIntent($payment_intent_id);
+      if ($paymentIntent) {
 
-      Payment::firstOrCreate(
-        [
-          'payment_intent_id' => $paymentIntent['id'],
-          'payment_status' => $payment_status,
-          'payment_step' => $payment_step,
-          'reservation_id' => $reservation->id
-        ],
-        ['total_fees' => $paymentIntent['amount'], 'school_id' => $reservation->school->id, 'event_object' => json_encode($paymentIntent)],
-      );
+        Payment::firstOrCreate(
+          [
+            'payment_intent_id' => $paymentIntent['id'],
+            'payment_status' => $payment_status,
+            'payment_step' => $payment_step,
+            'reservation_id' => $reservation->id
+          ],
+          ['total_fees' => $paymentIntent['amount'], 'school_id' => $reservation->school->id, 'event_object' => json_encode($paymentIntent)],
+        );
+      }
+    } catch (Exception $e) {
+      info($e->getMessage());
     }
   }
 
