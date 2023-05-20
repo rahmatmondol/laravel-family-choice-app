@@ -136,7 +136,7 @@ class StripeService
 
   public static function getEventObject($endpoint_secret)
   {
-    Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+    Stripe\Stripe::setApiKey($endpoint_secret);
     // $endpoint_secret = env('ENDPOINT_SECRET');
     $payload = @file_get_contents('php://input');
     $event = null;
