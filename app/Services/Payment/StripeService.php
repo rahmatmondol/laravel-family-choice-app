@@ -134,11 +134,10 @@ class StripeService
     return $stripe_customer_id;
   }
 
-  public static function getEventObject()
+  public static function getEventObject($endpoint_secret)
   {
     Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
     // $endpoint_secret = env('ENDPOINT_SECRET');
-    $endpoint_secret = "whsec_1335dc14d639b9906b06f77858152a58d5d30e442e958ad488b5ae8c05a57f5f";
     $payload = @file_get_contents('php://input');
     $event = null;
     // info($payload);

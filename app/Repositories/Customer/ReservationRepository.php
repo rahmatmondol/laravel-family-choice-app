@@ -173,15 +173,17 @@ class ReservationRepository implements ReservationRepositoryInterface
 
   public function attachPaidServices($reservation)
   {
-    $data  = [];
-    $paidServices = PaidService::find(request()->input('child.paid_services'));
-    foreach ($paidServices  as $service) {
-      $data[$service->id] = ['price' => $service->price];
+    if(request()->input('child.paid_services')){
+      $data  = [];
+      $paidServices = PaidService::find(request()->input('child.paid_services'));
+      foreach ($paidServices  as $service) {
+        $data[$service->id] = ['price' => $service->price];
+      }
+      if ($data)
+        $reservation->paidServices()->sync($data);
+      else
+        $reservation->paidServices()->sync([]);
     }
-    if ($data)
-      $reservation->paidServices()->sync($data);
-    else
-      $reservation->paidServices()->sync([]);
   }
 
   public function attachNurseryFees($reservation)

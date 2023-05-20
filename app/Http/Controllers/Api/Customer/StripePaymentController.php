@@ -20,15 +20,14 @@ class StripePaymentController extends Controller
     return $this->sendResponse(StripeService::getPaymentIntent($request), "");
   }
 
-  // stripe trigger payment_intent.succeeded --add payment_intent:metadata.payment_method=card --add payment_intent:metadata.reservation_id=1 --add payment_intent:metadata.payment_step=partial_payment
+  // stripe trigger payment_intent.succeeded --add payment_intent:metadata.payment_method=card --add payment_intent:metadata.reservation_id=56 --add payment_intent:metadata.payment_step=partial_payment
 
   // to test this api  run this in terminal
-  // stripe listen --forward-to  http://127.0.0.1:8001/api/stripe/webhook
+  // stripe listen --forward-to  http://127.0.0.1:8002/api/stripe/webhook
   //  stripe trigger  payment_intent.succeeded  >> in another terminal
   public function paymentWebHook(Request $request)
   {
-    $eventObject  = StripeService::getEventObject();
-    // info($eventObject);
+    $eventObject  = StripeService::getEventObject(env('ENDPOINT_SECRET_WEB_HOOK'));
     if ( // succeeded payment
       isset($eventObject['event_type']) &&
       $eventObject['event_type'] == 'payment_intent.succeeded' &&
@@ -37,9 +36,7 @@ class StripePaymentController extends Controller
       isset($eventObject['reservation_id'])
     ) {
       info($eventObject);
-      // info('done');
       $reservation = Reservation::find($eventObject['reservation_id']);
-      // info($eventObject['event_type']);
       $status  = ReservationService::getPaymentStatus($eventObject['event_type']);
 
       info($status);
@@ -70,11 +67,11 @@ class StripePaymentController extends Controller
   }
 
   // to test this api  run this in terminal
-  // stripe listen --forward-to  http://127.0.0.1:8000/api/stripe/refund-partial-payment-webhook
+  // stripe listen --forward-to  http://127.0.0.1:8002/api/stripe/refund-partial-payment-webhook
   public function refundPartialPaymentWebhook(Request $request)
   {
     // info($request->all());
-    $eventObject  = StripeService::getEventObject();
+    $eventObject  = StripeService::getEventObject(env('ENDPOINT_SECRET_REFUND_PARTIAL_PAYMENT'));
     // info($eventObject);
 
     if ($eventObject['reservation_id'] && $eventObject['event_type'] == 'charge.refunded') {

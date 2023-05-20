@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentStatus;
 use App\Enums\PaymentType;
 use App\Enums\ReservationStatus;
 use Exception;
@@ -53,15 +54,15 @@ class Reservation extends Model
   // amount
   public function getRequiredPartialPaymentAmountAttribute()
   {
-    return (setting('partial_payment_percent') / 100) * $this->total_fees;
+    return  (setting('partial_payment_percent') / 100) * $this->total_fees;
   }
   // amount
   public function getRequiredAmountToPayWithCardAttribute()
   {
     if ($this->required_payment_step_is_partial) {
-      return $this->required_partial_payment_amount;
+      return $this->required_partial_payment_amount * 100;
     } else if ($this->required_payment_step_is_remaining) {
-      return $this->required_remaining_payment_amount;
+      return $this->required_remaining_payment_amount * 100;
     } else {
       throw new Exception("Partial and remaining payment steps are done");
     }
@@ -91,7 +92,9 @@ class Reservation extends Model
   ##########################  start refund partial payment info  ###########################
   public function getCanRefundPartialPaymentAttribute()
   {
-    return  $this->required_payment_step_is_remaining  && empty($this->refund_partial_payment_info) ? true : false;
+    return $this->payment_status != PaymentStatus::Succeeded->value && (isset($this->partial_payment_info) &&  $this->partial_payment_info['status'] == 'done')
+      ? true : false;
+    // return  $this->required_payment_step_is_remaining  && empty($this->refund_partial_payment_info) ? true : false;
   }
 
   public function getAmountRefundedToCardInPartialPaymentAttribute()
@@ -136,7 +139,6 @@ class Reservation extends Model
     return count($options) ? $options : null;
   }
   ##########################  end refund partial payment info  ###########################
-
 
   ########################## start  remaining payment info  ###########################
   public function getRemainingPaymentOptionsAttribute()

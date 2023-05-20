@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Notification;
 
 Route::get('/test-mail', function () {
 
-
   app()->setLocale('ar');
   $reservation = Reservation::first();
   $data = [

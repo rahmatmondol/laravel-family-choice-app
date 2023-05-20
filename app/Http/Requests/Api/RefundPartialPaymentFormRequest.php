@@ -18,7 +18,7 @@ class RefundPartialPaymentFormRequest extends BaseRequest
     $reservation  = Reservation::findOrFail($this->reservation_id);
     return [
       'reservation_id' => ['bail', 'required', 'exists:reservations,id', function ($attribute, $value, $fail) use ($reservation) {
-        if (!$reservation->can_refund_partial_payment){
+        if (!$reservation->can_refund_partial_payment || (isset($reservation->refund_partial_payment_info) && $reservation->refund_partial_payment_info['status']=='done')){
           $fail(__('can not refund partial payment'));
         }
       }],

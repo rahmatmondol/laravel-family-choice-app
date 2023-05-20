@@ -31,6 +31,7 @@ class WalletRepository implements WalletRepositoryInterface
       'status' => 'done',
       'type' => PaymentType::Wallet->value,
       'amount' => $reservation->required_partial_payment_amount,
+      'customer_notified'=>false,
     ];
 
     $description = " خصم قيمة الدفع  المقدم للحجز رقم  " . $reservation->id;
@@ -45,7 +46,7 @@ class WalletRepository implements WalletRepositoryInterface
 
     $reservation->update([
       'partial_payment_info' => $partial_payment_info,
-      'partial_payment_info->customer_notified' => false,
+      // 'partial_payment_info->customer_notified' => false,
     ]);
     // return $reservation;
   }
@@ -55,6 +56,8 @@ class WalletRepository implements WalletRepositoryInterface
       'status' => 'done',
       'type' => PaymentType::Wallet->value,
       'amount' => $reservation->required_remaining_payment_amount,
+      'customer_notified'=>false,
+      'payment_status'=>PaymentStatus::Succeeded->value,
     ];
     $description = " خصم قيمة الدفع  المتبقي للحجز رقم  " . $reservation->id;
     $data = [
@@ -68,8 +71,8 @@ class WalletRepository implements WalletRepositoryInterface
 
     $reservation->update([
       'remaining_payment_info' => $remaining_payment_info,
-      'remaining_payment_info->customer_notified' => false,
-      'payment_status' => PaymentStatus::Succeeded->value,
+      // 'remaining_payment_info->customer_notified' => false,
+      // 'payment_status' => PaymentStatus::Succeeded->value,
 
     ]);
   }
