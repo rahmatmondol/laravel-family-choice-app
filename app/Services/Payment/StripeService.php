@@ -136,7 +136,7 @@ class StripeService
 
   public static function getEventObject($endpoint_secret)
   {
-    Stripe\Stripe::setApiKey($endpoint_secret);
+    Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
     // $endpoint_secret = env('ENDPOINT_SECRET');
     $payload = @file_get_contents('php://input');
     $event = null;
@@ -152,8 +152,6 @@ class StripeService
           $sig_header,
           $endpoint_secret
         );
-        // info($event);
-        // info($event['data']['object']['charges']['data']['id']??null);
 
         return [
           'payment_intent_id'   => $event['data']['object']['id'],
