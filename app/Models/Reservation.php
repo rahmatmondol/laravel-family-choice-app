@@ -40,7 +40,7 @@ class Reservation extends Model
         } else {
           $options[PaymentType::CardAndWallet->value] = [
             PaymentType::Wallet->value => [
-              'amount' =>  $available_amount_in_wallet,
+              'amount' =>  (int)$available_amount_in_wallet,
             ],
             PaymentType::Card->value => [
               'amount' =>  $required_partial_payment_amount  - $available_amount_in_wallet,
