@@ -118,21 +118,15 @@ class Reservation extends Model
     $options = [];
     if ($this->can_refund_partial_payment) {
       if ($this->partial_payment_info) {
-        $options['status'] = "pending";
         if ($this->partial_payment_info['type'] == PaymentType::Card->value) {
-          $options['type']   = PaymentType::Card->value;
-          $options['amount'] = $this->amount_refunded_to_card_in_partial_payment;
+          $options['card'] = $this->amount_refunded_to_card_in_partial_payment;
+          $options['wallet'] = $this->partial_payment_info['amount'];
         }
         if ($this->partial_payment_info['type'] == PaymentType::Wallet->value) {
-          $options['type']   = PaymentType::Wallet->value;
-          $options['amount'] = $this->partial_payment_info['amount'];
+          $options['wallet'] = $this->partial_payment_info['amount'];
         }
         if ($this->partial_payment_info['type'] == PaymentType::CardAndWallet->value) {
-          $options['type']   = PaymentType::CardAndWallet->value;
-          $options[PaymentType::CardAndWallet->value][PaymentType::Wallet->value]['amount'] = $this->partial_payment_info[PaymentType::Wallet->value]['amount'];
-          $options[PaymentType::CardAndWallet->value][PaymentType::Wallet->value]['status'] = 'pending';
-          $options[PaymentType::CardAndWallet->value][PaymentType::Card->value]['amount'] =  $this->amount_refunded_to_card_in_partial_payment;
-          $options[PaymentType::CardAndWallet->value][PaymentType::Card->value]['status'] = 'pending';
+          $options[PaymentType::CardAndWallet->value] = $this->amount_refunded_to_card_in_partial_payment + $this->partial_payment_info[PaymentType::Wallet->value]['amount'];
         }
       }
     }

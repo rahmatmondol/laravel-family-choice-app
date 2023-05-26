@@ -17,7 +17,12 @@ class RefundPartialPaymentService
         self::refundInWallet($reservation);
       }
       if ($info['type'] == PaymentType::Card->value) {
-        self::refundInCard($reservation);
+        if(request('refund_type')==PaymentType::Card->value){
+          self::refundInCard($reservation);
+        }
+        if(request('refund_type')==PaymentType::Wallet->value){
+          self::refundInWallet($reservation);
+        }
       }
       if ($info['type'] == PaymentType::CardAndWallet->value) {
         self::refundInCardAndWallet($reservation);
@@ -70,7 +75,6 @@ class RefundPartialPaymentService
   public static function refundInCardAndWallet($reservation)
   {
     $info = $reservation->partial_payment_info;
-    // dd($info);
     if (isset($info) && $info['status'] == 'done' && isset($info['card']['charge_id'])) {
       $stripe = new \Stripe\StripeClient(
         env('STRIPE_SECRET')
