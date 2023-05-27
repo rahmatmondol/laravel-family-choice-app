@@ -24,10 +24,10 @@ use Illuminate\Support\Facades\Notification;
 Route::get('/test-mail', function () {
 
   app()->setLocale('ar');
-  $reservation = Reservation::first();
+  $reservation = Reservation::find(73);
   $data = [
     'title'           => "تم الغاء طلبك",
-    'body'            => "تم  الغاء طلبك لعد اكتمال البيانات",
+    'body'            => "تم  الغاء طلبك لعدم اكتمال البيانات",
     // 'customer_id'  => $customer->id,
     'click_action'    => 'ReservationDetails',
     'reservation_id'  => (int)$reservation->id,

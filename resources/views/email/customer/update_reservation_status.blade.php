@@ -240,6 +240,7 @@
                                                                                             border="0"
                                                                                             align="left">
                                                                                             @php $child = $reservation->child  @endphp
+                                                                                            @if ($child &&  $reservation->school?->is_school_type)
                                                                                             <tbody>
                                                                                                 <tr>
                                                                                                     <td style="padding: 5px 10px 5px 0"
@@ -255,38 +256,102 @@
                                                                                                         </p>
                                                                                                     </td>
                                                                                                 </tr>
+                                                                                                @foreach ($reservation->gradeFees as $gradeFees)
                                                                                                 <tr>
                                                                                                     <td style="padding: 5px 10px 5px 0"
                                                                                                         width="80%"
                                                                                                         align="left">
-                                                                                                        <p>@lang('site.Fees')
-                                                                                                        </p>
+                                                                                                        <p>{{ $gradeFees->title }}</p>
                                                                                                     </td>
                                                                                                     <td style="padding: 5px 0"
                                                                                                         width="20%"
                                                                                                         align="left">
-                                                                                                        <p>{{ $child->administrative_expenses }}
-                                                                                                            {{ appCurrency() }}
-                                                                                                        </p>
+                                                                                                        <p>{{ $gradeFees->pivot->price }} {{ appCurrency() }}</p>
                                                                                                     </td>
                                                                                                 </tr>
-                                                                                                <tr>
-                                                                                                    <td style="padding: 5px 10px 5px 0"
-                                                                                                        width="80%"
-                                                                                                        align="left">
-                                                                                                        <p>@lang('site.Administrative Expenses')
-                                                                                                        </p>
-                                                                                                    </td>
-                                                                                                    <td style="padding: 5px 0"
-                                                                                                        width="20%"
-                                                                                                        align="left">
-                                                                                                        <p>{{ $child->fees }}
-                                                                                                            {{ appCurrency() }}
-                                                                                                        </p>
-                                                                                                    </td>
-                                                                                                </tr>
+                                                                                                @endforeach
 
                                                                                             </tbody>
+                                                                                            @endif
+
+
+                                                                                            @if ($child &&  $reservation->school?->is_nursery_type)
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td style="padding: 5px 10px 5px 0"
+                                                                                                        width="80%"
+                                                                                                        align="left">
+                                                                                                        <p>@lang('site.Subscription Type')</p>
+                                                                                                    </td>
+                                                                                                    <td style="padding: 5px 0"
+                                                                                                        width="20%"
+                                                                                                        align="left">
+                                                                                                        <p>{{ $child->subscription_type?->title }} - ({{ $child->subscription_type_price }})
+                                                                                                        </p>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                <tr>
+                                                                                                    <td style="padding: 5px 10px 5px 0"
+                                                                                                        width="80%"
+                                                                                                        align="left">
+                                                                                                        <p>@lang('site.Course')</p>
+                                                                                                    </td>
+                                                                                                    <td style="padding: 5px 0"
+                                                                                                        width="20%"
+                                                                                                        align="left">
+                                                                                                        <p>{{ $child->course?->title }}</p>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                @foreach ($reservation->nurseryFees as $nurseryFees)
+                                                                                                <tr>
+                                                                                                    <td style="padding: 5px 10px 5px 0"
+                                                                                                        width="80%"
+                                                                                                        align="left">
+                                                                                                        <p>{{ $nurseryFees->title }}</p>
+                                                                                                    </td>
+                                                                                                    <td style="padding: 5px 0"
+                                                                                                        width="20%"
+                                                                                                        align="left">
+                                                                                                        <p>{{ $nurseryFees->pivot->price }} {{ appCurrency() }}</p>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                @endforeach
+
+                                                                                            </tbody>
+                                                                                            @endif
+
+
+                                                                                            @if (isset($reservation->paidServices))
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td style="padding: 5px 10px 5px 0"
+                                                                                                        width="80%"
+                                                                                                        align="left">
+                                                                                                        <p>@lang('site.Paid Services')</p>
+                                                                                                    </td>
+                                                                                                    <td style="padding: 5px 0"
+                                                                                                        width="20%"
+                                                                                                        align="left">
+                                                                                                        <p></p>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                @foreach ($reservation->paidServices as $paidService)
+                                                                                                <tr>
+                                                                                                    <td style="padding: 5px 10px 5px 0"
+                                                                                                        width="80%"
+                                                                                                        align="left">
+                                                                                                        <p>{{ $paidService->title }}</p>
+                                                                                                    </td>
+                                                                                                    <td style="padding: 5px 0"
+                                                                                                        width="20%"
+                                                                                                        align="left">
+                                                                                                        <p>{{ $paidService->pivot->price }} {{ appCurrency() }}</p>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                                @endforeach
+
+                                                                                            </tbody>
+                                                                                            @endif
                                                                                         </table>
                                                                                     </td>
                                                                                 </tr>

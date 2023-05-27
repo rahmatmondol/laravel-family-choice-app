@@ -287,7 +287,7 @@ return [
   'Short Description' => 'وصف قصير',
   'search by reservation number or parent name' => 'ابحث  برقم الحجز او  اسم ولي الامر',
   'Transportation' => 'المواصلات',
-  'Paid Services' => 'الخدمات الدفوعة',
+  'Paid Services' => 'الخدمات المدفوعة',
   'Subscription Type' => 'Subscription Type',
   'From' => 'من',
   'To' => 'الي',
