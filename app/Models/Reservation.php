@@ -33,10 +33,10 @@ class Reservation extends Model
     if ($this->status == ReservationStatus::Pending->value && $this->required_payment_step_is_partial) {
       $required_partial_payment_amount = $this->required_partial_payment_amount;
       $available_amount_in_wallet = getCustomer()->wallet;
-      $options[PaymentType::Card->value] = $required_partial_payment_amount;
+      $options[PaymentType::Card->value] = (int)$required_partial_payment_amount;
       if ($available_amount_in_wallet > 0) {
         if ($required_partial_payment_amount <= $available_amount_in_wallet) {
-          $options[PaymentType::Wallet->value] =  $required_partial_payment_amount;
+          $options[PaymentType::Wallet->value] = (int)$required_partial_payment_amount;
         } else {
           $options[PaymentType::CardAndWallet->value] = [
             PaymentType::Wallet->value => [
@@ -125,8 +125,14 @@ class Reservation extends Model
         if ($this->partial_payment_info['type'] == PaymentType::Wallet->value) {
           $options['wallet'] = $this->partial_payment_info['amount'];
         }
+        // if ($this->partial_payment_info['type'] == PaymentType::CardAndWallet->value) {
+        //   $options[PaymentType::CardAndWallet->value] =  $this->amount_refunded_to_card_in_partial_payment + $this->partial_payment_info[PaymentType::Wallet->value]['amount'];
+        // }
         if ($this->partial_payment_info['type'] == PaymentType::CardAndWallet->value) {
-          $options[PaymentType::CardAndWallet->value] = $this->amount_refunded_to_card_in_partial_payment + $this->partial_payment_info[PaymentType::Wallet->value]['amount'];
+          $options[PaymentType::CardAndWallet->value] = [
+            PaymentType::Wallet->value => [  'amount' => (int)$this->partial_payment_info[PaymentType::Wallet->value]['amount'] ],
+            PaymentType::Card->value  => [  'amount'  => (int)$this->amount_refunded_to_card_in_partial_payment ],
+          ];
         }
       }
     }
@@ -141,14 +147,14 @@ class Reservation extends Model
     if ($this->status == ReservationStatus::Accepted->value && $this->required_payment_step_is_remaining) {
       $required_remaining_payment_amount = $this->required_remaining_payment_amount;
       $available_amount_in_wallet = getCustomer()->wallet;
-      $options[PaymentType::Card->value] = $required_remaining_payment_amount;
+      $options[PaymentType::Card->value] = (int)$required_remaining_payment_amount;
       if ($available_amount_in_wallet > 0) {
         if ($required_remaining_payment_amount <= $available_amount_in_wallet) {
-          $options[PaymentType::Wallet->value] = $required_remaining_payment_amount;
+          $options[PaymentType::Wallet->value] = (int)$required_remaining_payment_amount;
         } else {
           $options[PaymentType::CardAndWallet->value] = [
             PaymentType::Wallet->value => [
-              'amount' =>  $available_amount_in_wallet,
+              'amount' =>  (int)$available_amount_in_wallet,
             ],
             PaymentType::Card->value => [
               'amount' =>  $required_remaining_payment_amount  - $available_amount_in_wallet,
