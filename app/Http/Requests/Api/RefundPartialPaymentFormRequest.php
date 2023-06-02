@@ -26,7 +26,7 @@ class RefundPartialPaymentFormRequest extends BaseRequest
           }
         }
       ],
-      'refund_type' => ['nullable', 'in:card,wallet', Rule::requiredIf(function () use ($reservation) {
+      'refund_type' => ['nullable', 'in:card,wallet,card_and_wallet', Rule::requiredIf(function () use ($reservation) {
         return isset($reservation->partial_payment_info) && $reservation->partial_payment_info['type'] == PaymentType::Card->value
           ? true
           : false;
