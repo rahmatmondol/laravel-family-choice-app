@@ -49,6 +49,7 @@ class ReservationService
 
       $reservation->update([
         'partial_payment_info->customer_notified' => false,
+        'partial_payment_info->status' => 'pending',
         'partial_payment_info->type'    =>PaymentType::CardAndWallet->value,
         'partial_payment_info->card->status'    => 'done',
         'partial_payment_info->card->charge_id' => $eventObject['charge_id'],
