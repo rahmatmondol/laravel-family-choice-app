@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StripeController;
 use App\Models\Reservation;
+use App\Models\School;
 use App\Notifications\Reservation\UpdateReservationStatusNotification;
 use Illuminate\Support\Facades\Notification;
 
@@ -22,6 +23,8 @@ use Illuminate\Support\Facades\Notification;
 */
 
 Route::get('/test-mail', function () {
+  $school = School::first();
+  dd($school->gradeFees);
 
   app()->setLocale('ar');
   $reservation = Reservation::find(73);

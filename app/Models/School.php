@@ -100,26 +100,94 @@ class School extends Authenticatable
 
   public function scopeWhenSortByPrice($query)
   {
-    if (request()->sortType == 'priceLH') {
-      return $query->orderBy('fees', 'asc');
-    }
+    if($type_id = request('type_id')){
+      if (request()->sortType == 'priceLH') {
+        // return $query->orderBy('fees', 'asc');
 
-    if (request()->sortType == 'priceHL') {
-      return $query->orderBy('fees', 'desc');
+        if($type_id==1){
+          return $query->whereHas('gradeFees', function ($qu)  {
+
+            return $qu->orderBy('price','asc' );
+          });
+        }
+
+        if($type_id==2){
+          return $query->whereHas('nurseryFees', function ($qu)  {
+
+            return $qu->orderBy('price','asc' );
+          });
+        }
+
+      }
+
+      if (request()->sortType == 'priceHL') {
+        // return $query->orderBy('fees', 'desc');
+
+        if($type_id==1){
+          return $query->whereHas('gradeFees', function ($qu)  {
+
+            return $qu->orderBy('price','desc' );
+          });
+        }
+
+        if($type_id==2){
+          return $query->whereHas('nurseryFees', function ($qu)  {
+
+            return $qu->orderBy('price','desc' );
+          });
+        }
+
+      }
     }
   } // end of scopeWhenSearch
 
   public function scopeWhenFromPrice($query)
   {
-    if (request()->from_price != null) {
-      return $query->where('fees', '>=', request()->from_price);
+    if($type_id = request('type_id')){
+      if (request()->from_price != null) {
+
+        if($type_id==1){
+          return $query->whereHas('gradeFees', function ($qu)  {
+
+            return $qu->where('price','>=',request()->from_price );
+          });
+        }
+
+        if($type_id==2){
+          return $query->whereHas('nurseryFees', function ($qu)  {
+
+            return $qu->where('price','>=',request()->from_price );
+          });
+        }
+
+      }
     }
+
   }
 
   public function scopeWhenToPrice($query)
   {
-    if (request()->to_price != null) {
-      return $query->where('fees', '<=', request()->to_price);
+
+    if($type_id = request('type_id')){
+      if (request()->to_price != null) {
+
+        if($type_id==1){
+
+          return $query->whereHas('gradeFees', function ($qu)  {
+
+            return $qu->where('price','<=',request()->to_price );
+          });
+        }
+
+        if($type_id==2){
+
+          return $query->whereHas('nurseryFees', function ($qu)  {
+
+            return $qu->where('price','<=',request()->to_price );
+          });
+        }
+
+      }
     }
   }
 
@@ -272,7 +340,7 @@ class School extends Authenticatable
 
   public function gradeFees()
   {
-    return $this->hasMany(GradeFees::class, 'school_id', 'id')->withTranslation(app()->getLocale())->withPivot([ 'status'])->withoutGlobalScope(new OrderScope);
+    return $this->hasMany(GradeFees::class, 'school_id', 'id')->withTranslation(app()->getLocale())->withoutGlobalScope(new OrderScope);
   }
 
   public function activeGradeFees()

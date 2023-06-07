@@ -14,6 +14,7 @@ use App\Http\Resources\Collection\SchoolCollection;
 use App\Http\Resources\SchoolResource;
 use App\Http\Resources\SubscriptionTypeResource;
 use App\Interfaces\SubscriptionTypeRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class SchoolController extends Controller
 {
@@ -28,7 +29,9 @@ class SchoolController extends Controller
 
   public function schools(Request $request)
   {
+    DB::enableQueryLog();
     $schools = $this->schoolRepository->getSchools($request);
+    info(DB::getQueryLog());
     return $this->sendResponse(new SchoolCollection($schools), "");
   }
 
