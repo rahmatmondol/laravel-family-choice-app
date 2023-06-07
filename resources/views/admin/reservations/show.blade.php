@@ -140,7 +140,7 @@ $title = __('site.Show Reservation');
                                 @else
                                     <tr>
                                         <td>@lang('site.Amount')</td>
-                                        <td>{{ $reservation->remaining_payment_info['amount'] }}</td>
+                                        <td>{{ $reservation->remaining_payment_info['amount']?? "" }}</td>
                                     </tr>
                                 @endif
                             </tbody>

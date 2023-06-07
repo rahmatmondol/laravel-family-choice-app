@@ -44,7 +44,7 @@ $title = __('site.Edit Grade');
               <div class="form-group">
                 <label>@lang('site.' . $locale . '.Title')</label>
                 <input required="required" type="text" name="{{ $locale }}[title]" class="form-control"
-                  value="{{ old($locale . '.title',$grade->translate($locale)->title) }}">
+                  value="{{ old($locale . '.title',$grade->translate($locale)?->title) }}">
               </div>
               <div class="  with-border"></div><br>
               @endforeach

@@ -23,15 +23,14 @@ class GradeRepository implements GradeRepositoryInterface
 
   public function getAllGrades()
   {
-    return  Grade::isActive(true)->withTranslation(app()->getLocale())
+    return  Grade::isActive(true)->withTranslation()
       // ->withoutGlobalScope(new OrderScope)
       ->get();
   }
 
   public function getGradeById($gradeId)
   {
-    $grade = Grade::withTranslation(app()->getLocale())
-      ->findOrFail($gradeId);
+    $grade = Grade::findOrFail($gradeId)->load('translations');
     return $grade;
   }
 
@@ -45,7 +44,6 @@ class GradeRepository implements GradeRepositoryInterface
   public function createGrade($request)
   {
     $request_data = $this->getGradeRequestData($request);
-
     if ($request->image) {
       $request_data['image'] = $this->uploadImages($request->image, 'grades/', '', '');
     } //end of if
