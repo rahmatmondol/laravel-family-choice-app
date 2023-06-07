@@ -29,9 +29,7 @@ class SchoolController extends Controller
 
   public function schools(Request $request)
   {
-    DB::enableQueryLog();
     $schools = $this->schoolRepository->getSchools($request);
-    info(DB::getQueryLog());
     return $this->sendResponse(new SchoolCollection($schools), "");
   }
 
