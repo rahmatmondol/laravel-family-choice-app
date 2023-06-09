@@ -43,6 +43,9 @@ class PaymentWithWalletFormRequest extends BaseRequest
             $fail('no enough wallet');
           }
         }
+        if($reservation->refund_partial_payment_info && $reservation->refund_partial_payment_info['status']=='done'){
+          $fail(__('site.Partial Payment Already Refunded'));
+        }
       }],
     ];
   }

@@ -40,7 +40,7 @@ class ReservationService
     if ($eventObject['payment_method'] == PaymentType::Card->value) {
       $reservation->update([
         'partial_payment_info->customer_notified' => false,
-        'partial_payment_info->type' => PaymentType::Card->value,
+        // 'partial_payment_info->type' => PaymentType::Card->value,
         'partial_payment_info->status' => 'done',
         'partial_payment_info->charge_id' => $eventObject['charge_id'],
         'partial_payment_info->payment_intent_id' => $eventObject['payment_intent_id'],
@@ -50,7 +50,7 @@ class ReservationService
       $reservation->update([
         'partial_payment_info->customer_notified' => false,
         'partial_payment_info->status' => 'pending',
-        'partial_payment_info->type'    =>PaymentType::CardAndWallet->value,
+        // 'partial_payment_info->type'    =>PaymentType::CardAndWallet->value,
         'partial_payment_info->card->status'    => 'done',
         'partial_payment_info->card->charge_id' => $eventObject['charge_id'],
         'partial_payment_info->card->payment_intent_id' => $eventObject['payment_intent_id'],
@@ -68,7 +68,7 @@ class ReservationService
         self::updateWallet($data);
         $reservation->update([
           'partial_payment_info->status' => 'done',
-          'partial_payment_info->amount' => $amount,
+          // 'partial_payment_info->wallet->amount' => $amount,
           'partial_payment_info->wallet->status' => 'done',
         ]);
       }
@@ -85,13 +85,13 @@ class ReservationService
         'remaining_payment_info->status' => 'done',
         'remaining_payment_info->charge_id' => $eventObject['charge_id'],
         'remaining_payment_info->payment_intent_id' => $eventObject['payment_intent_id'],
-
       ]);
     } elseif ($eventObject['payment_method'] == PaymentType::CardAndWallet->value) {
 
       $reservation->update([
         'remaining_payment_info->customer_notified' => false,
-        'remaining_payment_info->card->type'   => PaymentType::CardAndWallet->value,
+        'partial_payment_info->status' => 'pending',
+        // 'remaining_payment_info->card->type'   => PaymentType::CardAndWallet->value,
         'remaining_payment_info->card->status'   => 'done',
         'remaining_payment_info->card->charge_id' => $eventObject['charge_id'],
         'remaining_payment_info->card->payment_intent_id' => $eventObject['payment_intent_id'],
@@ -109,7 +109,7 @@ class ReservationService
         self::updateWallet($data);
         $reservation->update([
           'remaining_payment_info->status' => 'done',
-          'remaining_payment_info->type' => PaymentType::Wallet->value,
+          // 'remaining_payment_info->type' => PaymentType::Wallet->value,
           'remaining_payment_info->wallet->status' => 'done',
         ]);
       }

@@ -32,6 +32,9 @@ class GetPaymentIntentRequest extends BaseRequest
 
           $fail(__('site.Reservation Already Paid Successfully'));
         }
+        if($reservation->refund_partial_payment_info && $reservation->refund_partial_payment_info['status']=='done'){
+          $fail(__('site.Partial Payment Already Refunded'));
+        }
       }],
       'payment_method' => ['bail', 'required', 'in:card,card_and_wallet', function ($attribute, $value, $fail) use ($reservation) {
         $customer = $reservation->customer;

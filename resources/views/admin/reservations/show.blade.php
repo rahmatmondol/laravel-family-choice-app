@@ -34,7 +34,7 @@ $title = __('site.Show Reservation');
         <!-- Content -->
         <div class="card mt-4 content-table">
             {{-- partial_payment_info --}}
-            @if ($reservation->partial_payment_info)
+            @if (isset($reservation->partial_payment_info))
                 <div class="card-body">
                     <h4>@lang('site.Partial Payment')</h4>
                     <div class="table-res ponsive">
@@ -71,7 +71,7 @@ $title = __('site.Show Reservation');
                 </div>
             @endif
             {{-- refund_partial_payment_info --}}
-            @if ($reservation->refund_partial_payment_info)
+            @if (isset($reservation->refund_partial_payment_info))
                 <div class="card-body">
                     <h4>@lang('site.Refund Partial Payment')</h4>
                     <div class="table-res ponsive">
@@ -110,7 +110,7 @@ $title = __('site.Show Reservation');
                 </div>
             @endif
             {{-- remaining_payment_info --}}
-            @if ($reservation->remaining_payment_info)
+            @if (isset($reservation->remaining_payment_info))
                 <div class="card-body">
                     <h4>@lang('site.Remaining Payment')</h4>
                     <div class="table-res ponsive">

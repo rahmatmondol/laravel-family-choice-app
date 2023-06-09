@@ -363,6 +363,9 @@ return [
   'remaining_payment_failed_mail_body' => 'تم دفع باقي رسوم الحجز بنجاح. ستتصل بك إدارة المدرسة في أقرب وقت ممكن',
   'Wallets' => 'المحفظة',
 
+  'Partial Payment Already Refunded' => 'Partial Payment Already Refunded',
+  'Wallet' => 'المحفظة',
+
   '' => '',
   '' => '',
   '' => '',
