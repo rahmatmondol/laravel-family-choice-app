@@ -28,6 +28,25 @@ trait UploadFileTrait
     }
   }
 
+  function uploadBase64Image($req, $path)
+  {
+    // dd($req);
+    if (!is_dir(public_path('uploads') . '/' . $path)) {
+      File::makeDirectory(public_path('uploads/' . $path), 0755, true, true);
+    }
+
+    $base64Image = explode(";base64,", $req);
+    $explodeImage = explode("image/", $base64Image[0]);
+    $imageType = $explodeImage[1];
+
+    $imageName =uniqid().time().rand(1,10000).rand(1,10000).'.'.$imageType;
+    Image::make($req)
+      ->save(public_path('uploads'.'/' .$path .'/' . $imageName));
+    return $imageName;
+  }
+
+
+
   #upload image
   function uploadFile($req, $path, $deleteOldFile)
   {

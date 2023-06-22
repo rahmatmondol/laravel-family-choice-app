@@ -76,7 +76,7 @@ class AddReservationFormRequest extends BaseRequest
     ];
     if ($this->school) {
       foreach (optional($this->school)->attachments->pluck('id')->toArray() as $attachment_id) {
-        $this->rules += ['child.attachments.' . $attachment_id => ['required', 'file']];
+        $this->rules += ['child.attachments.' . $attachment_id => ['required', 'string']];
       } // end of  for each
     }
     return $this->rules;

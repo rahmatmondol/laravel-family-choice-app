@@ -54,7 +54,8 @@ class ReservationRepository implements ReservationRepositoryInterface
       ]);
 
       foreach ($request->child['attachments'] ?? [] as $key => $attachment) {
-        $file_name = $this->uploadFile($attachment, 'child_attachments/', '');
+        // $file_name = $this->uploadFile($attachment, 'child_attachments/', '');
+        $file_name = $this->uploadBase64Image($attachment,'child_attachments');
 
         if ($file_name) {
           ChildAttachment::create([
