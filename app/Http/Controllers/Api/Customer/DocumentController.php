@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\StoreDocumentRequest;
+use App\Http\Resources\DocumnetResource;
 use App\Models\CustoemrDocument;
 use App\Traits\ResponseTrait;
 use App\Traits\UploadFileTrait;
@@ -21,7 +22,7 @@ class DocumentController extends Controller
 
         $data = CustoemrDocument::where('user_id',$user_id)->get();
 
-        return $this->sendResponse();
+        return $this->sendResponse(DocumnetResource::collection($data),'success');
     }
     public function save(StoreDocumentRequest $request)
     {
