@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Customer\DocumentController;
 use App\Http\Controllers\Api\Customer\FavoriteController;
 use App\Http\Controllers\Api\Customer\NotificationController;
 use App\Http\Controllers\Api\Customer\StripePaymentController;
@@ -103,6 +104,12 @@ Route::group(
       Route::controller(RefundController::class)->group(function () {
         Route::post('refund-partial-payment', 'refundPartialPayment');
       });
+
+      //Document
+        Route::controller(DocumentController::class)->group(function (){
+            Route::post('/add-document','save');
+            Route::get('/get-document','view');
+        });
 
     });
   }

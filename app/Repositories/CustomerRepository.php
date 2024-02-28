@@ -49,7 +49,7 @@ class CustomerRepository implements CustomerRepositoryInterface
       $request_data['image'] = $this->uploadImages($request->image, 'customers/', '', '');
     } //end of if
     $request_data['password'] = bcrypt($request->password);
-
+    $request_data['verified']=1;
     $customer = Customer::create($request_data);
 
     if (request()->is('api/*')) {
@@ -70,9 +70,9 @@ class CustomerRepository implements CustomerRepositoryInterface
       $request_data['password'] = bcrypt($request->password);
     }
 
-    if (request()->is('api/*')) {
-      $request_data['phone'] = $customer->phone;
-    }
+    // if (request()->is('api/*')) {
+    //   $request_data['phone'] = $customer->phone;
+    // }
 
     $customer->update($request_data);
 
