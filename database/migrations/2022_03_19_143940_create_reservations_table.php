@@ -34,6 +34,7 @@ return new class extends Migration
       $table->foreignId('school_id')->nullable()->constrained()->nullOnDelete();
       // $table->foreignId('course_id')->nullable()->constrained()->nullOnDelete();
       $table->foreignId('customer_id')->nullable()->constrained()->nullOnDelete();
+      $table->integer('document_id');
       $table->softDeletes();
       $table->timestamps();
     });
