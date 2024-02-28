@@ -4,6 +4,7 @@ use App\Enums\PaymentStatus;
 use App\Enums\PaymentStep;
 use App\Enums\PaymentType;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StripeController;
 use App\Models\Reservation;
@@ -21,6 +22,12 @@ use Illuminate\Support\Facades\Notification;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/clear-cache', function() {
+     Artisan::call('cache:clear');
+     Artisan::call('config:cache');
+    return 'DONE'; //Return anything
+});
 
 Route::get('/test-mail', function () {
   $school = School::first();

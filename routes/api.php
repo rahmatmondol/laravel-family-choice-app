@@ -1,9 +1,16 @@
 <?php
 
+use App\Http\Controllers\Api\Customer\AuthController;
 use App\Http\Controllers\Api\Customer\DocumentController;
 use App\Http\Controllers\Api\Customer\FavoriteController;
 use App\Http\Controllers\Api\Customer\NotificationController;
+use App\Http\Controllers\Api\Customer\PublicController;
+use App\Http\Controllers\Api\Customer\RefundController;
+use App\Http\Controllers\Api\Customer\ReservationsController;
+use App\Http\Controllers\API\Customer\ReviewController;
+use App\Http\Controllers\Api\Customer\SchoolController;
 use App\Http\Controllers\Api\Customer\StripePaymentController;
+use App\Http\Controllers\Api\Customer\WalletController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
