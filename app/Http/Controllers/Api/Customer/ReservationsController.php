@@ -39,6 +39,8 @@ class ReservationsController  extends Controller
   {
 
     $reservation = $this->reservationRepository->addReservation($request);
+    $reservation->document_id = $request->document_id;
+    $reservation->seve();
 
     return $this->sendResponse(new ReservationResource($reservation->refresh()), "");
   }

@@ -29,7 +29,7 @@ class AddReservationFormRequest extends FormRequest
 
         return [
             'school_id' => ['required', 'exists:schools,id'],
-            'document_id'=> ['required','exists:'],
+            'document_id'=> ['required','exists:custoemr_documents,id'],
             'child' => ['required', 'array'],
             'child.child_name' => ['required', 'string', 'max:255'],
             'child.date_of_birth' => [
