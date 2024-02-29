@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Customer;
 
+use App\Http\Requests\Api\AddReservationRequest;
 use Illuminate\Http\Request;
 
 use App\Traits\ResponseTrait;
@@ -34,24 +35,30 @@ class ReservationsController  extends Controller
 
     return $this->sendResponse(AttachmentResource::collection($attachments), "");
   }
-    public function add(Request $request)
+    public function store_reservation(AddReservationRequest $request)
     {
         // Validate the incoming request data
-        $validatedData = $request->validate([
+       /* $validatedData = $request->validate([
             'parent_name' => 'required|string|max:255',
             'parent_phone' => 'required|string|max:255',
             'parent_date_of_birth' => 'nullable|date_format:Y-m-d',
             'address' => 'required|string|max:255',
-            'total_fees' => 'nullable|numeric',
-            'reason_of_refuse' => 'nullable|string',
-            'partial_payment_info' => 'nullable|array',
-            'remaining_payment_info' => 'nullable|array',
-            'refund_partial_payment_info' => 'nullable|array',
+            'document_id' => 'required|integer',
+            'school_id' => 'required|integer',
+            'Children_name' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'Children_birth_certificate' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'Children_health_card' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+//            'total_fees' => 'nullable|numeric',
+//            'reason_of_refuse' => 'nullable|string',
+//            'partial_payment_info' => 'nullable|array',
+//            'remaining_payment_info' => 'nullable|array',
+//            'refund_partial_payment_info' => 'nullable|array',
             'status' => 'string|in:pending,accepted,rejected',
             'payment_status' => 'string|in:pending,succeeded,failed',
             'identification_number' => 'required|string|max:255',
-            'document_id' => 'required|integer', // Assuming document_id is required and should be an integer
-        ]);
+             // Assuming document_id is required and should be an integer
+        ]);*/
 
         try {
             // Create a new reservation instance and fill it with validated request data

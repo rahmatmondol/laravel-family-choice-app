@@ -93,7 +93,7 @@ Route::group(
       #reserve school
     Route::controller(ReservationsController::class)->group(function () {
         Route::get('school-attachments', 'school_attachments');
-        Route::post('add-reservation', 'add_reservation');
+        Route::post('add-reservation', 'store_reservation');
         Route::post('update-reservation', 'update_reservation');
         Route::get('customer-reservations', 'customer_reservations');
         Route::get('reservation-details', 'reservation_details');
