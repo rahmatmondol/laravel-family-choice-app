@@ -307,6 +307,4 @@ class Reservation extends Model
     return $this->belongsToMany(GradeFees::class, 'reservation_grade_fees', 'reservation_id', 'grade_fees_id')->withTranslation(app()->getLocale())->withPivot(['price']);
   }
   ////////////////// end relationships //////////////////////////////
-
-
 }

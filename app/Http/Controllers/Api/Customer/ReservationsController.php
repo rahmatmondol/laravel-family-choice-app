@@ -34,6 +34,40 @@ class ReservationsController  extends Controller
 
     return $this->sendResponse(AttachmentResource::collection($attachments), "");
   }
+    public function add(Request $request)
+    {
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'parent_name' => 'required|string|max:255',
+            'parent_phone' => 'required|string|max:255',
+            'parent_date_of_birth' => 'nullable|date_format:Y-m-d',
+            'address' => 'required|string|max:255',
+            'total_fees' => 'nullable|numeric',
+            'reason_of_refuse' => 'nullable|string',
+            'partial_payment_info' => 'nullable|array',
+            'remaining_payment_info' => 'nullable|array',
+            'refund_partial_payment_info' => 'nullable|array',
+            'status' => 'string|in:pending,accepted,rejected',
+            'payment_status' => 'string|in:pending,succeeded,failed',
+            'identification_number' => 'required|string|max:255',
+            'document_id' => 'required|integer', // Assuming document_id is required and should be an integer
+        ]);
+
+        try {
+            // Create a new reservation instance and fill it with validated request data
+            $reservation = new Reservation();
+            $reservation->fill($validatedData);
+
+            // Save the reservation
+            $reservation->save();
+
+            // Return success response with the newly created reservation
+            return $this->sendResponse(new ReservationResource($reservation), "Reservation added successfully");
+        } catch (\Exception $e) {
+            // If an error occurs, return an error response
+            return $this->sendError("Failed to add reservation", [], 500);
+        }
+    }
 
   public function add_reservation(AddReservationFormRequest $request)
   {
