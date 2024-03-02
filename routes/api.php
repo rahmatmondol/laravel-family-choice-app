@@ -60,6 +60,7 @@ Route::group(
         Route::get('courses', 'courses');
         Route::get('subscription-types', 'subscriptionTypes');
         Route::get('school-reviews', 'school_reviews');
+        Route::get('search-school','search');
       });
     });
 

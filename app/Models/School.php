@@ -30,7 +30,14 @@ class School extends Authenticatable
 
   public function getImagePathAttribute()
   {
-    return asset('uploads/schools/' . $this->image);
+      //
+      if(file_exists(asset('uploads/schools/'.$this->image))){
+          return asset('uploads/schools/' . $this->image);
+      }else{
+          return asset('uploads/schools/default.png');
+      }
+//      return asset('uploads/school_images/default.png' );
+
   } //end of image path attribute
 
   public function getCoverPathAttribute()
