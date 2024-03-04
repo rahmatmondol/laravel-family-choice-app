@@ -8,6 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class AddReservationRequest extends FormRequest
 {
     use ResponseTrait;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,24 +27,22 @@ class AddReservationRequest extends FormRequest
     public function rules()
     {
         return [
-            'parent_name' => 'required|string|max:255',
-            'parent_phone' => 'required|string|max:255',
-            'parent_date_of_birth' => 'nullable|date_format:Y-m-d',
-            'address' => 'required|string|max:255',
-            'document_id' => 'required|integer',
-            'school_id' => 'required|integer',
-            'Children_name' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'Children_birth_certificate' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'Children_health_card' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-
-//            'total_fees' => 'nullable|numeric',
-//            'reason_of_refuse' => 'nullable|string',
-//            'partial_payment_info' => 'nullable|array',
-//            'remaining_payment_info' => 'nullable|array',
-//            'refund_partial_payment_info' => 'nullable|array',
+            'parent_Name'=>'required|string',
+//            'parent_name' => 'required|string|max:255',
+            'parent_Phone' => 'required|string|max:255',
+            'parent_Date_of_birth' => 'required|nullable|date_format:Y-m-d',
+            'parent_Address' => 'required|string|max:255',
+            'documentId' => 'required|integer',
+            'schoolId' => 'required|integer',
+            'child_name' => 'required|string|max:255',
+            'child_photo' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'child_birth_certificate' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'child_health_card' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'child_date_of_birth' => 'required|date|date_format:Y-m-d',
+            'child_gender' => 'required|in:male,female',
             'status' => 'string|in:pending,accepted,rejected',
             'payment_status' => 'string|in:pending,succeeded,failed',
-            'identification_number' => 'required|string|max:255',
+            'identification_Number' => 'required|string|max:255',
         ];
     }
 }

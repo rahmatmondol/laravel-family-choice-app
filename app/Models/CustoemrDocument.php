@@ -18,14 +18,14 @@ class CustoemrDocument extends Model
     protected function frontSide(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $value != null && file_exists('uploads/document/'.$value) ? asset('uploads/document/'.$value) : asset("uploads/document/170903095064.jpeg"),
+            get: fn ($value) => $value != null && file_exists('uploads/document/'.$value) ? asset('uploads/document/'.$value) : asset("uploads/document/default.png"),
         );
     }
 
     protected function backSide(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $value != null && file_exists('uploads/document/'.$value) ? asset('uploads/document/'.$value) : asset("uploads/document/170903095064.jpeg"),
+            get: fn ($value) => $value != null && file_exists('uploads/document/'.$value) ? asset('uploads/document/'.$value) : asset("uploads/document/default.png"),
         );
     }
 

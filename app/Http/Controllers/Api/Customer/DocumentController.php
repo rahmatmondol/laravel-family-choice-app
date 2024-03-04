@@ -30,6 +30,7 @@ class DocumentController extends Controller
 
         // Create a new CustomerDocument instance
         $document = new CustoemrDocument();
+        $document->title = $request->title;
         $document->user_id = $user_id;
         $document->save();
 
@@ -50,6 +51,15 @@ class DocumentController extends Controller
 
         // Handle response appropriately
         return response()->json(['success' => true, 'message' => 'Document saved successfully'], 200);
+    }
+    public function delete($id)
+    {
+        $document = CustoemrDocument::find($id);
+        if(empty($document)){
+            return $this->sendResponse('','document is not exist');
+        }
+        $document->delete();
+        return $this->sendResponse('','Document delete successfully');
     }
 
 }

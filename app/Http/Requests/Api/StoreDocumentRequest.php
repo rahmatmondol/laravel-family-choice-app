@@ -26,6 +26,7 @@ class StoreDocumentRequest extends FormRequest
     public function rules()
     {
         return [
+
             'title'=>'required|string',
             'back_side' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'front_side' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

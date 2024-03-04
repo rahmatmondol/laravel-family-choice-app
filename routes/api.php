@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Customer\AuthController;
 use App\Http\Controllers\Api\Customer\DocumentController;
 use App\Http\Controllers\Api\Customer\FavoriteController;
+use App\Http\Controllers\Api\Customer\FixReservationController;
 use App\Http\Controllers\Api\Customer\NotificationController;
 use App\Http\Controllers\Api\Customer\PublicController;
 use App\Http\Controllers\Api\Customer\RefundController;
@@ -61,6 +62,7 @@ Route::group(
         Route::get('subscription-types', 'subscriptionTypes');
         Route::get('school-reviews', 'school_reviews');
         Route::get('search-school','search');
+
       });
     });
 
@@ -82,6 +84,7 @@ Route::group(
       Route::controller(FavoriteController::class)->group(function () {
         Route::post('toggle-favorite', 'toggle_favorite');
         Route::get('favorites', 'favorites');
+        Route::post('favorites-delete/{id}','delete');
       });
 
       #review
@@ -92,13 +95,14 @@ Route::group(
       });
 
       #reserve school
-    Route::controller(ReservationsController::class)->group(function () {
-        Route::get('school-attachments', 'school_attachments');
-        Route::post('add-reservation', 'store_reservation');
-        Route::post('update-reservation', 'update_reservation');
-        Route::get('customer-reservations', 'customer_reservations');
-        Route::get('reservation-details', 'reservation_details');
-      });
+//    Route::group(function () {
+//        Route::get('school-attachments', 'school_attachments');
+        Route::post('add-reservation', [FixReservationController::class,'add']);
+        Route::get('customer-reservations', [ReservationsController::class,'customer_reservations']);
+//        Route::post('update-reservation', 'update_reservation');
+//        Route::get('customer-reservations', 'customer_reservations');
+        Route::get('reservation-details', [ReservationsController::class,'reservation_details']);
+//      });
 
       Route::controller(StripePaymentController::class)->group(function () {
         Route::get('get-payment-intent', 'getPaymentIntent');
@@ -117,6 +121,7 @@ Route::group(
         Route::controller(DocumentController::class)->group(function (){
             Route::post('/add-document','save');
             Route::get('/get-document','view');
+            Route::post('/delete-document/{id}','delete');
         });
 
     });

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api\Customer;
 
 use App\Models\School;
-use App\Models\SchoolTranslation;
 use Illuminate\Http\Request;
+use App\Models\SchoolTranslation;
 use App\Traits\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Interfaces\CourseRepositoryInterface;
@@ -15,8 +15,9 @@ use App\Http\Resources\Collection\SchoolCollection;
 use App\Http\Resources\SchoolResource;
 use App\Http\Resources\SubscriptionTypeResource;
 use App\Interfaces\SubscriptionTypeRepositoryInterface;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+
+use Illuminate\Support\Facades\DB;
 
 class SchoolController extends Controller
 {
@@ -34,8 +35,8 @@ class SchoolController extends Controller
     $schools = $this->schoolRepository->getSchools($request);
     return $this->sendResponse(new SchoolCollection($schools), "");
   }
-
-    public function search(Request $request)
+  
+  public function search(Request $request)
     {
         // Validate the incoming request data
         $validator = Validator::make($request->all(), [
