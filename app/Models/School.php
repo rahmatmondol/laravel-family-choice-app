@@ -144,6 +144,30 @@ class School extends Authenticatable
 
       }
     }
+    else {
+
+        if (request()->sortType == 'priceLH') {
+            return $query->where(function ($q) {
+                return $q->whereHas('gradeFees', function ($qu) {
+                    return $qu->orderBy('price', 'asc');
+                })->orWhereHas('nurseryFees', function ($qu) {
+                    return $qu->orderBy('price', 'asc');
+                });
+            });
+        }
+
+        if (request()->sortType == 'priceHL') {
+            return $query->where(function ($q) {
+                return $q->whereHas('gradeFees', function ($qu) {
+                    return $qu->orderBy('price', 'desc');
+                })->orWhereHas('nurseryFees', function ($qu) {
+                    return $qu->orderBy('price', 'desc');
+                });
+            });
+        }
+        // If type_id is not provided in the request, include both gradeFees and nurseryFees
+
+    }
   } // end of scopeWhenSearch
 
   public function scopeWhenFromPrice($query)
