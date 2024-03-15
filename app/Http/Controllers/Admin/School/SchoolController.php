@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\School;
 
+use App\Models\City;
 use App\Models\School;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -53,8 +54,9 @@ class SchoolController extends BaseController
     $grades = $this->gradeRepository->getAllGrades();
     $types = $this->typeRepository->getAllTypes();
     $services = $this->serviceRepository->getAllServices();
+    $citys = City::get()->all();
 
-    return view($this->mainViewPrefix.'.schools.create', compact('educationalSubjects', 'educationTypes', 'schoolTypes', 'grades', 'types','services'));
+    return view($this->mainViewPrefix.'.schools.create', compact('educationalSubjects', 'educationTypes', 'schoolTypes', 'grades', 'types','services','citys'));
   } //end of create
 
   public function show($school)

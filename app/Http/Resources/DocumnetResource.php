@@ -17,6 +17,7 @@ class DocumnetResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'child_name' => $this->child_name,
             'front_side' => $this->front_side,
             'back_side' => $this->back_side,
         ];

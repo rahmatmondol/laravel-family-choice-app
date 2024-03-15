@@ -12,6 +12,8 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\School\Auth\ForgotPasswordController;
 use App\Http\Controllers\School\PaymentController;
 
+Route::get('school/login', [LoginController::class,'showLoginForm'])->name('school.login');
+
 Route::group(
   [
     'prefix' => LaravelLocalization::setLocale(),
@@ -26,7 +28,7 @@ Route::group(
     # must guest
     Route::group(['prefix' => 'school', 'as' => 'school.', 'namespace' => "School\Auth", 'middleware' => 'guest:school'], function () {
       #login
-      Route::get('login', [LoginController::class,'showLoginForm'])->name('login');
+//      Route::get('login', [LoginController::class,'showLoginForm'])->name('login');
 
       Route::post('login-post', [LoginController::class,'login'])->name('login-post');
     });

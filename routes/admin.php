@@ -31,6 +31,9 @@ use App\Http\Controllers\Admin\SubscriptionTypeController;
 use App\Http\Controllers\Admin\TransportationController;
 use App\Http\Controllers\Admin\WalletController;
 
+Route::get('admin/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
+
+
 Route::group(
   [
     'prefix' => LaravelLocalization::setLocale(),
@@ -45,7 +48,6 @@ Route::group(
     # must guest
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => "Auth", 'middleware' => 'guest:admin'], function () {
       #login
-      Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 
       Route::post('login-post', [LoginController::class, 'login'])->name('login-post');
     });

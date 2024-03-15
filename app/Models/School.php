@@ -95,6 +95,13 @@ class School extends Authenticatable
       return $query->orderByTranslation('title', request()->sortType == 'nameAZ' ? 'asc' : 'desc');
     }
   } // end of scopeWhenSearch
+  
+  public function scopeWhenSortByCity($query)
+    {
+
+            return $query->where('city_id',request()->city_id );
+
+    }
 
   public function scopeWhenSortByReview($query)
   {
@@ -103,106 +110,72 @@ class School extends Authenticatable
     }
   } // end of scopeWhenSearch
 
-//  public function scopeWhenSortByPrice($query)
-//  {
-//    if($type_id = request('type_id')){
-//      if (request()->sortType == 'priceLH') {
-//        // return $query->orderBy('fees', 'asc');
-//
-//        if($type_id==1){
-//          return $query->whereHas('gradeFees', function ($qu)  {
-//
-//            return $qu->orderBy('price','asc' );
-//          });
-//        }
-//
-//        if($type_id==2){
-//          return $query->whereHas('nurseryFees', function ($qu)  {
-//
-//            return $qu->orderBy('price','asc' );
-//          });
-//        }
-//
-//      }
-//
-//      if (request()->sortType == 'priceHL') {
-//        // return $query->orderBy('fees', 'desc');
-//
-//        if($type_id==1){
-//          return $query->whereHas('gradeFees', function ($qu)  {
-//
-//            return $qu->orderBy('price','desc' );
-//          });
-//        }
-//
-//        if($type_id==2){
-//          return $query->whereHas('nurseryFees', function ($qu)  {
-//
-//            return $qu->orderBy('price','desc' );
-//          });
-//        }
-//
-//      }
-//    }
-//    else {
-//
-//        if (request()->sortType == 'priceLH') {
-//            return $query->where(function ($q) {
-//                return $q->whereHas('gradeFees', function ($qu) {
-//                    return $qu->orderBy('price', 'asc');
-//                })->orWhereHas('nurseryFees', function ($qu) {
-//                    return $qu->orderBy('price', 'asc');
-//                });
-//            });
-//        }
-//
-//        if (request()->sortType == 'priceHL') {
-//            return $query->where(function ($q) {
-//                return $q->whereHas('gradeFees', function ($qu) {
-//                    return $qu->orderBy('price', 'desc');
-//                })->orWhereHas('nurseryFees', function ($qu) {
-//                    return $qu->orderBy('price', 'desc');
-//                });
-//            });
-//        }
-//        // If type_id is not provided in the request, include both gradeFees and nurseryFees
-//
-//    }
-//  } // end of scopeWhenSearch
+  public function scopeWhenSortByPrice($query)
+  {
+    if($type_id = request('type_id')){
+      if (request()->sortType == 'priceLH') {
+        // return $query->orderBy('fees', 'asc');
 
-    public function scopeWhenSortByPrice($query)
-    {
-        $type_id = request('type_id');
-        $sortType = request()->sortType;
+        if($type_id==1){
+          return $query->whereHas('gradeFees', function ($qu)  {
 
-        if ($type_id && ($sortType == 'priceLH' || $sortType == 'priceHL')) {
-            if ($type_id == 1) {
-                return $query->whereHas('gradeFees', function ($qu) use ($sortType) {
-                    $qu->orderBy('price', ($sortType == 'priceLH') ? 'asc' : 'desc');
-                });
-            }
-
-            if ($type_id == 2) {
-                return $query->whereHas('nurseryFees', function ($qu) use ($sortType) {
-                    $qu->orderBy('price', ($sortType == 'priceLH') ? 'asc' : 'desc');
-                });
-            }
-        } else {
-            return $query->where(function ($q) {
-                $q->whereHas('gradeFees', function ($qu) {
-                    $qu->orderBy('price', 'asc');
-                })->orWhereHas('nurseryFees', function ($qu) {
-                    $qu->orderBy('price', 'asc');
-                });
-            })->orWhere(function ($q) {
-                $q->whereHas('gradeFees', function ($qu) {
-                    $qu->orderBy('price', 'desc');
-                })->orWhereHas('nurseryFees', function ($qu) {
-                    $qu->orderBy('price', 'desc');
-                });
-            });
+            return $qu->orderBy('price','asc' );
+          });
         }
+
+        if($type_id==2){
+          return $query->whereHas('nurseryFees', function ($qu)  {
+
+            return $qu->orderBy('price','asc' );
+          });
+        }
+
+      }
+
+      if (request()->sortType == 'priceHL') {
+        // return $query->orderBy('fees', 'desc');
+
+        if($type_id==1){
+          return $query->whereHas('gradeFees', function ($qu)  {
+
+            return $qu->orderBy('price','desc' );
+          });
+        }
+
+        if($type_id==2){
+          return $query->whereHas('nurseryFees', function ($qu)  {
+
+            return $qu->orderBy('price','desc' );
+          });
+        }
+
+      }
     }
+    else {
+
+          if (request()->sortType == 'priceLH') {
+              return $query->where(function ($q) {
+                  return $q->whereHas('gradeFees', function ($qu) {
+                      return $qu->orderBy('price', 'asc');
+                  })->orWhereHas('nurseryFees', function ($qu) {
+                      return $qu->orderBy('price', 'asc');
+                  });
+              });
+          }
+
+          if (request()->sortType == 'priceHL') {
+              return $query->where(function ($q) {
+                  return $q->whereHas('gradeFees', function ($qu) {
+                      return $qu->orderBy('price', 'desc');
+                  })->orWhereHas('nurseryFees', function ($qu) {
+                      return $qu->orderBy('price', 'desc');
+                  });
+              });
+          }
+          // If type_id is not provided in the request, include both gradeFees and nurseryFees
+
+      }
+  } // end of scopeWhenSearch
 
   public function scopeWhenFromPrice($query)
   {

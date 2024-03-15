@@ -20,6 +20,7 @@ return new class extends Migration
 
       $table->integer('order_column')->nullable();
       $table->string('phone')->nullable()->unique();
+      $table->string('city_id')->nullable();
       $table->string('whatsapp')->nullable()->unique();
       $table->string('email')->unique();
       $table->integer('available_seats')->nullable();

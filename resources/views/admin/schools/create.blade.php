@@ -143,6 +143,17 @@ $title = __('site.Create School');
                   @endforeach
                 </select>
               </div>
+              
+                <div class="form-group">
+                <label for="inputType">Citys</label>
+                <select name="type_id" class="form-control" required>
+                  <option value="city_id">Select City</option>
+                  @foreach( $citys as $value )
+                    <option value="{{ $value->id }}">
+                      {{ $value->title }}</option>
+                  @endforeach
+                </select>
+              </div>
 
               {{-- educationTypes --}}
               <div class="form-group">

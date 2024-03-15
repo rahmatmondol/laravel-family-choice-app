@@ -88,11 +88,11 @@ Route::group(
       });
 
       #review
-      Route::controller(ReviewController::class)->group(function () {
-        Route::post('set-review', 'setReview');
-        Route::get('reviews-list', 'reviewsList');
-        Route::delete('delete-review', 'deleteReview');
-      });
+//      Route::controller(ReviewController::class)->group(function () {
+//        Route::post('set-review', 'setReview');
+//        Route::get('reviews-list', 'reviewsList');
+//        Route::delete('delete-review', 'deleteReview');
+//      });
 
       #reserve school
 //    Route::group(function () {

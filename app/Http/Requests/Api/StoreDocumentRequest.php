@@ -28,6 +28,7 @@ class StoreDocumentRequest extends FormRequest
         return [
 
             'title'=>'required|string',
+            'child_name'=>'required|string',
             'back_side' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'front_side' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];

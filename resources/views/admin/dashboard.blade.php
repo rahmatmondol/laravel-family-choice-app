@@ -161,22 +161,22 @@ $title = __('site.Dashboard');
       <!-- /.row -->
 
       <div class="row">
-        <div class="col-md-8">
-          <div class="box box-solid">
-            <div class="box-header">
-              <h3 class="box-title">@lang('site.Sales Graph')</h3>
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-              </div>
-            </div>
-            <div class="box-body border-radius-none">
-              <div class="chart" id="line-chart" style="height: 250px;"></div>
-            </div>
-            <!-- /.box-body -->
-          </div>
-        </div>
+{{--        <div class="col-md-8">--}}
+{{--          <div class="box box-solid">--}}
+{{--            <div class="box-header">--}}
+{{--              <h3 class="box-title">@lang('site.Sales Graph')</h3>--}}
+{{--              <div class="box-tools pull-right">--}}
+{{--                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>--}}
+{{--                </button>--}}
+{{--                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>--}}
+{{--              </div>--}}
+{{--            </div>--}}
+{{--            <div class="box-body border-radius-none">--}}
+{{--              <div class="chart" id="line-chart" style="height: 250px;"></div>--}}
+{{--            </div>--}}
+{{--            <!-- /.box-body -->--}}
+{{--          </div>--}}
+{{--        </div>--}}
         <div class="col-md-4">
           <div class="box box-danger">
             <div class="box-header with-border">
@@ -221,35 +221,35 @@ $title = __('site.Dashboard');
 @endsection
 
 @push('footer_js')
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+{{--<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">--}}
 {{-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script> --}}
-<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+{{--<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>--}}
+{{--<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>--}}
 
 
-<script>
-  //line chart
-  var line = new Morris.Line({
-      element: 'line-chart',
-      resize: true,
-      data: [
-          @foreach ($reservationData as $data)
-          {
-              ym: "{{ $data->year }}-{{ $data->month }}", sum: "{{ $data->sum }}"
-          },
-          @endforeach
-      ],
-      xkey: 'ym',
-      ykeys: ['sum'],
-      labels: ['@lang('site.Total')'],
-      lineWidth: 2,
-      hideHover: 'auto',
-      gridStrokeWidth: 0.4,
-      pointSize: 4,
-      gridTextFamily: 'Open Sans',
-      gridTextSize: 10
-  });
-</script>
+{{--<script>--}}
+{{--  //line chart--}}
+{{--  var line = new Morris.Line({--}}
+{{--      element: 'line-chart',--}}
+{{--      resize: true,--}}
+{{--      data: [--}}
+{{--          @foreach ($reservationData as $data)--}}
+{{--          {--}}
+{{--              ym: "{{ $data->year }}-{{ $data->month }}", sum: "{{ $data->sum }}"--}}
+{{--          },--}}
+{{--          @endforeach--}}
+{{--      ],--}}
+{{--      xkey: 'ym',--}}
+{{--      ykeys: ['sum'],--}}
+{{--      labels: ['@lang('site.Total')'],--}}
+{{--      lineWidth: 2,--}}
+{{--      hideHover: 'auto',--}}
+{{--      gridStrokeWidth: 0.4,--}}
+{{--      pointSize: 4,--}}
+{{--      gridTextFamily: 'Open Sans',--}}
+{{--      gridTextSize: 10--}}
+{{--  });--}}
+{{--</script>--}}
 
 @endpush
 

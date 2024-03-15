@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('title');
+            $table->string('child_name');
             $table->text('front_side');
             $table->text('back_side');
             $table->timestamps();

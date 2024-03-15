@@ -43,6 +43,7 @@ class SchoolRepository implements SchoolRepositoryInterface
       ->whenFromPrice()
       ->whenToPrice()
       ->whenSortByName()
+      ->whenSortByCity()
       ->whenSortByPrice()
       ->whenSortByReview()
       ->whenLocation()
@@ -79,7 +80,7 @@ class SchoolRepository implements SchoolRepositoryInterface
   public function getSchoolRequestData($request)
   {
     $request_data = array_merge([
-      'status', 'order_column', 'type', 'phone', 'whatsapp', 'email', 'available_seats', 'total_seats', 'type_id', 'fees', 'lat', 'lng'
+      'status', 'order_column', 'type','city_id', 'phone', 'whatsapp', 'email', 'available_seats', 'total_seats', 'type_id', 'fees', 'lat', 'lng'
     ], config('translatable.locales'));
 
     return  $request->only($request_data);
