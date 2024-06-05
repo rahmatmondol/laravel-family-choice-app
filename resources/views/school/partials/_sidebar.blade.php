@@ -25,7 +25,7 @@
 
         <li class="nav-item">
           <a href="{{ route($mainRoutePrefix.'.dashboard') }}" class="nav-link @if( $page == 'dashboard' )   active  @endif">
-            <i class="nav-icon fas fa-columns"></i>
+            <i class="nav-icon fas fa-edit"></i>
             <p>
               {{ucfirst(__('site.Dashboard'))}}
             </p>
@@ -124,6 +124,22 @@
             <i class="nav-icon fas fa-columns"></i>
             <p>
               {{ucfirst(__('site.Payments'))}}
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route($mainRoutePrefix.'.discount.view') }}" class="nav-link ">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+              Discount
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route($mainRoutePrefix.'.boost.list') }}" class="nav-link ">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+              Boost School
             </p>
           </a>
         </li>

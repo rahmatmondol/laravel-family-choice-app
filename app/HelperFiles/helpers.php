@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 if (!function_exists('appName')) {
   function appName()
   {
@@ -125,4 +127,10 @@ if (!function_exists('perPage')) {
   {
     return [1, 10, 20, 30, 40, 50];
   }
+}
+
+if(!function_exists('getCurrentDate')) {
+    function getCurrentDate(){
+        return Carbon::now()->toDateString();
+    }
 }

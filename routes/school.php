@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\School\BoostController;
+use App\Http\Controllers\School\MarkettingConrtoller;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\School\GradeController;
 use App\Http\Controllers\School\CourseController;
@@ -71,6 +73,15 @@ Route::group(
 
       Route::get('reservations/customers/{customer}', [ReservationController::class,'show_customer'])->name('customers.show');
       Route::get('reservation-logs', [ReservationLogsController::class,'index'])->name('reservation-logs');
+
+      Route::get('/discount/List',[MarkettingConrtoller::class,'moreOrderView'])->name('discount.view');
+      Route::get('/discount/show/{id}',[MarkettingConrtoller::class,'discountView'])->name('discount.show');
+      Route::get('/discount/add',[MarkettingConrtoller::class,'addOrderView'])->name('discount.add');
+      Route::delete('discount/delete/{id}',[MarkettingConrtoller::class,'distroy'])->name('discount.delete');
+
+      Route::get('/boost/list',[BoostController::class,'moreOrderView'])->name('boost.list');
+      Route::get('/boost/show/{id}',[BoostController::class,'boostView'])->name('boost.show');
+      Route::delete('/boost/delete/{id}',[BoostController::class,'distroy'])->name('boost.delete');
     });
 
     // reset password

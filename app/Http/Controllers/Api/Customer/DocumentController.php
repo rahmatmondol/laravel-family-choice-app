@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddFolderRequest;
 use App\Http\Requests\Api\StoreDocumentRequest;
+use App\Http\Requests\GetDocumentRequest;
 use App\Http\Resources\DocumnetResource;
 use App\Models\CustoemrDocument;
+use App\Models\UserDocumentFolder;
 use App\Traits\ResponseTrait;
 use App\Traits\UploadFileTrait;
 use Illuminate\Http\Request;
@@ -16,11 +19,11 @@ class DocumentController extends Controller
     use UploadFileTrait;
     use ResponseTrait;
     //
-    public function view()
+    public function view(GetDocumentRequest $request)
     {
         $user_id = Auth::user()->id;
 
-        $data = CustoemrDocument::where('user_id',$user_id)->get();
+        $data = CustoemrDocument::where('user_id',$user_id)->where('folder_id',$request->folder_id)->get();
 
         return $this->sendResponse(DocumnetResource::collection($data),'success');
     }
@@ -31,7 +34,7 @@ class DocumentController extends Controller
         // Create a new CustomerDocument instance
         $document = new CustoemrDocument();
         $document->title = $request->title;
-        $document->child_name = $request->child_name;
+        $document->folder_id = $request->folder_id;
         $document->user_id = $user_id;
         $document->save();
 
@@ -61,6 +64,34 @@ class DocumentController extends Controller
         }
         $document->delete();
         return $this->sendResponse('','Document delete successfully');
+    }
+
+
+    public function saveFolder(AddFolderRequest $request)
+    {
+        $user_id = Auth::user()->id;
+        $folder = new UserDocumentFolder();
+        $folder->title = $request->title;
+        $folder->user_id = $user_id;
+        $folder->save();
+        return response()->json(['success' => true, 'message' => 'Folder saved successfully'], 200);
+
+    }
+
+    public function DeleteFolder($id)
+    {
+        $folder = UserDocumentFolder::find($id);
+        $folder->delete();
+        return response()->json(['success' => true, 'message' => 'Folder delete successfully'], 200);
+
+    }
+
+    public function getFolder()
+    {
+        $user_id = Auth::user()->id;
+        $data = UserDocumentFolder::where('user_id',$user_id)->get();
+        return $this->sendResponse($data,'success');
+
     }
 
 }
