@@ -78,10 +78,14 @@ Route::group(
       Route::get('/discount/show/{id}',[MarkettingConrtoller::class,'discountView'])->name('discount.show');
       Route::get('/discount/add',[MarkettingConrtoller::class,'addOrderView'])->name('discount.add');
       Route::delete('discount/delete/{id}',[MarkettingConrtoller::class,'distroy'])->name('discount.delete');
+      Route::get('/discount/create',[MarkettingConrtoller::class,'addOrderView'])->name('discount.create');
+        Route::post('/discount/store', [MarkettingConrtoller::class, 'store'])->name('discount.store');
 
       Route::get('/boost/list',[BoostController::class,'moreOrderView'])->name('boost.list');
       Route::get('/boost/show/{id}',[BoostController::class,'boostView'])->name('boost.show');
+      Route::get('/boost/crate',[BoostController::class,'addOrderView'])->name('boost.create');
       Route::delete('/boost/delete/{id}',[BoostController::class,'distroy'])->name('boost.delete');
+      Route::post('/boost/store',[BoostController::class,'store'])->name('boost.store');
     });
 
     // reset password

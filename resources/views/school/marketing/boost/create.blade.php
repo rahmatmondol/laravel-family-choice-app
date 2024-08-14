@@ -1,148 +1,135 @@
 @extends($masterLayout)
 <?php
-$page = 'courses';
-$title = __('site.Create Course');
+$page = 'Boosting Page';
+$title = 'Add Boost';
 ?>
 @section('title_page')
-{{ $title }}
+  {{ $title }}
 @endsection
 @section('content')
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h6>{{ $title }}</h6>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('school.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('school.courses.index') }}">@lang('site.Courses')</a>
-            </li>
-            <li class="breadcrumb-item active">{{ $title }}</li>
-          </ol>
-        </div>
-      </div>
-    </div><!-- /.container-fluid -->
-  </section>
-
-  <!-- Main content -->
-  <section class="content">
-    <form method="post" action="{{ route('school.courses.store')}}" enctype="multipart/form-data">
-      @csrf
-      @method('post')
-      @include('school.partials._errors')
-      <input type="hidden" name="school_id" value="{{ $globalSchool->id }}">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card card-primary">
-            <div class="card-body">
-
-              @foreach (config('translatable.locales') as $key => $locale)
-              <div class="form-group">
-                <label>@lang('site.' . $locale . '.Title')</label>
-                <input required="required" type="text" name="{{ $locale }}[title]" class="form-control"
-                  value="{{ old($locale . '.title') }}">
-              </div>
-              <div class="form-group">
-                <label>@lang('site.' . $locale . '.Short Description')</label>
-                <input required="required" type="text" name="{{ $locale }}[short_description]" class="form-control"
-                  value="{{ old($locale . '.short_description') }}">
-              </div>
-              <div class="form-group">
-                <label>@lang('site.' . $locale . '.Description')</label>
-                <textarea required="required" type="text" name="{{ $locale }}[description]"
-                  class="form-control">{{ old($locale . '.description') }}</textarea>
-              </div>
-              <div class="  with-border"></div><br>
-              @endforeach
-
-              {{-- from_date --}}
-              <div class="form-group">
-                <label>@lang('site.From Date')</label>
-                <input type="date" name="from_date" value="{{ old('from_date') }}" class="form-control">
-              </div>
-
-              {{-- to_date --}}
-              <div class="form-group">
-                <label>@lang('site.To Date')</label>
-                <input type="date" name="to_date" value="{{ old('to_date') }}" class="form-control">
-              </div>
-            </div>
-            <!-- /.card-body -->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h6>{{ $title }}</h6>
           </div>
-          <!-- /.card -->
-        </div>
-        <div class="col-md-6">
-          <div class="card card-primary">
-            <div class="card-body">
-              {{-- subscriptions --}}
-              <div class="form-group">
-                <label>@lang('site.Subscriptions')</label>
-                <select name="subscription_id" class="form-control" required>
-                  <option value='' selected disabled>@lang('site.Subscriptions')</option>
-                  @foreach ($subscriptions as $subscription)
-                  <option value="{{ $subscription->id }}" @if(old('subscription_id')==$subscription->id) selected @endif>{{
-                    $subscription->title }}</option>
-                  @endforeach
-                </select>
-              </div>
-
-              {{-- type --}}
-              <div class="form-group">
-                <label for="inputType">@lang('site.Type')</label>
-                <select id="inputType" name="type" required class="form-control custom-select">
-                  <option value='' selected disabled>@lang('site.Type')</option>
-                  <option value="summery" @if(old('type')=='summery' ) selected @endif>@lang('site.Summery')</option>
-                  <option value="wintry" @if(old('type')=='wintry' ) selected @endif>@lang('site.Wintry')</option>
-                </select>
-              </div>
-
-              {{-- order_column --}}
-              <div class="form-group">
-                <label>@lang('site.Order Item')</label>
-                <input type="text" name="order_column" value="{{ old('order_column') }}" class="form-control"
-                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
-              </div>
-
-              {{-- status --}}
-              <div class="form-group">
-                <label for="inputStatus">@lang('site.Status')</label>
-                <select id="inputStatus" name="status" required class="form-control custom-select">
-                  <option value='' selected disabled>@lang('site.Status')</option>
-                  <option value="1" @if(old('status')==1) selected @endif>@lang('site.Active')</option>
-                  <option value="0" @if(old('status')==0) selected @endif>@lang('site.In-Active')</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>@lang('site.Image')</label>
-                <input type="file" id='image' name="image" class="form-control image1" required>
-              </div>
-
-              <div class="form-group">
-                <img src="{{ asset('uploads/default.png') }}" style="width: 100px" class="img-thumbnail image-preview1"
-                  alt="">
-              </div>
-
-            </div>
-            <!-- /.card-body -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ route('school.dashboard') }}">@lang('site.Home')</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('school.boost.list') }}">@lang('site.Boosts')</a></li>
+              <li class="breadcrumb-item active">{{ $title }}</li>
+            </ol>
           </div>
-          <!-- /.card -->
         </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <button class="btn btn-success" type="submit" name='continue' value='continue'><i class="fas fa-save"></i>
-            @lang('site.Save & Continue')</button>
-          <button class="btn btn-success" type="submit"><i class="fas fa-save"></i> @lang('site.Save')</button>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <form method="post" action="{{route('school.boost.store')}}" enctype="multipart/form-data">
+        @csrf
+        @method('post')
+        @include('school.partials._errors')
+        <input type="hidden" name="school_id" value="{{ $globalSchool->id }}">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card card-primary">
+              <div class="card-body">
+
+                {{-- City ID --}}
+                <div class="form-group">
+                  <label>City</label>
+                  <select name="city_id" class="form-control" required>
+                    <option value='' selected disabled>Select City</option>
+                    @foreach ($cities as $city)
+                      <option value="{{ $city->id }}" @if(old('city_id')==$city->id) selected @endif>{{ $city->title }}</option>
+                    @endforeach
+                  </select>
+                </div>
+
+                {{-- Monthly Budget --}}
+                <div class="form-group">
+                  <label>Monthly Budget</label>
+                  <input type="number" name="monthly_budget" id="monthly_budget" value="{{ old('monthly_budget') }}" class="form-control" required min="441">
+                  <small id="budgetError" class="form-text text-danger" style="display: none;">The monthly budget must be between 441 AED and 2000 AED.</small>
+
+                </div>
+
+                {{-- Cost Per Click --}}
+                <div class="form-group">
+                  <label>Cost per Click</label>
+                  <select name="cost_per_click" id="cost_per_click" class="form-control" id="">
+                    <option value="" selected disabled>Select</option>
+                    @for($i=2.5;$i <= 6.5;$i+=0.5)
+                      <option value="{{$i}}">{{$i}} AED</option>
+                    @endfor
+                  </select>
+{{--                  <input type="number" name="cost_per_click" value="{{ old('cost_per_click') }}" class="form-control" required step="0.01" min="2.4" max="6.5">--}}
+                </div>
+
+                {{-- Starting Date --}}
+                <div class="form-group">
+                  <label>Staring Date</label>
+                  <input type="date" name="starting" value="{{ old('starting') }}" class="form-control" required>
+                </div>
+
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <div class="col-md-6">
+            <div class="card card-primary">
+              <div class="card-body">
+
+                {{-- Order Column --}}
+                <div class="form-group">
+                  <h2 class="text-danger">Attention Please !!</h2>
+                  <small class="form-text text-muted">Please enter maximum allowed value is between 100 - 400.</small>
+
+                </div>
+
+
+
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
         </div>
-      </div>
-    </form>
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+        <div class="row">
+          <div class="col-12">
+            <button class="btn btn-success" type="submit"><i class="fas fa-save"></i> @lang('site.Save')</button>
+          </div>
+        </div>
+      </form>
+    </section>
+    <!-- /.content -->
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const monthlyBudgetInput = document.getElementById('monthly_budget');
+      const budgetError = document.getElementById('budgetError');
+
+      monthlyBudgetInput.addEventListener('input', function () {
+        let value = parseFloat(this.value);
+
+        if (isNaN(value) || value < 0) {
+          this.value = 441;
+          budgetError.style.display = 'none';
+        } else if (value < 441 || value > 2000) {
+          budgetError.style.display = 'block';
+        } else {
+          budgetError.style.display = 'none';
+        }
+      });
+    });
+  </script>
+
+  <!-- /.content-wrapper -->
 @endsection

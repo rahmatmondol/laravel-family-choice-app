@@ -85,7 +85,7 @@ $title = 'Discount';
               <th style="width: 1%">
                 #
               </th>
-              <th style="width: 20%">
+              <th style="width: 8%">
                 @lang('site.Title')
               </th>
               <th style="width: 8%">
@@ -100,16 +100,16 @@ $title = 'Discount';
               <th style="width: 8%">
                Minimum Amount
               </th>
-              <th style="width: 20%">
+              <th style="width: 8%">
                 Starting Date
               </th>
-              <th style="width: 20%" class="text-center">
+              <th style="width: 8%" >
                 Ending Date
               </th>
-              <th style="width: 8%" class="text-center">
+              <th style="width: 8%">
                 Status
               </th>
-              <th style="width: 20%" class="text-center">
+              <th style="width: 10%" >
                 @lang('site.Actions')
               </th>
             </tr>
@@ -140,7 +140,7 @@ $title = 'Discount';
 
                               @include('school.partials._destroy_btn',[
                               'txt'=>__('site.Delete'),
-                              'route'=>route($mainRoutePrefix.'.discount.delete', $discount->id),
+                              'route'=>route('school.discount.delete',['id'=>$discount->id]),
                               ])
                             </td>
             </tr>

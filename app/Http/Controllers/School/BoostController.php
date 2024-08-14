@@ -43,7 +43,7 @@ class BoostController  extends BaseController
 //         Query boosts with schools
         $query = SchoolBoosting::with('citys')->where('school_id',$schoolId);
 
-       $currentDate = getCurrentDate();
+       $currentDate = $this->getCurrentDateTime();
 
         // Apply status scope if status is provided
         if ($status === 'active') {
@@ -65,9 +65,9 @@ class BoostController  extends BaseController
     public function addOrderView(Request $request){
         session(['currentPage' => request('page', 1)]);
         $local = ($request->hasHeader('X-localization')) ? $request->header('X-localization') : 'en';
-        $city  = City::where('status',1)->get();
+        $cities  = City::where('status',1)->get();
 
-        return view($this->mainViewPrefix.".marketing.boost.create",compact('city','local'));
+        return view($this->mainViewPrefix.".marketing.boost.create",compact('cities','local'));
     }
 
     public function store(Request $request)
@@ -76,12 +76,15 @@ class BoostController  extends BaseController
         $request->validate([
             'city_id' => 'required|string',
             'monthly_budget' => 'required|numeric|min:441',
-            'cost_per_click' => 'required|numeric|min:2.4|max:6.5',
+            'cost_per_click' => 'required|numeric|min:2.5|max:6.5',
             'starting' => 'required|date',
         ]);
-        $currentDate = getCurrentDateTime();
 
-        $extendedDate = getExtendedDateTime($request->starting);
+
+        $currentDate = $this->getCurrentDateTime();
+        $extendedDate = $this->getExtendedDateTime($request->starting);
+
+
 
 
 
@@ -103,7 +106,7 @@ class BoostController  extends BaseController
 
             session()->flash('success', __('boost added successfully'));
 
-            return redirect()->route('school.view-boost-more')
+            return redirect()->route('school.boost.list')
                 ->with('success', 'More order created successfully.');
         }catch (\Throwable $e){
             DB::rollBack();
@@ -180,6 +183,17 @@ class BoostController  extends BaseController
 
 
         return view($this->mainViewPrefix.'.marketing.boost.show',compact('boost'));
+    }
+
+    function getCurrentDateTime()
+    {
+        return Carbon::now()->toDateString();
+    }
+
+    function getExtendedDateTime($starting)
+    {
+        $startingDate = Carbon::parse($starting);
+        return $startingDate->addMonth()->toDateString();
     }
 
 

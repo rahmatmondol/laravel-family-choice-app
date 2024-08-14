@@ -30,7 +30,7 @@ $title = 'boost';
         </div>
         <div class="col-sm-12">
 
-          <form action="{{ route($mainRoutePrefix.'.discount.view') }}" method="get">
+          <form action="{{ route($mainRoutePrefix.'.boost.list') }}" method="get">
 
             <div class="row">
 
@@ -51,7 +51,7 @@ $title = 'boost';
                 <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
                   Filter</button>
                 @if (checkAdminPermission('create_courses'))
-                <a href="{{ route($mainRoutePrefix.'.discount.add') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
+                <a href="{{ route($mainRoutePrefix.'.boost.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
                   @lang('site.Add')</a>
                 @endif
               </div>
@@ -114,8 +114,8 @@ $title = 'boost';
               <td>{{ $discount->monthly_budget ?? 0}} EAD</td>
               <td>{{ $discount->cost_per_click ?? 0 }} EAD</td>
 
-              <td>{{  Carbon\Carbon::parse($discount->start_date)->format('F j, Y') }}</td>
-              <td>{{  Carbon\Carbon::parse($discount->end_date)->format('F j, Y') }}</td>
+              <td>{{  Carbon\Carbon::parse($discount->starting)->format('F j, Y') }}</td>
+              <td>{{  Carbon\Carbon::parse($discount->ending)->format('F j, Y') }}</td>
 
               <td class="project-actions text-right">
 
@@ -125,7 +125,7 @@ $title = 'boost';
                               ])
                               @include('school.partials._destroy_btn',[
                               'txt'=>__('site.Delete'),
-                              'route'=>route($mainRoutePrefix.'.boost.delete', $discount->id),
+                              'route'=>route($mainRoutePrefix.'.boost.delete', ['id'=>$discount->id]),
                               ])
                             </td>
             </tr>

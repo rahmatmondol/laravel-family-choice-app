@@ -30,7 +30,7 @@ class DashboardController extends BaseController
       ->select(
         DB::raw('YEAR(created_at) as year'),
         DB::raw('MONTH(created_at) as month'),
-        DB::raw('SUM(total_fees) as sum')
+        DB::raw('IFNULL(SUM(total_fees), 0) as sum')
       )->groupBy('month')
       ->get();
     return view($this->mainViewPrefix.'.dashboard', compact(

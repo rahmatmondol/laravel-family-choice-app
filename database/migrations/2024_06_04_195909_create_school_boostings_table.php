@@ -19,8 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('city_id');
             $table->float('monthly_budget')->default(0);
             $table->float('cost_per_click')->default(0);
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->date('starting');
+            $table->date('ending')->nullable();
             $table->timestamps();
         });
     }

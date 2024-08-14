@@ -49,11 +49,11 @@ $title = 'boost';
             </tr>
             <tr>
               <td>Starting Date</td>
-              <td>{{ Carbon\Carbon::parse($boost->starting_date)->format('F j, Y') }}</td>
+              <td>{{ Carbon\Carbon::parse($boost->starting)->format('F j, Y') }}</td>
             </tr>
             <tr>
               <td>Ending Date</td>
-              <td>{{ Carbon\Carbon::parse($boost->ending_date)->format('F j, Y') }}</td>
+              <td>{{ Carbon\Carbon::parse($boost->ending)->format('F j, Y') }}</td>
             </tr>
 {{--            <tr>--}}
 {{--              <td>@lang('site.Order Item')</td>--}}

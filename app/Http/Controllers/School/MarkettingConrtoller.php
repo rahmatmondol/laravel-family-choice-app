@@ -66,6 +66,7 @@ class MarkettingConrtoller  extends BaseController
     public function store(Request $request)
     {
 
+
         $request->validate([
             'title' => 'required|string',
             'discount_type' => ['required', Rule::in(['percentage', 'fixed'])],
@@ -76,6 +77,8 @@ class MarkettingConrtoller  extends BaseController
             'ending_date' => 'required|date|after_or_equal:starting_date',
             'status' => 'required',
         ]);
+
+
 
         try {
 
@@ -100,7 +103,7 @@ class MarkettingConrtoller  extends BaseController
 
             session()->flash('success', __('discount added successfully'));
 
-            return redirect()->route('school.view-order-more')
+            return redirect()->route('school.discount.view')
                 ->with('success', 'More order created successfully.');
         }catch (\Throwable $e){
             DB::rollBack();
