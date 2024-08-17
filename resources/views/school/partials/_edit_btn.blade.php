@@ -1,5 +1,5 @@
 @if (checkAdminPermission('read_roles'))
-<a class="btn btn-info btn-sm" href="{{ $route }}">
+<a class="btn inline-flex justify-center btn-primary" href="{{ $route }}">
   <i class="fas fa-pencil-alt">
   </i>
   {{ $txt }}
