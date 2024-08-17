@@ -4,285 +4,231 @@ $page = 'schools';
 $title = __('site.Edit Profile');
 ?>
 @section('title_page')
-{{ $title }}
+    {{ $title }}
 @endsection
 
 @push('footer_js')
+    <script type="text/javascript" src="{!! asset('admin/js/initMap.js') !!}"></script>
+    <!-- en  get states and regoins and streests  -->
+    <script>
+        // Initialize the map.
+        @php
+            $lat = old('lat', $school->lat) ?? 24.713552;
+            $lng = old('lng', $school->lng) ?? 46.675297;
+        @endphp
+        setCoordinates({{ $lat }}, {{ $lng }})
+    </script>
 
-<script type="text/javascript" src="{!! asset('admin/js/initMap.js') !!}"></script>
-<!-- en  get states and regoins and streests  -->
-<script>
-  // Initialize the map.
-  @php
-    $lat = old('lat',$school->lat)??24.713552;
-    $lng = old('lng',$school->lng)??46.675297;
-  @endphp
-  setCoordinates({{ $lat }},{{ $lng }})
-</script>
-
-<script src="https://maps.googleapis.com/maps/api/js?key={{env('MAP_KEY')}}&callback&callback=initMap&libraries=places"
-  async defer>
-</script>
-<script type="text/javascript" src="{!! asset('admin/js/locationpicker.jquery.js') !!}"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key={{ env('MAP_KEY') }}&callback&callback=initMap&libraries=places"
+        async defer></script>
+    <script type="text/javascript" src="{!! asset('admin/js/locationpicker.jquery.js') !!}"></script>
 @endpush
 
 
 @section('content')
-
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h6>{{ $title }}</h6>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.profile.show') }}">@lang('site.Profile')</a>
-            </li>
-            <li class="breadcrumb-item active">{{ $title }}</li>
-          </ol>
-        </div>
-      </div>
-    </div><!-- /.container-fluid -->
-  </section>
-
-  <!-- Main content -->
-  <section class="content">
-    <form method="post" action="{{ route($mainRoutePrefix.'.profile.update')}}" enctype="multipart/form-data">
-      @csrf
-      @method('put')
-      @include('admin.partials._errors')
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card card-primary">
-            <div class="card-body">
-
-              @foreach (config('translatable.locales') as $key => $locale)
-              <div class="form-group">
-                <label>@lang('site.' . $locale . '.Title')</label>
-                <input required="required" type="text" name="{{ $locale }}[title]" class="form-control"
-                  value="{{ old($locale . '.title',$school->translate($locale)->title) }}">
-              </div>
-              <div class="form-group">
-                <label>@lang('site.' . $locale . '.Address')</label>
-                <input required="required" type="text" name="{{ $locale }}[address]" class="form-control"
-                  value="{{ old($locale . '.address',$school->translate($locale)->address) }}">
-              </div>
-              <div class="form-group">
-                <label>@lang('site.' . $locale . '.Description')</label>
-                <textarea name="{{ $locale }}[description]" id="" class="form-control" cols="30" rows="5"
-                  required>{{ old($locale . '.description',$school->translate($locale)->description) }}</textarea>
-              </div>
-              <div class="  with-border"></div><br>
-              @endforeach
-              {{-- email --}}
-              <div class="form-group">
-                <label for="inputName"> @lang('site.E-mail')</label>
-                <input type="email" name="email" value="{{ old('email',$school->email) }}" required
-                  class="form-control">
-              </div>
-              {{-- phone --}}
-              <div class="form-group">
-                <label>@lang('site.Phone')</label>
-                <input required="required" type="text" name="phone" class="form-control"
-                  value="{{old('phone',$school->phone)}}"
-                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
-              </div>
-              {{-- whatsapp --}}
-              <div class="form-group">
-                <label>@lang('site.Whatsapp')</label>
-                <input required="required" type="text" name="whatsapp" class="form-control"
-                  value="{{old('whatsapp',$school->whatsapp)}}"
-                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
-              </div>
-
-
-              <div class="form-group">
-                <label>@lang('site.Address')</label>
-                <input type="text" name='address' class="form-control" id="address">
-              </div>
-
-              <div class="form-group">
-                <div id="map" style="height:300px !important"></div>
-              </div>
-
-              <input type="hidden" class="form-control" id="lat" name="lat" value="{!! $lat !!}">
-
-              <input type="hidden" class="form-control" id="lng" name="lng" value="{!! $lng !!}">
-
-
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-        </div>
-        <div class="col-md-6">
-          <div class="card card-primary">
-            <div class="card-body">
-
-              {{-- types --}}
-              <div class="form-group">
-                <label for="inputType">@lang('site.Types')</label>
-                <select name="type_id" class="form-control"  required>
-                  <option value="">@lang('site.Types') </option>
-                  @foreach( $types as $value )
-                  <option value="{{ $value->id }}" @selected((old('type_id') == $value->id) || ($school->type_id == $value->id)) >
-                    {{ $value->title }}</option>
-                  @endforeach
-                </select>
-              </div>
-
-              {{-- educationalSubjects --}}
-              <div class="form-group">
-                <label for="inputType">@lang('site.EducationalSubjects')</label>
-                <select name="educationalSubjects[]" class="form-control selectric" multiple data-live-search="true"
-                  required>
-                  <option value="">@lang('site.EducationalSubjects') </option>
-                  @foreach( $educationalSubjects as $value )
-                  <option value="{{ $value->id }}" @if( in_array($value->
-                    id,$school->educationalSubjects->pluck('id')->toArray())
-                    || in_array($value->id,(array)old('educationalSubjects'))) selected @endif >
-                    {{ $value->title }}</option>
-                  @endforeach
-                </select>
-              </div>
-
-              {{-- educationTypes --}}
-              <div class="form-group">
-                <label for="inputType">@lang('site.EducationTypes')</label>
-                <select name="educationTypes[]" class="form-control selectric" multiple data-live-search="true"
-                  required>
-                  <option value="">@lang('site.EducationTypes') </option>
-                  @foreach( $educationTypes as $value )
-                  <option value="{{ $value->id }}" @if( in_array($value->
-                    id,$school->educationTypes->pluck('id')->toArray())
-                    || in_array($value->id,(array)old('educationTypes'))) selected @endif >
-                    {{ $value->title }}</option>
-                  @endforeach
-                </select>
-              </div>
-
-              {{-- schoolTypes --}}
-              <div class="form-group">
-                <label for="inputType">@lang('site.SchoolTypes')</label>
-                <select name="schoolTypes[]" class="form-control selectric" multiple data-live-search="true" required>
-                  <option value="">@lang('site.SchoolTypes') </option>
-                  @foreach( $schoolTypes as $value )
-                  <option value="{{ $value->id }}" @if( in_array($value->
-                    id,$school->schoolTypes->pluck('id')->toArray())
-                    || in_array($value->id,(array)old('schoolTypes'))) selected @endif >
-                    {{ $value->title }}</option>
-                  @endforeach
-                </select>
-              </div>
-
-              {{-- services --}}
-              <div class="form-group">
-                <label for="inputType">@lang('site.Services')</label>
-                <select name="services[]" class="form-control selectric" multiple data-live-search="true" required>
-                  <option value="">@lang('site.Services') </option>
-                  @foreach( $services as $value )
-                  <option value="{{ $value->id }}" @if( in_array($value->
-                    id,$school->services->pluck('id')->toArray())
-                    || in_array($value->id,(array)old('services'))) selected @endif >
-                    {{ $value->title }}</option>
-                  @endforeach
-                </select>
-              </div>
-
-              {{-- available_seats --}}
-              <div class="form-group">
-                <label>@lang('site.Available seats')</label>
-                <input required="required" type="text" name="available_seats" class="form-control"
-                  value="{{old('available_seats',$school->available_seats)}}"
-                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
-              </div>
-
-              {{-- total_seats --}}
-              <div class="form-group">
-                <label>@lang('site.Total seats')</label>
-                <input required="required" type="text" name="total_seats" class="form-control"
-                  value="{{old('total_seats',$school->total_seats)}}"
-                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
-              </div>
-
-              {{-- status --}}
-              <div class="form-group">
-                <label for="inputStatus">@lang('site.Status')</label>
-                <select id="inputStatus" name="status" required class="form-control custom-select">
-                  <option value='' selected disabled>@lang('site.Status')</option>
-                  <option value="1" @if(old('status',$school->status)==1) selected @endif>@lang('site.Active')</option>
-                  <option value="0" @if(old('status',$school->status)==0) selected @endif>@lang('site.In-Active')
-                  </option>
-                </select>
-              </div>
-
-              {{-- passwrod --}}
-              <div class="form-group">
-                <label>@lang('site.Password')</label>
-                <input type="password" name="password" class="form-control">
-              </div>
-
-              {{-- password_confirmation --}}
-              <div class="form-group">
-                <label>@lang('site.Password Confirmation')</label>
-                <input type="password" name="password_confirmation" class="form-control">
-              </div>
-
-              {{-- image --}}
-              <div class="form-group">
-                <label>@lang('site.Image')</label>
-                <input type="file" id='image' name="image" class="form-control image2">
-              </div>
-
-              <div class="form-group">
-                <img src="{{ $school->image_path }}" style="width: 100px" class="img-thumbnail image-preview2" alt="">
-              </div>
-
-              {{-- cover --}}
-              <div class="form-group">
-                <label>@lang('site.Cover')</label>
-                <input type="file" id='cover' name="cover" class="form-control image3">
-              </div>
-
-              <div class="form-group">
-                <img src="{{ $school->cover_path }}" style="width: 100px" class="img-thumbnail image-preview3" alt="">
-              </div>
-
-              {{-- attachments --}}
-              <div class="form-group">
-                <label>@lang('site.Attachments')</label>
-                <input type="file" name="attachments[]" multiple class="form-control" enctype="multipart/form-data">
-                @foreach ( $school->schoolImages as $imgs )
-                <a href="{{url('school/profile/deleteImage').'/'.$imgs['id']}}"
-                  onclick="return confirm('{{trans('site.Confirm Delete')}}')"
-                  class="confirm btn btn-danger img-thumbnail image-preview" style="width: 100px;"
-                  title="Delete this item">
-                  <i class="fa fa-trash"></i><br>
-                  <img src="{{$imgs->image_path}}" class="img-thumbnail image-preview" alt="">
+    <!-- BEGIN: Breadcrumb -->
+    <div class="mb-5">
+        <ul class="m-0 p-0 list-none">
+            <li class="inline-block relative top-[3px] text-base text-primary-500 font-Inter ">
+                <a href="index.html">
+                    <iconify-icon icon="heroicons-outline:home"></iconify-icon>
+                    <iconify-icon icon="heroicons-outline:chevron-right"
+                        class="relative text-slate-500 text-sm rtl:rotate-180"></iconify-icon>
                 </a>
-                @endforeach
-              </div>
+            </li>
+        
+            <li class="inline-block relative text-sm text-slate-500 font-Inter dark:text-white">
+              {{ $title }}</li>
+        </ul>
+    </div>
+    <!-- END: BreadCrumb -->
+    <div class="grid xl:grid-cols-2 grid-cols-1 gap-6">
+        <!-- Basic Inputs -->
+        <div class="card">
+            <div class="card-body flex flex-col p-6">
+                <header class="flex mb-5 items-center border-b border-slate-100 dark:border-slate-700 pb-5 -mx-6 px-6">
+                    <div class="flex-1">
+                        <div class="card-title text-slate-900 dark:text-white">Basic Inputs</div>
+                    </div>
+                </header>
+                <div class="card-text h-full space-y-4">
+                    <div class="input-area">
+                        <label for="name" class="form-label">Project Name*</label>
+                        <input id="name" type="text" class="form-control" placeholder="Project Name">
+                    </div>
+                    <div class="input-area">
+                        <label for="readonly" class="form-label">Readonly Input</label>
+                        <input id="readonly" type="text" class="form-control"
+                            placeholder="You can't change me.(Readonly)" readonly="readonly">
+                    </div>
+                    <div class="input-area">
+                        <label for="disable" class="form-label">Disabled</label>
+                        <input id="disable" type="text" class="form-control" placeholder="Disabled"
+                            disabled="disabled">
+                    </div>
+                    <div class="input-area">
+                        <label for="description" class="form-label">Project Description</label>
+                        <textarea id="description" rows="5" class="form-control" placeholder="Type Here"></textarea>
+                    </div>
+                    <div class="input-area">
+                        <label for="select" class="form-label">Select Option</label>
+                        <select id="select" class="form-control">
+                            <option value="option1" class="dark:bg-slate-700">Options 1</option>
+                            <option value="option2" class="dark:bg-slate-700">Options 2</option>
+                            <option value="option3" class="dark:bg-slate-700">Options 3</option>
+                            <option value="option4" class="dark:bg-slate-700">Options 4</option>
+                        </select>
+                    </div>
+                </div>
             </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
         </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <button class="btn btn-success" type="submit" name='continue' value='continue'><i class="fas fa-save"></i>
-            @lang('site.Save & Continue')</button>
-          <button class="btn btn-success" type="submit"><i class="fas fa-save"></i> @lang('site.Save')</button>
+        <!-- Sized Inputs -->
+        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-1 gap-6">
+            <div class="card">
+                <div class="card-body flex flex-col p-6">
+                    <header class="flex mb-5 items-center border-b border-slate-100 dark:border-slate-700 pb-5 -mx-6 px-6">
+                        <div class="flex-1">
+                            <div class="card-title text-slate-900 dark:text-white">Sizing Options</div>
+                        </div>
+                    </header>
+                    <div class="card-text h-full space-y-4">
+                        <div class="input-area">
+                            <label for="largeInput" class="form-label">Large Input</label>
+                            <input id="largeInput" type="text" class="form-control !text-lg" placeholder="Large Input">
+                        </div>
+                        <div class="input-area">
+                            <label for="defaultInput" class="form-label">Default Input</label>
+                            <input id="defaultInput" type="text" class="form-control" placeholder="Default Input">
+                        </div>
+                        <div class="input-area">
+                            <label for="smallInput" class="form-label">Small Input</label>
+                            <input id="smallInput" type="text" class="form-control !py-1 !text-xs"
+                                placeholder="Project Name">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body flex flex-col p-6">
+                    <header class="flex mb-5 items-center border-b border-slate-100 dark:border-slate-700 pb-5 -mx-6 px-6">
+                        <div class="flex-1">
+                            <div class="card-title text-slate-900 dark:text-white">Horizontal Form Label Sizing</div>
+                        </div>
+                    </header>
+                    <div class="card-text h-full space-y-4">
+                        <div class="input-area relative pl-28">
+                            <label for="largeInput"
+                                class="mb-2 absolute left-0 top-1/2 -translate-y-1/2 block cursor-pointer font-Inter font-medium capitalize
+                                            text-slate-700 dark:text-slate-50 leading-6">
+                                Large Input</label>
+                            <input id="largeInput" type="text" class="form-control !text-lg" placeholder="Large Input">
+                        </div>
+                        <div class="input-area relative pl-28">
+                            <label for="defaultInput"
+                                class="mb-2 absolute left-0 top-1/2 -translate-y-1/2 block cursor-pointer font-Inter font-medium capitalize
+                                                text-slate-700 dark:text-slate-50 leading-6">
+                                Default Input</label>
+                            <input id="defaultInput" type="text" class="form-control" placeholder="Default Input">
+                        </div>
+                        <div class="input-area relative pl-28">
+                            <label for="smallInput"
+                                class="mb-2 absolute left-0 top-1/2 -translate-y-1/2 block cursor-pointer font-Inter font-medium capitalize
+                                                    text-slate-700 dark:text-slate-50 leading-6">
+                                Small Input</label>
+                            <input id="smallInput" type="text" class="form-control !py-1 !text-xs"
+                                placeholder="Project Name">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </form>
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+        <!-- States Inputs -->
+        <div class="card">
+            <div class="card-body flex flex-col p-6">
+                <header class="flex mb-5 items-center border-b border-slate-100 dark:border-slate-700 pb-5 -mx-6 px-6">
+                    <div class="flex-1">
+                        <div class="card-title text-slate-900 dark:text-white">States</div>
+                    </div>
+                </header>
+                <div class="card-text h-full space-y-4">
+                    <div class="input-area">
+                        <label for="name" class="form-label">Valid State</label>
+                        <div class="relative">
+                            <input id="name" type="text" class="form-control !border-success-500 !pr-9"
+                                placeholder="Valid">
+                            <iconify-icon class="absolute top-1/2 right-3 -translate-y-1/2 text-success-500 text-xl"
+                                icon="heroicons-outline:check"></iconify-icon>
+                        </div>
+                        <span class="font-Inter text-sm text-success-500 pt-2 inline-block">This is valid state.</span>
+                    </div>
+                    <div class="input-area">
+                        <label for="name" class="form-label">Invalid State</label>
+                        <div class="relative">
+                            <input id="name" type="text" class="form-control !border-danger-500 !pr-9"
+                                placeholder="Invalid">
+                            <iconify-icon class="absolute top-1/2 right-3 -translate-y-1/2 text-danger-500 text-xl"
+                                icon="mdi:warning-octagon-outline"></iconify-icon>
+                        </div>
+                        <span class="font-Inter text-sm text-danger-500 pt-2 inline-block">This is invalid state.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Validation Inputs -->
+        <div class="card">
+            <div class="card-body flex flex-col p-6">
+                <header class="flex mb-5 items-center border-b border-slate-100 dark:border-slate-700 pb-5 -mx-6 px-6">
+                    <div class="flex-1">
+                        <div class="card-title text-slate-900 dark:text-white">Input Validation States With Tootltips</div>
+                    </div>
+                </header>
+                <div class="card-text h-full space-y-4">
+                    <div class="input-area">
+                        <label for="name" class="form-label">Valid State</label>
+                        <div class="relative">
+                            <input id="name" type="text" class="form-control !border-success-500 !pr-9"
+                                placeholder="Valid">
+                            <iconify-icon class="absolute top-1/2 right-3 -translate-y-1/2 text-success-500 text-xl"
+                                icon="heroicons-outline:check"></iconify-icon>
+                        </div>
+                        <span class="font-Inter text-xs text-white bg-success-500 rounded px-2 py-1 mt-2 inline-block">This
+                            is valid state.</span>
+                    </div>
+                    <div class="input-area">
+                        <label for="name" class="form-label">Invalid State</label>
+                        <div class="relative">
+                            <input id="name" type="text" class="form-control !border-danger-500 !pr-9"
+                                placeholder="Invalid">
+                            <iconify-icon class="absolute top-1/2 right-3 -translate-y-1/2 text-danger-500 text-xl"
+                                icon="mdi:warning-octagon-outline"></iconify-icon>
+                        </div>
+                        <span class="font-Inter text-xs text-white bg-danger-500 rounded px-2 py-1 mt-2 inline-block">This
+                            is invalid state.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Formatter Support -->
+        <div class="card xl:col-span-2 rounded-md bg-white dark:bg-slate-800 lg:h-full shadow-base">
+            <div class="card-body flex flex-col p-6">
+                <header class="flex mb-5 items-center border-b border-slate-100 dark:border-slate-700 pb-5 -mx-6 px-6">
+                    <div class="flex-1">
+                        <div class="card-title text-slate-900 dark:text-white">Formatter Support</div>
+                    </div>
+                </header>
+                <div class="card-text h-full space-y-4">
+                    <div class="input-area">
+                        <label for="textFormatter" class="form-label">Text Input With Formatter (On Input)</label>
+                        <div class="relative">
+                            <input id="textFormatter" type="text" class="form-control lowercase"
+                                placeholder="Text Formatter">
+                            <span class="text-xs font-Inter font-normal text-slate-400 mt-2 inline-block">We will convert
+                                your text to lowercase instantly</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

@@ -30,7 +30,7 @@
         @include('school/partials/_sidebar')
         @include('school/partials/_navbar')
         <div class="content-wrapper transition-all duration-150 ltr:ml-[248px] rtl:mr-[248px]" id="content_wrapper">
-            <div class="page-content">
+            <div class="page-content" style="background: #f1f5f9;">
                 <div class="transition-all duration-150 container-fluid" id="page_layout">
                     <div id="content_layout">
                         @yield('content')

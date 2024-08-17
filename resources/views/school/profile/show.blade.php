@@ -179,7 +179,7 @@ $title = __('site.Show school');
                         </h4>
                     </header>
                     <div class="card-body">
-                        <div class="card-body p-2">
+                        <div class="card-body p-6">
                             {{ $school->description }}
                         </div>
                     </div>
