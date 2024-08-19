@@ -11,12 +11,13 @@ $title = __('site.Courses');
     <div class="mb-5">
         <ul class="m-0 p-0 list-none">
             <li class="inline-block relative top-[3px] text-base text-primary-500 font-Inter ">
-                <a href="index.html">
+                <a href="{{ route('school.dashboard') }}">
                     <iconify-icon icon="heroicons-outline:home"></iconify-icon>
                     <iconify-icon icon="heroicons-outline:chevron-right"
                         class="relative text-slate-500 text-sm rtl:rotate-180"></iconify-icon>
                 </a>
             </li>
+           
             <li class="inline-block relative text-sm text-slate-500 font-Inter dark:text-white">
                 {{ $title }}</li>
         </ul>
@@ -24,10 +25,16 @@ $title = __('site.Courses');
     <!-- END: BreadCrumb -->
 
     <div class=" space-y-5">
+
         <div class="card">
             <header class=" card-header noborder">
                 <h4 class="card-title"> {{ $title }}
                 </h4>
+                @if (checkAdminPermission('create_courses'))
+                    <a href="{{ route($mainRoutePrefix . '.courses.create') }}" class="btn btn-sm btn-primary">
+                        <iconify-icon icon="heroicons:folder-plus"></iconify-icon>
+                        @lang('site.Add')</a>
+                @endif
             </header>
             <div class="card-body px-6 pb-6">
                 <div class="overflow-x-auto -mx-6 dashcode-data-table">
@@ -126,10 +133,13 @@ $title = __('site.Courses');
                                                         class="action-btn">
                                                         <iconify-icon icon="heroicons:pencil-square"></iconify-icon>
                                                     </a>
-                                                    <a href="{{ route($mainRoutePrefix . '.courses.destroy', $course->id) }}"
-                                                        class="action-btn">
-                                                        <iconify-icon icon="heroicons:trash"></iconify-icon>
-                                                    </a>
+                                                    @include('school.partials._destroy_btn', [
+                                                        'txt' => __('site.Delete'),
+                                                        'route' => route(
+                                                            $mainRoutePrefix . '.courses.destroy',
+                                                            $course->id),
+                                                    ])
+
                                                 </div>
                                             </td>
                                         </tr>
