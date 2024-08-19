@@ -10011,18 +10011,18 @@ ToolTip And PopOver
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-#file-preview{
+.file-preview{
   display: flex;
   flex-wrap: wrap;
 }
 
-#file-preview > :not([hidden]) ~ :not([hidden]){
+.file-preview > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
   margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
 }
 
-#file-preview img{
+.file-preview img{
   margin-top: 1rem;
   height: 10rem;
   width: 10rem;

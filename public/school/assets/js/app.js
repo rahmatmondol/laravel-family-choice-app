@@ -690,6 +690,7 @@
   $(".select2").select2({
     placeholder: "Select an Option"
   });
+
   $("#limitedSelect").select2({
     placeholder: "Select an Option",
     maximumSelectionLength: 2
@@ -699,10 +700,12 @@
     var message = count + " file" + (count === 1 ? "" : "s") + " selected";
     $("#placeholder").text(message);
   });
-  $(".filePreview input").on("change", function () {
+
+  //image
+  $(".filePreview-image input").on("change", function () {
     var files = $(this).get(0).files;
-    var preview = $(".filePreview #file-preview");
-    var name = $(".filePreview #placeholder");
+    var preview = $(".filePreview-image > .file-preview");
+    var name = $(".filePreview-image #placeholder");
     preview.empty();
     name.empty();
     if (files) {
@@ -719,6 +722,51 @@
       }
     }
   });
+
+  //cover
+  $(".filePreview-cover input").on("change", function () {
+    var files = $(this).get(0).files;
+    var preview = $(".filePreview-cover > .file-preview");
+    var name = $(".filePreview-cover #placeholder");
+    preview.empty();
+    name.empty();
+    if (files) {
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        var reader = new FileReader();
+        reader.onload = function () {
+          var img = $("<img>").attr("src", reader.result);
+          preview.append(img);
+        };
+        reader.readAsDataURL(file);
+        var span = $("<span>").text(file.name);
+        name.append(span);
+      }
+    }
+  });
+
+  //attachments
+  $(".filePreview-attachments input").on("change", function () {
+    var files = $(this).get(0).files;
+    var preview = $(".filePreview-attachments > .file-preview");
+    var name = $(".filePreview-attachments #placeholder");
+    preview.empty();
+    name.empty();
+    if (files) {
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        var reader = new FileReader();
+        reader.onload = function () {
+          var img = $("<img>").attr("src", reader.result);
+          preview.append(img);
+        };
+        reader.readAsDataURL(file);
+        var span = $("<span>").text(file.name);
+        name.append(span);
+      }
+    }
+  });
+
   $(".multiFilePreview input").on("change", function () {
     $(".multiFilePreview #file-preview").empty(); // clear any existing previews
     var files = $(this)[0].files;
