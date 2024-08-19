@@ -23,9 +23,7 @@ $title = __('site.SubscriptionTypes');
         </ul>
     </div>
     <!-- END: BreadCrumb -->
-
     <div class=" space-y-5">
-
         <div class="card">
             <header class=" card-header noborder">
                 <h4 class="card-title"> {{ $title }}
