@@ -28,6 +28,7 @@ class SubscriptionTypeController extends BaseController
 
     $subscriptionTypes = $this->subscriptionTypeRepository->getFilteredSubscriptionTypes($request);
     $subscriptions = $this->subscriptionRepository->getAllSubscriptions();
+    $subscriptionTypes = SubscriptionType::with(['school', 'subscription'])->get();
     return view($this->mainViewPrefix.'.subscriptionTypes.index', compact('subscriptionTypes','subscriptions'));
   } // end of index
 
