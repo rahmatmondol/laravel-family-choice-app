@@ -4,181 +4,148 @@ $page = 'courses';
 $title = __('site.Courses');
 ?>
 @section('title_page')
-{{ $title }}
+    {{ $title }}
 @endsection
 @section('content')
+    <!-- BEGIN: Breadcrumb -->
+    <div class="mb-5">
+        <ul class="m-0 p-0 list-none">
+            <li class="inline-block relative top-[3px] text-base text-primary-500 font-Inter ">
+                <a href="index.html">
+                    <iconify-icon icon="heroicons-outline:home"></iconify-icon>
+                    <iconify-icon icon="heroicons-outline:chevron-right"
+                        class="relative text-slate-500 text-sm rtl:rotate-180"></iconify-icon>
+                </a>
+            </li>
+            <li class="inline-block relative text-sm text-slate-500 font-Inter dark:text-white">
+                {{ $title }}</li>
+        </ul>
+    </div>
+    <!-- END: BreadCrumb -->
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h6>{{ $title }}
-            <small>
-              ( {{ $courses->total() }} )
-            </small>
-          </h6>
+    <div class=" space-y-5">
+        <div class="card">
+            <header class=" card-header noborder">
+                <h4 class="card-title"> {{ $title }}
+                </h4>
+            </header>
+            <div class="card-body px-6 pb-6">
+                <div class="overflow-x-auto -mx-6 dashcode-data-table">
+                    <span class=" col-span-8  hidden"></span>
+                    <span class="  col-span-4 hidden"></span>
+                    <div class="inline-block min-w-full align-middle">
+                        <div class="overflow-hidden ">
+                            <table
+                                class="min-w-full divide-y divide-slate-100 table-fixed dark:divide-slate-700 data-table">
+                                <thead class=" bg-slate-200 dark:bg-slate-700">
+                                    <tr>
+                                        <th scope="col" class=" table-th ">
+                                            Id
+                                        </th>
 
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item active">{{ $title }}</li>
-          </ol>
-        </div>
-        <div class="col-sm-12">
+                                        <th scope="col" class=" table-th ">
+                                            @lang('site.Title')
+                                        </th>
 
-          <form action="{{ route($mainRoutePrefix.'.courses.index') }}" method="get">
+                                        <th scope="col" class=" table-th ">
+                                            @lang('site.Type')
+                                        </th>
 
-            <div class="row">
+                                        <th scope="col" class=" table-th ">
+                                            @lang('site.Subscription')
+                                        </th>
 
-              <div class="col-md-4">
-                <div class="form-group">
-                  <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
-                    value="{{ request()->search }}">
+                                        <th scope="col" class=" table-th ">
+                                            @lang('site.From Date')
+                                        </th>
+
+                                        <th scope="col" class=" table-th ">
+                                            @lang('site.To Date')
+                                        </th>
+
+                                        <th scope="col" class=" table-th ">
+                                            @lang('site.Image')
+                                        </th>
+
+                                        <th scope="col" class=" table-th ">
+                                            @lang('site.Status')
+                                        </th>
+
+                                        <th scope="col" class=" table-th ">
+                                            @lang('site.table.Order Item')
+                                        </th>
+
+                                        <th scope="col" class=" table-th ">
+                                            @lang('site.Actions')
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
+                                    @forelse ($courses as $course)
+                                        <tr>
+                                            <td class="table-td"> {{ $loop->iteration }}</td>
+                                            <td class="table-td "> {{ $course->title }}</td>
+                                            <td class="table-td "> @lang('site.' . ucfirst($course->type))</td>
+                                            <td class="table-td "> {{ $course->subscription?->title }}</td>
+                                            <td class="table-td "> {{ $course->from_date }}</td>
+                                            <td class="table-td "> {{ $course->to_date }}</td>
+
+                                            <td class="table-td">
+                                                <a href="{{ $course->image_path }}">
+                                                    <span class="flex">
+                                                        <span class="w-7 h-7 rounded-full ltr:mr-3 rtl:ml-3 flex-none">
+                                                            <img src="{{ $course->image_path }}" alt=""
+                                                                class="object-cover w-full h-full rounded-full">
+                                                        </span>
+                                                    </span>
+                                                </a>
+                                            </td>
+
+                                            <td class="table-td ">
+                                                @if ($course->status)
+                                                    <div
+                                                        class="inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-success-500 bg-success-500">
+                                                        @lang('site.Active')
+                                                    </div>
+                                                @else
+                                                    <div
+                                                        class="inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 text-danger-500 bg-danger-500">
+                                                        @lang('site.In-Active')
+                                                    </div>
+                                                @endif
+                                            </td>
+                                            <td class="table-td "> {{ $course->order_column }}</td>
+
+                                            <td class="table-td ">
+                                                <div class="flex space-x-3 rtl:space-x-reverse">
+                                                    <a href="{{ route($mainRoutePrefix . '.courses.show', ['course' => $course->id]) }}"
+                                                        class="action-btn">
+                                                        <iconify-icon icon="heroicons:eye"></iconify-icon>
+                                                    </a>
+                                                    <a href="{{ route($mainRoutePrefix . '.courses.edit', ['course' => $course->id]) }}"
+                                                        class="action-btn">
+                                                        <iconify-icon icon="heroicons:pencil-square"></iconify-icon>
+                                                    </a>
+                                                    <a href="{{ route($mainRoutePrefix . '.courses.destroy', $course->id) }}"
+                                                        class="action-btn">
+                                                        <iconify-icon icon="heroicons:trash"></iconify-icon>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td>
+                                                @include('school.partials.no_data_found')
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
-                  @lang('site.Search')</button>
-                @if (checkAdminPermission('create_courses'))
-                <a href="{{ route($mainRoutePrefix.'.courses.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
-                  @lang('site.Add')</a>
-                @endif
-              </div>
-            </div>
-
-            </div>
-          </form><!-- end of form -->
         </div>
-      </div>
-    </div><!-- /.container-fluid -->
-  </section>
-
-  <!-- Main content -->
-  <section class="content">
-
-    <!-- Default box -->
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">{{ $title }}</h3>
-
-        <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-            <i class="fas fa-minus"></i>
-          </button>
-        </div>
-      </div>
-      <div class="card-body p-0">
-        <table class="table table-striped projects">
-          <thead>
-            <tr>
-              <th style="width: 1%">
-                #
-              </th>
-              <th style="width: 20%">
-                @lang('site.Title')
-              </th>
-              <th style="width: 20%">
-                @lang('site.Type')
-              </th>
-              <th style="width: 20%">
-                @lang('site.Subscription')
-              </th>
-              <th style="width: 20%">
-                @lang('site.From Date')
-              </th>
-              <th style="width: 20%">
-                @lang('site.To Date')
-              </th>
-              <th style="width: 20%">
-                @lang('site.Image')
-              </th>
-              <th style="width: 8%" class="text-center">
-                @lang('site.Status')
-              </th>
-              <th style="width: 8%" class="text-center">
-                @lang('site.table.Order Item')
-              </th>
-              <th style="width: 20%" class="text-center">
-                @lang('site.Actions')
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            @forelse ($courses as $course )
-            <tr>
-              <td>
-                {{ $loop->iteration }}
-              </td>
-              <td>
-                {{ $course->title }}
-              </td>
-              <td>
-                @lang('site.'.ucfirst($course->type))
-              </td>
-              <td>
-                {{ $course->subscription?->title }}
-              </td>
-              <td>
-                {{ $course->from_date }}
-              </td>
-              <td>
-                {{ $course->to_date }}
-              </td>
-              <td>
-                <a href="{{ $course->image_path }}" data-fancybox data-caption="Caption for single image">
-                  <img src="{{ $course->image_path }}" style="width: 100px;" class="img-thumbnail" alt="">
-                </a>
-              </td>
-              <td class="project-state">
-                @include('school.partials._render_status',['status'=>$course->status])
-              </td>
-              <td>
-                {{ $course->order_column }}
-              </td>
-              <td class="project-actions text-right">
-
-                @include('school.partials._view_btn',[
-                'txt'=>__('site.View'),
-                'route'=>route($mainRoutePrefix.'.courses.show', ['course'=>$course->id]),
-                ])
-
-                @include('school.partials._edit_btn',[
-                'txt'=>__('site.Edit'),
-                'route'=>route($mainRoutePrefix.'.courses.edit', ['course'=>$course->id]),
-                ])
-
-                @include('school.partials._destroy_btn',[
-                'txt'=>__('site.Delete'),
-                'route'=>route($mainRoutePrefix.'.courses.destroy', $course->id),
-                ])
-
-              </td>
-            </tr>
-            @empty
-            <tr>
-              <td>
-                @include('school.partials.no_data_found')
-              </td>
-            </tr>
-            @endforelse
-
-          </tbody>
-        </table>
-        {{ $courses->appends(request()->query())->links() }}
-
-      </div>
-      <!-- /.card-body -->
     </div>
-    <!-- /.card -->
-
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
 @endsection
