@@ -142,6 +142,7 @@ $title = __('site.Courses');
                                     @endforelse
                                 </tbody>
                             </table>
+                            {{ $courses->appends(request()->query())->links() }}
                         </div>
                     </div>
                 </div>
