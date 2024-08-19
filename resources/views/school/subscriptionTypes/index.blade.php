@@ -30,7 +30,7 @@ $title = __('site.SubscriptionTypes');
             <header class=" card-header noborder">
                 <h4 class="card-title"> {{ $title }}
                 </h4>
-                @if (checkAdminPermission('create_courses'))
+                @if (checkAdminPermission('create_subscriptionTypes'))
                     <a href="{{ route($mainRoutePrefix.'.subscriptionTypes.create') }}" class="btn btn-sm btn-primary">
                         <iconify-icon icon="heroicons:folder-plus"></iconify-icon>
                         @lang('site.Add')</a>
