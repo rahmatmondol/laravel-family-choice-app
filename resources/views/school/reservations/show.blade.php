@@ -345,7 +345,7 @@ $title = __('site.Show Reservation');
                                             @lang('site.Status')</td>
                                         <td
                                             class="table-td border border-slate-100 dark:bg-slate-800 dark:border-slate-700">
-                                            >@include('admin.partials._render_reservation_status', [
+                                            @include('admin.partials._render_reservation_status', [
                                                 'status' => $reservation->status,
                                             ])
                                         </td>

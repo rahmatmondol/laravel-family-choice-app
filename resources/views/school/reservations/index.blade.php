@@ -98,6 +98,9 @@ $title = __('site.Reservations');
                                         #
                                     </th>
                                     <th scope="col" class=" table-th " style="width: 20%">
+                                        @lang('site.Parent Name')
+                                    </th>
+                                    <th scope="col" class=" table-th " style="width: 20%">
                                         @lang('site.Status')
                                     </th>
                                     <th scope="col" class=" table-th " style="width: 20%">
@@ -113,6 +116,7 @@ $title = __('site.Reservations');
                                         @lang('site.Created At')
                                     </th>
                                     <th scope="col" class=" table-th " style="width: 20%">
+                                        @lang('site.Actions')
                                     </th>
                                 </tr>
                             </thead>
