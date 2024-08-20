@@ -4,136 +4,98 @@ $page = 'logs';
 $title = __('site.Logs');
 ?>
 @section('title_page')
-{{ $title }}
+    {{ $title }}
 @endsection
 @section('content')
+    <!-- BEGIN: Breadcrumb -->
+    <div class="mb-5">
+        <ul class="m-0 p-0 list-none">
+            <li class="inline-block relative top-[3px] text-base text-primary-500 font-Inter ">
+                <a href="{{ route('school.dashboard') }}">
+                    <iconify-icon icon="heroicons-outline:home"></iconify-icon>
+                    <iconify-icon icon="heroicons-outline:chevron-right"
+                        class="relative text-slate-500 text-sm rtl:rotate-180"></iconify-icon>
+                </a>
+            </li>
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h6>{{ $title }}
-            <small>
-              ( {{ $logs->total() }} )
-            </small>
-          </h6>
-
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-center">
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item active">{{ $title }}</li>
-          </ol>
-        </div>
-        <div class="col-sm-12">
-
-          <form action="{{ route($mainRoutePrefix.'.reservation-logs') }}" method="get">
-
-            <div class="row">
-
-              <div class="col-md-4">
-                <div class="form-group">
-                  <input type="text" name="search" class="form-control" placeholder="@lang('site.search')"
-                  value="{{ request()->search }}">
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="form-group">
-                  <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
-                    @lang('site.Search')</button>
-                </div>
-              </div>
-
-            </div>
-          </form><!-- end of form -->
-        </div>
-      </div>
-    </div><!-- /.container-fluid -->
-  </section>
-
-  <!-- Main content -->
-  <section class="content">
-
-    <!-- Default box -->
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">{{ $title }}</h3>
-
-        <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-            <i class="fas fa-minus"></i>
-          </button>
-        </div>
-      </div>
-      <div class="card-body p-0">
-        <table class="table table-striped projects">
-          <thead>
-            <tr>
-              <th style="width: 1%">
-                #
-              </th>
-              <th style="width: 20%" class="text-center">
-                @lang('site.Reservation Number')
-              </th>
-              <th style="width: 20%" class="text-center">
-                @lang('site.Description')
-              </th>
-              <th style="width: 20%" class="text-center">
-                @lang("site.User Name")
-              </th>
-              <th style="width: 20%" class="text-center">
-                @lang("site.User Type")
-              </th>
-              <th style="width: 20%" class="text-center">
-                @lang('site.Created At')
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            @forelse ($logs as $log )
-            <tr>
-              <td class="text-center">
-                {{ $loop->iteration }}
-              </td>
-              <td class="text-center">
-                {{ $log->subject_id }}
-              </td>
-              <td class="text-center">
-                {{ $log->description }}
-              </td>
-              <td class="text-center">
-                {{ $log->causer_full_name  }}
-              </td>
-              <td class="text-center">
-                {{ $log->causer_model_type  }}
-              </td>
-              <td class="text-center">
-                {{ $log->created_at }}
-              </td>
-            </tr>
-            @empty
-            <tr>
-              <td class="text-center">
-                @include('admin.partials.no_data_found')
-              </td>
-            </tr>
-            @endforelse
-
-          </tbody>
-        </table>
-        {{ $logs->appends(request()->query())->links() }}
-
-      </div>
-      <!-- /.card-body -->
+            <li class="inline-block relative text-sm text-slate-500 font-Inter dark:text-white">
+                {{ $title }}</li>
+        </ul>
     </div>
-    <!-- /.card -->
+    <!-- END: BreadCrumb -->
 
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+    <div class=" space-y-5">
+
+        <div class="card">
+            <header class=" card-header noborder">
+                <h4 class="card-title"> {{ $title }}
+                </h4>
+            </header>
+            <div class="card-body px-6 pb-6">
+                <div class="overflow-x-auto -mx-6 dashcode-data-table">
+                    <span class=" col-span-8  hidden"></span>
+                    <span class="  col-span-4 hidden"></span>
+                    <div class="inline-block min-w-full align-middle">
+                        <div class="overflow-hidden ">
+                            <table
+                                class="min-w-full divide-y divide-slate-100 table-fixed dark:divide-slate-700 data-table">
+                                <thead class=" bg-slate-200 dark:bg-slate-700">
+                                    <tr>
+                                        <th scope="col" class=" table-th ">
+                                            #
+                                        </th>
+
+                                        <th scope="col" class=" table-th ">
+                                            @lang('site.Reservation Number')
+                                        </th>
+
+                                        <th scope="col" class=" table-th ">
+                                            @lang('site.Description')
+                                        </th>
+
+                                        <th scope="col" class=" table-th ">
+                                            @lang('site.User Name')
+                                        </th>
+
+                                        <th scope="col" class=" table-th ">
+                                            @lang('site.User Type')
+                                        </th>
+
+                                        <th scope="col" class=" table-th ">
+                                            @lang('site.Created At')
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
+                                    @forelse ($logs as $log)
+                                        <tr>
+                                            <td class="table-td"> {{ $loop->iteration }}</td>
+                                            <td class="table-td ">{{ $log->subject_id }}</td>
+                                            <td class="table-td "> {{ $log->description }}</td>
+                                            <td class="table-td "> {{ $log->causer_full_name }}</td>
+                                            <td class="table-td "> {{ $log->causer_model_type }}</td>
+                                            <td class="table-td ">{{ $log->created_at }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                          <td></td>
+                                          <td></td>
+                                            <td>
+                                                @include('school.partials.no_data_found')
+                                            </td>
+                                          <td></td>
+                                          <td></td>
+                                          <td></td>
+
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                            {{ $logs->appends(request()->query())->links() }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
