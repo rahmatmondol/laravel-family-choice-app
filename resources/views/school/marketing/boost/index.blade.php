@@ -4,148 +4,131 @@ $page = 'boost page';
 $title = 'boost';
 ?>
 @section('title_page')
-{{ $title }}
+    {{ $title }}
 @endsection
+
 @section('content')
+    <!-- BEGIN: Breadcrumb -->
+    <div class="mb-5">
+        <ul class="m-0 p-0 list-none">
+            <li class="inline-block relative top-[3px] text-base text-primary-500 font-Inter ">
+                <a href="{{ route('school.dashboard') }}">
+                    <iconify-icon icon="heroicons-outline:home"></iconify-icon>
+                    <iconify-icon icon="heroicons-outline:chevron-right"
+                        class="relative text-slate-500 text-sm rtl:rotate-180"></iconify-icon>
+                </a>
+            </li>
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h6>{{ $title }}
-            <small>
-              ({{ $count }})
-            </small>
-          </h6>
-
+            <li class="inline-block relative text-sm text-slate-500 font-Inter dark:text-white">
+                {{ $title }}</li>
+        </ul>
+    </div>
+    <!-- END: BreadCrumb -->
+    <div class=" space-y-5">
+        <div class="card">
+            <div class="card-body px-6 pb-6">
+                <form action="{{ route($mainRoutePrefix . '.boost.list') }}" method="get">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
+                        <div class="input-area">
+                            <select name="status" class="form-control custom-select">
+                                <option value="active">Active </option>
+                                <option value="inactive">In Active </option>
+                            </select>
+                        </div>
+                        <div class="input-area">
+                            <button type="submit" class="btn btn-sm btn-primary"><iconify-icon
+                                    icon="heroicons-outline:search"></iconify-icon>
+                                @lang('site.Search')</button>
+                            @if (checkAdminPermission('create_courses'))
+                                <a href="{{ route($mainRoutePrefix . '.discount.add') }}"
+                                    class="btn btn-sm btn-primary"><iconify-icon
+                                        icon="heroicons-outline:plus"></iconify-icon>
+                                    @lang('site.Add')</a>
+                            @endif
+                        </div>
+                    </div>
+                </form><!-- end of form -->
+            </div>
         </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item active">{{ $title }}</li>
-          </ol>
-        </div>
-        <div class="col-sm-12">
+    </div>
+    {{-- table --}}
+    <div class="card mt-4">
+        <div class="card-body px-6 pb-6">
+            <div class="overflow-x-auto -mx-6 dashcode-data-table">
 
-          <form action="{{ route($mainRoutePrefix.'.boost.list') }}" method="get">
+                <div class="inline-block min-w-full align-middle">
+                    <div class="overflow-hidden ">
+                        <table class="min-w-full divide-y divide-slate-100 table-fixed dark:divide-slate-700 data-table">
+                            <thead class=" bg-slate-200 dark:bg-slate-700">
+                                <tr>
+                                    <th scope="col" class=" table-th " style="width: 1%">
+                                        #
+                                    </th>
+                                    <th scope="col" class=" table-th " style="width: 20%">
+                                        city
+                                    </th>
+                                    <th scope="col" class=" table-th " style="width: 20%">
+                                        Monthly Budget
+                                    </th>
+                                    <th scope="col" class=" table-th " style="width: 20%">
+                                        Cost per click
+                                    </th>
+                                    <th scope="col" class=" table-th " style="width: 20%">
+                                        Starting Date
+                                    </th>
+                                    <th scope="col" class=" table-th " style="width: 8%">
+                                        Ending Date
+                                    </th>
+                                    <th scope="col" class=" table-th " style="width: 20%">
+                                        @lang('site.Actions')
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
+                                @forelse($data as $discount)
+                                    <tr>
+                                        <td class="table-td text-center">{{ $loop->iteration }}</td>
+                                        <td class="table-td text-center">{{ $discount->citys->title }}</td>
+                                        <td class="table-td text-center">{{ $discount->monthly_budget ?? 0 }} EAD</td>
+                                        <td class="table-td text-center">{{ $discount->cost_per_click ?? 0 }} EAD</td>
+                                        <td class="table-td text-center">
+                                            {{ Carbon\Carbon::parse($discount->starting)->format('F j, Y') }}</td>
+                                        <td class="table-td text-center">
+                                            {{ Carbon\Carbon::parse($discount->ending)->format('F j, Y') }}</td>
 
-            <div class="row">
-
-              <div class="col-md-4">
-                <div class="form-group">
-{{--                  <label for="inputType">@lang('site.EducationalSubjects')</label>--}}
-                  <select name="status" class="form-control selectric"  data-live-search="true"
-                          required>
-                    <option value="active">Active </option>
-                    <option value="inactive">In Active </option>
-
-                  </select>
+                                        <td class="table-td ">
+                                            <div class="flex space-x-3 rtl:space-x-reverse">
+                                                <a href="{{ route($mainRoutePrefix . '.boost.show', ['id' => $discount->id]) }}"
+                                                    class="action-btn">
+                                                    <iconify-icon icon="heroicons:eye"></iconify-icon>
+                                                </a>
+                                                @include('school.partials._destroy_btn', [
+                                                    'txt' => __('site.Delete'),
+                                                    'route' => route($mainRoutePrefix . '.boost.delete', [
+                                                        'id' => $discount->id,
+                                                    ]),
+                                                ])
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            @include('school.partials.no_data_found')
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
-                  Filter</button>
-                @if (checkAdminPermission('create_courses'))
-                <a href="{{ route($mainRoutePrefix.'.boost.create') }}" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i>
-                  @lang('site.Add')</a>
-                @endif
-              </div>
-            </div>
-
-            </div>
-          </form><!-- end of form -->
         </div>
-      </div>
-    </div><!-- /.container-fluid -->
-  </section>
-
-  <!-- Main content -->
-  <section class="content">
-
-    <!-- Default box -->
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">{{ $title }}</h3>
-
-        <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-            <i class="fas fa-minus"></i>
-          </button>
-        </div>
-      </div>
-      <div class="card-body p-0">
-        <table class="table table-striped projects">
-          <thead>
-            <tr>
-              <th style="width: 1%">
-                #
-              </th>
-              <th style="width: 20%">
-                city
-              </th>
-              <th style="width: 20%">
-                Monthly Budget
-              </th>
-              <th style="width: 20%">
-               Cost per click
-              </th>
-              <th style="width: 20%">
-                Starting Date
-              </th>
-              <th style="width: 8%">
-                Ending Date
-              </th>
-
-              <th style="width: 20%" class="text-center">
-                @lang('site.Actions')
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-          @forelse($data as $discount)
-            <tr>
-              <td>{{ $loop->iteration }}</td>
-              <td>{{ $discount->citys->title }}</td>
-              <td>{{ $discount->monthly_budget ?? 0}} EAD</td>
-              <td>{{ $discount->cost_per_click ?? 0 }} EAD</td>
-
-              <td>{{  Carbon\Carbon::parse($discount->starting)->format('F j, Y') }}</td>
-              <td>{{  Carbon\Carbon::parse($discount->ending)->format('F j, Y') }}</td>
-
-              <td class="project-actions text-right">
-
-                              @include('school.partials._view_btn',[
-                              'txt'=>__('site.View'),
-                              'route'=>route($mainRoutePrefix.'.boost.show', ['id'=>$discount->id]),
-                              ])
-                              @include('school.partials._destroy_btn',[
-                              'txt'=>__('site.Delete'),
-                              'route'=>route($mainRoutePrefix.'.boost.delete', ['id'=>$discount->id]),
-                              ])
-                            </td>
-            </tr>
-          @empty
-            <tr>
-              <td colspan="9">No discounts found</td>
-            </tr>
-          @endforelse
-
-          </tbody>
-        </table>
-{{--        {{ $courses->appends(request()->query())->links() }}--}}
-
-      </div>
-      <!-- /.card-body -->
     </div>
-    <!-- /.card -->
-
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
 @endsection
