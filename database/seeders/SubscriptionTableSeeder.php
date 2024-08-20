@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Reservation;
 use App\Models\Subscription;
 use Illuminate\Database\Seeder;
 
