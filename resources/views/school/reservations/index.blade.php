@@ -4,212 +4,176 @@ $page = 'reservations';
 $title = __('site.Reservations');
 ?>
 @section('title_page')
-{{ $title }}
+    {{ $title }}
 @endsection
 @section('content')
+    <!-- BEGIN: Breadcrumb -->
+    <div class="mb-5">
+        <ul class="m-0 p-0 list-none">
+            <li class="inline-block relative top-[3px] text-base text-primary-500 font-Inter ">
+                <a href="{{ route('school.dashboard') }}">
+                    <iconify-icon icon="heroicons-outline:home"></iconify-icon>
+                    <iconify-icon icon="heroicons-outline:chevron-right"
+                        class="relative text-slate-500 text-sm rtl:rotate-180"></iconify-icon>
+                </a>
+            </li>
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h6>{{ $title }}
-            <small>
-              ( {{ $reservations->total() }} )
-            </small>
-          </h6>
-
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-center">
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item active">{{ $title }}</li>
-          </ol>
-        </div>
-        <div class="col-sm-12">
-
-          <form action="{{ route($mainRoutePrefix.'.reservations.index') }}" method="get">
-
-            <div class="row">
-
-              <div class="col-md-4">
-                <div class="form-group">
-                  <input type="text" name="search" class="form-control" placeholder="@lang('site.search by reservation number or parent name')"
-                  value="{{ request()->search }}">
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="form-group">
-                  <select id="inputStatus" name="status" class="form-control custom-select">
-                    <option value='' selected >@lang('site.reservation_status.Status')</option>
-                    @foreach(App\Enums\ReservationStatus::values() as $status)
-                      <option value="{{ $status }}" @selected(request('status')==$status)>@lang('site.reservation_status.'.$status)</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="form-group">
-                  <select  name="payment_status" class="form-control custom-select">
-                    <option value='' selected >@lang('site.payment_status.Status')</option>
-                    @foreach(App\Enums\PaymentStatus::values() as $payment_status)
-                      <option value="{{ $payment_status }}" @selected(request('payment_status')==$payment_status)>@lang('site.payment_status.'.$payment_status)</option>
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        @lang('site.From')
-                      </span>
-                    </div>
-                    <input type="date" name="from_date" class="form-control float-right"  value="{{ request('from_date') }}">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        @lang('site.To')
-                      </span>
-                    </div>
-                    <input type="date" name="to_date" class="form-control float-right"  value="{{ request('to_date') }}">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="form-group">
-                  <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
-                    @lang('site.Search')</button>
-                    <a href="{{ route($mainRoutePrefix.'.reservations.export',request()->all() ) }}" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
-                      @lang('site.Export')</a>
-                </div>
-              </div>
-
-            </div>
-          </form><!-- end of form -->
-        </div>
-      </div>
-    </div><!-- /.container-fluid -->
-  </section>
-
-  <!-- Main content -->
-  <section class="content">
-
-    <!-- Default box -->
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">{{ $title }}</h3>
-
-        <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-            <i class="fas fa-minus"></i>
-          </button>
-        </div>
-      </div>
-      <div class="card-body p-0">
-        <table class="table table-striped projects">
-          <thead>
-            <tr>
-              <th style="width: 1%">
-                #
-              </th>
-              <th style="width: 20%" class="text-center">
-                @lang('site.Parent Name')
-              </th>
-              <th style="width: 20%" class="text-center">
-                @lang('site.Status')
-              </th>
-              <th style="width: 20%" class="text-center">
-                @lang('site.payment_status.Status')
-              </th>
-              <th style="width: 20%" class="text-center">
-                @lang('site.Customer')
-              </th>
-              <th style="width: 20%" class="text-center">
-                @lang('site.Total Fees')
-              </th>
-              </th>
-              <th style="width: 20%" class="text-center">
-                @lang('site.Created At')
-              </th>
-              <th style="width: 20%" class="text-center">
-
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            @forelse ($reservations as $reservation )
-            <tr>
-              <td class="text-center">
-                {{ $loop->iteration }}
-              </td>
-              <td class="text-center">
-                {{ $reservation->parent_name }}
-              </td>
-              <td class="text-center">
-                @include('admin.partials._render_reservation_status',['status'=>$reservation->status])
-              </td>
-              <td class="text-center">
-                @include('admin.partials._render_payment_status',['status'=>$reservation->payment_status])
-              </td>
-              <td class="text-center">
-
-                @if($reservation->customer_id)
-                <a href="{{ route($mainRoutePrefix.'.customers.show', ['customer'=>$reservation->customer_id]) }}"
-                  class="btn btn-primary btn-sm" target="_blank">{{ $reservation->customer?->full_name }}</a>
-                @endif
-              </td>
-              <td class="text-center">
-                {{ $reservation->total_fees }}  @lang('site.app.Currency')
-              </td>
-              <td class="text-center">
-                {{ $reservation->created_at }}
-              </td>
-              <td class="text-center">
-                @include('school.partials._view_btn',[
-                'txt'=>__('site.View'),
-                'route'=>route($mainRoutePrefix.'.reservations.show', ['reservation'=>$reservation->id]),
-                ])
-                @include('school.partials._edit_btn',[
-                'txt'=>__('site.Edit'),
-                'route'=>route($mainRoutePrefix.'.reservations.edit', ['reservation'=>$reservation->id]),
-                ])
-              </td>
-            </tr>
-            @empty
-            <tr>
-              <td class="text-center">
-                @include('school.partials.no_data_found')
-              </td>
-            </tr>
-            @endforelse
-
-          </tbody>
-        </table>
-        {{ $reservations->appends(request()->query())->links() }}
-
-      </div>
-      <!-- /.card-body -->
+            <li class="inline-block relative text-sm text-slate-500 font-Inter dark:text-white">
+                {{ $title }}</li>
+        </ul>
     </div>
-    <!-- /.card -->
+    <!-- END: BreadCrumb -->
+    <div class=" space-y-5">
+        <div class="card">
+            <div class="card-body px-6 pb-6">
+                <form action="{{ route($mainRoutePrefix . '.reservations.index') }}" method="get">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
+                        <div class="input-area">
+                            <input type="text" name="search" class="form-control" placeholder="@lang('site.search by reservation number or parent name')"
+                                value="{{ request()->search }}">
+                        </div>
+                        <div class="input-area">
+                            <select id="inputStatus" name="status" class="form-control">
+                                <option value='' selected>@lang('site.reservation_status.Status')</option>
+                                @foreach (App\Enums\ReservationStatus::values() as $status)
+                                    <option value="{{ $status }}" @selected(request('status') == $status)>
+                                        @lang('site.reservation_status.' . $status)</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="input-area">
+                            <select name="payment_status" class="form-control">
+                                <option value='' selected>@lang('site.payment_status.Status')</option>
+                                @foreach (App\Enums\PaymentStatus::values() as $payment_status)
+                                    <option value="{{ $payment_status }}" @selected(request('payment_status') == $payment_status)>
+                                        @lang('site.payment_status.' . $payment_status)</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
+                        <div class="input-area">
+                            <div class="relative group">
+                                <input type="date" class="form-control !pl-12" name="from_date"
+                                    value="{{ request('from_date') }}">
+                                <span style="font-size: 10px;"
+                                    class="absolute left-0 top-1/2 -translate-y-1/2 w-9 h-full border-r border-r-slate-200 dark:border-r-slate-700 flex items-center justify-center">
+                                    @lang('site.From')
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-area">
+                            <div class="relative group">
+                                <input type="date" class="form-control !pl-12" name="to_date"
+                                    value="{{ request('to_date') }}">
+                                <span style="font-size: 10px;"
+                                    class="absolute left-0 top-1/2 -translate-y-1/2 w-9 h-full border-r border-r-slate-200 dark:border-r-slate-700 flex items-center justify-center">
+                                    @lang('site.To')
+                                </span>
+                            </div>
+                        </div>
+                        <div class="input-area">
+                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
+                                @lang('site.Search')</button>
+                            <a href="{{ route($mainRoutePrefix . '.reservations.export', request()->all()) }}"
+                                class="btn btn-sm btn-primary"><i class="fa fa-search"></i>
+                                @lang('site.Export')</a>
+                        </div>
+                    </div>
+                </form><!-- end of form -->
+            </div>
+        </div>
+    </div>
+    {{-- table --}}
+    <div class="card mt-4">
+        <div class="card-body px-6 pb-6">
+            <div class="overflow-x-auto -mx-6 dashcode-data-table">
 
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+                <div class="inline-block min-w-full align-middle">
+                    <div class="overflow-hidden ">
+                        <table class="min-w-full divide-y divide-slate-100 table-fixed dark:divide-slate-700 data-table">
+                            <thead class=" bg-slate-200 dark:bg-slate-700">
+                                <tr>
+                                    <th scope="col" class=" table-th " style="width: 1%">
+                                        #
+                                    </th>
+                                    <th scope="col" class=" table-th " style="width: 20%">
+                                        @lang('site.Status')
+                                    </th>
+                                    <th scope="col" class=" table-th " style="width: 20%">
+                                        @lang('site.payment_status.Status')
+                                    </th>
+                                    <th scope="col" class=" table-th " style="width: 20%">
+                                        @lang('site.Customer')
+                                    </th>
+                                    <th scope="col" class=" table-th " style="width: 20%">
+                                        @lang('site.Total Fees')
+                                    </th>
+                                    <th scope="col" class=" table-th " style="width: 20%">
+                                        @lang('site.Created At')
+                                    </th>
+                                    <th scope="col" class=" table-th " style="width: 20%">
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
+                                @forelse ($reservations as $reservation)
+                                    <tr>
+                                        <td class="table-td text-center">{{ $loop->iteration }}</td>
+                                        <td class="table-td text-center">{{ $reservation->parent_name }}</td>
+                                        <td class="table-td text-center">
+                                            @include('admin.partials._render_reservation_status', [
+                                                'status' => $reservation->status,
+                                            ])
+                                        </td>
+                                        <td class="table-td text-center">
+                                            @include('admin.partials._render_payment_status', [
+                                                'status' => $reservation->payment_status,
+                                            ])
+                                        </td>
+                                        <td class="table-td text-center">
+                                            @if ($reservation->customer_id)
+                                                <a href="{{ route($mainRoutePrefix . '.customers.show', ['customer' => $reservation->customer_id]) }}"
+                                                    class="btn btn-primary btn-sm"
+                                                    target="_blank">{{ $reservation->customer?->full_name }}</a>
+                                            @endif
+                                        </td>
+
+                                        <td class="table-td ">{{ $reservation->total_fees }} @lang('site.app.Currency')</td>
+                                        <td class="table-td ">{{ $reservation->created_at }}</td>
+                                        <td class="table-td ">
+                                            <div class="flex space-x-3 rtl:space-x-reverse">
+                                                <a href="{{ route($mainRoutePrefix . '.reservations.show', ['reservation' => $reservation->id]) }}"
+                                                    class="action-btn">
+                                                    <iconify-icon icon="heroicons:eye"></iconify-icon>
+                                                </a>
+                                                <a href="{{ route($mainRoutePrefix . '.reservations.edit', ['reservation' => $reservation->id]) }}"
+                                                    class="action-btn">
+                                                    <iconify-icon icon="heroicons:pencil-square"></iconify-icon>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            @include('school.partials.no_data_found')
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 @endsection
