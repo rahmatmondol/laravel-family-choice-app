@@ -239,7 +239,7 @@ $longitude = old('lng', $school->lng) ?? 46.675297;
                         <div class="input-area">
                             <div class="filePreview-image">
                                 <label>
-                                    <input type="file" class=" w-full hidden" id='image' name="image">
+                                    <input type="file" class=" w-full hidden" id='image' name="template_file">
                                     <span class="w-full h-[40px] file-control flex items-center custom-class">
                                         <span class="flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
                                             <span id="placeholder" class="text-slate-400">Choose a file or drop it
@@ -250,7 +250,7 @@ $longitude = old('lng', $school->lng) ?? 46.675297;
                                     </span>
                                 </label>
                                 <div class="file-preview">
-                                    <img src="{{ $school->image_path }}">
+                                    {{-- <img src="{{ $school->image_path }}"> --}}
                                 </div>
                             </div>
                         </div>

@@ -4,105 +4,138 @@ $page = 'attachments';
 $title = __('site.Edit Attachment');
 ?>
 @section('title_page')
-{{ $title }}
+    {{ $title }}
 @endsection
 @section('content')
-
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h6>{{ $title }}</h6>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.attachments.index') }}">@lang('site.Attachments')</a>
+    <!-- BEGIN: Breadcrumb -->
+    <div class="mb-5">
+        <ul class="m-0 p-0 list-none">
+            <li class="inline-block relative top-[3px] text-base text-primary-500 font-Inter ">
+                <a href="index.html">
+                    <iconify-icon icon="heroicons-outline:home"></iconify-icon>
+                    <iconify-icon icon="heroicons-outline:chevron-right"
+                        class="relative text-slate-500 text-sm rtl:rotate-180"></iconify-icon>
+                </a>
             </li>
-            <li class="breadcrumb-item active">{{ $title }}</li>
-          </ol>
-        </div>
-      </div>
-    </div><!-- /.container-fluid -->
-  </section>
+            <li class="inline-block relative text-sm text-slate-500 font-Inter dark:text-white">
+                <a href="{{ route($mainRoutePrefix . '.attachments.index') }}">
+                    @lang('site.Attachments')
+                    <iconify-icon icon="heroicons-outline:chevron-right"
+                        class="relative text-slate-500 text-sm rtl:rotate-180"></iconify-icon>
+                </a>
+            </li>
+            <li class="inline-block relative text-sm text-slate-500 font-Inter dark:text-white">
+                {{ $title }}</li>
+        </ul>
+    </div>
+    <!-- END: BreadCrumb -->
+    <form method="post" action="{{ route($mainRoutePrefix . '.attachments.update', $attachment->id) }}"
+        enctype="multipart/form-data">
+        @csrf
+        @method('put')
+        @include('school.partials._errors')
+        <input type="hidden" name="school_id" value="{{ $globalSchool->id }}">
+        <div class="grid xl:grid-cols-2 grid-cols-1 gap-6">
+            @foreach (LaravelLocalization::getSupportedLocales() as $locale => $properties)
+                <div class="card">
+                    <div class="card-body flex flex-col p-6">
+                        <header
+                            class="flex mb-5 items-center border-b border-slate-100 dark:border-slate-700 pb-5 -mx-6 px-6">
+                            <div class="flex-1">
+                                <div class="card-title text-slate-900 dark:text-white">{{ $properties['name'] }}</div>
+                            </div>
+                        </header>
+                        <div class="card-text h-full space-y-4">
+                            {{-- title --}}
+                            <div class="input-area">
+                                <label class="form-label">@lang('site.' . $locale . '.Title')</label>
+                                <input required="required" name="{{ $locale }}[title]"
+                                    value="{{ old($locale . '.title', $attachment->translate($locale)->title) }}"
+                                    type="text" class="form-control">
+                            </div>
 
-  <!-- Main content -->
-  <section class="content">
-    <form method="post" action="{{ route($mainRoutePrefix.'.attachments.update',$attachment->id)}}" enctype="multipart/form-data">
-      @csrf
-      @method('put')
-      @include('school.partials._errors')
-      <input type="hidden" name="school_id" value="{{ $globalSchool->id }}">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card card-primary">
-            <div class="card-body">
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+            <div class="card">
+                <div class="card-body flex flex-col p-6">
+                  
+                    <div class="card-text h-full space-y-4">
+                        {{-- order_column --}}
+                        <div class="input-area">
+                            <label>@lang('site.Order Item')</label>
+                            <input type="text" name="order_column"
+                                value="{{ old('order_column', $attachment->order_column) }}" class="form-control mt-2"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                        </div>
 
-              @foreach (config('translatable.locales') as $key => $locale)
-              <div class="form-group">
-                <label>@lang('site.' . $locale . '.Title')</label>
-                <input required="required" type="text" name="{{ $locale }}[title]" class="form-control"
-                  value="{{ old($locale . '.title',$attachment->translate($locale)->title) }}">
-              </div>
-              <div class="  with-border"></div><br>
-              @endforeach
+                        {{-- status --}}
+                        <div class="input-area">
+                            <label for="inputStatus">@lang('site.Status')</label>
+                            <select id="inputStatus" name="status" required class="form-control mt-2">
+                                <option value='' selected disabled>@lang('site.Status')</option>
+                                <option value="1" @if (old('status', $attachment->status) == 1) selected @endif>@lang('site.Active')
+                                </option>
+                                <option value="0" @if (old('status', $attachment->status) == 0) selected @endif>@lang('site.In-Active')
+                                </option>
+                            </select>
+                        </div>
 
+                    </div>
+                </div>
             </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-        </div>
-        <div class="col-md-6">
-          <div class="card card-primary">
-            <div class="card-body">
+            <div class="card">
+                <div class="card-body flex flex-col p-6">
+                  <header class="flex mb-5 items-center border-b border-slate-100 dark:border-slate-700 pb-5 -mx-6 px-6">
+                    <div class="flex-1">
+                        <div class="card-title text-slate-900 dark:text-white">@lang('site.Template File')</div>
+                    </div>
+                </header>
+                    <div class="card-text h-full space-y-4">
+                        {{-- Template --}}
+                        <div class="input-area">
+                            <div class="filePreview-image">
+                                <label>
+                                    <input type="file" class=" w-full hidden" id='image' name="template_file">
+                                    <span class="w-full h-[40px] file-control flex items-center custom-class">
+                                        <span class="flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
+                                            <span id="placeholder" class="text-slate-400">Choose a file or drop it
+                                                here...</span>
+                                        </span>
+                                        <span
+                                            class="file-name flex-none cursor-pointer border-l px-4 border-slate-200 dark:border-slate-700 h-full inline-flex items-center bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 text-sm rounded-tr rounded-br font-normal">Browse</span>
+                                    </span>
+                                </label>
+                                <div class="file-preview">
+                                    <img src="{{ $attachment->template_file_path }}">
+                                </div>
+                                @if($attachment->template_file_path)
+                                <a href="{{ $attachment->template_file_path }}" target="_blank">@lang('site.Download')</a>
+                                @endif
+                            </div>
+                        </div>
 
-              <div class="form-group">
-                <label>@lang('site.Template File')</label>
-                <input type="file" id='template_file' name="template_file" class="form-control">
-                @if($attachment->template_file_path)
-                <a href="{{ $attachment->template_file_path }}" target="_blank">@lang('site.Download')</a>
-                @endif
-              </div>
-
-              {{-- order_column --}}
-              <div class="form-group">
-                <label>@lang('site.Order Item')</label>
-                <input type="text" name="order_column" value="{{ old('order_column',$attachment->order_column) }}"
-                  class="form-control"
-                  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
-              </div>
-
-              {{-- status --}}
-              <div class="form-group">
-                <label for="inputStatus">@lang('site.Status')</label>
-                <select id="inputStatus" name="status" required class="form-control custom-select">
-                  <option value='' selected disabled>@lang('site.Status')</option>
-                  <option value="1" @if(old('status',$attachment->status)==1) selected @endif>@lang('site.Active')
-                  </option>
-                  <option value="0" @if(old('status',$attachment->status)==0) selected @endif>@lang('site.In-Active')
-                  </option>
-                </select>
-              </div>
-
+                    </div>
+                </div>
             </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
         </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <button class="btn btn-success" type="submit" name='continue' value='continue'><i class="fas fa-save"></i>
-            @lang('site.Save & Continue')</button>
-          <button class="btn btn-success" type="submit"><i class="fas fa-save"></i> @lang('site.Save')</button>
+        {{-- save --}}
+        <div class="grid xl:grid-cols-1 grid-cols-1 gap-6 mt-6">
+            <div class="card rounded-md bg-white dark:bg-slate-800 lg:h-full shadow-base">
+                <div class="card-body flex flex-col p-6">
+                    <div class="card-text h-full space-y-6">
+                        <div class="input-area text-center">
+                            <button class="btn inline-flex justify-center btn-primary" type="submit" name='continue'
+                                value='continue'><i class="fas fa-save"></i>
+                                @lang('site.Save & Continue')</button>
+                            <button class="btn inline-flex justify-center btn-primary" type="submit"><i
+                                    class="fas fa-save"></i>
+                                @lang('site.Save')</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </form>
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
 @endsection
