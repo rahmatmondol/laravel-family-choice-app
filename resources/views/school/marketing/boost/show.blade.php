@@ -4,72 +4,100 @@ $page = 'boost view';
 $title = 'boost';
 ?>
 @section('title_page')
-{{ $title }}
+    {{ $title }}
 @endsection
 @section('content')
-
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h6>{{ $title }}</h6>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.boost.list') }}">boost list</a>
+    <!-- BEGIN: Breadcrumb -->
+    <div class="mb-5">
+        <ul class="m-0 p-0 list-none">
+            <li class="inline-block relative top-[3px] text-base text-primary-500 font-Inter ">
+                <a href="{{ route($mainRoutePrefix . '.dashboard') }}">
+                    <iconify-icon icon="heroicons-outline:home"></iconify-icon>
+                    <iconify-icon icon="heroicons-outline:chevron-right"
+                        class="relative text-slate-500 text-sm rtl:rotate-180"></iconify-icon>
+                </a>
             </li>
-            <li class="breadcrumb-item active">{{ $title }}</li>
-          </ol>
-        </div>
-      </div>
-    </div><!-- /.container-fluid -->
-  </section>
-
-  <!-- Content -->
-  <div class="card mt-4 content-table">
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-striped table-bordered">
-          <tbody>
-            <tr>
-              <td>City</td>
-              <td>{{ $boost->citys->title }}</td>
-            </tr>
-            <tr>
-              <td>Monthly Budget</td>
-              <td>{{ $boost->monthly_budget ?? 0 }}</td>
-            </tr>
-            <tr>
-              <td>Cost per click</td>
-              <td>{{ $boost->cost_per_click ?? 0 }}</td>
-            </tr>
-            <tr>
-              <td>Starting Date</td>
-              <td>{{ Carbon\Carbon::parse($boost->starting)->format('F j, Y') }}</td>
-            </tr>
-            <tr>
-              <td>Ending Date</td>
-              <td>{{ Carbon\Carbon::parse($boost->ending)->format('F j, Y') }}</td>
-            </tr>
-{{--            <tr>--}}
-{{--              <td>@lang('site.Order Item')</td>--}}
-{{--              <td>{{ $boost->order_column }}</td>--}}
-{{--            </tr>--}}
-{{--            <tr>--}}
-{{--              <td>@lang('site.Status') {{$boost['status']}}</td>--}}
-{{--              <td>@include('school.partials._render_status',['status'=>$boost['status']])</td>--}}
-{{--            </tr>--}}
-
-          </tbody>
-        </table>
-      </div>
+            <li class="inline-block relative text-sm text-slate-500 font-Inter dark:text-white">
+                <a href="{{ route($mainRoutePrefix . '.boost.list') }}">
+                    boost list
+                    <iconify-icon icon="heroicons-outline:chevron-right"
+                        class="relative text-slate-500 text-sm rtl:rotate-180"></iconify-icon>
+                </a>
+            </li>
+            <li class="inline-block relative text-sm text-slate-500 font-Inter dark:text-white">
+                {{ $title }}</li>
+        </ul>
     </div>
-  </div>
-  <!-- //Content -->
-</div>
-<!-- /.content-wrapper -->
+    <!-- END: BreadCrumb -->
+
+
+    <div class="grid xl:grid-cols-1 grid-cols-1 gap-5">
+        <!-- BEGIN: Bordered Table -->
+        <div class="card">
+            <header class=" card-header noborder">
+                <h4 class="card-title">
+                    {{ $title }}
+                </h4>
+            </header>
+            <div class="card-body px-6 pb-6">
+                <div class="overflow-x-auto ">
+                    <div class="inline-block min-w-full align-middle">
+                        <div class="overflow-hidden ">
+                            <table class="min-w-full divide-y divide-slate-100 table-fixed dark:divide-slate-700">
+                                <tbody class="bg-white divide-y divide-slate-100 dark:bg-slate-800 dark:divide-slate-700">
+
+                                    <tr>
+                                        <td style="width: 40%;"
+                                            class="table-td border border-slate-100 dark:bg-slate-800 dark:border-slate-700">
+                                            City</td>
+                                        <td
+                                            class="table-td border border-slate-100 dark:bg-slate-800 dark:border-slate-700">
+                                            {{ $boost->citys->title }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td
+                                            class="table-td border border-slate-100 dark:bg-slate-800 dark:border-slate-700">
+                                            Monthly Budget</td>
+                                        <td
+                                            class="table-td border border-slate-100 dark:bg-slate-800 dark:border-slate-700">
+                                            {{ $boost->monthly_budget ?? 0 }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td
+                                            class="table-td border border-slate-100 dark:bg-slate-800 dark:border-slate-700">
+                                            Cost per click</td>
+                                        <td
+                                            class="table-td border border-slate-100 dark:bg-slate-800 dark:border-slate-700">
+                                            {{ $boost->cost_per_click ?? 0 }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td
+                                            class="table-td border border-slate-100 dark:bg-slate-800 dark:border-slate-700">
+                                            Starting Date</td>
+                                        <td
+                                            class="table-td border border-slate-100 dark:bg-slate-800 dark:border-slate-700">
+                                            {{ Carbon\Carbon::parse($boost->starting)->format('F j, Y') }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td
+                                            class="table-td border border-slate-100 dark:bg-slate-800 dark:border-slate-700">
+                                            Ending Date</td>
+                                        <td
+                                            class="table-td border border-slate-100 dark:bg-slate-800 dark:border-slate-700">
+                                            {{ Carbon\Carbon::parse($boost->ending)->format('F j, Y') }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: Bordered Table -->
+    </div>
+    <!-- /.content-wrapper -->
 @endsection
