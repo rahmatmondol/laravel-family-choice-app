@@ -40,7 +40,7 @@ $title = 'boost';
                                     icon="heroicons-outline:search"></iconify-icon>
                                 @lang('site.Search')</button>
                             @if (checkAdminPermission('create_courses'))
-                                <a href="{{ route($mainRoutePrefix . '.discount.add') }}"
+                                <a href="{{  route($mainRoutePrefix.'.boost.create') }}"
                                     class="btn btn-sm btn-primary"><iconify-icon
                                         icon="heroicons-outline:plus"></iconify-icon>
                                     @lang('site.Add')</a>
