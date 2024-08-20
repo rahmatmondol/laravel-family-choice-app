@@ -4,89 +4,75 @@ $page = 'schools';
 $title = __('site.Change Password');
 ?>
 @section('title_page')
-{{ $title }}
+    {{ $title }}
 @endsection
 
 @section('content')
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h6>{{ $title }}</h6>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.dashboard') }}">@lang('site.Home')</a></li>
-            {{-- <li class="breadcrumb-item"><a href="{{ route($mainRoutePrefix.'.schools.index') }}">@lang('site.Schools')</a> --}}
+    <!-- BEGIN: Breadcrumb -->
+    <div class="mb-5">
+        <ul class="m-0 p-0 list-none">
+            <li class="inline-block relative top-[3px] text-base text-primary-500 font-Inter ">
+                <a href="index.html">
+                    <iconify-icon icon="heroicons-outline:home"></iconify-icon>
+                    <iconify-icon icon="heroicons-outline:chevron-right"
+                        class="relative text-slate-500 text-sm rtl:rotate-180"></iconify-icon>
+                </a>
             </li>
-            <li class="breadcrumb-item active">{{ $title }}</li>
-          </ol>
-        </div>
-      </div>
-    </div><!-- /.container-fluid -->
-  </section>
-
-  <!-- Main content -->
-  <section class="content">
-    <form method="post" action="{{ route($mainRoutePrefix.'.profile.change-password-post')}}" >
-      @csrf
-      @method('post')
-      @include('admin.partials._errors')
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card card-primary">
-            <div class="card-body">
-
-              {{-- current_password --}}
-              <div class="form-group">
-                <label>@lang('site.Current Password')</label>
-                <input type="password" name="current_password" class="form-control" required>
-              </div>
-
-              <div class="form-group">
-
-              </div>
-
+            <li class="inline-block relative text-sm text-slate-500 font-Inter dark:text-white">
+                {{ $title }}</li>
+        </ul>
+    </div>
+    <!-- END: BreadCrumb -->
+    <form method="post" action="{{ route($mainRoutePrefix . '.profile.change-password-post') }}">
+        @csrf
+        @method('post')
+        @include('admin.partials._errors')
+        <div class="grid xl:grid-cols-2 grid-cols-1 gap-6">
+            <div class="card">
+                <div class="card-body flex flex-col p-6">
+                    <div class="card-text h-full space-y-4">
+                        {{-- current_password --}}
+                        <div class="input-area">
+                            <label>@lang('site.Current Password')</label>
+                            <input type="password" name="current_password" class="form-control mt-2" required>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-        </div>
-        <div class="col-md-6">
-          <div class="card card-primary">
-            <div class="card-body">
+            <div class="card">
+                <div class="card-body flex flex-col p-6">
+                    <div class="card-text h-full space-y-4">
+                        {{-- passwrod --}}
+                        <div class="input-area">
+                            <label>@lang('site.Password')</label>
+                            <input type="password" name="password" class="form-control mt-2" required>
+                        </div>
 
-              {{-- passwrod --}}
-              <div class="form-group">
-                <label>@lang('site.Password')</label>
-                <input type="password" name="password" class="form-control" required>
-              </div>
-
-              {{-- password_confirmation --}}
-              <div class="form-group">
-                <label>@lang('site.Password Confirmation')</label>
-                <input type="password" name="password_confirmation" class="form-control" required>
-              </div>
-
+                        {{-- password_confirmation --}}
+                        <div class="input-area">
+                            <label>@lang('site.Password Confirmation')</label>
+                            <input type="password" name="password_confirmation" class="form-control mt-2" required>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
         </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <button class="btn btn-success" type="submit" name='continue' value='continue'><i class="fas fa-save"></i>
-            @lang('site.Save & Continue')</button>
-          <button class="btn btn-success" type="submit"><i class="fas fa-save"></i> @lang('site.Save')</button>
+        {{-- save --}}
+        <div class="grid xl:grid-cols-1 grid-cols-1 gap-6 mt-6">
+            <div class="card rounded-md bg-white dark:bg-slate-800 lg:h-full shadow-base">
+                <div class="card-body flex flex-col p-6">
+                    <div class="card-text h-full space-y-6">
+                        <div class="input-area text-center">
+                            <button class="btn inline-flex justify-center btn-primary" type="submit" name='continue'
+                                value='continue'><i class="fas fa-save"></i>
+                                @lang('site.Save & Continue')</button>
+                            <button class="btn inline-flex justify-center btn-primary" type="submit"><i
+                                    class="fas fa-save"></i>
+                                @lang('site.Save')</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </form>
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
 @endsection
