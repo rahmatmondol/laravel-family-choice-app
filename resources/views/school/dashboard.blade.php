@@ -13,6 +13,50 @@ $title = __('site.Dashboard');
                 class="font-medium lg:text-2xl text-xl capitalize text-slate-900 inline-block ltr:pr-4 rtl:pl-4 mb-1 sm:mb-0">
                 {{ $page }}</h4>
         </div>
+
+        <div class="grid lg:grid-cols-1 grid-cols-1 mb-4">
+                <div class="flex flex-col">
+                    <div class="card-text h-full gap-4">
+                        <button class="btn inline-flex justify-center bg-white rounded-full min-w-10">Today</button>
+                        <button class="btn inline-flex justify-center bg-white rounded-full min-w-10">Yesterday </button>
+                        <button class="btn inline-flex justify-center bg-white rounded-full min-w-10">7 Days</button>
+                        <button class="btn inline-flex justify-center bg-white rounded-full min-w-32">30 Days</button>
+                    </div>
+                </div>
+        </div>
+
+        <div class="grid lg:grid-cols-1 grid-cols-1 mb-4">
+            <div class="card">
+                <div class="card-body flex flex-col p-6">
+                    <header class="flex mb-5 items-center border-b border-slate-100 dark:border-slate-700 pb-5 -mx-6 px-6">
+                        <div class="flex-1">
+                            <div class="card-title text-slate-900 dark:text-white">@lang('Business Summary')</div>
+                            <span class="block mb-6 text-sm text-slate-900 dark:text-white font-medium">
+                                @lang('Chart View ')
+                            </span>
+                        </div>
+                        <div class="flex-1 text-right">
+                            <div class="card-title text-slate-900 dark:text-white">@lang('More In Performance ')</div>
+                            <div class=" text-right">
+                                <div class="card-title text-slate-900 dark:text-white">0</div>
+                                <span class="block mb-6 text-sm text-slate-900 dark:text-white font-medium">
+
+                                    @lang('Total order')
+                                </span>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="card-text h-full">
+                        <div class="tab-pane fade active show" id="pills-settingsHorizontal" role="tabpanel"
+                            aria-labelledby="pills-settings-tabHorizontal">
+                            <div class="legend-ring4">
+                                <div id="account-receivable-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {{-- widgets --}}
         <div class="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-3 mb-4">
 
@@ -88,54 +132,42 @@ $title = __('site.Dashboard');
 
             <!-- END: Group Chart5 -->
         </div>
+    </div>
 
-        <div class="grid grid-cols-12 gap-5">
-
-            <div class="xl:col-span-12 lg:col-span-12 col-span-12">
-                <div class="card">
-                    <header class=" card-header">
-                        <h4 class="card-title">@lang('site.Sales Graph')
-                        </h4>
-                    </header>
-                    <div class="card-body px-6 pb-6">
-                        <div id="areaChart"></div>
-                    </div>
+    <div class="grid grid-cols-12 gap-5 mt-4">
+        <div class="xl:col-span-12 col-span-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">@lang('site.Latest Reservations')</h4>
                 </div>
-            </div>
-
-            <div class="xl:col-span-12 col-span-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">@lang('site.Latest Reservations')</h4>
-                    </div>
-                    <div class="card-body p-6">
-                        <!-- BEGIN: Products -->
-                        <div class="grid md:grid-cols-4 grid-cols-1 gap-5">
-                            @foreach ($latestReservations as $reservation)
-                                @if ($reservation->customer)
-                                    <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded text-center">
-                                        <div class="h-12 w-12 rounded-full mb-4 mx-auto">
-                                            <img src="{{ $reservation->customer->image_path }}" alt=""
-                                                class="w-full h-full rounded-full">
-                                        </div>
-                                        <span class="text-slate-500 dark:text-slate-300 text-sm mb-1 block font-normal">
-                                            {{ $reservation->parent_name }}
-                                        </span>
-                                        <span class="text-slate-600 dark:text-slate-300 text-sm mb-4 block">
-                                            {{ $reservation->created_at }}
-                                        </span>
-                                        <a href="{{ route('school.reservations.show', ['reservation' => $reservation->id]) }}"
-                                            class="btn btn-secondary dark:bg-slate-800 dark:hover:bg-slate-600 block w-full text-center btn-sm">
-                                            @lang('site.More info')
-                                        </a>
+                <div class="card-body p-6">
+                    <!-- BEGIN: Products -->
+                    <div class="grid md:grid-cols-4 grid-cols-1 gap-5">
+                        @foreach ($latestReservations as $reservation)
+                            @if ($reservation->customer)
+                                <div class="bg-slate-50 dark:bg-slate-900 p-4 rounded text-center">
+                                    <div class="h-12 w-12 rounded-full mb-4 mx-auto">
+                                        <img src="{{ $reservation->customer->image_path }}" alt=""
+                                            class="w-full h-full rounded-full">
                                     </div>
-                                @endif
-                            @endforeach
-                        </div>
-                        <!-- END: Product -->
+                                    <span class="text-slate-500 dark:text-slate-300 text-sm mb-1 block font-normal">
+                                        {{ $reservation->parent_name }}
+                                    </span>
+                                    <span class="text-slate-600 dark:text-slate-300 text-sm mb-4 block">
+                                        {{ $reservation->created_at }}
+                                    </span>
+                                    <a href="{{ route('school.reservations.show', ['reservation' => $reservation->id]) }}"
+                                        class="btn btn-secondary dark:bg-slate-800 dark:hover:bg-slate-600 block w-full text-center btn-sm">
+                                        @lang('site.More info')
+                                    </a>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
+                    <!-- END: Product -->
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection
