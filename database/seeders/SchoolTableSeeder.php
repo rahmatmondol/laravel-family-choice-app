@@ -53,14 +53,15 @@ class SchoolTableSeeder extends Seeder
         $prices = [1200, 1500, 1400];
         $courses_types = ['summery', 'wintry'];
         $subscription_time_types = ['part_time', 'full_time'];
+
         for ($i = 1; $i < 25; $i++) {
             $school = School::create([
               'ar' => ['title' => $title . $i, 'address' => $address . $i, 'description' => $description . $i],
               'en' => ['title' => $title . $i, 'address' => $address . $i, 'description' => $description . $i],
               'status' => 1,
-              'phone' => \rand(5, 10) . \rand(5, 10) . '015254' . $i * \rand(5, 10),
-              'whatsapp' =>  \rand(5, 10) . \rand(5, 10) . '012254' . $i * \rand(5, 10),
-              'email' => 'info' . \rand(5, 100) . \rand(5, 100) . \rand(5, 100) . '@gmail.com',
+              'phone' => fake()->phoneNumber(),
+              'whatsapp' => fake()->phoneNumber(),
+              'email' => fake()->unique()->email(),
               'available_seats' => $available_seats = \rand(5, 500),
               'total_seats' => $available_seats + 100,
               'review' => \rand(1, 5),

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('ending')->nullable();
             $table->timestamps();
         });
-    }
+    } 
 
     /**
      * Reverse the migrations.
