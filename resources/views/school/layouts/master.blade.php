@@ -12,8 +12,10 @@
         rel="stylesheet">
 
     <!-- Theme style -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('school/') }}/assets/css/rt-plugins.css">
     <link rel="stylesheet" href="{{ asset('school/') }}/assets/css/app.css">
+
 
     <script>
         let appUrl = @json(config('myconfig.appUrl'));

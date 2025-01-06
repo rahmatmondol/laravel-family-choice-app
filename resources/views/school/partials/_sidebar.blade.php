@@ -135,7 +135,7 @@
                     <span class="flex items-center">
                         <iconify-icon class=" nav-icon" icon="heroicons-outline:clipboard-document-list"></iconify-icon>
                         <span>
-                            {{ ucfirst(__('Reservation.Logs')) }}
+                            {{ ucfirst(__('Reservation Logs')) }}
                         </span>
                     </span>
                 </a>

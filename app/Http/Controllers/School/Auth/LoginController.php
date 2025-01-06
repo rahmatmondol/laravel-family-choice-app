@@ -32,7 +32,7 @@ class LoginController extends Controller
 
   public function showLoginForm()
   {
-    return view('school.auth.login');
+    return view('school.auth.login-new');
   }
 
   public function login(Request $request)
