@@ -20,7 +20,7 @@ class AddCustomerFormRequest extends BaseRequest
       'gender' => 'nullable|in:male,female',
       'date_of_birth' => ['nullable', 'date', 'before:yesterday', 'date_format:Y-m-d'],
       'email' => ['required', 'email', 'unique:customers', new CheckEmailExist("customers")],
-      'phone' => ['bail', 'required', 'unique:customers,phone', 'regex:/[0-9]{9}/','max:9'],
+      'phone' => ['bail', 'required', 'unique:customers,phone', 'regex:/[0-9]{9}/','max:14'],
       // 'phone' => ['bail', 'required', 'unique:customers,phone',new ValidatePhoneNumber()],
       'password' => ['required', 'string', 'min:6'],
       'password_confirmation' => ['required', 'same:password', 'min:6'],

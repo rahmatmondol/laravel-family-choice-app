@@ -19,11 +19,11 @@ class DocumentController extends Controller
     use UploadFileTrait;
     use ResponseTrait;
     //
-    public function view(GetDocumentRequest $request)
+    public function view()
     {
         $user_id = Auth::user()->id;
 
-        $data = CustoemrDocument::where('user_id',$user_id)->where('folder_id',$request->folder_id)->get();
+        $data = CustoemrDocument::where('user_id',$user_id)->get();
 
         return $this->sendResponse(DocumnetResource::collection($data),'success');
     }
@@ -34,7 +34,7 @@ class DocumentController extends Controller
         // Create a new CustomerDocument instance
         $document = new CustoemrDocument();
         $document->title = $request->title;
-        $document->folder_id = $request->folder_id;
+        // $document->folder_id = $request->folder_id;
         $document->user_id = $user_id;
         $document->save();
 
