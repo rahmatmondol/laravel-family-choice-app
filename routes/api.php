@@ -124,6 +124,15 @@ Route::group(
             Route::post('/delete-document/{id}','delete');
         });
 
+        Route::get('contact-support', function () {
+          $data = [
+              'email' => 'info@familychoice.com',
+              'phone' => '00966555555555',
+              'whatsapp' => '00966555555555',
+          ];
+          return response()->json($data);
+      });
+
     });
   }
 );

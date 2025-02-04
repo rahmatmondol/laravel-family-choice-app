@@ -16,6 +16,7 @@ use App\Traits\ResponseTrait;
 use App\Traits\UploadFileTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Discount;
 
 class FixReservationController extends Controller
 {
@@ -30,17 +31,17 @@ class FixReservationController extends Controller
         try {
 
             $customer = getCustomer();
-            $school = School::find($request->school_id);
+            $school = School::find($request->schoolId);
             $isSchool = $school->is_school_type;
             $grade = Grade::find($request->input('child.grade_id'));
             $fees = $this->calculateFees($school, $grade);
             $user_id = auth()->user()->id;
 
             // Retrieve the discount applicable for the given school and grade
-            $discount = Discount::where('school_id', $request->school_id)
+            $discount = Discount::where('school_id', $request->schoolId)
                 ->where('status', 'active')
                 ->where(function ($query) {
-                    $now = getCurrentDateTime();
+                    $now = now();
                     $query->where('starting_date', '<=', $now)
                         ->where('ending_date', '>=', $now)
                         ->orWhereNull('starting_date')
@@ -79,8 +80,8 @@ class FixReservationController extends Controller
             $childData->gender = $request->child_gender;
             $childData->reservation_id = $reservation->id;
             $childData->grade_id                = $isSchool ? $request->grade_id : null;
-           $childData->course_id               = !$isSchool ? $request->course_id : null;
-          $childData->subscription_type_id    = !$isSchool ? $request->subscription_type_id : null;
+            $childData->course_id               = !$isSchool ? $request->course_id : null;
+            $childData->subscription_type_id    = !$isSchool ? $request->subscription_type_id : null;
             $childData->total_fees = $fees['totalFees'];
             $childData->subscription_type_price = $fees['subscriptionTypeFees'] ?? null;
             $childData->transportation_price    = $fees['transportationPrice'] ?? null;
@@ -103,10 +104,10 @@ class FixReservationController extends Controller
             }
 
             // Return success response with the newly created reservation
-            return $this->sendResponse('',"Reservation added successfully");
+            return $this->sendResponse('', "Reservation added successfully");
         } catch (\Exception $e) {
             // If an error occurs, return an error response
-//            return $this->sendError("Failed to add reservation", [], 500);
+            return $this->sendError("Failed to add reservation", ['error' => $e->getMessage()], 500);
         }
     }
 
@@ -139,6 +140,4 @@ class FixReservationController extends Controller
 
         return $this->sendResponse(new ReservationCollection($reservation), "");
     }
-
-
 }

@@ -34,7 +34,7 @@ class DocumentController extends Controller
         // Create a new CustomerDocument instance
         $document = new CustoemrDocument();
         $document->title = $request->title;
-        // $document->folder_id = $request->folder_id;
+        $document->child_name = $request->child_name;
         $document->user_id = $user_id;
         $document->save();
 
