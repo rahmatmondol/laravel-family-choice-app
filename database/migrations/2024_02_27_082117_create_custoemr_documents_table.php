@@ -13,6 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
+        // desable foreign key constraints
+        Schema::disableForeignKeyConstraints();
+
         Schema::create('custoemr_documents', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
@@ -20,8 +23,12 @@ return new class extends Migration
             $table->string('child_name');
             $table->text('front_side');
             $table->text('back_side');
+            $table->foreignId('user_document_folder_id')->constrained('user_document_folders')->onDelete('cascade');
             $table->timestamps();
         });
+
+        // enable foreign key constraints
+        Schema::enableForeignKeyConstraints();
     }
 
     /**

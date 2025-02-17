@@ -67,7 +67,7 @@ class FixReservationController extends Controller
             $reservation->address = $request->parent_Address;
             $reservation->identification_number = $request->identification_Number;
             $reservation->school_id = $request->schoolId;
-            $reservation->document_id = $request->documentId;
+            $reservation->user_document_folder_id = $request->folderId;
             $reservation->customer_id = $user_id;
             $reservation->total_fees = $fees['totalFees'];
             // Save the reservation

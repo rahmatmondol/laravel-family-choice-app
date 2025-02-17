@@ -15,6 +15,7 @@ return new class extends Migration
    */
   public function up()
   {
+    Schema::disableForeignKeyConstraints();
     Schema::create('reservations', function (Blueprint $table) {
       $table->id();
       $table->string('parent_name');
@@ -34,10 +35,11 @@ return new class extends Migration
       $table->foreignId('school_id')->nullable()->constrained()->nullOnDelete();
       // $table->foreignId('course_id')->nullable()->constrained()->nullOnDelete();
       $table->foreignId('customer_id')->nullable()->constrained()->nullOnDelete();
-      $table->integer('document_id')->nullable();
+      $table->foreignId('user_document_folder_id')->constrained('user_document_folders')->onDelete('cascade');
       $table->softDeletes();
       $table->timestamps();
     });
+    Schema::enableForeignKeyConstraints();
   }
 
   /**

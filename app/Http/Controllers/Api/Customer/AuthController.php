@@ -27,8 +27,7 @@ class AuthController extends Controller
 
   public function __construct(
     private CustomerRepositoryInterface $customerRepository
-  ) {
-  } //end of constructor
+  ) {} //end of constructor
 
   public function signupCustomer(AddCustomerFormRequest $request)
   {
@@ -111,7 +110,7 @@ class AuthController extends Controller
 
   public function currentWallet(Request $request)
   {
-    return $this->sendResponse(getCustomer()->wallet , "");
+    return $this->sendResponse(getCustomer()->wallet, "");
   }
 
   public function foregetPassword(ForgetPasswordFormRequest $request)

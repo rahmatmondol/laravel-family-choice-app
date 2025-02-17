@@ -31,6 +31,7 @@ class StoreDocumentRequest extends FormRequest
             'child_name'=>'required|string',
             'back_side' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'front_side' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'folder_id' => 'required|exists:user_document_folders,id',
         ];
     }
 }

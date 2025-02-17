@@ -140,7 +140,7 @@ $title = __('site.Show Reservation');
                                 @else
                                     <tr>
                                         <td>@lang('site.Amount')</td>
-                                        <td>{{ $reservation->remaining_payment_info['amount']?? "" }}</td>
+                                        <td>{{ $reservation->remaining_payment_info['amount'] ?? '' }}</td>
                                     </tr>
                                 @endif
                             </tbody>
@@ -201,7 +201,7 @@ $title = __('site.Show Reservation');
                             </tr>
                             <tr>
                                 <td>@lang('site.Status')</td>
-                                <td>@include('admin.partials._render_reservation_status', [
+                                <td >@include('admin.partials._render_reservation_status', [
                                     'status' => $reservation->status,
                                 ])</td>
                             </tr>
@@ -308,6 +308,47 @@ $title = __('site.Show Reservation');
                                         </tr>
                                     @endforeach
                                 @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            @endif
+
+            @if ($folder = $reservation->folder)
+                <div class="card-body">
+                    <h4>@lang('Student documents')</h4>
+                    <div class="info-section">
+                        <h4>Details</h4>
+                        <ul class="list-unstyled">
+                            <li><strong>Title:</strong> Rahmat</li>
+                        </ul>
+                        <h5>Documents</h5>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Child Name</th>
+                                    <th>Front Side</th>
+                                    <th>Back Side</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($folder->documents as $document)
+                                <tr>
+                                    <td>{{ $document->title }}</td>
+                                    <td>{{ $document->child_name }}</td>
+                                    <td>
+                                        @if ($document->front_side)
+                                            <img src="{{ $document->front_side }}" alt="front side" class="img-thumbnail" width="100">
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($document->back_side)
+                                            <img src="{{ $document->back_side }}" alt="back side" class="img-thumbnail" width="100">
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

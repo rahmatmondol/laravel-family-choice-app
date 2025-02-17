@@ -50,8 +50,9 @@ class ReservationController extends BaseController
 
   public function show($reservation)
   {
-    $reservation = $this->reservationRepository->getReservationById($reservation);
-
+    // $reservation = $this->reservationRepository->getReservationById($reservation);
+    $reservation = Reservation::find($reservation)->load('child', 'folder','folder.documents');
+    // return  $reservation;
     return view($this->mainViewPrefix . '.reservations.show', compact('reservation'));
   } //end of create
 

@@ -120,6 +120,8 @@ Route::group(
       //Document
         Route::controller(DocumentController::class)->group(function (){
             Route::post('/add-document','save');
+            Route::post('/add-folder','saveFolder');
+            Route::get('/get-folders','getFolder');
             Route::get('/get-document','view');
             Route::post('/delete-document/{id}','delete');
         });

@@ -29,4 +29,9 @@ class CustoemrDocument extends Model
         );
     }
 
+    public function folder()
+    {
+        return $this->belongsTo(UserDocumentFolder::class, 'user_document_folder_id');
+    }
+
 }

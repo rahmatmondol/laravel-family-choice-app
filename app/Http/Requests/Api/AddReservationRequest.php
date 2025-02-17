@@ -32,7 +32,7 @@ class AddReservationRequest extends FormRequest
             'parent_Phone' => 'required|string|max:255',
             'parent_Date_of_birth' => 'required|nullable|date_format:Y-m-d',
             'parent_Address' => 'required|string|max:255',
-            'documentId' => 'required|integer',
+            'folderId' => 'required|integer',
             'schoolId' => 'required|integer',
             'child_name' => 'required|string|max:255',
             'child_photo' =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

@@ -43,4 +43,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function documents()
+    {
+        return $this->hasMany(CustoemrDocument::class);
+    }
+
+    public function folders()
+    {
+        return $this->hasMany(UserDocumentFolder::class, 'user_id');
+    }
 }

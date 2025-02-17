@@ -62,7 +62,7 @@ class Customer extends  Authenticatable implements HasLocalePreference
 
   public function walletHistory()
   {
-    return $this->hasMany(WalletHistory::class,'customer_id','id');
+    return $this->hasMany(WalletHistory::class, 'customer_id', 'id');
   } //end fo category
 
   public function city()
@@ -90,7 +90,12 @@ class Customer extends  Authenticatable implements HasLocalePreference
 
   public function preferredLocale()
   {
-      return 'ar';
+    return 'ar';
   }
 
+  public function folders()
+  {
+    return $this->hasMany(UserDocumentFolder::class, 'customer_id');
+  }
+  
 }

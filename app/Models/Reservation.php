@@ -54,7 +54,7 @@ class Reservation extends Model
   // amount
   public function getRequiredPartialPaymentAmountAttribute()
   {
-    return  (setting('partial_payment_percent') / 100) * $this->total_fees;
+    return (setting('partial_payment_percent') / 100) * $this->total_fees;
   }
   // amount
   public function getRequiredAmountToPayWithCardAttribute()
@@ -130,8 +130,8 @@ class Reservation extends Model
         // }
         if ($this->partial_payment_info['type'] == PaymentType::CardAndWallet->value) {
           $options[PaymentType::CardAndWallet->value] = [
-            PaymentType::Wallet->value => [  'amount' => (int)$this->partial_payment_info[PaymentType::Wallet->value]['amount'] ],
-            PaymentType::Card->value  => [  'amount'  => (int)$this->amount_refunded_to_card_in_partial_payment ],
+            PaymentType::Wallet->value => ['amount' => (int)$this->partial_payment_info[PaymentType::Wallet->value]['amount']],
+            PaymentType::Card->value  => ['amount'  => (int)$this->amount_refunded_to_card_in_partial_payment],
           ];
         }
       }
@@ -305,6 +305,11 @@ class Reservation extends Model
   public function gradeFees()
   {
     return $this->belongsToMany(GradeFees::class, 'reservation_grade_fees', 'reservation_id', 'grade_fees_id')->withTranslation(app()->getLocale())->withPivot(['price']);
+  }
+
+  public function folder()
+  {
+    return $this->belongsTo(UserDocumentFolder::class, 'user_document_folder_id');
   }
   ////////////////// end relationships //////////////////////////////
 }
